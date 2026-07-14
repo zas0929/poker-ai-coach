@@ -10,6 +10,7 @@ export default function HomePage() {
   const {
     analysis,
     actionReview,
+    decisionLog,
     error,
     hand,
     isLoading,
@@ -35,6 +36,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <SessionStrip hand={hand} />
+
       {error ? (
         <div className="error-banner">
           <span>{error}</span>
@@ -46,6 +49,7 @@ export default function HomePage() {
         <div className="table-column">
           <PokerTable hand={hand} />
           <ActionPanel
+            analysis={analysis}
             hand={hand}
             isLoading={isLoading}
             onAction={action}
@@ -55,10 +59,57 @@ export default function HomePage() {
           />
         </div>
         <aside className="side-column">
-          <CoachPanel analysis={analysis} actionReview={actionReview} hand={hand} isLoading={isLoading} />
+          <CoachPanel
+            analysis={analysis}
+            actionReview={actionReview}
+            decisionLog={decisionLog}
+            hand={hand}
+            isLoading={isLoading}
+          />
           <HandHistory hand={hand} />
         </aside>
       </section>
     </main>
+  );
+}
+
+function SessionStrip({ hand }: { hand: ReturnType<typeof usePokerHand>['hand'] }) {
+  const hero = hand?.players.find((player) => player.id === 'hero');
+  const villain = hand?.players.find((player) => player.id === 'villain');
+  const heroTotal = (hero?.stack ?? 0) + (hero?.current_bet ?? 0);
+  const villainTotal = (villain?.stack ?? 0) + (villain?.current_bet ?? 0);
+  const net = heroTotal - villainTotal;
+  const leader = net === 0 ? 'Even' : net > 0 ? 'You' : 'AI';
+  const button = hand?.dealer_player_id === 'hero' ? 'You' : hand?.dealer_player_id === 'villain' ? 'AI' : '-';
+
+  return (
+    <section className="session-strip">
+      <div>
+        <span>You</span>
+        <strong>{heroTotal}</strong>
+      </div>
+      <div>
+        <span>AI</span>
+        <strong>{villainTotal}</strong>
+      </div>
+      <div>
+        <span>Net</span>
+        <strong>{net > 0 ? `+${net}` : net}</strong>
+      </div>
+      <div>
+        <span>Leader</span>
+        <strong>{leader}</strong>
+      </div>
+      <div>
+        <span>Button</span>
+        <strong>{button}</strong>
+      </div>
+      <div>
+        <span>Blinds</span>
+        <strong>
+          {hand ? `${hand.small_blind}/${hand.big_blind}` : '-'}
+        </strong>
+      </div>
+    </section>
   );
 }

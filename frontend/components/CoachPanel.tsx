@@ -3,6 +3,7 @@ import type { ActionReview, HandAnalysis, HandState } from '@/types/poker';
 interface CoachPanelProps {
   analysis: HandAnalysis | null;
   actionReview: ActionReview | null;
+  decisionLog: ActionReview[];
   hand: HandState | null;
   isLoading: boolean;
 }
@@ -15,8 +16,22 @@ function label(value?: string) {
   return value?.replaceAll('_', ' ') ?? '-';
 }
 
-export default function CoachPanel({ analysis, actionReview, hand, isLoading }: CoachPanelProps) {
+export default function CoachPanel({
+  analysis,
+  actionReview,
+  decisionLog,
+  hand,
+  isLoading,
+}: CoachPanelProps) {
   const result = hand?.result;
+  const decisionStats = decisionLog.reduce(
+    (stats, review) => ({
+      ...stats,
+      [review.verdict]: stats[review.verdict] + 1,
+      total: stats.total + 1,
+    }),
+    { acceptable: 0, optimal: 0, reconsider: 0, total: 0 },
+  );
 
   return (
     <section className="coach-panel">
@@ -45,6 +60,10 @@ export default function CoachPanel({ analysis, actionReview, hand, isLoading }: 
           <span>Hand</span>
           <strong>{label(analysis?.hand_strength.category)}</strong>
         </div>
+        <div>
+          <span>Preflop</span>
+          <strong>{analysis?.preflop_profile.notation ?? '-'}</strong>
+        </div>
       </div>
 
       {analysis ? (
@@ -53,7 +72,21 @@ export default function CoachPanel({ analysis, actionReview, hand, isLoading }: 
           <div className="summary-meta">
             <span>Confidence {percent(analysis.confidence)}</span>
             <span>Risk {label(analysis.risk_level)}</span>
+            <span>{label(analysis.preflop_profile.category)}</span>
           </div>
+          {analysis.preflop_profile.tags.length ? (
+            <div className="tag-row">
+              {analysis.preflop_profile.tags.map((tag) => (
+                <span key={tag}>{label(tag)}</span>
+              ))}
+            </div>
+          ) : null}
+          {analysis.draw_profile.draws.length ? (
+            <div className="draw-box">
+              <strong>{analysis.draw_profile.outs} estimated outs</strong>
+              <span>{analysis.draw_profile.draws.map(label).join(', ')}</span>
+            </div>
+          ) : null}
           <ul>
             {analysis.key_factors.map((factor) => (
               <li key={factor}>{factor}</li>
@@ -73,6 +106,31 @@ export default function CoachPanel({ analysis, actionReview, hand, isLoading }: 
             <span>Chosen {label(actionReview.chosen_action)}</span>
             <span>Recommended {label(actionReview.recommended_action)}</span>
           </div>
+        </div>
+      ) : null}
+
+      {decisionLog.length ? (
+        <div className="decision-log-panel">
+          <div className="review-heading">
+            <span>Session decisions</span>
+            <strong>{decisionStats.total}</strong>
+          </div>
+          <div className="decision-stats">
+            <span>Optimal {decisionStats.optimal}</span>
+            <span>Acceptable {decisionStats.acceptable}</span>
+            <span>Review {decisionStats.reconsider}</span>
+          </div>
+          <ol>
+            {decisionLog.slice(0, 5).map((review, index) => (
+              <li key={`${review.hand_id}-${review.street}-${index}`}>
+                <span>{label(review.street)}</span>
+                <strong>{label(review.verdict)}</strong>
+                <em>
+                  {label(review.chosen_action)} vs {label(review.recommended_action)}
+                </em>
+              </li>
+            ))}
+          </ol>
         </div>
       ) : null}
 

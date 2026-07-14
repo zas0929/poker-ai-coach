@@ -37,6 +37,19 @@ export interface HandStrength {
   cards: Card[];
 }
 
+export interface PreflopProfile {
+  notation: string;
+  category: string;
+  score: number;
+  tags: string[];
+}
+
+export interface DrawProfile {
+  outs: number;
+  draws: string[];
+  overcards: number;
+}
+
 export interface PlayerHandResult {
   player_id: string;
   outcome: string;
@@ -77,6 +90,8 @@ export interface HandAnalysis {
   ev_call: number;
   recommended_action: string;
   hand_strength: HandStrength;
+  preflop_profile: PreflopProfile;
+  draw_profile: DrawProfile;
   coach_summary: string;
   confidence: number;
   risk_level: string;
@@ -85,6 +100,8 @@ export interface HandAnalysis {
 }
 
 export interface ActionReview {
+  hand_id: string;
+  street: Street;
   chosen_action: ActionType;
   recommended_action: string;
   verdict: 'optimal' | 'acceptable' | 'reconsider';

@@ -7,6 +7,7 @@ export function usePokerHand() {
   const [hand, setHand] = useState<HandState | null>(null);
   const [analysis, setAnalysis] = useState<HandAnalysis | null>(null);
   const [actionReview, setActionReview] = useState<ActionReview | null>(null);
+  const [decisionLog, setDecisionLog] = useState<ActionReview[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -83,7 +84,9 @@ export function usePokerHand() {
 
       if (result) {
         if (preActionAnalysis) {
-          setActionReview(reviewAction(actionType, preActionAnalysis));
+          const review = reviewAction(actionType, preActionAnalysis);
+          setActionReview(review);
+          setDecisionLog((current) => [review, ...current].slice(0, 25));
         }
         await applyState(result);
       }
@@ -105,6 +108,7 @@ export function usePokerHand() {
   return {
     analysis,
     actionReview,
+    decisionLog,
     error,
     hand,
     isLoading,
@@ -121,6 +125,8 @@ function reviewAction(actionType: ActionType, analysis: HandAnalysis): ActionRev
 
   if (actionType === recommended) {
     return {
+      hand_id: analysis.hand_id,
+      street: analysis.street,
       chosen_action: actionType,
       recommended_action: recommended,
       verdict: 'optimal',
@@ -138,6 +144,8 @@ function reviewAction(actionType: ActionType, analysis: HandAnalysis): ActionRev
 
   if (isAcceptable && analysis.confidence < 0.7) {
     return {
+      hand_id: analysis.hand_id,
+      street: analysis.street,
       chosen_action: actionType,
       recommended_action: recommended,
       verdict: 'acceptable',
@@ -146,6 +154,8 @@ function reviewAction(actionType: ActionType, analysis: HandAnalysis): ActionRev
   }
 
   return {
+    hand_id: analysis.hand_id,
+    street: analysis.street,
     chosen_action: actionType,
     recommended_action: recommended,
     verdict: 'reconsider',
