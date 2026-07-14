@@ -40,6 +40,7 @@ export default function ActionPanel({
     }
     return Math.max(highestBet - currentPlayer.current_bet, 0);
   }, [currentPlayer, highestBet, hand]);
+  const heroStack = currentPlayer?.id === 'hero' ? currentPlayer.stack : 0;
 
   const suggestedAmount = useMemo(() => {
     if (!hand) {
@@ -79,6 +80,24 @@ export default function ActionPanel({
 
   const buttonClass = (actionType: ActionType) =>
     recommendedAction === actionType && canAct ? 'recommended-action' : undefined;
+
+  const goAllIn = () => {
+    if (!currentPlayer || currentPlayer.id !== 'hero') {
+      return;
+    }
+
+    if (callAmount >= currentPlayer.stack) {
+      onAction('call');
+      return;
+    }
+
+    if (highestBet > 0) {
+      onAction('raise', currentPlayer.current_bet + currentPlayer.stack);
+      return;
+    }
+
+    onAction('bet', currentPlayer.stack);
+  };
 
   return (
     <section className="control-panel">
@@ -156,6 +175,9 @@ export default function ActionPanel({
         </button>
         <button className={buttonClass('raise')} disabled={!canAct || isLoading} onClick={() => onAction('raise', amount)}>
           Raise
+        </button>
+        <button className="all-in-button" disabled={!canAct || isLoading || heroStack <= 0} onClick={goAllIn}>
+          All in
         </button>
       </div>
 

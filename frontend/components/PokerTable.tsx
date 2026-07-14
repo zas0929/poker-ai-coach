@@ -1,5 +1,9 @@
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+
 import CardView from '@/components/CardView';
-import type { HandAction, HandResult, HandState, Player } from '@/types/poker';
+import type { HandAction, HandResult, HandState, Player, Street } from '@/types/poker';
 
 interface PokerTableProps {
   hand: HandState | null;
@@ -42,12 +46,41 @@ function Seat({
 }
 
 export default function PokerTable({ hand }: PokerTableProps) {
+  const [displayedBoardCount, setDisplayedBoardCount] = useState(0);
   const hero = hand?.players.find((player) => player.id === 'hero');
   const villain = hand?.players.find((player) => player.id === 'villain');
   const revealVillainCards = Boolean(hand?.result || hand?.street === 'showdown');
   const heroAction = lastActionFor(hand, 'hero');
   const villainAction = lastActionFor(hand, 'villain');
   const winnerBadge = winnerText(hand);
+  const allInRunout = isAllInRunout(hand);
+  const runoutComplete = !allInRunout || displayedBoardCount >= 5;
+  const visibleBoard = useMemo(
+    () => hand?.board.slice(0, displayedBoardCount) ?? [],
+    [displayedBoardCount, hand?.board],
+  );
+
+  useEffect(() => {
+    if (!hand) {
+      setDisplayedBoardCount(0);
+      return;
+    }
+
+    if (!isAllInRunout(hand)) {
+      setDisplayedBoardCount(hand.board.length);
+      return;
+    }
+
+    const stages = runoutStages(hand);
+    setDisplayedBoardCount(stages[0] ?? hand.board.length);
+    const timers = stages.slice(1).map((count, index) =>
+      window.setTimeout(() => setDisplayedBoardCount(count), 850 * (index + 1)),
+    );
+
+    return () => {
+      timers.forEach(window.clearTimeout);
+    };
+  }, [hand]);
 
   return (
     <section className="table-surface">
@@ -59,15 +92,16 @@ export default function PokerTable({ hand }: PokerTableProps) {
       />
 
       <div className="board-zone">
-        {winnerBadge ? <div className="winner-badge">{winnerBadge}</div> : null}
-        {hand?.result ? <ShowdownSummary hand={hand} result={hand.result} /> : null}
+        {allInRunout && !runoutComplete ? <div className="runout-badge">All-in runout</div> : null}
+        {winnerBadge && runoutComplete ? <div className="winner-badge">{winnerBadge}</div> : null}
+        {hand?.result && runoutComplete ? <ShowdownSummary hand={hand} result={hand.result} /> : null}
         <div className="pot-display">
           <span>Pot</span>
           <strong>{hand?.pot ?? 0}</strong>
         </div>
         <div className="board-cards">
           {Array.from({ length: 5 }).map((_, index) => (
-            <CardView key={index} card={hand?.board[index]} hidden={!hand?.board[index]} />
+            <CardView key={`${hand?.hand_id ?? 'empty'}-${index}-${visibleBoard[index]?.rank ?? 'hidden'}`} card={visibleBoard[index]} hidden={!visibleBoard[index]} />
           ))}
         </div>
       </div>
@@ -133,4 +167,35 @@ function playerName(hand: HandState, playerId: string) {
 
 function label(value: string) {
   return value.replaceAll('_', ' ');
+}
+
+function isAllInRunout(hand: HandState | null) {
+  return Boolean(hand?.result && hand.notes.some((note) => note.toLowerCase().includes('all-in runout')));
+}
+
+function runoutStages(hand: HandState) {
+  const start = boardCountBeforeRunout(lastVoluntaryAction(hand)?.street);
+  return [start, 3, 4, 5].filter((count, index, counts) => (
+    count <= hand.board.length && count >= start && counts.indexOf(count) === index
+  ));
+}
+
+function boardCountBeforeRunout(street?: Street) {
+  if (street === 'flop') {
+    return 3;
+  }
+  if (street === 'turn') {
+    return 4;
+  }
+  if (street === 'river' || street === 'showdown') {
+    return 5;
+  }
+  return 0;
+}
+
+function lastVoluntaryAction(hand: HandState) {
+  return hand.history
+    .slice()
+    .reverse()
+    .find((action) => !['small_blind', 'big_blind'].includes(action.action));
 }

@@ -259,7 +259,8 @@ h2 {
   gap: 10px;
 }
 
-.winner-badge {
+.winner-badge,
+.runout-badge {
   border: 1px solid rgba(214, 192, 120, 0.6);
   border-radius: 999px;
   background: rgba(17, 23, 26, 0.88);
@@ -269,6 +270,11 @@ h2 {
   font-weight: 900;
   padding: 7px 14px;
   text-align: center;
+}
+
+.runout-badge {
+  animation: pulseGlow 1.2s ease-in-out infinite;
+  color: var(--success);
 }
 
 .showdown-summary {
@@ -343,6 +349,14 @@ h2 {
   color: #141414;
   padding: 6px;
   box-shadow: 0 8px 14px rgba(0, 0, 0, 0.18);
+  transform-origin: center;
+  animation: dealCard 260ms ease-out both;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.playing-card:not(.card-back):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.22);
 }
 
 .playing-card span {
@@ -366,6 +380,27 @@ h2 {
     linear-gradient(-45deg, rgba(255, 255, 255, 0.08) 25%, transparent 25%),
     #263135;
   background-size: 14px 14px;
+}
+
+@keyframes dealCard {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) rotateX(62deg) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
+  }
+  50% {
+    box-shadow: 0 12px 30px rgba(127, 201, 155, 0.24);
+  }
 }
 
 .control-panel,
@@ -466,7 +501,7 @@ h2 {
 }
 
 .action-grid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .quick-size-grid button,
@@ -480,6 +515,13 @@ h2 {
   background: rgba(214, 192, 120, 0.2);
   color: var(--accent);
   font-weight: 800;
+}
+
+.action-grid .all-in-button {
+  border-color: rgba(209, 102, 102, 0.62);
+  background: rgba(209, 102, 102, 0.16);
+  color: #ffb1b1;
+  font-weight: 900;
 }
 
 .secondary-actions {
