@@ -9,6 +9,7 @@ import { usePokerHand } from '@/hooks/usePokerHand';
 export default function HomePage() {
   const {
     analysis,
+    actionReview,
     error,
     hand,
     isLoading,
@@ -50,14 +51,14 @@ export default function HomePage() {
             onAction={action}
             onAdvance={advance}
             onAnalyze={analyze}
+            onStartHand={startHand}
           />
         </div>
         <aside className="side-column">
-          <CoachPanel analysis={analysis} hand={hand} isLoading={isLoading} />
+          <CoachPanel analysis={analysis} actionReview={actionReview} hand={hand} isLoading={isLoading} />
           <HandHistory hand={hand} />
         </aside>
       </section>
     </main>
   );
 }
-

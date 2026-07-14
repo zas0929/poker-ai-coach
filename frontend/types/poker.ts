@@ -77,7 +77,18 @@ export interface HandAnalysis {
   ev_call: number;
   recommended_action: string;
   hand_strength: HandStrength;
+  coach_summary: string;
+  confidence: number;
+  risk_level: string;
+  key_factors: string[];
   notes: string[];
+}
+
+export interface ActionReview {
+  chosen_action: ActionType;
+  recommended_action: string;
+  verdict: 'optimal' | 'acceptable' | 'reconsider';
+  summary: string;
 }
 
 export interface PlayerActionRequest {

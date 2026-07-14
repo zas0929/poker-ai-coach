@@ -53,6 +53,10 @@ export const PokerApi = {
     });
   },
 
+  autoPlay() {
+    return request<HandState>('/api/hand/auto-play', { method: 'POST' });
+  },
+
   advance() {
     return request<HandState>('/api/hand/advance', { method: 'POST' });
   },

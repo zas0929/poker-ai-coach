@@ -1,7 +1,8 @@
-import type { HandAnalysis, HandState } from '@/types/poker';
+import type { ActionReview, HandAnalysis, HandState } from '@/types/poker';
 
 interface CoachPanelProps {
   analysis: HandAnalysis | null;
+  actionReview: ActionReview | null;
   hand: HandState | null;
   isLoading: boolean;
 }
@@ -14,7 +15,7 @@ function label(value?: string) {
   return value?.replaceAll('_', ' ') ?? '-';
 }
 
-export default function CoachPanel({ analysis, hand, isLoading }: CoachPanelProps) {
+export default function CoachPanel({ analysis, actionReview, hand, isLoading }: CoachPanelProps) {
   const result = hand?.result;
 
   return (
@@ -45,6 +46,35 @@ export default function CoachPanel({ analysis, hand, isLoading }: CoachPanelProp
           <strong>{label(analysis?.hand_strength.category)}</strong>
         </div>
       </div>
+
+      {analysis ? (
+        <div className="coach-summary">
+          <p>{analysis.coach_summary}</p>
+          <div className="summary-meta">
+            <span>Confidence {percent(analysis.confidence)}</span>
+            <span>Risk {label(analysis.risk_level)}</span>
+          </div>
+          <ul>
+            {analysis.key_factors.map((factor) => (
+              <li key={factor}>{factor}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {actionReview ? (
+        <div className={`action-review review-${actionReview.verdict}`}>
+          <div className="review-heading">
+            <span>Last decision</span>
+            <strong>{label(actionReview.verdict)}</strong>
+          </div>
+          <p>{actionReview.summary}</p>
+          <div className="summary-meta">
+            <span>Chosen {label(actionReview.chosen_action)}</span>
+            <span>Recommended {label(actionReview.recommended_action)}</span>
+          </div>
+        </div>
+      ) : null}
 
       {result ? (
         <div className="result-panel">

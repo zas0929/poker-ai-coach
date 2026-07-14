@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { PokerApi } from '@/services/pokerApi';
-import type { ActionType, HandAnalysis, HandState } from '@/types/poker';
+import type { ActionReview, ActionType, HandAnalysis, HandState } from '@/types/poker';
 
 export function usePokerHand() {
   const [hand, setHand] = useState<HandState | null>(null);
   const [analysis, setAnalysis] = useState<HandAnalysis | null>(null);
+  const [actionReview, setActionReview] = useState<ActionReview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,10 +36,15 @@ export function usePokerHand() {
       let settledHand = nextHand;
       setHand(settledHand);
 
-      if (settledHand.current_player_id === 'villain' && !settledHand.result) {
-        const aiResult = await run(() => PokerApi.aiAction('villain'));
-        if (aiResult) {
-          settledHand = aiResult;
+      const shouldAutoPlay =
+        !settledHand.result &&
+        settledHand.street !== 'showdown' &&
+        (settledHand.current_player_id === 'villain' || settledHand.current_player_id === null);
+
+      if (shouldAutoPlay) {
+        const autoResult = await run(() => PokerApi.autoPlay());
+        if (autoResult) {
+          settledHand = autoResult;
           setHand(settledHand);
         }
       }
@@ -55,12 +61,18 @@ export function usePokerHand() {
     const result = await run(() => PokerApi.startHand());
     if (result) {
       setAnalysis(null);
+      setActionReview(null);
       await applyState(result);
     }
   }, [applyState, run]);
 
   const action = useCallback(
     async (actionType: ActionType, amount?: number) => {
+      const preActionAnalysis =
+        hand?.current_player_id === 'hero'
+          ? await run(() => PokerApi.analyze('hero'))
+          : null;
+
       const result = await run(() =>
         PokerApi.action({
           player_id: hand?.current_player_id ?? 'hero',
@@ -70,6 +82,9 @@ export function usePokerHand() {
       );
 
       if (result) {
+        if (preActionAnalysis) {
+          setActionReview(reviewAction(actionType, preActionAnalysis));
+        }
         await applyState(result);
       }
     },
@@ -89,6 +104,7 @@ export function usePokerHand() {
 
   return {
     analysis,
+    actionReview,
     error,
     hand,
     isLoading,
@@ -97,5 +113,42 @@ export function usePokerHand() {
     analyze,
     clearError: () => setError(null),
     startHand,
+  };
+}
+
+function reviewAction(actionType: ActionType, analysis: HandAnalysis): ActionReview {
+  const recommended = analysis.recommended_action;
+
+  if (actionType === recommended) {
+    return {
+      chosen_action: actionType,
+      recommended_action: recommended,
+      verdict: 'optimal',
+      summary: `Good decision. ${analysis.coach_summary}`,
+    };
+  }
+
+  const acceptablePairs = new Set([
+    'call:raise',
+    'raise:call',
+    'check:bet',
+    'bet:check',
+  ]);
+  const isAcceptable = acceptablePairs.has(`${actionType}:${recommended}`);
+
+  if (isAcceptable && analysis.confidence < 0.7) {
+    return {
+      chosen_action: actionType,
+      recommended_action: recommended,
+      verdict: 'acceptable',
+      summary: `Reasonable alternative. The engine preferred ${recommended}, but confidence was not high enough to call your ${actionType} a clear mistake.`,
+    };
+  }
+
+  return {
+    chosen_action: actionType,
+    recommended_action: recommended,
+    verdict: 'reconsider',
+    summary: `Review this spot. The engine preferred ${recommended}, while you chose ${actionType}. ${analysis.coach_summary}`,
   };
 }

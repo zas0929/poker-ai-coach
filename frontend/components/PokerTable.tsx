@@ -5,7 +5,15 @@ interface PokerTableProps {
   hand: HandState | null;
 }
 
-function Seat({ player, active }: { player?: Player; active: boolean }) {
+function Seat({
+  player,
+  active,
+  cardsHidden = false,
+}: {
+  player?: Player;
+  active: boolean;
+  cardsHidden?: boolean;
+}) {
   return (
     <div className={`seat ${active ? 'active-seat' : ''}`}>
       <div>
@@ -18,9 +26,10 @@ function Seat({ player, active }: { player?: Player; active: boolean }) {
       </div>
       <div className="hole-cards">
         {(player?.cards ?? [undefined, undefined]).map((card, index) => (
-          <CardView key={`${player?.id ?? 'empty'}-${index}`} card={card} hidden={!player} />
+          <CardView key={`${player?.id ?? 'empty'}-${index}`} card={card} hidden={!player || cardsHidden} />
         ))}
       </div>
+      {cardsHidden ? <span className="hidden-card-label">Hidden until showdown</span> : null}
     </div>
   );
 }
@@ -28,10 +37,15 @@ function Seat({ player, active }: { player?: Player; active: boolean }) {
 export default function PokerTable({ hand }: PokerTableProps) {
   const hero = hand?.players.find((player) => player.id === 'hero');
   const villain = hand?.players.find((player) => player.id === 'villain');
+  const revealVillainCards = Boolean(hand?.result || hand?.street === 'showdown');
 
   return (
     <section className="table-surface">
-      <Seat player={villain} active={hand?.current_player_id === 'villain'} />
+      <Seat
+        player={villain}
+        active={hand?.current_player_id === 'villain'}
+        cardsHidden={Boolean(villain) && !revealVillainCards}
+      />
 
       <div className="board-zone">
         <div className="pot-display">
@@ -49,4 +63,3 @@ export default function PokerTable({ hand }: PokerTableProps) {
     </section>
   );
 }
-

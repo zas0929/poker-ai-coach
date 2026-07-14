@@ -173,6 +173,13 @@ h2 {
   min-width: 90px;
 }
 
+.hidden-card-label {
+  grid-column: 1 / -1;
+  justify-self: end;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 .hole-cards,
 .board-cards {
   display: flex;
@@ -251,6 +258,10 @@ h2 {
 .control-panel {
   display: grid;
   gap: 14px;
+}
+
+.next-hand-button {
+  width: 100%;
 }
 
 .turn-strip {
@@ -345,6 +356,88 @@ h2 {
   border-radius: 8px;
   background: rgba(214, 192, 120, 0.08);
   padding: 12px;
+}
+
+.coach-summary {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #11171a;
+  padding: 12px;
+}
+
+.action-review {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #11171a;
+  padding: 12px;
+}
+
+.action-review p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.review-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.review-heading span {
+  color: var(--muted);
+}
+
+.review-heading strong {
+  text-transform: capitalize;
+}
+
+.review-optimal {
+  border-color: rgba(127, 201, 155, 0.45);
+}
+
+.review-acceptable {
+  border-color: rgba(214, 192, 120, 0.45);
+}
+
+.review-reconsider {
+  border-color: rgba(209, 102, 102, 0.55);
+}
+
+.coach-summary p,
+.coach-summary ul {
+  margin: 0;
+}
+
+.coach-summary p {
+  line-height: 1.5;
+}
+
+.coach-summary ul {
+  display: grid;
+  gap: 6px;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.summary-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.summary-meta span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: var(--accent);
+  font-size: 12px;
 }
 
 .result-panel > div {

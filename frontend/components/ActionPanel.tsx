@@ -8,6 +8,7 @@ interface ActionPanelProps {
   onAction: (action: ActionType, amount?: number) => void;
   onAdvance: () => void;
   onAnalyze: () => void;
+  onStartHand: () => void;
 }
 
 export default function ActionPanel({
@@ -16,11 +17,13 @@ export default function ActionPanel({
   onAction,
   onAdvance,
   onAnalyze,
+  onStartHand,
 }: ActionPanelProps) {
   const [amount, setAmount] = useState(30);
   const currentPlayer = hand?.players.find((player) => player.id === hand.current_player_id);
-  const canAct = Boolean(currentPlayer?.id === 'hero' && hand?.street !== 'showdown');
-  const actionClosed = Boolean(hand && hand.current_player_id === null && hand.street !== 'showdown');
+  const handEnded = Boolean(hand?.result || hand?.street === 'showdown');
+  const canAct = Boolean(currentPlayer?.id === 'hero' && !handEnded);
+  const actionClosed = Boolean(hand && hand.current_player_id === null && !handEnded);
 
   const callAmount = useMemo(() => {
     if (!hand || !currentPlayer) {
@@ -37,9 +40,15 @@ export default function ActionPanel({
         <strong>
           {currentPlayer?.id === 'villain'
             ? 'AI thinking'
-            : currentPlayer?.name ?? (hand?.street === 'showdown' ? 'Showdown' : 'Action closed')}
+            : currentPlayer?.name ?? (handEnded ? 'Hand complete' : 'Action closed')}
         </strong>
       </div>
+
+      {handEnded ? (
+        <button className="primary-button next-hand-button" disabled={isLoading} onClick={onStartHand}>
+          Next hand
+        </button>
+      ) : null}
 
       <div className="amount-control">
         <label htmlFor="bet-amount">Bet target</label>
