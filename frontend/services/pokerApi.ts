@@ -1,12 +1,17 @@
+import { ensureProfile } from './trainingApi';
+
 import type { HandAnalysis, HandState, PlayerActionRequest } from '@/types/poker';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8000';
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
+  const profile = await ensureProfile();
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${profile.token}`,
       ...(options?.headers ?? {}),
     },
   });

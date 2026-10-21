@@ -60,6 +60,7 @@ def read_progress(response: Response, authorization: Optional[str] = Header(defa
 
 
 @router.post('/decision')
+@live.serialized
 def save_action(request: SavedAction, response: Response, authorization: Optional[str] = Header(default=None)):
     private(response)
     owner = profile(authorization)

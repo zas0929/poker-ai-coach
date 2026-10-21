@@ -23,7 +23,7 @@ async function parse<T>(response: Response): Promise<T> {
   }
   return response.json();
 }
-async function ensureProfile(): Promise<TrainingProfile> {
+export async function ensureProfile(): Promise<TrainingProfile> {
   if (!profilePromise) {
     profilePromise = (async () => {
       try {

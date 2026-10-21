@@ -5,7 +5,7 @@ Create a table for 2-6 friends, share an invitation, confirm readiness and deal.
 Cards are filtered on the server; seats restore after reconnect. This is a local
 preview with virtual chips and SQLite-backed rooms. Hands and seats survive
 server restarts. The host can configure stacks, blinds and turn time before the
-first deal. Internet hosting is a later stage.
+first deal. Hosting preparation is documented in [docs/HOSTING.md](docs/HOSTING.md).
 See [docs/ROOMS.md](docs/ROOMS.md) for setup, protocol and current limitations.
 
 Completed hands appear in **Your hand history** inside the room. Open a hand to
@@ -102,10 +102,12 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-Start a hand:
+Start a hand (the frontend creates a profile automatically; direct API clients first
+POST `/api/training/profiles` and use the returned token):
 
 ```bash
-curl -X POST http://localhost:8000/api/hand/start
+curl -X POST http://localhost:8000/api/hand/start \
+  -H 'Authorization: Bearer <training-profile-token>'
 ```
 
 Analyze the hero decision:

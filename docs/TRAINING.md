@@ -34,7 +34,7 @@ commits the private pre-action snapshot, choice, review and new questions in one
 SQLite transaction. Only after a successful commit does it replace live state.
 A failed write cannot consume chips. Duplicate command IDs do not repeat moves;
 stale table versions are rejected. The client reloads authoritative state after
-an uncertain response. Legacy `/api/hand/action` remains an unrecorded local API.
+an uncertain response. Legacy `/api/hand/action` remains unrecorded but now requires the same profile token.
 
 Saved decisions include the analysis assumptions and whether the choice matched
 the coach heuristic. A different choice is not automatically an error; a match
@@ -47,8 +47,11 @@ Training tables use the same private SQLite file as rooms, on a separate connect
 protected by a thread lock. Profile token hashes, decisions, questions and attempts
 survive restarts. Question answers and hidden AI cards are not included in exercise
 responses. A profile can read and answer only its own questions and journal.
-The legacy live AI training table itself is still one local in-memory session;
-this change isolates saved profiles, not live training tables for multiple users.
+Live AI training tables are isolated by the authenticated training profile.
+Different profiles cannot read or mutate each other's live hand. Browser tabs with
+the same profile intentionally share a table. Live hands remain in memory and
+reset on server restart; saved journals and progress persist. Idle tables may
+be reclaimed after 24 hours, with a process limit of 1000 live profiles.
 Friend-room hands never generate training advice or these decision records.
 
 The browser needs its saved token to reopen its progress. Clearing browser storage

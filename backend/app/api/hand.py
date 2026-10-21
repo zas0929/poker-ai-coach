@@ -3,6 +3,8 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from functools import wraps
 from threading import RLock
+from contextvars import ContextVar
+from time import monotonic
 from typing import Optional
 
 from app.models.poker import HandAnalysis, HandState, PlayerActionRequest, Street
@@ -17,13 +19,35 @@ decision_engine = DecisionEngine()
 ai_opponent = AIOpponentService(profile="balanced")
 current_state: HandState | None = None
 state_lock = RLock()
+# HTTP requests bind an authenticated profile; direct engine calls retain the local test session.
+training_owner: ContextVar[Optional[str]] = ContextVar('training_owner', default=None)
+profile_states: dict[str, tuple[Optional[HandState], float]] = {}
+MAX_TRAINING_SESSIONS = 1000
+TRAINING_IDLE_SECONDS = 24 * 60 * 60
 
 
 def serialized(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
+        global current_state
         with state_lock:
-            return function(*args, **kwargs)
+            owner = training_owner.get()
+            if owner is None:
+                return function(*args, **kwargs)
+            now = monotonic()
+            if owner not in profile_states:
+                for key, (_, touched) in list(profile_states.items()):
+                    if now - touched > TRAINING_IDLE_SECONDS:
+                        del profile_states[key]
+                if len(profile_states) >= MAX_TRAINING_SESSIONS:
+                    raise HTTPException(status_code=503, detail='Training tables are busy. Please retry later.')
+            previous = current_state
+            current_state = profile_states.get(owner, (None, now))[0]
+            try:
+                return function(*args, **kwargs)
+            finally:
+                profile_states[owner] = (current_state, monotonic())
+                current_state = previous
     return wrapper
 
 
