@@ -64,6 +64,15 @@ export interface HandResult {
   player_results: PlayerHandResult[];
 }
 
+export interface BettingOptions {
+  player_id?: string | null;
+  legal_actions: ActionType[];
+  call_amount: number;
+  min_bet?: number | null;
+  min_raise_to?: number | null;
+  max_raise_to?: number | null;
+}
+
 export interface HandState {
   hand_id: string;
   street: Street;
@@ -77,6 +86,20 @@ export interface HandState {
   history: HandAction[];
   notes: string[];
   result?: HandResult | null;
+  betting?: BettingOptions | null;
+  last_full_raise?: number;
+  acted_at_bet?: Record<string, number>;
+}
+
+export interface OpponentRangeSummary {
+  player_id: string;
+  position: string;
+  model: 'uniform' | 'action_weighted';
+  legal_combos: number;
+  effective_combos: number;
+  top_hands: string[];
+  evidence: string[];
+  description: string;
 }
 
 export interface HandAnalysis {
@@ -87,6 +110,10 @@ export interface HandAnalysis {
   call_amount: number;
   required_equity: number;
   equity: number;
+  opponent_range?: OpponentRangeSummary | null;
+  equity_method?: 'monte_carlo' | 'exact_river';
+  equity_samples?: number;
+  equity_sampling_error?: number;
   ev_call: number;
   recommended_action: string;
   hand_strength: HandStrength;

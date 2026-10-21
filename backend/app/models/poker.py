@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, StrictInt
 
 
 class Rank(str, Enum):
@@ -74,7 +74,7 @@ class HandAction(BaseModel):
 class PlayerActionRequest(BaseModel):
     player_id: str = "hero"
     action: ActionType
-    amount: Optional[int] = None
+    amount: Optional[StrictInt] = None
 
 
 class HandStrength(BaseModel):
@@ -82,6 +82,19 @@ class HandStrength(BaseModel):
     rank: int
     kickers: list[int]
     cards: list[Card]
+
+
+class PreflopProfile(BaseModel):
+    notation: str
+    category: str
+    score: int
+    tags: list[str] = Field(default_factory=list)
+
+
+class DrawProfile(BaseModel):
+    outs: int = 0
+    draws: list[str] = Field(default_factory=list)
+    overcards: int = 0
 
 
 class PlayerHandResult(BaseModel):
@@ -98,6 +111,15 @@ class HandResult(BaseModel):
     player_results: list[PlayerHandResult] = Field(default_factory=list)
 
 
+class BettingOptions(BaseModel):
+    player_id: Optional[str] = None
+    legal_actions: list[ActionType] = Field(default_factory=list)
+    call_amount: int = 0
+    min_bet: Optional[int] = None
+    min_raise_to: Optional[int] = None
+    max_raise_to: Optional[int] = None
+
+
 class HandState(BaseModel):
     hand_id: str
     street: Street
@@ -111,12 +133,26 @@ class HandState(BaseModel):
     history: list[HandAction] = Field(default_factory=list)
     notes: list[str] = Field(default_factory=list)
     result: Optional[HandResult] = None
+    last_full_raise: int = 0
+    acted_at_bet: dict[str, int] = Field(default_factory=dict)
+    betting: Optional[BettingOptions] = None
 
 
 class PlayerAnalysis(BaseModel):
     player_id: str
     hand_strength: HandStrength
     equity: float
+
+
+class OpponentRangeSummary(BaseModel):
+    player_id: str
+    position: str
+    model: str
+    legal_combos: int
+    effective_combos: float
+    top_hands: list[str] = Field(default_factory=list)
+    evidence: list[str] = Field(default_factory=list)
+    description: str
 
 
 class HandAnalysis(BaseModel):
@@ -127,7 +163,17 @@ class HandAnalysis(BaseModel):
     call_amount: int
     required_equity: float
     equity: float
+    opponent_range: Optional[OpponentRangeSummary] = None
+    equity_method: str = "monte_carlo"
+    equity_samples: int = 0
+    equity_sampling_error: float = 0.0
     ev_call: float
     recommended_action: str
     hand_strength: HandStrength
+    preflop_profile: PreflopProfile
+    draw_profile: DrawProfile
+    coach_summary: str
+    confidence: float
+    risk_level: str
+    key_factors: list[str] = Field(default_factory=list)
     notes: list[str] = Field(default_factory=list)

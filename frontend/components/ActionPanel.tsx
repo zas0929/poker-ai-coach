@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import type { ActionType, HandAnalysis, HandState } from '@/types/poker';
 
@@ -21,10 +21,15 @@ export default function ActionPanel({
   onAnalyze,
   onStartHand,
 }: ActionPanelProps) {
-  const [amount, setAmount] = useState(30);
+  const [amountEntry, setAmountEntry] = useState<{ context: string; value: number } | null>(null);
   const currentPlayer = hand?.players.find((player) => player.id === hand.current_player_id);
   const handEnded = Boolean(hand?.result || hand?.street === 'showdown');
   const canAct = Boolean(currentPlayer?.id === 'hero' && !handEnded);
+  const betting = hand?.betting;
+  const allows = (action: ActionType) => canAct && Boolean(betting?.legal_actions.includes(action));
+  const canSize = allows('bet') || allows('raise');
+  const minimumAmount = betting?.min_raise_to ?? betting?.min_bet ?? 1;
+  const maximumAmount = betting?.max_raise_to ?? 0;
   const actionClosed = Boolean(hand && hand.current_player_id === null && !handEnded);
   const recommendedAction = analysis?.recommended_action as ActionType | undefined;
   const highestBet = useMemo(() => {
@@ -34,29 +39,21 @@ export default function ActionPanel({
     return Math.max(...hand.players.map((player) => player.current_bet));
   }, [hand]);
 
-  const callAmount = useMemo(() => {
-    if (!hand || !currentPlayer) {
-      return 0;
-    }
-    return Math.max(highestBet - currentPlayer.current_bet, 0);
-  }, [currentPlayer, highestBet, hand]);
+  const callAmount = betting?.call_amount ?? 0;
   const heroStack = currentPlayer?.id === 'hero' ? currentPlayer.stack : 0;
 
   const suggestedAmount = useMemo(() => {
-    if (!hand) {
-      return 30;
-    }
+    if (!hand || maximumAmount === 0) return minimumAmount;
+    const preferred = highestBet > 0
+      ? Math.max(highestBet * 2, minimumAmount)
+      : Math.max(minimumAmount, Math.round(hand.pot / 2));
+    return Math.min(maximumAmount, preferred);
+  }, [hand, highestBet, minimumAmount, maximumAmount]);
 
-    if (highestBet > 0) {
-      return Math.max(highestBet * 2, highestBet + hand.big_blind);
-    }
-
-    return Math.max(hand.big_blind, Math.round(hand.pot / 2));
-  }, [hand, highestBet]);
-
-  useEffect(() => {
-    setAmount(suggestedAmount);
-  }, [suggestedAmount]);
+  const amountContext = `${hand?.hand_id}:${hand?.street}:${hand?.history.length}:${hand?.current_player_id}`;
+  const amount = amountEntry?.context === amountContext ? amountEntry.value : suggestedAmount;
+  const setAmount = (value: number) => setAmountEntry({ context: amountContext, value });
+  const validAmount = Number.isInteger(amount) && amount >= minimumAmount && amount <= maximumAmount;
 
   const quickAmounts = useMemo(() => {
     if (!hand) {
@@ -80,108 +77,96 @@ export default function ActionPanel({
 
   const buttonClass = (actionType: ActionType) =>
     recommendedAction === actionType && canAct ? 'recommended-action' : undefined;
+  const sizedAction: ActionType = highestBet > 0 ? 'raise' : 'bet';
+  const clampAmount = (value: number) => Math.min(maximumAmount, Math.max(minimumAmount, value));
+  const actionContext = callAmount > 0 ? `Facing ${callAmount}` : highestBet > 0 ? 'Matched pot' : 'Open action';
 
   const goAllIn = () => {
     if (!currentPlayer || currentPlayer.id !== 'hero') {
       return;
     }
 
-    if (callAmount >= currentPlayer.stack) {
+    if (allows('raise')) {
+      onAction('raise', maximumAmount);
+    } else if (allows('bet')) {
+      onAction('bet', maximumAmount);
+    } else if (allows('call')) {
       onAction('call');
-      return;
     }
-
-    if (highestBet > 0) {
-      onAction('raise', currentPlayer.current_bet + currentPlayer.stack);
-      return;
-    }
-
-    onAction('bet', currentPlayer.stack);
   };
 
   return (
     <section className="control-panel">
       <div className="turn-strip">
-        <span>Turn</span>
-        <strong>
-          {currentPlayer?.id === 'villain'
-            ? 'AI thinking'
-            : currentPlayer?.name ?? (handEnded ? 'Hand complete' : 'Action closed')}
-        </strong>
-      </div>
-
-      {handEnded ? (
-        <button className="primary-button next-hand-button" disabled={isLoading} onClick={onStartHand}>
-          Next hand
-        </button>
-      ) : null}
-
-      {analysis ? (
-        <div className="decision-strip">
-          <span>
-            Best <strong>{analysis.recommended_action}</strong>
-          </span>
-          <span>
-            Equity <strong>{formatPercent(analysis.equity)}</strong>
-          </span>
-          <span>
-            Req <strong>{formatPercent(analysis.required_equity)}</strong>
-          </span>
-          <span>
-            EV <strong>{analysis.ev_call}</strong>
-          </span>
+        <div>
+          <span>Turn</span>
+          <strong>
+            {currentPlayer?.id === 'villain'
+              ? 'AI thinking'
+              : currentPlayer?.name ?? (handEnded ? 'Hand complete' : 'Action closed')}
+          </strong>
         </div>
-      ) : null}
-
-      <div className="amount-control">
-        <label htmlFor="bet-amount">{highestBet > 0 ? 'Raise to' : 'Bet size'}</label>
-        <input
-          id="bet-amount"
-          min={1}
-          type="number"
-          value={amount}
-          onChange={(event) => setAmount(Number(event.target.value))}
-        />
+        <em>{handEnded ? 'Result ready' : `${actionContext} · Stack ${heroStack || '-'}`}</em>
       </div>
 
-      <div className="quick-size-grid">
-        {quickAmounts.map((preset) => (
-          <button
-            key={preset.label}
-            disabled={!canAct || isLoading}
-            type="button"
-            onClick={() => {
-              setAmount(preset.value);
-              onAction(highestBet > 0 ? 'raise' : 'bet', preset.value);
-            }}
-          >
-            {preset.label}
-          </button>
-        ))}
+      <div className="sizing-panel">
+        <div className="amount-control">
+          <label htmlFor="bet-amount">{highestBet > 0 ? 'Raise to' : 'Bet size'}</label>
+          <input
+            id="bet-amount"
+            min={minimumAmount}
+            max={maximumAmount}
+            step={1}
+            disabled={!canSize || isLoading}
+            type="number"
+            value={amount}
+            onChange={(event) => setAmount(Number(event.target.value))}
+          />
+        </div>
+
+        <div className="quick-size-grid">
+          {quickAmounts.map((preset) => (
+            <button
+              key={preset.label}
+              disabled={!canSize || isLoading}
+              type="button"
+              onClick={() => {
+                const value = clampAmount(preset.value);
+                setAmount(value);
+                onAction(sizedAction, value);
+              }}
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="action-grid">
-        <button className={buttonClass('fold')} disabled={!canAct || isLoading} onClick={() => onAction('fold')}>
+        <button className={buttonClass('fold')} disabled={!allows('fold') || isLoading} onClick={() => onAction('fold')}>
           Fold
         </button>
-        <button className={buttonClass('check')} disabled={!canAct || isLoading || callAmount > 0} onClick={() => onAction('check')}>
+        <button className={buttonClass('check')} disabled={!allows('check') || isLoading} onClick={() => onAction('check')}>
           Check
         </button>
-        <button className={buttonClass('call')} disabled={!canAct || isLoading || callAmount === 0} onClick={() => onAction('call')}>
+        <button className={buttonClass('call')} disabled={!allows('call') || isLoading} onClick={() => onAction('call')}>
           Call {callAmount || ''}
         </button>
-        <button className={buttonClass('bet')} disabled={!canAct || isLoading || callAmount > 0} onClick={() => onAction('bet', amount)}>
+        <button className={buttonClass('bet')} disabled={!allows('bet') || isLoading || !validAmount} onClick={() => onAction('bet', amount)}>
           Bet
         </button>
-        <button className={buttonClass('raise')} disabled={!canAct || isLoading} onClick={() => onAction('raise', amount)}>
+        <button className={buttonClass('raise')} disabled={!allows('raise') || isLoading || !validAmount} onClick={() => onAction('raise', amount)}>
           Raise
         </button>
-        <button className="all-in-button" disabled={!canAct || isLoading || heroStack <= 0} onClick={goAllIn}>
+        <button className="all-in-button" disabled={isLoading || (!canSize && !(allows('call') && callAmount === heroStack))} onClick={goAllIn}>
           All in
         </button>
       </div>
 
       <div className="secondary-actions">
+        <button className="primary-button next-hand-button" disabled={!handEnded || isLoading} onClick={onStartHand}>
+          Next hand
+        </button>
         <button disabled={!actionClosed || isLoading} onClick={onAdvance}>
           Advance
         </button>
@@ -191,8 +176,4 @@ export default function ActionPanel({
       </div>
     </section>
   );
-}
-
-function formatPercent(value: number) {
-  return `${Math.round(value * 1000) / 10}%`;
 }

@@ -130,7 +130,7 @@ function reviewAction(actionType: ActionType, analysis: HandAnalysis): ActionRev
       chosen_action: actionType,
       recommended_action: recommended,
       verdict: 'optimal',
-      summary: `Good decision. ${analysis.coach_summary}`,
+      summary: `Matches the coach heuristic. ${analysis.coach_summary}`,
     };
   }
 

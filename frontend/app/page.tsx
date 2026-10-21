@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import ActionPanel from '@/components/ActionPanel';
 import CoachPanel from '@/components/CoachPanel';
 import HandHistory from '@/components/HandHistory';
@@ -7,6 +9,7 @@ import PokerTable from '@/components/PokerTable';
 import { usePokerHand } from '@/hooks/usePokerHand';
 
 export default function HomePage() {
+  const [seatCount, setSeatCount] = useState(2);
   const {
     analysis,
     actionReview,
@@ -29,6 +32,16 @@ export default function HomePage() {
           <h1>Poker AI Coach</h1>
         </div>
         <div className="status-row">
+          <label className="seat-count-control">
+            <span>Seats</span>
+            <select value={seatCount} onChange={(event) => setSeatCount(Number(event.target.value))}>
+              {[2, 3, 4, 5, 6].map((count) => (
+                <option key={count} value={count}>
+                  {count}
+                </option>
+              ))}
+            </select>
+          </label>
           <span className="status-pill">{hand?.street ?? 'not started'}</span>
           <button className="primary-button" onClick={startHand} disabled={isLoading}>
             New hand
@@ -47,7 +60,7 @@ export default function HomePage() {
 
       <section className="game-layout">
         <div className="table-column">
-          <PokerTable hand={hand} />
+          <PokerTable hand={hand} seatCount={seatCount} />
           <ActionPanel
             analysis={analysis}
             hand={hand}

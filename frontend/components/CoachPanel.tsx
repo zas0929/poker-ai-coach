@@ -13,6 +13,7 @@ function percent(value?: number) {
 }
 
 function label(value?: string) {
+  if (value === 'optimal') return 'matches coach';
   return value?.replaceAll('_', ' ') ?? '-';
 }
 
@@ -53,7 +54,7 @@ export default function CoachPanel({
           <strong>{percent(analysis?.required_equity)}</strong>
         </div>
         <div>
-          <span>EV call</span>
+          <span>Call EV · check-down</span>
           <strong>{analysis?.ev_call ?? 0}</strong>
         </div>
         <div>
@@ -70,7 +71,7 @@ export default function CoachPanel({
         <div className="coach-summary">
           <p>{analysis.coach_summary}</p>
           <div className="summary-meta">
-            <span>Confidence {percent(analysis.confidence)}</span>
+            <span>Heuristic score {percent(analysis.confidence)}</span>
             <span>Risk {label(analysis.risk_level)}</span>
             <span>{label(analysis.preflop_profile.category)}</span>
           </div>
@@ -95,6 +96,36 @@ export default function CoachPanel({
         </div>
       ) : null}
 
+      {analysis?.opponent_range ? (
+        <div className="range-panel">
+          <div className="review-heading">
+            <span>Opponent range</span>
+            <strong>{label(analysis.opponent_range.position)}</strong>
+          </div>
+          <p>{analysis.opponent_range.description}</p>
+          <div className="summary-meta">
+            <span>{analysis.opponent_range.legal_combos} legal combos</span>
+            <span>{analysis.opponent_range.effective_combos} effective combos</span>
+          </div>
+          <p className="range-detail">Effective combos measure how concentrated the weights are; they are not a hard cutoff.</p>
+          {analysis.opponent_range.top_hands.length ? (
+            <div className="tag-row" aria-label="Hand classes with the most range weight">
+              {analysis.opponent_range.top_hands.map((handClass) => <span key={handClass}>{handClass}</span>)}
+            </div>
+          ) : null}
+          {analysis.opponent_range.top_hands.length ? <p className="range-detail">Largest total weights by hand class, including available suit combinations.</p> : null}
+          {analysis.opponent_range.evidence.length ? (
+            <p>Observed: {analysis.opponent_range.evidence.join(' → ')}</p>
+          ) : null}
+          <p className="range-detail">
+            {analysis.equity_method === 'exact_river'
+              ? `Exact river enumeration · ${analysis.equity_samples} combinations`
+              : `${analysis.equity_samples} simulations · 95% sampling bound ±${percent(analysis.equity_sampling_error)}`}
+            . Range-model uncertainty is additional.
+          </p>
+        </div>
+      ) : null}
+
       {actionReview ? (
         <div className={`action-review review-${actionReview.verdict}`}>
           <div className="review-heading">
@@ -116,7 +147,7 @@ export default function CoachPanel({
             <strong>{decisionStats.total}</strong>
           </div>
           <div className="decision-stats">
-            <span>Optimal {decisionStats.optimal}</span>
+            <span>Matches coach {decisionStats.optimal}</span>
             <span>Acceptable {decisionStats.acceptable}</span>
             <span>Review {decisionStats.reconsider}</span>
           </div>
