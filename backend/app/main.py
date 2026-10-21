@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from starlette.concurrency import run_in_threadpool
 from app.services.room_repository import RoomStorageError
+from app.services.database import DatabaseFailure
 
 from app.api.training import router as training_router, store as training_store, profile
 from app.api.hand import router as hand_router, training_owner
@@ -37,6 +38,8 @@ async def private_training_table(request, call_next):
         return await call_next(request)
     try:
         owner = await run_in_threadpool(profile, request.headers.get('authorization'))
+    except DatabaseFailure:
+        return JSONResponse(status_code=503, content={'detail': 'Saved storage is temporarily unavailable. Please retry.'}, headers={'Cache-Control': 'no-store'})
     except HTTPException as exc:
         return JSONResponse(status_code=exc.status_code, content={'detail': exc.detail}, headers={'Cache-Control': 'no-store'})
     binding = training_owner.set(owner)
@@ -73,3 +76,8 @@ def root():
 @app.exception_handler(RoomStorageError)
 async def storage_error(request, exc):
     return JSONResponse(status_code=503, content={'detail': str(exc)})
+
+
+@app.exception_handler(DatabaseFailure)
+async def database_error(request, exc):
+    return JSONResponse(status_code=503, content={'detail': 'Saved storage is temporarily unavailable. Please retry.'})

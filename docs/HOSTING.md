@@ -14,14 +14,24 @@ Set `POKER_ROOM_ORIGINS` to the exact HTTPS frontend origin, without a trailing 
 The same list configures HTTP CORS and WebSocket Origin validation. Local defaults
 remain `http://localhost:3000,http://127.0.0.1:3000`. Never use a wildcard.
 
-### Storage decision required before creating the service
+### Durable storage on the free plan
 
-- **Render with persistent disk:** keep SQLite. Set `POKER_DB_PATH` to
-  `/var/data/poker.sqlite3` and mount the disk at `/var/data`.
-- **Render Free:** its local filesystem is ephemeral. The current SQLite backend
-  must be replaced by durable PostgreSQL storage (for example Supabase) before
-  a persistent release can use this plan. Pointing `POKER_DB_PATH` at another
-  local folder does not provide persistence.
+Set the backend-only secret `POKER_DATABASE_URL` to a PostgreSQL connection URI.
+For Supabase use the IPv4 **Session pooler** connection (port 5432), with the
+project's database password percent-encoded in the URI. Never expose this value
+through a `NEXT_PUBLIC_` variable or commit it. TLS is required by the driver;
+prepared statements are disabled for pooler compatibility.
+
+The backend creates its tables in the `poker_private` schema, revokes public
+schema access and enables RLS on every table. It does not use Supabase's public
+Data API or change the `public` schema. A dedicated database is preferred; sharing
+an existing project requires its owner's approval and shares resource quotas.
+Only run one backend instance against a given Poker schema.
+
+On Render, missing `POKER_DATABASE_URL` prevents startup rather than silently
+putting private records in ephemeral SQLite. Local development still uses SQLite
+by default. SQLite with `POKER_DB_PATH` on a persistent disk is also supported
+outside this free deployment.
 
 Do not upload the developer's local `.data/` folder: it contains private cards,
 seat tokens and profile records. A new hosted installation starts with its own
@@ -70,3 +80,10 @@ npm run build
 ```
 
 No paid service or database should be provisioned until its plan is selected.
+
+PostgreSQL integration checks use a separate disposable database, never the
+production URL (the suite creates test profiles and rooms):
+
+```sh
+POKER_TEST_DATABASE_URL='<disposable PostgreSQL URI>' .venv/bin/python -m unittest discover -s tests -p test_postgres.py
+```

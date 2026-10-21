@@ -13,7 +13,12 @@ from app.services.room_service import RoomCommand, RoomStore
 from app.services.room_repository import RoomStorageError
 
 router = APIRouter()
-store = RoomStore(os.environ.get('POKER_DB_PATH', str(Path(__file__).resolve().parents[2] / '.data' / 'poker.sqlite3')))
+database_url = os.environ.get('POKER_DATABASE_URL')
+if os.environ.get('RENDER') == 'true' and not database_url:
+    raise RuntimeError('POKER_DATABASE_URL is required on Render; local SQLite storage is ephemeral.')
+if database_url and not database_url.startswith(('postgres://', 'postgresql://')):
+    raise RuntimeError('POKER_DATABASE_URL must be a PostgreSQL connection URL.')
+store = RoomStore(database_url or os.environ.get('POKER_DB_PATH', str(Path(__file__).resolve().parents[2] / '.data' / 'poker.sqlite3')))
 
 
 class JoinRequest(BaseModel):

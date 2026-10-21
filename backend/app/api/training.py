@@ -10,7 +10,7 @@ from app.models.poker import ActionType
 from app.services.training_store import TrainingStore
 
 router = APIRouter()
-store = TrainingStore(room_store.repository.path)
+store = TrainingStore(room_store.repository.source)
 
 
 class SavedAction(BaseModel):

@@ -4,15 +4,14 @@ import hashlib
 import json
 import math
 import secrets
-import sqlite3
 import uuid
-from pathlib import Path
 from threading import RLock
 
 from app.models.poker import ActionType, Card, HandState, Player, Street
 from app.services.betting_rules import betting_options, highest_bet
 from app.services.hand_projection import project_hand
 from app.services.room_repository import RoomStorageError
+from app.services.database import connect, is_postgres, DATABASE_ERRORS
 
 
 def action_review(action, analysis):
@@ -65,13 +64,17 @@ def starter_state(short=False):
 
 class TrainingStore:
     def __init__(self, database_path):
-        self.path = Path(database_path)
+        self.source = str(database_path)
+        self.postgres = is_postgres(database_path)
         self.connection = None
         self.lock = RLock()
 
     def open(self):
         # RoomRepository creates this private database before this store opens it.
-        self.connection = sqlite3.connect(str(self.path), timeout=5, check_same_thread=False)
+        self.connection = connect(self.source, threaded=True)
+        if self.postgres:
+            # RoomRepository initializes the private hosted schema first.
+            return
         self.connection.execute('PRAGMA synchronous=FULL')
         self.connection.executescript('''
             CREATE TABLE IF NOT EXISTS training_profiles (
@@ -115,7 +118,7 @@ class TrainingStore:
                         for kind in ['call_price', 'legal_actions']:
                             self._add_question(profile_id, 'starter-short' if short else 'starter-standard',
                                                starter_state(short), kind, 'Practice scenario')
-            except sqlite3.Error as exc:
+            except DATABASE_ERRORS as exc:
                 raise RoomStorageError('Could not create a saved training profile.') from exc
         return {'profile_id': profile_id, 'token': token}
 
@@ -134,7 +137,7 @@ class TrainingStore:
         public['source'] = source_label
         question_id = str(uuid.uuid4())
         public['question_id'] = question_id
-        self.connection.execute('INSERT OR IGNORE INTO training_questions VALUES(?,?,?,?,?,?)',
+        self.connection.execute('INSERT INTO training_questions(question_id,profile_id,source_id,kind,payload,answer_json) VALUES(?,?,?,?,?,?) ON CONFLICT DO NOTHING',
                                 (question_id, profile_id, source_id, kind, json.dumps(public), json.dumps(answer)))
 
     def cached_decision(self, profile_id, command_id, fingerprint):
@@ -152,20 +155,21 @@ class TrainingStore:
         with self.lock:
             try:
                 with self.connection:
-                    cursor = self.connection.execute('INSERT INTO training_decisions(profile_id,command_id,request_json,payload) VALUES(?,?,?,?)',
+                    sql = 'INSERT INTO training_decisions(profile_id,command_id,request_json,payload) VALUES(?,?,?,?)'
+                    cursor = self.connection.execute(sql + (' RETURNING id' if self.postgres else ''),
                                                      (profile_id, command_id, fingerprint, json.dumps(payload)))
-                    decision_id = cursor.lastrowid
+                    decision_id = cursor.fetchone()[0] if self.postgres else cursor.lastrowid
                     self._add_question(profile_id, str(decision_id), state, 'legal_actions', 'Your saved decision')
                     if len(state.players) == 2 and state.betting.call_amount > 0:
                         self._add_question(profile_id, str(decision_id), state, 'call_price', 'Your saved decision')
-            except sqlite3.Error as exc:
+            except DATABASE_ERRORS as exc:
                 raise RoomStorageError('Decision was not saved. The action was not applied; please retry.') from exc
         return {'decision_id': decision_id, **payload}
 
     def decisions(self, profile_id, before=None, limit=20):
         with self.lock:
             rows = self.connection.execute('''SELECT id,created_at,payload FROM training_decisions
-                WHERE profile_id=? AND (? IS NULL OR id < ?) ORDER BY id DESC LIMIT ?''',
+                WHERE profile_id=? AND (CAST(? AS BIGINT) IS NULL OR id < ?) ORDER BY id DESC LIMIT ?''',
                 (profile_id, before, before, limit + 1)).fetchall()
             items = []
             for decision_id, created_at, raw in rows[:limit]:
@@ -186,12 +190,13 @@ class TrainingStore:
 
     def next_question(self, profile_id, kind, exclude=None):
         with self.lock:
-            row = self.connection.execute('''SELECT q.payload FROM training_questions q
+            sequence = 'q.sequence' if self.postgres else 'q.rowid'
+            row = self.connection.execute(f'''SELECT q.payload FROM training_questions q
                 LEFT JOIN training_attempts a ON a.id=(SELECT MAX(t.id) FROM training_attempts t
                     WHERE t.profile_id=q.profile_id AND t.question_id=q.question_id)
                 WHERE q.profile_id=? AND q.kind=? AND q.question_id != COALESCE(?, '')
                 ORDER BY CASE WHEN a.correct=0 THEN 0 WHEN a.id IS NULL THEN 1 ELSE 2 END,
-                         COALESCE(a.id,0), q.rowid LIMIT 1''', (profile_id, kind, exclude)).fetchone()
+                         COALESCE(a.id,0), {sequence} LIMIT 1''', (profile_id, kind, exclude)).fetchone()
         if row is None and exclude is not None:
             return self.next_question(profile_id, kind)
         if row is None:
@@ -235,7 +240,7 @@ class TrainingStore:
                 with self.connection:
                     self.connection.execute('INSERT INTO training_attempts(profile_id,attempt_id,question_id,request_json,payload,correct) VALUES(?,?,?,?,?,?)',
                                             (profile_id, request.attempt_id, request.question_id, fingerprint, json.dumps(result), int(correct)))
-            except sqlite3.Error as exc:
+            except DATABASE_ERRORS as exc:
                 raise RoomStorageError('Answer was not saved. Please retry.') from exc
             return result
 
