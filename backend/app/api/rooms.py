@@ -86,7 +86,7 @@ async def room_socket(websocket: WebSocket, code: str):
                 except (ValueError, ValidationError) as exc:
                     message = 'Invalid command format.' if isinstance(exc, ValidationError) else str(exc)
                     await websocket.send_json({'type': 'error', 'message': message})
-                    await websocket.send_json(room.snapshot(member))
+                    await room.broadcast()
     except (ValueError, asyncio.TimeoutError):
         await websocket.close(code=1008)
     except (WebSocketDisconnect, RuntimeError):

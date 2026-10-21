@@ -16,7 +16,9 @@ The smoke test defaults to http://127.0.0.1:8000; override with `POKER_TEST_API_
 For two test players in one browser, open `/friends` in a second tab and manually
 enter the room code. Each tab keeps its seat in sessionStorage; localStorage is
 the fallback when reopening an invitation. The invitation contains only the room
-code. "Other room" disconnects while keeping the seat available for reconnect.
+code. "Close table" disconnects while keeping the seat available for reconnect.
+"Leave room" releases membership and invalidates its token. Other participants
+continue; the host role transfers when the host leaves.
 
 ## Server protocol
 
@@ -29,7 +31,8 @@ code. "Other room" disconnects while keeping the seat available for reconnect.
   hand projection. Other players' hole cards are empty arrays. At showdown only
   non-folded hands are revealed. Hidden cards are also removed from hand results.
 - Commands include unique `command_id`, current `revision`, and `kind`: `ready`,
-  `start`, or `action`. Ready adds `ready`; action adds `hand_id`, `action` and an
+  `start`, `action`, `sit_out`, or `leave`. Sit-out adds a boolean `sit_out`.
+  Ready adds `ready`; action adds `hand_id`, `action` and an
   optional integer `amount`. The server derives player identity from the token.
 - Accepted commands get an `ack`. Repeating the same ID and payload cannot repeat
   an action. The latest 128 IDs per member are retained; older commands fail the
@@ -45,10 +48,23 @@ The AI training API does not access or manage room hands.
 
 One backend process stores up to 200 rooms in memory. Restarting clears all rooms,
 seats and hands. Do not use multiple workers until shared persistence is added.
-The roster is fixed after the first deal. Blinds are 5/10, initial stacks 1000.
-Stacks below 10 receive 1000 virtual chips between hands. A disconnected player's
-seat is reserved and their turn waits for reconnect. Timers, sit-out, leaving and
-changing the roster belong to the next stage.
+Players may join between hands. Blinds are 5/10, initial stacks 1000.
+Stacks below 10 receive 1000 virtual chips between hands. Each turn has 30 seconds,
+including after disconnect. The server owns the deadline; reconnecting cannot
+extend it. On timeout it checks if legal, otherwise folds, then enables sit-out.
+Deadlines are checked with a monotonic clock; clients receive an epoch deadline
+and server time to display a synchronized countdown. A background task processes
+timeouts even when no client sends messages.
+
+Sit-out takes effect immediately: remaining decisions in the current hand use
+check/fold. Return is possible between hands. A sitting-out player is excluded
+from the next deal and keeps their stack. Leaving uses the same automatic policy
+for the remaining hand, revokes the seat token and transfers the host role. A
+replacement may join once the hand ends, with a fresh identity and initial stack;
+they cannot inherit the prior occupant's private cards. Existing stacks and the
+clockwise button position are preserved when the roster changes.
+
+Next: configurable stacks/blinds, mobile polish and persistent storage.
 
 WebSocket Origin is restricted to http://localhost:3000 and http://127.0.0.1:3000.
 Set `POKER_ROOM_ORIGINS` to a comma-separated list of exact origins for another

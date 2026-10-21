@@ -1386,3 +1386,7 @@ h2 {
 .room-lobby li div { display: grid; gap: 4px; }
 .room-lobby li span, .room-lobby li em { font-size: 12px; color: #a8c9bb; font-style: normal; }
 @media (max-width: 600px) { .room-entry { margin: 16px auto; } .room-toolbar { gap: 8px; } .room-join { grid-template-columns: 1fr; } }
+
+.turn-clock { border: 1px solid var(--line); padding: 12px; border-radius: 10px; font-size: 24px; font-variant-numeric: tabular-nums; color: var(--accent); }
+.turn-clock span { display: block; margin-top: 5px; font-size: 12px; color: var(--muted); }
+.turn-clock-urgent { color: var(--danger); border-color: var(--danger); }

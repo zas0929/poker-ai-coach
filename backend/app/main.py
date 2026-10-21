@@ -1,10 +1,24 @@
+import asyncio
+from contextlib import asynccontextmanager, suppress
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.hand import router as hand_router
-from app.api.rooms import router as room_router
+from app.api.rooms import router as room_router, store
 
-app = FastAPI(title="Poker AI Coach API")
+@asynccontextmanager
+async def lifespan(app):
+    task = asyncio.create_task(store.run_timers())
+    try:
+        yield
+    finally:
+        task.cancel()
+        with suppress(asyncio.CancelledError):
+            await task
+
+
+app = FastAPI(title="Poker AI Coach API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
