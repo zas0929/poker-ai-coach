@@ -68,3 +68,15 @@ test('all explicitly translated UI literals exist in the catalog', () => {
   walk(path.join(__dirname, '../app'));
   walk(path.join(__dirname, '../components'));
 });
+
+
+test('English preserves original UI, advice, action labels and values', () => {
+  for (const text of [
+    'Practice & decisions', 'Play with friends', 'raise to 120',
+    'Checking is reasonable. AKo is a strong, but your high card does not have enough estimated equity to force value.',
+    '20 / (60 + 20) = 25.0%. This call price assumes no further betting or rake.',
+    ...Object.keys(require('../i18n/messages.json')),
+  ]) assert.equal(translate(text, 'en'), text);
+  assert.equal(translate(null, 'en'), null);
+  assert.equal(translate(120, 'en'), 120);
+});

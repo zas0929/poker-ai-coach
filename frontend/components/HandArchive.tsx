@@ -66,7 +66,7 @@ export default function HandArchive({ credentials, completedHandId }: {
       <ol className="archive-list">{items.map((item) => (
         <li key={item.hand_id}>
           <button disabled={Boolean(opening)} onClick={() => void openHand(item.hand_id)}>
-            <span><strong>{t(item.reason === 'showdown' ? 'Showdown' : 'Won by fold')} · {t(item.player_count)}{t(" players")}</strong><small>{t(new Date(item.completed_at.replace(' ', 'T')).toLocaleString(locale === 'uk' ? 'uk-UA' : 'ru-RU'))} · {t(item.hand_id.slice(0, 8))}</small></span>
+            <span><strong>{t(item.reason === 'showdown' ? 'Showdown' : 'Won by fold')} · {t(item.player_count)}{t(" players")}</strong><small>{t(new Date(item.completed_at.replace(' ', 'T')).toLocaleString(locale === 'en' ? 'en-US' : locale === 'uk' ? 'uk-UA' : 'ru-RU'))} · {t(item.hand_id.slice(0, 8))}</small></span>
             <em className={item.net >= 0 ? 'archive-profit' : 'archive-loss'}>{t(opening === item.hand_id ? 'Opening…' : `${item.net > 0 ? '+' : ''}${item.net}`)}</em>
           </button>
         </li>

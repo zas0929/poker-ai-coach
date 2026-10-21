@@ -1,7 +1,7 @@
 import messages from './messages.json';
 
-export type Locale = 'ru' | 'uk';
-const dictionary: Record<string, Record<Locale, string>> = messages;
+export type Locale = 'en' | 'ru' | 'uk';
+const dictionary: Record<string, Record<Exclude<Locale, 'en'>, string>> = messages;
 const escape = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const patterns = Object.entries(dictionary).filter(([key]) => /\{\d+\}/.test(key)).map(([key, value]) => ({
   regex: new RegExp(`^${key.split(/\{\d+\}/).map(escape).join('(.+?)')}$`), value,
@@ -9,11 +9,11 @@ const patterns = Object.entries(dictionary).filter(([key]) => /\{\d+\}/.test(key
 
 /** Translate presentation text only; API actions and saved records stay canonical. */
 export function translate<T>(value: T, locale: Locale): T {
-  if (typeof value !== 'string') return value;
+  if (locale === 'en' || typeof value !== 'string') return value;
   return translateText(value, locale) as T;
 }
 
-function translateText(value: string, locale: Locale, depth = 0): string {
+function translateText(value: string, locale: Exclude<Locale, 'en'>, depth = 0): string {
   if (!value.trim() || depth > 6) return value;
   const leading = value.match(/^\s*/)?.[0] ?? '';
   const trailing = value.match(/\s*$/)?.[0] ?? '';
