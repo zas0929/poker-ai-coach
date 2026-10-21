@@ -47,6 +47,36 @@ Each room serializes commands and broadcasts personalized snapshots in revision
 order. Each hand owns its deck. Shuffling uses the operating system's randomness.
 The AI training API does not access or manage room hands.
 
+## Completed hand archive
+
+The room sidebar contains **Your hand history**. It lists only completed hands
+dealt to the authenticated seat, newest first, with net chips and pagination.
+New arrivals and replacement occupants cannot read previous occupants' hands.
+Leaving revokes the seat token, including its history access.
+
+- `GET /api/rooms/{code}/history?limit=20&before=123` returns summaries and
+  `next_cursor` (null at the end). Limit is 1-50; cursors are stable if new hands finish.
+- `GET /api/rooms/{code}/history/{hand_id}` returns a private final snapshot and
+  replay frames. Both endpoints require `Authorization: Bearer <seat token>`;
+  the invitation code alone is insufficient. Live hands have no archive endpoint.
+- History responses use `Cache-Control: private, no-store` and `Vary: Authorization`.
+
+The review dialog opens at the final result. First/Previous/Next/Result and the
+step selector show the table before each recorded action. Opponent cards remain
+hidden in earlier frames, even when they were revealed at the final showdown.
+Folded opponents stay hidden throughout, including hand-strength card lists.
+No remaining deck or seat tokens are sent to the client.
+
+Replay reconstructs original starting stacks from final stacks, contributions and
+payouts, restores the recorded cards/board, and runs the betting engine. It checks
+every action and the final board, contributions, stacks and payouts. Incompatible
+records fall back to the saved final result with a notice, never an approximate replay.
+
+Review facts include net chips, pots, payouts, actual call amount and your made
+hand at the time. Heads-up call price is shown before future betting/rake;
+multiway side-pot EV is omitted. This is factual review, not a solver grade.
+Opening a review does not pause or modify the live table or its turn timer.
+
 ## Current limits and next work
 
 One backend process serves up to 200 rooms, stored in SQLite. Do not use multiple

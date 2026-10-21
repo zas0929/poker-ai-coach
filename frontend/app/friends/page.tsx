@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import ActionPanel from '@/components/ActionPanel';
 import HandHistory from '@/components/HandHistory';
+import HandArchive from '@/components/HandArchive';
 import PokerTable from '@/components/PokerTable';
 import { enterRoom, roomSocketUrl } from '@/services/roomApi';
 import type { RoomCredentials, RoomState, RoomSettings } from '@/services/roomApi';
@@ -232,6 +233,7 @@ export default function FriendsPage() {
                 <p className="room-note">Each turn has {settings.turn_seconds} seconds, including after disconnect. Timeout uses check if possible, otherwise fold, then sit-out. Leaving releases the seat after this hand; the host role transfers automatically.</p>
               </section>
               <HandHistory hand={hand} />
+              <HandArchive key={`${credentials.code}:${credentials.player_id}`} credentials={credentials} completedHandId={hand?.result ? hand.hand_id : null} />
             </aside>
           </section>
         </>

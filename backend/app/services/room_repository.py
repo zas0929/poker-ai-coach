@@ -58,6 +58,25 @@ class RoomRepository:
                 self.connection.execute('INSERT OR IGNORE INTO completed_hands(code,hand_id,payload) VALUES(?,?,?)',
                                         (record['code'], hand['hand_id'], json.dumps(hand)))
 
+    def history_page(self, code, player_id, limit=20, before=None):
+        rows = self.connection.execute('''SELECT h.rowid, h.completed_at, h.payload
+            FROM completed_hands h WHERE h.code=? AND (? IS NULL OR h.rowid < ?)
+            AND EXISTS (SELECT 1 FROM json_each(h.payload, '$.players') p
+                        WHERE json_extract(p.value, '$.id')=?)
+            ORDER BY h.rowid DESC LIMIT ?''', (code, before, before, player_id, limit + 1)).fetchall()
+        from app.services.hand_archive import hand_summary
+        items = [hand_summary(json.loads(payload), player_id, cursor, completed_at)
+                 for cursor, completed_at, payload in rows[:limit]]
+        return {'items': items, 'next_cursor': items[-1]['cursor'] if len(rows) > limit else None}
+
+    def archived_hand(self, code, hand_id, player_id):
+        row = self.connection.execute('SELECT payload FROM completed_hands WHERE code=? AND hand_id=?',
+                                      (code, hand_id)).fetchone()
+        if row is None:
+            raise ValueError('Archived hand not found.')
+        from app.services.hand_archive import replay_hand
+        return replay_hand(json.loads(row[0]), player_id)
+
     def close(self):
         if self.connection:
             self.connection.close()

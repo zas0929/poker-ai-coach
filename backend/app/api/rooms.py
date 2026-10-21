@@ -4,8 +4,9 @@ import asyncio
 import json
 import os
 from pathlib import Path
+from typing import Optional
 
-from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect, Header, Query, Response
 from pydantic import BaseModel, Field, ValidationError, field_validator
 
 from app.services.room_service import RoomCommand, RoomStore
@@ -46,6 +47,40 @@ async def join_room(code: str, request: JoinRequest):
             return {'code': room.code, 'token': member.token, 'player_id': member.player_id}
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+def history_member(code, authorization):
+    if not authorization or not authorization.startswith('Bearer '):
+        raise HTTPException(status_code=401, detail='Seat authentication is required.')
+    try:
+        room = store.get(code)
+        member = room.authenticate(authorization[7:])
+    except ValueError as exc:
+        raise HTTPException(status_code=401, detail='Seat authentication failed.') from exc
+    if not store.repository:
+        raise HTTPException(status_code=503, detail='Hand history storage is unavailable.')
+    return room, member
+
+
+@router.get('/{code}/history')
+async def read_history(code: str, response: Response, authorization: Optional[str] = Header(default=None),
+                       limit: int = Query(default=20, ge=1, le=50),
+                       before: Optional[int] = Query(default=None, ge=1, le=9223372036854775807)):
+    room, member = history_member(code, authorization)
+    response.headers['Cache-Control'] = 'private, no-store'
+    response.headers['Vary'] = 'Authorization'
+    return store.repository.history_page(room.code, member.player_id, limit, before)
+
+
+@router.get('/{code}/history/{hand_id}')
+async def read_archived_hand(code: str, hand_id: str, response: Response, authorization: Optional[str] = Header(default=None)):
+    room, member = history_member(code, authorization)
+    response.headers['Cache-Control'] = 'private, no-store'
+    response.headers['Vary'] = 'Authorization'
+    try:
+        return store.repository.archived_hand(room.code, hand_id, member.player_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail='Archived hand not found.') from exc
 
 
 def allowed_origin(origin: str) -> bool:

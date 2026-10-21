@@ -8,6 +8,10 @@ server restarts. The host can configure stacks, blinds and turn time before the
 first deal. Internet hosting is a later stage.
 See [docs/ROOMS.md](docs/ROOMS.md) for setup, protocol and current limitations.
 
+Completed hands appear in **Your hand history** inside the room. Open a hand to
+replay each decision, review net chips and inspect main/side-pot payouts. The
+archive requires your seat token and follows the same private-card rules as live play.
+
 Texas Hold'em AI Coach is a poker training app inspired by the Chess AI Coach architecture: a deterministic analysis backend, a focused frontend table, and an AI coach panel that explains decisions in natural language.
 
 The core idea is hybrid:

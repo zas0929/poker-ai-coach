@@ -11,8 +11,9 @@ from typing import Optional
 
 from pydantic import BaseModel, Field, StrictInt, model_validator
 
-from app.models.poker import ActionType, Card, HandState, PlayerStatus
+from app.models.poker import ActionType, Card, HandState
 from app.services.poker_engine import PokerEngine
+from app.services.hand_projection import project_hand
 from app.services.room_repository import RoomRepository, RoomStorageError
 
 SEAT_IDS = ['hero', 'villain', 'villain_2', 'villain_3', 'villain_4', 'villain_5']
@@ -119,24 +120,7 @@ class Room:
         return member
 
     def snapshot(self, viewer: Member) -> dict:
-        hand = json.loads(self.hand.model_dump_json()) if self.hand else None
-        if hand:
-            revealed = set()
-            for player in hand['players']:
-                if player['id'] == viewer.player_id or (
-                    hand['result'] and hand['result']['reason'] == 'showdown'
-                    and player['status'] != PlayerStatus.FOLDED.value
-                ):
-                    revealed.add(player['id'])
-                else:
-                    player['cards'] = []
-            if hand['result']:
-                for result in hand['result']['player_results']:
-                    if result['player_id'] not in revealed:
-                        result['hand_strength'] = None
-            # Explicitly exclude internal state from the public protocol.
-            hand.pop('acted_at_bet', None)
-            hand['notes'] = []
+        hand = project_hand(self.hand, viewer.player_id) if self.hand else None
         return {
             'type': 'state', 'code': self.code, 'revision': self.revision,
             'viewer_id': viewer.player_id, 'host_id': self.host_id,
