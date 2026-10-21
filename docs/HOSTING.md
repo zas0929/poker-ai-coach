@@ -18,7 +18,9 @@ remain `http://localhost:3000,http://127.0.0.1:3000`. Never use a wildcard.
 
 Set the backend-only secret `POKER_DATABASE_URL` to a PostgreSQL connection URI.
 For Supabase use the IPv4 **Session pooler** connection (port 5432), with the
-project's database password percent-encoded in the URI. Never expose this value
+project's database password percent-encoded in the URI. Alternatively omit the
+password from the URI and set backend-only `PGPASSWORD` to its existing value;
+libpq reads it directly, so special characters need no encoding. Never expose either value
 through a `NEXT_PUBLIC_` variable or commit it. TLS is required by the driver;
 prepared statements are disabled for pooler compatibility.
 
