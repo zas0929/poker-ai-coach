@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from app.models.poker import ActionType, HandAnalysis, HandState, Player, Street
-from app.services.betting_rules import betting_options
+from app.services.betting_rules import betting_options, highest_bet as table_highest_bet
 
 
 @dataclass(frozen=True)
@@ -19,7 +19,7 @@ class AIOpponentService:
 
     def choose_action(self, state: HandState, analysis: HandAnalysis, player_id: str = "villain") -> AIOpponentDecision:
         player = self._get_player(state, player_id)
-        highest_bet = max(seat.current_bet for seat in state.players)
+        highest_bet = table_highest_bet(state)
         call_amount = max(highest_bet - player.current_bet, 0)
 
         options = betting_options(state, player_id)

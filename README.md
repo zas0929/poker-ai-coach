@@ -1,5 +1,11 @@
 # Poker AI Coach
 
+Private rooms are available at [localhost:3000/friends](http://localhost:3000/friends).
+Create a table for 2-6 friends, share an invitation, confirm readiness and deal.
+Cards are filtered on the server; seats restore after reconnect. This is a local
+preview with virtual chips and in-memory rooms. Internet hosting is a later stage.
+See [docs/ROOMS.md](docs/ROOMS.md) for setup, protocol and current limitations.
+
 Texas Hold'em AI Coach is a poker training app inspired by the Chess AI Coach architecture: a deterministic analysis backend, a focused frontend table, and an AI coach panel that explains decisions in natural language.
 
 The core idea is hybrid:
@@ -143,6 +149,28 @@ The AI opponent decision layer lives in `backend/app/services/ai_opponent.py`; i
 ## Multiplayer roadmap and betting rules
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the private 2–6 player release plan.
-The current heads-up API includes `betting` with legal actions and inclusive size
+The current 2–6 player API includes `betting` with legal actions and inclusive size
 bounds. Raise amounts are total street bets; fractional amounts and oversized
 requests are rejected. A repeated `/start` resumes a live training hand.
+
+## Multiway training tables
+
+`POST /api/hand/start?player_count=6` creates a training table with five AI
+opponents. Without a count, `/start` resumes the current table or preserves its
+size for the next hand. A different size is accepted only after a hand ends and
+starts a new training session. The browser's Seats selector now controls actual
+players, not decorative empty seats.
+
+The engine tracks `contributions` across all streets, resolves main/side pots in
+`result.pots`, keeps folded contributions as dead money, and refunds unmatched
+bets. Each hand has a private, non-serialized deck. API operations on the one
+in-memory training session are serialized; independent rooms and human players
+are still the next milestone.
+
+Multiway equity samples every live opponent jointly and rejects card collisions.
+It includes split pots and ignores hidden AI holdings. It does not calculate
+side-pot call EV: `call_ev_available=false` explicitly marks that omission for
+any table with more than two dealt players, even if only two remain live.
+The displayed price proxy and recommendations are educational heuristics, not
+solver-derived action EV comparisons. Sample count and sampling-only uncertainty
+remain visible. Expand each opponent's range to inspect its assumptions.

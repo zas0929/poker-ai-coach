@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
+from functools import wraps
+from threading import RLock
+from typing import Optional
 
 from app.models.poker import HandAnalysis, HandState, PlayerActionRequest, Street
 from app.services.ai_opponent import AIOpponentService
@@ -13,6 +16,15 @@ engine = PokerEngine()
 decision_engine = DecisionEngine()
 ai_opponent = AIOpponentService(profile="balanced")
 current_state: HandState | None = None
+state_lock = RLock()
+
+
+def serialized(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        with state_lock:
+            return function(*args, **kwargs)
+    return wrapper
 
 
 def get_current_state() -> HandState:
@@ -22,21 +34,28 @@ def get_current_state() -> HandState:
 
 
 @router.post("/start", response_model=HandState)
-def start_hand():
+@serialized
+def start_hand(player_count: Optional[int] = None):
     global current_state
     # Refreshing the browser must not discard a live pot or reset its stacks.
+    if player_count is not None and (type(player_count) is not int or not 2 <= player_count <= 6):
+        raise HTTPException(status_code=400, detail="Choose 2–6 players.")
     if current_state is not None and current_state.result is None:
+        if player_count is not None and player_count != len(current_state.players):
+            raise HTTPException(status_code=409, detail="Finish the hand before changing table size.")
         return current_state
-    current_state = engine.start_hand(previous_state=current_state)
+    current_state = engine.start_hand(previous_state=current_state, player_count=player_count)
     return current_state
 
 
 @router.get("/state", response_model=HandState)
+@serialized
 def read_state():
     return get_current_state()
 
 
 @router.get("/analyze", response_model=HandAnalysis)
+@serialized
 def analyze_hand(player_id: str = "hero"):
     try:
         return decision_engine.analyze(get_current_state(), player_id=player_id)
@@ -45,6 +64,7 @@ def analyze_hand(player_id: str = "hero"):
 
 
 @router.post("/action", response_model=HandState)
+@serialized
 def apply_action(request: PlayerActionRequest):
     global current_state
     try:
@@ -60,6 +80,7 @@ def apply_action(request: PlayerActionRequest):
 
 
 @router.post("/ai-action", response_model=HandState)
+@serialized
 def apply_ai_action(player_id: str = "villain"):
     global current_state
     state = engine.settle_all_in_if_ready(get_current_state())
@@ -80,20 +101,21 @@ def apply_ai_action(player_id: str = "villain"):
 
 
 @router.post("/auto-play", response_model=HandState)
+@serialized
 def auto_play_until_hero():
     global current_state
     state = get_current_state()
 
     try:
-        for _ in range(12):
+        for _ in range(512):
             state = engine.settle_all_in_if_ready(state)
             current_state = state
 
             if state.result or state.street == Street.SHOWDOWN or state.current_player_id == "hero":
                 break
 
-            if state.current_player_id == "villain":
-                state = _apply_ai_action_to_state(state, player_id="villain")
+            if state.current_player_id is not None and state.current_player_id != "hero":
+                state = _apply_ai_action_to_state(state, player_id=state.current_player_id)
                 current_state = state
                 continue
 
@@ -110,6 +132,7 @@ def auto_play_until_hero():
 
 
 @router.post("/advance", response_model=HandState)
+@serialized
 def advance_hand():
     global current_state
     try:
@@ -120,6 +143,7 @@ def advance_hand():
 
 
 @router.post("/flop", response_model=HandState)
+@serialized
 def deal_flop():
     global current_state
     try:
@@ -130,6 +154,7 @@ def deal_flop():
 
 
 @router.post("/turn", response_model=HandState)
+@serialized
 def deal_turn():
     global current_state
     try:
@@ -140,6 +165,7 @@ def deal_turn():
 
 
 @router.post("/river", response_model=HandState)
+@serialized
 def deal_river():
     global current_state
     try:
@@ -162,7 +188,5 @@ def _apply_ai_action_to_state(state: HandState, player_id: str) -> HandState:
         action=decision.action,
         amount=decision.amount,
     )
-    next_state.notes.append(
-        f"AI chose {decision.action.value} with {analysis.equity:.1%} equity. {decision.reason}"
-    )
+    next_state.notes.append(f"{player_id} chose {decision.action.value}.")
     return next_state

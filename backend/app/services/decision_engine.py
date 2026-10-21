@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from app.models.poker import Card, DrawProfile, HandAnalysis, HandState, PreflopProfile, Rank, Street, Suit
+from app.models.poker import Card, DrawProfile, HandAnalysis, HandState, PreflopProfile, PlayerStatus, Rank, Street, Suit
 from app.services.equity_service import EquityService
 from app.services.hand_evaluator import HandEvaluator
 from app.services.range_service import RangeService
-from app.services.betting_rules import betting_options
+from app.services.betting_rules import betting_options, highest_bet
 
 
 class DecisionEngine:
@@ -20,22 +20,29 @@ class DecisionEngine:
     def analyze(self, state: HandState, player_id: str = "hero") -> HandAnalysis:
         player = self._get_player(state, player_id)
         call_amount = self._call_amount(state, player_id)
-        opponent_range = self.range_service.infer(state, player_id)
-        estimate = self.equity_service.estimate(state, player_id, opponent_range=opponent_range)
+        opponents = [p for p in state.players if p.id != player_id and p.status != PlayerStatus.FOLDED]
+        if player.status == PlayerStatus.FOLDED or not opponents:
+            raise ValueError("Analysis requires an unfolded player and at least one live opponent.")
+        ranges = [self.range_service.infer(state, player_id, p.id) for p in opponents]
+        opponent_range = ranges[0]
+        estimate = self.equity_service.estimate(state, player_id, opponent_range=opponent_range, opponent_ranges=ranges)
+        multiway = len(state.players) > 2
         equity = estimate.equity
         # An unmatched overbet is returned when a short stack calls all-in.
-        raw_call = max(p.current_bet for p in state.players) - player.current_bet
+        raw_call = highest_bet(state) - player.current_bet
         contestable_pot = state.pot - max(0, raw_call - call_amount)
+        if multiway and state.contributions:
+            cap = state.contributions[player_id] + call_amount
+            contestable_pot = sum(min(c, cap) for c in state.contributions.values())
         required_equity = self._required_equity(contestable_pot, call_amount)
-        ev_call = round(equity * (contestable_pot + call_amount) - call_amount, 2)
+        ev_call = 0.0 if multiway else round(equity * (contestable_pot + call_amount) - call_amount, 2)
         hand_strength = self.evaluator.evaluate([*player.cards, *state.board])
         preflop_profile = self._preflop_profile(player.cards)
         draw_profile = self._draw_profile(player.cards, state.board, state.street)
         recommended_action = self._recommend_action(equity, required_equity, call_amount)
-        if recommended_action == "bet" and max(p.current_bet for p in state.players) > 0:
+        if recommended_action == "bet" and highest_bet(state) > 0:
             recommended_action = "raise"
-        opponent = next(p for p in state.players if p.id != player_id)
-        if recommended_action == "raise" and (player.stack <= call_amount or opponent.stack == 0):
+        if recommended_action == "raise" and (player.stack <= call_amount or all(p.stack == 0 for p in opponents)):
             recommended_action = "call" if call_amount else "check"
         options = betting_options(state, player_id)
         if options.legal_actions and recommended_action not in options.legal_actions:
@@ -50,6 +57,9 @@ class DecisionEngine:
             required_equity=required_equity,
             equity=equity,
             opponent_range=opponent_range.summary,
+            opponent_ranges=[r.summary for r in ranges],
+            opponent_count=len(opponents),
+            call_ev_available=not multiway,
             equity_method=estimate.method,
             equity_samples=estimate.samples,
             equity_sampling_error=estimate.sampling_error,
@@ -58,7 +68,8 @@ class DecisionEngine:
             hand_strength=hand_strength,
             preflop_profile=preflop_profile,
             draw_profile=draw_profile,
-            coach_summary=self._coach_summary(
+            coach_summary=(f"Equity is your expected share against {len(opponents)} live opponents. "
+                           "The action is a heuristic; pot-specific call EV and future responses are not solved.") if multiway else self._coach_summary(
                 recommended_action,
                 equity,
                 required_equity,
@@ -70,7 +81,7 @@ class DecisionEngine:
             ),
             confidence=self._confidence(equity, required_equity, call_amount),
             risk_level=self._risk_level(equity, required_equity, call_amount),
-            key_factors=self._key_factors(
+            key_factors=([f"Live opponents: {len(opponents)}", "Multiway equity includes split pots; side-pot EV is not calculated."] if multiway else self._key_factors(
                 state,
                 call_amount,
                 equity,
@@ -79,14 +90,14 @@ class DecisionEngine:
                 hand_strength.category,
                 preflop_profile,
                 draw_profile,
-            ),
-            notes=[opponent_range.summary.description, *self._notes(equity, required_equity, call_amount, ev_call)],
+            )),
+            notes=(["Multiway ranges are heuristic and sampled jointly without card collisions.", "Required equity is a single-pot price proxy, not a side-pot EV threshold."] if multiway else [opponent_range.summary.description, *self._notes(equity, required_equity, call_amount, ev_call)]),
         )
 
     def _call_amount(self, state: HandState, player_id: str) -> int:
         player = self._get_player(state, player_id)
-        highest_bet = max(seat.current_bet for seat in state.players)
-        return min(player.stack, max(highest_bet - player.current_bet, 0))
+        highest = highest_bet(state)
+        return min(player.stack, max(highest - player.current_bet, 0))
 
     def _required_equity(self, pot: int, call_amount: int) -> float:
         if call_amount == 0:

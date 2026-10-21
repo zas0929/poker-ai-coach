@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react';
 import type { ActionType, HandAnalysis, HandState } from '@/types/poker';
 
 interface ActionPanelProps {
+  viewerId?: string;
+  trainingControls?: boolean;
   analysis: HandAnalysis | null;
   hand: HandState | null;
   isLoading: boolean;
@@ -13,6 +15,8 @@ interface ActionPanelProps {
 }
 
 export default function ActionPanel({
+  viewerId = 'hero',
+  trainingControls = true,
   analysis,
   hand,
   isLoading,
@@ -24,7 +28,7 @@ export default function ActionPanel({
   const [amountEntry, setAmountEntry] = useState<{ context: string; value: number } | null>(null);
   const currentPlayer = hand?.players.find((player) => player.id === hand.current_player_id);
   const handEnded = Boolean(hand?.result || hand?.street === 'showdown');
-  const canAct = Boolean(currentPlayer?.id === 'hero' && !handEnded);
+  const canAct = Boolean(currentPlayer?.id === viewerId && !handEnded);
   const betting = hand?.betting;
   const allows = (action: ActionType) => canAct && Boolean(betting?.legal_actions.includes(action));
   const canSize = allows('bet') || allows('raise');
@@ -40,7 +44,7 @@ export default function ActionPanel({
   }, [hand]);
 
   const callAmount = betting?.call_amount ?? 0;
-  const heroStack = currentPlayer?.id === 'hero' ? currentPlayer.stack : 0;
+  const heroStack = currentPlayer?.id === viewerId ? currentPlayer.stack : 0;
 
   const suggestedAmount = useMemo(() => {
     if (!hand || maximumAmount === 0) return minimumAmount;
@@ -82,7 +86,7 @@ export default function ActionPanel({
   const actionContext = callAmount > 0 ? `Facing ${callAmount}` : highestBet > 0 ? 'Matched pot' : 'Open action';
 
   const goAllIn = () => {
-    if (!currentPlayer || currentPlayer.id !== 'hero') {
+    if (!currentPlayer || currentPlayer.id !== viewerId) {
       return;
     }
 
@@ -101,8 +105,8 @@ export default function ActionPanel({
         <div>
           <span>Turn</span>
           <strong>
-            {currentPlayer?.id === 'villain'
-              ? 'AI thinking'
+            {currentPlayer && currentPlayer.id !== viewerId
+              ? `${currentPlayer.name} thinking`
               : currentPlayer?.name ?? (handEnded ? 'Hand complete' : 'Action closed')}
           </strong>
         </div>
@@ -163,17 +167,17 @@ export default function ActionPanel({
         </button>
       </div>
 
-      <div className="secondary-actions">
+      {trainingControls ? <div className="secondary-actions">
         <button className="primary-button next-hand-button" disabled={!handEnded || isLoading} onClick={onStartHand}>
           Next hand
         </button>
         <button disabled={!actionClosed || isLoading} onClick={onAdvance}>
           Advance
         </button>
-        <button disabled={!hand || isLoading} onClick={onAnalyze}>
+        <button disabled={!hand || handEnded || isLoading} onClick={onAnalyze}>
           Analyze
         </button>
-      </div>
+      </div> : null}
     </section>
   );
 }

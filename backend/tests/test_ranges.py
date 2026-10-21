@@ -82,10 +82,10 @@ class RangeTest(unittest.TestCase):
         pick = lambda r: next(c.weight for c in r.combos if c.cards == (card("9", "spades"), card("8", "spades")))
         self.assertEqual(pick(at_flop), pick(at_turn))
 
-    def test_rejects_multiway_instead_of_silently_using_one_opponent(self):
+    def test_multiway_requires_explicit_opponent_for_single_range(self):
         state = state_for()
         state.players.append(Player(id="third", name="Third", stack=100, position="button"))
-        with self.assertRaisesRegex(ValueError, "heads-up"):
+        with self.assertRaisesRegex(ValueError, "Specify an opponent"):
             RangeService().infer(state)
 
 

@@ -9,6 +9,7 @@ import type { HandAction, HandResult, HandState, Player, Street } from '@/types/
 interface PokerTableProps {
   hand: HandState | null;
   seatCount: number;
+  viewerId?: string;
 }
 
 function Seat({
@@ -54,7 +55,7 @@ function Seat({
       </div>
       {player ? (
         <div className="hole-cards">
-          {player.cards.map((card, index) => (
+          {Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
             <CardView key={`${player.id}-${index}`} card={card} hidden={cardsHidden} />
           ))}
         </div>
@@ -63,12 +64,17 @@ function Seat({
   );
 }
 
-export default function PokerTable({ hand, seatCount }: PokerTableProps) {
-  const [displayedBoardCount, setDisplayedBoardCount] = useState(0);
+export default function PokerTable(props: PokerTableProps) {
+  const key = `${props.hand?.hand_id}:${props.hand?.board.length}:${props.hand?.result?.reason ?? ''}`;
+  return <TableScene key={key} {...props} />;
+}
+
+function TableScene({ hand, seatCount, viewerId = 'hero' }: PokerTableProps) {
+  const [displayedBoardCount, setDisplayedBoardCount] = useState(() =>
+    hand ? (isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand.board.length) : 0,
+  );
   const [showChipFlight, setShowChipFlight] = useState(false);
-  const revealVillainCards = Boolean(hand?.result || hand?.street === 'showdown');
-  const heroAction = lastActionFor(hand, 'hero');
-  const villainAction = lastActionFor(hand, 'villain');
+  const revealVillainCards = hand?.result?.reason === 'showdown';
   const winnerBadge = winnerText(hand);
   const allInRunout = isAllInRunout(hand);
   const runoutComplete = !allInRunout || displayedBoardCount >= 5;
@@ -76,24 +82,12 @@ export default function PokerTable({ hand, seatCount }: PokerTableProps) {
     () => hand?.board.slice(0, displayedBoardCount) ?? [],
     [displayedBoardCount, hand?.board],
   );
-  const seats = tableSeats(hand, seatCount);
-  const winnerSlot = winnerSeatSlot(hand);
+  const seats = tableSeats(hand, seatCount, viewerId);
+  const winnerSlot = winnerSeatSlot(hand, seatCount, viewerId);
 
   useEffect(() => {
-    setShowChipFlight(false);
-
-    if (!hand) {
-      setDisplayedBoardCount(0);
-      return;
-    }
-
-    if (!isAllInRunout(hand)) {
-      setDisplayedBoardCount(hand.board.length);
-      return;
-    }
-
+    if (!hand || !allInRunout) return;
     const stages = runoutStages(hand);
-    setDisplayedBoardCount(stages[0] ?? hand.board.length);
     const timers = stages.slice(1).map((count, index) =>
       window.setTimeout(() => setDisplayedBoardCount(count), 850 * (index + 1)),
     );
@@ -101,11 +95,9 @@ export default function PokerTable({ hand, seatCount }: PokerTableProps) {
     return () => {
       timers.forEach(window.clearTimeout);
     };
-  }, [hand]);
+  }, [hand, allInRunout]);
 
   useEffect(() => {
-    setShowChipFlight(false);
-
     if (!winnerSlot || !runoutComplete) {
       return;
     }
@@ -116,14 +108,14 @@ export default function PokerTable({ hand, seatCount }: PokerTableProps) {
 
   return (
     <section className="table-surface">
-      <div className="table-oval">
+      <div className={`table-oval table-seats-${seatCount} ${seatCount > 2 ? 'table-multiway' : ''}`}>
         {seats.map((seat) => (
           <Seat
             key={seat.slot}
             player={seat.player}
             active={Boolean(seat.player && hand?.current_player_id === seat.player.id)}
-            cardsHidden={Boolean(seat.player?.id === 'villain' && !revealVillainCards)}
-            lastAction={seat.player?.id === 'hero' ? heroAction : seat.player?.id === 'villain' ? villainAction : undefined}
+            cardsHidden={Boolean(seat.player?.id !== viewerId && (!revealVillainCards || seat.player?.status === 'folded'))}
+            lastAction={seat.player ? lastActionFor(hand, seat.player.id) : undefined}
             label={seat.label}
             slot={seat.slot}
           />
@@ -206,27 +198,17 @@ function chipCount(amount: number) {
   return 5;
 }
 
-function tableSeats(hand: HandState | null, seatCount: number) {
-  const hero = hand?.players.find((player) => player.id === 'hero');
-  const villain = hand?.players.find((player) => player.id === 'villain');
+function tableSeats(hand: HandState | null, seatCount: number, viewerId = 'hero') {
   const slotsByCount: Record<number, string[]> = {
-    2: ['top', 'bottom'],
-    3: ['top', 'right', 'bottom'],
-    4: ['top', 'right', 'bottom', 'left'],
-    5: ['top', 'top-right', 'right', 'bottom', 'left'],
-    6: ['top', 'top-right', 'right', 'bottom', 'left', 'top-left'],
+    2: ['bottom', 'top'],
+    3: ['bottom', 'left', 'right'],
+    4: ['bottom', 'left', 'top', 'right'],
+    5: ['bottom', 'left', 'top-left', 'top-right', 'right'],
+    6: ['bottom', 'left', 'top-left', 'top', 'top-right', 'right'],
   };
   const slots = slotsByCount[seatCount] ?? slotsByCount[2];
-
-  return slots.map((slot, index) => {
-    if (slot === 'top') {
-      return { slot, player: villain, label: 'AI Opponent' };
-    }
-    if (slot === 'bottom') {
-      return { slot, player: hero, label: 'You' };
-    }
-    return { slot, player: undefined, label: `Player ${index + 1}` };
-  });
+  const offset = Math.max(0, hand?.players.findIndex((player) => player.id === viewerId) ?? 0);
+  return slots.map((slot, index) => ({ slot, player: hand?.players[(index + offset) % hand.players.length], label: `Seat ${index + 1}` }));
 }
 
 function ShowdownSummary({ hand, result }: { hand: HandState; result: HandResult }) {
@@ -275,7 +257,7 @@ function winnerText(hand: HandState | null) {
   }
 
   const winners = result.winners.map((winnerId) => playerName(hand, winnerId)).join(', ');
-  const outcome = result.winners.length > 1 ? 'Split pot' : `${winners} wins`;
+  const outcome = (result.pots?.length ?? 0) > 1 ? 'Pots awarded' : result.winners.length > 1 ? 'Split pot' : `${winners} wins`;
   return `${outcome} ${result.pot_awarded}`;
 }
 
@@ -283,15 +265,11 @@ function playerName(hand: HandState, playerId: string) {
   return hand.players.find((player) => player.id === playerId)?.name ?? playerId;
 }
 
-function winnerSeatSlot(hand: HandState | null) {
-  const winner = hand?.result?.winners[0];
-  if (winner === 'hero') {
-    return 'bottom';
-  }
-  if (winner === 'villain') {
-    return 'top';
-  }
-  return null;
+function winnerSeatSlot(hand: HandState | null, seatCount: number, viewerId = 'hero') {
+  // A single flight would misrepresent different winners of main and side pots.
+  if (hand?.result?.winners.length !== 1) return null;
+  const winner = hand.result.winners[0];
+  return tableSeats(hand, seatCount, viewerId).find((seat) => seat.player?.id === winner)?.slot ?? null;
 }
 
 function label(value: string) {

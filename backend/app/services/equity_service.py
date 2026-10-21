@@ -8,7 +8,7 @@ import json
 from math import log, sqrt
 import random
 
-from app.models.poker import Card, HandState, Rank, Suit
+from app.models.poker import Card, HandState, PlayerStatus, Rank, Suit
 from app.services.hand_evaluator import HandEvaluator
 from app.services.range_service import OpponentRange, RangeService
 
@@ -32,6 +32,7 @@ class EquityService:
     def estimate(
         self, state: HandState, player_id: str = "hero",
         opponent_range: OpponentRange | None = None, simulations: int = 1000,
+        opponent_ranges: list[OpponentRange] | None = None,
     ) -> EquityEstimate:
         player = self._get_player(state, player_id)
         if len(player.cards) != 2 or len(state.board) > 5:
@@ -41,6 +42,10 @@ class EquityService:
             raise ValueError("Player cards and board must be distinct.")
         if simulations <= 0:
             raise ValueError("Simulation count must be positive.")
+        live_opponents = [p for p in state.players if p.id != player_id and p.status != PlayerStatus.FOLDED]
+        if len(live_opponents) > 1:
+            ranges = opponent_ranges or [self.range_service.infer(state, player_id, p.id) for p in live_opponents]
+            return self._estimate_multiway(state, player_id, ranges, simulations)
         inferred = opponent_range or self.range_service.infer(state, player_id)
         if not inferred.combos:
             raise ValueError("Opponent range has no legal combinations.")
@@ -80,6 +85,42 @@ class EquityService:
         # Hoeffding's 95% bound for bounded [0,1] outcomes; model error excluded.
         error = sqrt(log(40) / (2 * simulations))
         return EquityEstimate(round(wins / simulations, 4), "monte_carlo", simulations, round(error, 4))
+
+    def _estimate_multiway(self, state: HandState, player_id: str, ranges: list[OpponentRange], simulations: int) -> EquityEstimate:
+        player = self._get_player(state, player_id)
+        if len(ranges) != sum(p.id != player_id and p.status != PlayerStatus.FOLDED for p in state.players):
+            raise ValueError("Provide one range per live opponent.")
+        cumulative = [list(accumulate(c.weight for c in r.combos)) for r in ranges]
+        if any(not c or c[-1] <= 0 for c in cumulative):
+            raise ValueError("All opponent ranges need positive legal weight.")
+        known = [*player.cards, *state.board]
+        payload = {"cards": [(c.rank.value, c.suit.value) for c in known],
+                   "ranges": [[([(c.rank.value, c.suit.value) for c in combo.cards], combo.weight)
+                               for combo in r.combos] for r in ranges]}
+        rng = random.Random(int.from_bytes(sha256(json.dumps(payload).encode()).digest()[:8], 'big'))
+        remaining = self._remaining_deck(known)
+        known_keys = {(c.rank, c.suit) for c in known}
+        wins = 0.0
+        for _ in range(simulations):
+            # Reject the entire lineup on collisions: sequentially conditioning each
+            # hand would bias the product-of-ranges joint distribution.
+            for attempt in range(10000):
+                hands = [r.combos[min(bisect_right(c, rng.random() * c[-1]), len(r.combos)-1)].cards
+                         for r, c in zip(ranges, cumulative)]
+                keys = [(card.rank, card.suit) for hand in hands for card in hand]
+                if len(keys) == len(set(keys)) and not known_keys.intersection(keys):
+                    break
+            else:
+                raise ValueError("Opponent ranges have no reasonably sampleable disjoint lineup.")
+            blocked = set(keys)
+            deck = [c for c in remaining if (c.rank, c.suit) not in blocked]
+            board = [*state.board, *rng.sample(deck, 5 - len(state.board))]
+            scores = [self._score([*player.cards, *board]), *[self._score([*hand, *board]) for hand in hands]]
+            best = max(scores)
+            if scores[0] == best:
+                wins += 1 / scores.count(best)
+        return EquityEstimate(round(wins / simulations, 4), 'monte_carlo_multiway', simulations,
+                              round(sqrt(log(40) / (2 * simulations)), 4))
 
     def _score(self, cards: list[Card]) -> tuple:
         strength = self.evaluator.evaluate(cards)

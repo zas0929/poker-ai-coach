@@ -39,7 +39,7 @@ export default function CoachPanel({
       <div className="panel-heading">
         <div>
           <p className="eyebrow">Coach Panel</p>
-          <h2>{analysis?.recommended_action ?? 'waiting'}</h2>
+          <h2>{analysis?.recommended_action ?? (result ? 'hand complete' : isLoading ? 'thinking' : 'waiting')}</h2>
         </div>
         <span className="status-pill">{isLoading ? 'thinking' : hand?.street ?? 'idle'}</span>
       </div>
@@ -47,15 +47,15 @@ export default function CoachPanel({
       <div className="metric-grid">
         <div>
           <span>Equity</span>
-          <strong>{percent(analysis?.equity)}</strong>
+          <strong>{analysis ? percent(analysis.equity) : '—'}</strong>
         </div>
         <div>
-          <span>Required</span>
-          <strong>{percent(analysis?.required_equity)}</strong>
+          <span>{analysis?.call_ev_available === false ? 'Price proxy' : 'Required'}</span>
+          <strong>{analysis ? percent(analysis.required_equity) : '—'}</strong>
         </div>
         <div>
           <span>Call EV · check-down</span>
-          <strong>{analysis?.ev_call ?? 0}</strong>
+          <strong>{analysis?.call_ev_available === false ? 'Not calculated' : analysis?.ev_call ?? '—'}</strong>
         </div>
         <div>
           <span>Hand</span>
@@ -96,35 +96,35 @@ export default function CoachPanel({
         </div>
       ) : null}
 
-      {analysis?.opponent_range ? (
-        <div className="range-panel">
-          <div className="review-heading">
-            <span>Opponent range</span>
-            <strong>{label(analysis.opponent_range.position)}</strong>
-          </div>
-          <p>{analysis.opponent_range.description}</p>
+      {(analysis?.opponent_ranges?.length ? analysis.opponent_ranges : analysis?.opponent_range ? [analysis.opponent_range] : []).map((opponentRange) => (
+        <details className="range-panel" key={opponentRange.player_id} open={analysis?.opponent_ranges?.length === 1}>
+          <summary className="review-heading">
+            <span>{hand?.players.find((p) => p.id === opponentRange.player_id)?.name ?? 'Opponent'} range</span>
+            <strong>{label(opponentRange.position)}</strong>
+          </summary>
+          <p>{opponentRange.description}</p>
           <div className="summary-meta">
-            <span>{analysis.opponent_range.legal_combos} legal combos</span>
-            <span>{analysis.opponent_range.effective_combos} effective combos</span>
+            <span>{opponentRange.legal_combos} legal combos</span>
+            <span>{opponentRange.effective_combos} effective combos</span>
           </div>
           <p className="range-detail">Effective combos measure how concentrated the weights are; they are not a hard cutoff.</p>
-          {analysis.opponent_range.top_hands.length ? (
+          {opponentRange.top_hands.length ? (
             <div className="tag-row" aria-label="Hand classes with the most range weight">
-              {analysis.opponent_range.top_hands.map((handClass) => <span key={handClass}>{handClass}</span>)}
+              {opponentRange.top_hands.map((handClass) => <span key={handClass}>{handClass}</span>)}
             </div>
           ) : null}
-          {analysis.opponent_range.top_hands.length ? <p className="range-detail">Largest total weights by hand class, including available suit combinations.</p> : null}
-          {analysis.opponent_range.evidence.length ? (
-            <p>Observed: {analysis.opponent_range.evidence.join(' → ')}</p>
+          {opponentRange.top_hands.length ? <p className="range-detail">Largest total weights by hand class, including available suit combinations.</p> : null}
+          {opponentRange.evidence.length ? (
+            <p>Observed: {opponentRange.evidence.join(' → ')}</p>
           ) : null}
           <p className="range-detail">
-            {analysis.equity_method === 'exact_river'
-              ? `Exact river enumeration · ${analysis.equity_samples} combinations`
-              : `${analysis.equity_samples} simulations · 95% sampling bound ±${percent(analysis.equity_sampling_error)}`}
+            {analysis?.equity_method === 'exact_river'
+              ? `Exact river enumeration · ${analysis?.equity_samples} combinations`
+              : `${analysis?.equity_samples} simulations · 95% sampling bound ±${percent(analysis?.equity_sampling_error)}`}
             . Range-model uncertainty is additional.
           </p>
-        </div>
-      ) : null}
+        </details>
+      ))}
 
       {actionReview ? (
         <div className={`action-review review-${actionReview.verdict}`}>
@@ -173,16 +173,22 @@ export default function CoachPanel({
           </div>
           <div>
             <span>Winner</span>
-            <strong>{result.winners.join(', ')}</strong>
+            <strong>{result.winners.map((id) => hand?.players.find((p) => p.id === id)?.name ?? id).join(', ')}</strong>
           </div>
           <div>
             <span>Pot awarded</span>
             <strong>{result.pot_awarded}</strong>
           </div>
+          {result.pots?.map((pot, index) => (
+            <div key={index} className="pot-result">
+              <span>{index === 0 ? 'Main pot' : `Side pot ${index}`} · {pot.amount}</span>
+              <strong>{Object.entries(pot.awards).map(([id, amount]) => `${hand?.players.find((p) => p.id === id)?.name ?? id} +${amount}`).join(', ')}</strong>
+            </div>
+          ))}
           <div className="result-list">
             {result.player_results.map((player) => (
               <p key={player.player_id}>
-                <strong>{player.player_id}</strong>
+                <strong>{hand?.players.find((p) => p.id === player.player_id)?.name ?? player.player_id}</strong>
                 <span>
                   {label(player.outcome)}
                   {player.hand_strength ? ` · ${label(player.hand_strength.category)}` : ''}
@@ -195,7 +201,7 @@ export default function CoachPanel({
       ) : null}
 
       <div className="coach-notes">
-        {(analysis?.notes.length ? analysis.notes : ['Start a hand to get live decision analysis.']).map((note) => (
+        {(analysis?.notes.length ? analysis.notes : [result ? 'Hand complete. Choose the next hand to continue.' : 'Your decision analysis appears when it is your turn.']).map((note) => (
           <p key={note}>{note}</p>
         ))}
       </div>

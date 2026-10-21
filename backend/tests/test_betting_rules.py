@@ -3,7 +3,7 @@ import unittest
 
 from pydantic import ValidationError
 
-from app.models.poker import ActionType as A, Card, PlayerActionRequest, PlayerStatus, Rank, Street, Suit
+from app.models.poker import ActionType as A, Card, Player, PlayerActionRequest, PlayerStatus, Rank, Street, Suit
 from app.services.betting_rules import betting_options
 from app.services.hand_evaluator import HandEvaluator
 from app.services.poker_engine import PokerEngine
@@ -165,6 +165,8 @@ class BettingRulesTest(unittest.TestCase):
                 state.history = []
                 state.acted_at_bet = {}
                 state.pot = 105
+                state.players.append(Player(id='dead', name='Dead money', stack=0, position='cutoff', status=PlayerStatus.FOLDED))
+                state.contributions = {'hero': 52, 'villain': 52, 'dead': 1}
                 for p in state.players:
                     p.current_bet = 0
                 self.engine.apply_action(state, state.current_player_id, A.CHECK)

@@ -18,7 +18,7 @@ export default function HandHistory({ hand }: HandHistoryProps) {
         {(hand?.history ?? []).map((action, index) => (
           <li key={`${action.player_id}-${action.action}-${index}`}>
             <span>{action.street}</span>
-            <strong>{action.player_id}</strong>
+            <strong>{hand?.players.find((p) => p.id === action.player_id)?.name ?? action.player_id}</strong>
             <em>
               {action.action}
               {action.amount ? ` ${action.amount}` : ''}

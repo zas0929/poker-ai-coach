@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.hand import router as hand_router
+from app.api.rooms import router as room_router
 
 app = FastAPI(title="Poker AI Coach API")
 
@@ -15,6 +16,7 @@ app.add_middleware(
 )
 
 app.include_router(hand_router, prefix="/api/hand", tags=["hand"])
+app.include_router(room_router, prefix="/api/rooms", tags=["rooms"])
 
 
 @app.get("/")

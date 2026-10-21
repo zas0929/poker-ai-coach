@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel, Field, StrictInt
+from pydantic import BaseModel, Field, PrivateAttr, StrictInt
 
 
 class Rank(str, Enum):
@@ -104,11 +104,19 @@ class PlayerHandResult(BaseModel):
     hand_strength: Optional[HandStrength] = None
 
 
+class PotResult(BaseModel):
+    amount: int
+    eligible_player_ids: list[str]
+    winners: list[str]
+    awards: dict[str, int]
+
+
 class HandResult(BaseModel):
     reason: str
     winners: list[str] = Field(default_factory=list)
     pot_awarded: int
     player_results: list[PlayerHandResult] = Field(default_factory=list)
+    pots: list[PotResult] = Field(default_factory=list)
 
 
 class BettingOptions(BaseModel):
@@ -121,6 +129,7 @@ class BettingOptions(BaseModel):
 
 
 class HandState(BaseModel):
+    _deck: list[Card] = PrivateAttr(default_factory=list)
     hand_id: str
     street: Street
     pot: int
@@ -136,6 +145,7 @@ class HandState(BaseModel):
     last_full_raise: int = 0
     acted_at_bet: dict[str, int] = Field(default_factory=dict)
     betting: Optional[BettingOptions] = None
+    contributions: dict[str, int] = Field(default_factory=dict)
 
 
 class PlayerAnalysis(BaseModel):
@@ -164,6 +174,9 @@ class HandAnalysis(BaseModel):
     required_equity: float
     equity: float
     opponent_range: Optional[OpponentRangeSummary] = None
+    opponent_ranges: list[OpponentRangeSummary] = Field(default_factory=list)
+    opponent_count: int = 1
+    call_ev_available: bool = True
     equity_method: str = "monte_carlo"
     equity_samples: int = 0
     equity_sampling_error: float = 0.0

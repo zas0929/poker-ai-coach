@@ -4,7 +4,7 @@ from app.models.poker import ActionType, BettingOptions, HandState, PlayerStatus
 
 
 def betting_options(state: HandState, player_id: str | None = None) -> BettingOptions:
-    """Legal heads-up actions and sizes; a raise amount is the total street bet.
+    """Legal table actions and sizes; a raise amount is the total street bet.
 
     Short all-ins may be below the minimum full raise. A prior actor only regains
     raise rights after facing at least one full raise in cumulative increments.
@@ -17,7 +17,7 @@ def betting_options(state: HandState, player_id: str | None = None) -> BettingOp
     player = next((p for p in state.players if p.id == player_id), None)
     if player is None or player.status != PlayerStatus.ACTIVE or player.stack <= 0:
         return options
-    highest = max(p.current_bet for p in state.players)
+    highest = highest_bet(state)
     owed = highest - player.current_bet
     options.call_amount = min(player.stack, owed)
     options.legal_actions = [ActionType.FOLD, ActionType.CALL if owed else ActionType.CHECK]
@@ -35,3 +35,10 @@ def betting_options(state: HandState, player_id: str | None = None) -> BettingOp
             options.legal_actions.append(ActionType.RAISE)
             options.min_raise_to = min(highest + increment, maximum)
     return options
+
+
+def highest_bet(state: HandState) -> int:
+    actual = max(p.current_bet for p in state.players)
+    funded = sum(p.status == PlayerStatus.ACTIVE and p.stack > 0 for p in state.players)
+    # A short posted big blind does not reduce the preflop bring-in for others.
+    return max(actual, state.big_blind) if state.street == Street.PREFLOP and funded > 1 else actual

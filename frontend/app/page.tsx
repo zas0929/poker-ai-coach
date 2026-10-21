@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 import ActionPanel from '@/components/ActionPanel';
 import CoachPanel from '@/components/CoachPanel';
@@ -9,7 +10,7 @@ import PokerTable from '@/components/PokerTable';
 import { usePokerHand } from '@/hooks/usePokerHand';
 
 export default function HomePage() {
-  const [seatCount, setSeatCount] = useState(2);
+  const [seatCount, setSeatCount] = useState<number | null>(null);
   const {
     analysis,
     actionReview,
@@ -28,13 +29,14 @@ export default function HomePage() {
     <main className="app-shell">
       <section className="top-bar">
         <div>
-          <p className="eyebrow">Texas Hold'em AI Coach</p>
+          <p className="eyebrow">Texas Hold&apos;em AI Coach</p>
           <h1>Poker AI Coach</h1>
         </div>
         <div className="status-row">
+          <Link className="mode-link" href="/friends">Play with friends</Link>
           <label className="seat-count-control">
             <span>Seats</span>
-            <select value={seatCount} onChange={(event) => setSeatCount(Number(event.target.value))}>
+            <select value={seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} onChange={(event) => setSeatCount(Number(event.target.value))}>
               {[2, 3, 4, 5, 6].map((count) => (
                 <option key={count} value={count}>
                   {count}
@@ -43,7 +45,7 @@ export default function HomePage() {
             </select>
           </label>
           <span className="status-pill">{hand?.street ?? 'not started'}</span>
-          <button className="primary-button" onClick={startHand} disabled={isLoading}>
+          <button className="primary-button" onClick={() => startHand(seatCount ?? hand?.players.length ?? 2)} disabled={isLoading || Boolean(hand && !hand.result)}>
             New hand
           </button>
         </div>
@@ -60,7 +62,7 @@ export default function HomePage() {
 
       <section className="game-layout">
         <div className="table-column">
-          <PokerTable hand={hand} seatCount={seatCount} />
+          <PokerTable hand={hand} seatCount={hand?.players.length ?? 2} />
           <ActionPanel
             analysis={analysis}
             hand={hand}
@@ -68,7 +70,7 @@ export default function HomePage() {
             onAction={action}
             onAdvance={advance}
             onAnalyze={analyze}
-            onStartHand={startHand}
+            onStartHand={() => startHand(seatCount ?? hand?.players.length ?? 2)}
           />
         </div>
         <aside className="side-column">
@@ -88,41 +90,20 @@ export default function HomePage() {
 
 function SessionStrip({ hand }: { hand: ReturnType<typeof usePokerHand>['hand'] }) {
   const hero = hand?.players.find((player) => player.id === 'hero');
-  const villain = hand?.players.find((player) => player.id === 'villain');
+  const opponents = hand?.players.filter((player) => player.id !== 'hero') ?? [];
   const heroTotal = (hero?.stack ?? 0) + (hero?.current_bet ?? 0);
-  const villainTotal = (villain?.stack ?? 0) + (villain?.current_bet ?? 0);
-  const net = heroTotal - villainTotal;
-  const leader = net === 0 ? 'Even' : net > 0 ? 'You' : 'AI';
-  const button = hand?.dealer_player_id === 'hero' ? 'You' : hand?.dealer_player_id === 'villain' ? 'AI' : '-';
-
+  const aiTotal = opponents.reduce((sum, p) => sum + p.stack + p.current_bet, 0);
+  const net = heroTotal - 1000;
+  const leader = hand?.players.reduce((best, p) => p.stack > best.stack ? p : best, hand.players[0]);
+  const button = hand?.players.find((p) => p.id === hand.dealer_player_id)?.name ?? '-';
   return (
     <section className="session-strip">
-      <div>
-        <span>You</span>
-        <strong>{heroTotal}</strong>
-      </div>
-      <div>
-        <span>AI</span>
-        <strong>{villainTotal}</strong>
-      </div>
-      <div>
-        <span>Net</span>
-        <strong>{net > 0 ? `+${net}` : net}</strong>
-      </div>
-      <div>
-        <span>Leader</span>
-        <strong>{leader}</strong>
-      </div>
-      <div>
-        <span>Button</span>
-        <strong>{button}</strong>
-      </div>
-      <div>
-        <span>Blinds</span>
-        <strong>
-          {hand ? `${hand.small_blind}/${hand.big_blind}` : '-'}
-        </strong>
-      </div>
+      <div><span>You</span><strong>{heroTotal}</strong></div>
+      <div><span>{opponents.length} AI players</span><strong>{aiTotal}</strong></div>
+      <div><span>From initial stack</span><strong>{net > 0 ? `+${net}` : net}</strong></div>
+      <div><span>Largest stack</span><strong>{leader?.name ?? '-'}</strong></div>
+      <div><span>Button</span><strong>{button}</strong></div>
+      <div><span>Blinds</span><strong>{hand ? `${hand.small_blind}/${hand.big_blind}` : '-'}</strong></div>
     </section>
   );
 }

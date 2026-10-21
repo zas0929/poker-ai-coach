@@ -1,4 +1,4 @@
-"""Transparent, uncalibrated heads-up ranges inferred from public actions.
+"""Transparent, uncalibrated per-opponent ranges inferred from public actions.
 
 Weights are relative action likelihoods, not solver frequencies. Blinds alone
 leave every legal combination equally likely. Opponent hole cards are never read.
@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from itertools import combinations
 from math import exp
 
-from app.models.poker import Card, HandState, OpponentRangeSummary, Street
+from app.models.poker import Card, HandState, OpponentRangeSummary, PlayerStatus, Street
 from app.services.hand_evaluator import HandEvaluator, RANK_VALUES
 
 
@@ -29,13 +29,16 @@ class RangeService:
     def __init__(self, evaluator: HandEvaluator | None = None):
         self.evaluator = evaluator or HandEvaluator()
 
-    def infer(self, state: HandState, player_id: str = "hero") -> OpponentRange:
-        if len(state.players) != 2:
-            raise ValueError("Range analysis currently supports heads-up hands only.")
+    def infer(self, state: HandState, player_id: str = "hero", opponent_id: str | None = None) -> OpponentRange:
         player = next((p for p in state.players if p.id == player_id), None)
         if player is None:
             raise ValueError(f"Player {player_id} was not found.")
-        opponent = next(p for p in state.players if p.id != player_id)
+        opponents = [p for p in state.players if p.id != player_id and p.status != PlayerStatus.FOLDED]
+        if opponent_id is None and len(opponents) > 1:
+            raise ValueError("Specify an opponent for a multiway range.")
+        opponent = next((p for p in opponents if opponent_id is None or p.id == opponent_id), None)
+        if opponent is None:
+            raise ValueError("No live opponent matches this range request.")
         known = {(c.rank, c.suit) for c in [*player.cards, *state.board]}
         from app.models.poker import Rank, Suit
         deck = [Card(rank=r, suit=s) for r in Rank for s in Suit if (r, s) not in known]
@@ -59,7 +62,7 @@ class RangeService:
                 if action.street == Street.PREFLOP:
                     strength = self.preflop_strength(cards)
                     if action.action in {"bet", "raise"}:
-                        button = opponent.position == "small_blind_button"
+                        button = opponent.position in {"small_blind_button", "button", "cutoff"}
                         threshold = min(0.88, (0.38 if button else 0.48) + 0.16 * previous_raises)
                         weight *= self._continue_weight(strength, threshold)
                     elif action.action == "call":

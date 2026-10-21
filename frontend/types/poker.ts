@@ -57,11 +57,19 @@ export interface PlayerHandResult {
   hand_strength?: HandStrength | null;
 }
 
+export interface PotResult {
+  amount: number;
+  eligible_player_ids: string[];
+  winners: string[];
+  awards: Record<string, number>;
+}
+
 export interface HandResult {
   reason: string;
   winners: string[];
   pot_awarded: number;
   player_results: PlayerHandResult[];
+  pots?: PotResult[];
 }
 
 export interface BettingOptions {
@@ -89,6 +97,7 @@ export interface HandState {
   betting?: BettingOptions | null;
   last_full_raise?: number;
   acted_at_bet?: Record<string, number>;
+  contributions?: Record<string, number>;
 }
 
 export interface OpponentRangeSummary {
@@ -111,7 +120,10 @@ export interface HandAnalysis {
   required_equity: number;
   equity: number;
   opponent_range?: OpponentRangeSummary | null;
-  equity_method?: 'monte_carlo' | 'exact_river';
+  opponent_ranges?: OpponentRangeSummary[];
+  opponent_count?: number;
+  call_ev_available?: boolean;
+  equity_method?: 'monte_carlo' | 'exact_river' | 'monte_carlo_multiway';
   equity_samples?: number;
   equity_sampling_error?: number;
   ev_call: number;

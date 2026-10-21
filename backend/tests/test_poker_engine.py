@@ -1,6 +1,6 @@
 import unittest
 
-from app.models.poker import ActionType, PlayerStatus
+from app.models.poker import ActionType, PlayerStatus, Street
 from app.services.poker_engine import PokerEngine
 
 
@@ -35,6 +35,8 @@ class PokerEngineTest(unittest.TestCase):
         state = engine.start_hand()
         state.current_player_id = "villain"
         state.pot = 0
+        state.street = Street.FLOP
+        state.contributions = {p.id: 0 for p in state.players}
         for player in state.players:
             player.current_bet = 0
 
@@ -60,6 +62,7 @@ class PokerEngineTest(unittest.TestCase):
         state = engine.start_hand()
         state.current_player_id = "villain"
         state.pot = 2280
+        state.contributions = {"hero": 1000, "villain": 1280}
         for player in state.players:
             player.current_bet = 0
 
