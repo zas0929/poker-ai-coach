@@ -33,6 +33,7 @@ export default function HomePage() {
           <h1>Poker AI Coach</h1>
         </div>
         <div className="status-row">
+          <Link className="mode-link" href="/practice">Practice &amp; decisions</Link>
           <Link className="mode-link" href="/friends">Play with friends</Link>
           <label className="seat-count-control">
             <span>Seats</span>

@@ -12,6 +12,11 @@ Completed hands appear in **Your hand history** inside the room. Open a hand to
 replay each decision, review net chips and inspect main/side-pot payouts. The
 archive requires your seat token and follows the same private-card rules as live play.
 
+[Practice & decisions](http://localhost:3000/practice) saves your AI-table choices
+and offers call-price and legal-action exercises, including your own past spots.
+Answers, progress and the personal journal survive restarts. See
+[docs/TRAINING.md](docs/TRAINING.md) for grading, access and current limitations.
+
 Texas Hold'em AI Coach is a poker training app inspired by the Chess AI Coach architecture: a deterministic analysis backend, a focused frontend table, and an AI coach panel that explains decisions in natural language.
 
 The core idea is hybrid:

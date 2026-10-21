@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { PokerApi } from '@/services/pokerApi';
+import { TrainingApi } from '@/services/trainingApi';
 import type { ActionReview, ActionType, HandAnalysis, HandState } from '@/types/poker';
 
 export function usePokerHand() {
@@ -61,14 +62,17 @@ export function usePokerHand() {
   }), [applyState, run]);
 
   const action = useCallback(async (actionType: ActionType, amount?: number) => run(async () => {
-    const before = hand?.current_player_id === 'hero' ? await PokerApi.analyze('hero') : null;
-    const result = await PokerApi.action({player_id: 'hero', action: actionType, amount});
-    if (before) {
-      const review = reviewAction(actionType, before);
-      setActionReview(review);
-      setDecisionLog((current) => [review, ...current].slice(0, 25));
+    if (!hand) return;
+    try {
+      const result = await TrainingApi.action(hand, actionType, amount);
+      setActionReview(result.review);
+      setDecisionLog((current) => [result.review, ...current].slice(0, 25));
+      await applyState(result.state);
+    } catch (cause) {
+      // A lost response must not leave the UI offering a stale action again.
+      try { await applyState(await PokerApi.getState()); } catch { /* Keep the original error. */ }
+      throw cause;
     }
-    await applyState(result);
   }), [applyState, hand, run]);
 
   const advance = useCallback(async () => run(async () => {
@@ -91,48 +95,5 @@ export function usePokerHand() {
     analyze,
     clearError: () => setError(null),
     startHand,
-  };
-}
-
-function reviewAction(actionType: ActionType, analysis: HandAnalysis): ActionReview {
-  const recommended = analysis.recommended_action;
-
-  if (actionType === recommended) {
-    return {
-      hand_id: analysis.hand_id,
-      street: analysis.street,
-      chosen_action: actionType,
-      recommended_action: recommended,
-      verdict: 'optimal',
-      summary: `Matches the coach heuristic. ${analysis.coach_summary}`,
-    };
-  }
-
-  const acceptablePairs = new Set([
-    'call:raise',
-    'raise:call',
-    'check:bet',
-    'bet:check',
-  ]);
-  const isAcceptable = acceptablePairs.has(`${actionType}:${recommended}`);
-
-  if (isAcceptable && analysis.confidence < 0.7) {
-    return {
-      hand_id: analysis.hand_id,
-      street: analysis.street,
-      chosen_action: actionType,
-      recommended_action: recommended,
-      verdict: 'acceptable',
-      summary: `Reasonable alternative. The engine preferred ${recommended}, but confidence was not high enough to call your ${actionType} a clear mistake.`,
-    };
-  }
-
-  return {
-    hand_id: analysis.hand_id,
-    street: analysis.street,
-    chosen_action: actionType,
-    recommended_action: recommended,
-    verdict: 'reconsider',
-    summary: `Review this spot. The engine preferred ${recommended}, while you chose ${actionType}. ${analysis.coach_summary}`,
   };
 }

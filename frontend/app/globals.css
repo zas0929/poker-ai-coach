@@ -1435,3 +1435,29 @@ h2 {
 
 .review-totals .archive-profit { color: var(--success); }
 .review-totals .archive-loss { color: var(--danger); }
+
+.practice-question { display: grid; gap: 14px; margin-bottom: 16px; }
+.practice-question p { margin: 0; line-height: 1.6; }
+.practice-question label { display: grid; gap: 7px; font-size: 13px; color: var(--muted); }
+.practice-question select, .practice-percent input { border: 1px solid var(--line); border-radius: 8px; padding: 10px; background: var(--background); color: var(--text); min-width: 0; }
+.practice-percent { max-width: 240px; }
+.practice-actions { border: 1px solid var(--line); border-radius: 8px; display: flex; flex-wrap: wrap; gap: 16px; padding: 14px; }
+.practice-actions label { display: flex; align-items: center; gap: 8px; text-transform: capitalize; }
+.practice-actions input { width: 18px; height: 18px; }
+.practice-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.practice-buttons button { padding: 8px 12px; }
+.practice-feedback { border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+.practice-feedback h3 { margin: 0 0 8px; }
+.practice-correct { border-color: var(--success); }
+.practice-correct h3 { color: var(--success); }
+.practice-retry { border-color: var(--accent); }
+.practice-retry h3 { color: var(--accent); }
+.saved-decisions { display: grid; gap: 14px; }
+.saved-decisions details { border-top: 1px solid var(--line); padding-top: 12px; }
+.saved-decisions summary { cursor: pointer; }
+.saved-decisions summary strong, .saved-decisions summary span { display: block; margin-bottom: 5px; }
+.saved-decisions summary span, .saved-decisions p { color: var(--muted); font-size: 12px; line-height: 1.6; }
+.practice-progress { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-radius: 10px; gap: 12px; padding: 12px; }
+.practice-progress > div { display: grid; gap: 6px; align-content: start; }
+.practice-progress strong { font-size: 22px; }
+@media (max-width: 600px) { .practice-question .archive-heading { align-items: stretch; flex-direction: column; } .practice-progress { grid-template-columns: repeat(2,minmax(0,1fr)); } }
