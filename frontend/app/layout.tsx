@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { LanguageProvider, LanguageSwitcher } from '@/i18n/LanguageProvider';
 
 export const metadata: Metadata = {
   title: 'Poker AI Coach',
-  description: "Texas Hold'em decision trainer",
+  description: "Тренажёр решений в техасском холдеме",
 };
 
 export default function RootLayout({
@@ -12,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="ru">
+      <body><LanguageProvider><LanguageSwitcher />{children}</LanguageProvider></body>
     </html>
   );
 }

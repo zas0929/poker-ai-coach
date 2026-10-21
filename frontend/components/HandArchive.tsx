@@ -1,5 +1,7 @@
 'use client';
 
+import { useI18n } from '@/i18n/LanguageProvider';
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PokerTable from '@/components/PokerTable';
 import HandHistory from '@/components/HandHistory';
@@ -10,6 +12,7 @@ import type { ArchivedHand, ArchivedHandSummary, RoomCredentials } from '@/servi
 export default function HandArchive({ credentials, completedHandId }: {
   credentials: RoomCredentials; completedHandId: string | null;
 }) {
+  const { t, locale } = useI18n();
   const [items, setItems] = useState<ArchivedHandSummary[]>([]);
   const [nextCursor, setNextCursor] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
@@ -56,25 +59,26 @@ export default function HandArchive({ credentials, completedHandId }: {
 
   return (
     <section className="control-panel hand-archive">
-      <div className="archive-heading"><h2>Your hand history</h2><button disabled={loading} onClick={() => { setLoading(true); setError(null); void load(); }}>Refresh</button></div>
-      <p className="room-note">Completed hands you played. Net result includes returned bets and split pots.</p>
-      {error ? <p role="alert" className="archive-error">{error}</p> : null}
-      {!items.length ? <p>{loading ? 'Loading history…' : 'Play a hand to see its review here.'}</p> : null}
+      <div className="archive-heading"><h2>{t("Your hand history")}</h2><button disabled={loading} onClick={() => { setLoading(true); setError(null); void load(); }}>{t("Refresh")}</button></div>
+      <p className="room-note">{t("Completed hands you played. Net result includes returned bets and split pots.")}</p>
+      {error ? <p role="alert" className="archive-error">{t(error)}</p> : null}
+      {!items.length ? <p>{t(loading ? 'Loading history…' : 'Play a hand to see its review here.')}</p> : null}
       <ol className="archive-list">{items.map((item) => (
         <li key={item.hand_id}>
           <button disabled={Boolean(opening)} onClick={() => void openHand(item.hand_id)}>
-            <span><strong>{item.reason === 'showdown' ? 'Showdown' : 'Won by fold'} · {item.player_count} players</strong><small>{new Date(item.completed_at.replace(' ', 'T')).toLocaleString()} · {item.hand_id.slice(0, 8)}</small></span>
-            <em className={item.net >= 0 ? 'archive-profit' : 'archive-loss'}>{opening === item.hand_id ? 'Opening…' : `${item.net > 0 ? '+' : ''}${item.net}`}</em>
+            <span><strong>{t(item.reason === 'showdown' ? 'Showdown' : 'Won by fold')} · {t(item.player_count)}{t(" players")}</strong><small>{t(new Date(item.completed_at.replace(' ', 'T')).toLocaleString(locale === 'uk' ? 'uk-UA' : 'ru-RU'))} · {t(item.hand_id.slice(0, 8))}</small></span>
+            <em className={item.net >= 0 ? 'archive-profit' : 'archive-loss'}>{t(opening === item.hand_id ? 'Opening…' : `${item.net > 0 ? '+' : ''}${item.net}`)}</em>
           </button>
         </li>
       ))}</ol>
-      {nextCursor ? <button disabled={loading} onClick={() => { setLoading(true); setError(null); void load(nextCursor); }}>Load older hands</button> : null}
+      {nextCursor ? <button disabled={loading} onClick={() => { setLoading(true); setError(null); void load(nextCursor); }}>{t("Load older hands")}</button> : null}
       {review ? <HandReview key={review.hand_id} review={review} onClose={() => setReview(null)} /> : null}
     </section>
   );
 }
 
 function HandReview({ review, onClose }: { review: ArchivedHand; onClose: () => void }) {
+  const { t } = useI18n();
   const dialog = useRef<HTMLDialogElement>(null);
   const [index, setIndex] = useState(review.frames.length - 1);
   useEffect(() => {
@@ -90,26 +94,34 @@ function HandReview({ review, onClose }: { review: ArchivedHand; onClose: () => 
   const net = won - committed;
   const name = (id: string) => review.hand.players.find((player) => player.id === id)?.name ?? id;
   const facts = frame.decision;
+  const frameLabel = (step: ArchivedHand['frames'][number]) => {
+    const actor = step.hand.players.find(player => player.id === step.hand.current_player_id);
+    if (!actor) return t(step.label);
+    const prefix = `${step.hand.street} · ${actor.name}: `;
+    return step.label.startsWith(prefix)
+      ? `${t(step.hand.street)} · ${actor.name}: ${t(step.label.slice(prefix.length))}`
+      : step.label;
+  };
 
   return (
     <dialog ref={dialog} className="hand-review-dialog" aria-labelledby="hand-review-title" onCancel={onClose}>
-      <div className="archive-heading review-header"><div><p className="eyebrow">Archived hand · {review.hand_id.slice(0, 8)}</p><h2 id="hand-review-title">Hand review</h2><p>The live table continues while this review is open.</p></div><button autoFocus onClick={onClose}>Close review</button></div>
-      {review.warning ? <p role="status" className="archive-error">{review.warning}</p> : null}
-      <div className="review-totals"><span>Committed <strong>{committed}</strong></span><span>Received <strong>{won}</strong></span><span>Net <strong className={net >= 0 ? 'archive-profit' : 'archive-loss'}>{net > 0 ? '+' : ''}{net}</strong></span><span>Total awarded <strong>{result.pot_awarded}</strong></span></div>
-      <nav className="replay-controls" aria-label="Replay navigation">
-        <button disabled={index === 0} onClick={() => setIndex(0)}>First</button>
-        <button disabled={index === 0} onClick={() => setIndex(index - 1)}>Previous</button>
-        <label>Replay step<select value={index} onChange={(event) => setIndex(Number(event.target.value))}>{review.frames.map((step, i) => <option key={i} value={i}>{i + 1}. {step.label}</option>)}</select></label>
-        <button disabled={index === review.frames.length - 1} onClick={() => setIndex(index + 1)}>Next</button>
-        <button disabled={index === review.frames.length - 1} onClick={() => setIndex(review.frames.length - 1)}>Result</button>
+      <div className="archive-heading review-header"><div><p className="eyebrow">{t("Archived hand · ")}{t(review.hand_id.slice(0, 8))}</p><h2 id="hand-review-title">{t("Hand review")}</h2><p>{t("The live table continues while this review is open.")}</p></div><button autoFocus onClick={onClose}>{t("Close review")}</button></div>
+      {review.warning ? <p role="status" className="archive-error">{t(review.warning)}</p> : null}
+      <div className="review-totals"><span>{t("Committed ")}<strong>{committed}</strong></span><span>{t("Received ")}<strong>{won}</strong></span><span>{t("Net ")}<strong className={net >= 0 ? 'archive-profit' : 'archive-loss'}>{t(net > 0 ? '+' : '')}{net}</strong></span><span>{t("Total awarded ")}<strong>{result.pot_awarded}</strong></span></div>
+      <nav className="replay-controls" aria-label={t("Replay navigation")}>
+        <button disabled={index === 0} onClick={() => setIndex(0)}>{t("First")}</button>
+        <button disabled={index === 0} onClick={() => setIndex(index - 1)}>{t("Previous")}</button>
+        <label>{t("Replay step")}<select value={index} onChange={(event) => setIndex(Number(event.target.value))}>{review.frames.map((step, i) => <option key={i} value={i}>{t(i + 1)}. {frameLabel(step)}</option>)}</select></label>
+        <button disabled={index === review.frames.length - 1} onClick={() => setIndex(index + 1)}>{t("Next")}</button>
+        <button disabled={index === review.frames.length - 1} onClick={() => setIndex(review.frames.length - 1)}>{t("Result")}</button>
       </nav>
-      <p className="replay-caption">{index === review.frames.length - 1 ? 'Saved result' : `Before the recorded action: ${frame.label}`}</p>
+      <p className="replay-caption">{index === review.frames.length - 1 ? t('Saved result') : t('Before the recorded action: {0}').replace('{0}', frameLabel(frame))}</p>
       <div className="review-layout">
         <div><PokerTable hand={frame.hand} seatCount={frame.hand.players.length} viewerId={review.viewer_id} /></div>
         <aside className="review-facts">
-          {facts ? <section className="control-panel"><h3>Your decision</h3><p>{facts.description}</p><dl><div><dt>Pot before action</dt><dd>{facts.pot_before}</dd></div><div><dt>Your stack</dt><dd>{facts.stack_before}</dd></div><div><dt>Call amount</dt><dd>{facts.call_amount}</dd></div><div><dt>Chips committed by action</dt><dd>{facts.committed_by_action}</dd></div><div><dt>Made hand at the time</dt><dd>{facts.made_hand.replaceAll('_', ' ')}</dd></div>{facts.break_even_equity !== null ? <div><dt>Break-even call equity</dt><dd>{(facts.break_even_equity * 100).toFixed(1)}%</dd></div> : null}</dl><p className="room-note">{facts.note}</p></section> : index < review.frames.length - 1 ? <p className="room-note">Opponent action from the public hand log. Their private cards remain hidden.</p> : null}
-          {index === review.frames.length - 1 ? <section className="control-panel"><h3>Pots and payouts</h3>{result.pots?.map((pot, i) => <div className="review-pot" key={i}><strong>{i ? `Side pot ${i}` : 'Main pot'} · {pot.amount}</strong><p>Eligible: {pot.eligible_player_ids.map(name).join(', ')}</p>{Object.entries(pot.awards).map(([id, amount]) => <p key={id}>{name(id)} receives {amount}</p>)}</div>)}</section> : null}
-          <section className="control-panel"><h3>Board at this step</h3><div className="review-board">{frame.hand.board.map((card, i) => <CardView key={i} card={card} />)}{!frame.hand.board.length ? <p>Preflop</p> : null}</div><p className="room-note">{review.review_note}</p></section>
+          {facts ? <section className="control-panel"><h3>{t("Your decision")}</h3><p>{t(facts.description)}</p><dl><div><dt>{t("Pot before action")}</dt><dd>{t(facts.pot_before)}</dd></div><div><dt>{t("Your stack")}</dt><dd>{t(facts.stack_before)}</dd></div><div><dt>{t("Call amount")}</dt><dd>{t(facts.call_amount)}</dd></div><div><dt>{t("Chips committed by action")}</dt><dd>{t(facts.committed_by_action)}</dd></div><div><dt>{t("Made hand at the time")}</dt><dd>{t(facts.made_hand.replaceAll('_', ' '))}</dd></div>{facts.break_even_equity !== null ? <div><dt>{t("Break-even call equity")}</dt><dd>{t((facts.break_even_equity * 100).toFixed(1))}%</dd></div> : null}</dl><p className="room-note">{t(facts.note)}</p></section> : index < review.frames.length - 1 ? <p className="room-note">{t("Opponent action from the public hand log. Their private cards remain hidden.")}</p> : null}
+          {index === review.frames.length - 1 ? <section className="control-panel"><h3>{t("Pots and payouts")}</h3>{result.pots?.map((pot, i) => <div className="review-pot" key={i}><strong>{t(i ? `Side pot ${i}` : 'Main pot')} · {t(pot.amount)}</strong><p>{t("Eligible: ")}{t(pot.eligible_player_ids.map(name).join(', '))}</p>{Object.entries(pot.awards).map(([id, amount]) => <p key={id}>{name(id)}{t(" receives ")}{amount}</p>)}</div>)}</section> : null}
+          <section className="control-panel"><h3>{t("Board at this step")}</h3><div className="review-board">{frame.hand.board.map((card, i) => <CardView key={i} card={card} />)}{!frame.hand.board.length ? <p>{t("Preflop")}</p> : null}</div><p className="room-note">{t(review.review_note)}</p></section>
           <HandHistory hand={frame.hand} />
         </aside>
       </div>

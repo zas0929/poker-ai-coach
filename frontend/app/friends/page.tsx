@@ -1,5 +1,7 @@
 'use client';
 
+import { useI18n } from '@/i18n/LanguageProvider';
+
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import ActionPanel from '@/components/ActionPanel';
@@ -11,6 +13,7 @@ import type { RoomCredentials, RoomState, RoomSettings } from '@/services/roomAp
 import type { ActionType } from '@/types/poker';
 
 export default function FriendsPage() {
+  const { t } = useI18n();
   const [credentials, setCredentials] = useState<RoomCredentials | null>(null);
   const [room, setRoom] = useState<RoomState | null>(null);
   const [name, setName] = useState('');
@@ -184,27 +187,27 @@ export default function FriendsPage() {
   return (
     <main className="app-shell">
       <section className="top-bar">
-        <div><p className="eyebrow">Private tables · virtual chips</p><h1>Play with friends</h1></div>
-        <div className="status-row"><span className="status-pill">{status}</span><Link className="mode-link" href="/">AI training</Link></div>
+        <div><p className="eyebrow">{t("Private tables · virtual chips")}</p><h1>{t("Play with friends")}</h1></div>
+        <div className="status-row"><span className="status-pill">{t(status)}</span><Link className="mode-link" href="/">{t("AI training")}</Link></div>
       </section>
-      {error ? <div className="error-banner"><span>{error}</span><button onClick={() => setError(null)}>Dismiss</button></div> : null}
+      {error ? <div className="error-banner"><span>{t(error)}</span><button onClick={() => setError(null)}>{t("Dismiss")}</button></div> : null}
       {!credentials ? (
         <section className="room-entry control-panel">
-          <h2>Your private poker table</h2>
-          <p>Create a room and share its invitation. Bring 2–6 players, mark everyone ready, then deal.</p>
-          <label>Your name<input autoComplete="nickname" maxLength={24} value={name} onChange={(event) => setName(event.target.value)} placeholder="Roman" /></label>
-          <button className="primary-button" disabled={busy || !name.trim()} onClick={() => enter(false)}>Create room</button>
-          <div className="room-join"><label>Room code<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder="Invitation code" /></label><button disabled={busy || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>Join room</button></div>
-          <p className="room-note">Local preview. Friends on other networks will need the hosting stage. Rooms, seats and hands are saved on this server.</p>
+          <h2>{t("Your private poker table")}</h2>
+          <p>{t("Create a room and share its invitation. Bring 2–6 players, mark everyone ready, then deal.")}</p>
+          <label>{t("Your name")}<input autoComplete="nickname" maxLength={24} value={name} onChange={(event) => setName(event.target.value)} placeholder="Roman" /></label>
+          <button className="primary-button" disabled={busy || !name.trim()} onClick={() => enter(false)}>{t("Create room")}</button>
+          <div className="room-join"><label>{t("Room code")}<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder={t("Invitation code")} /></label><button disabled={busy || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>{t("Join room")}</button></div>
+          <p className="room-note">{t("Local preview. Friends on other networks will need the hosting stage. Rooms, seats and hands are saved on this server.")}</p>
         </section>
       ) : (
         <>
           <section className="room-toolbar control-panel">
-            <div><span className="eyebrow">Room {credentials.code}</span><strong>{me?.name ?? 'Restoring your seat'} · {room?.members.length ?? 1}/6 players</strong></div>
-            <button onClick={copyInvite}>{copied ? 'Link copied' : 'Copy invitation'}</button>
-            <button onClick={reset}>Close table</button>
-            <button disabled={busy || !connected} onClick={() => send('leave')}>Leave room</button>
-            <input className="invite-field" aria-label="Invitation link" readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} />
+            <div><span className="eyebrow">{t("Room ")}{t(credentials.code)}</span><strong>{me?.name ?? t('Restoring your seat')} · {t(room?.members.length ?? 1)}{t("/6 players")}</strong></div>
+            <button onClick={copyInvite}>{t(copied ? 'Link copied' : 'Copy invitation')}</button>
+            <button onClick={reset}>{t("Close table")}</button>
+            <button disabled={busy || !connected} onClick={() => send('leave')}>{t("Leave room")}</button>
+            <input className="invite-field" aria-label={t("Invitation link")} readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} />
           </section>
           <section className="game-layout">
             <div className="table-column">
@@ -213,24 +216,24 @@ export default function FriendsPage() {
             </div>
             <aside className="side-column">
               <section className="control-panel room-lobby">
-                <p className="saved-room">Saved on this server · reconnect after a restart</p>
+                <p className="saved-room">{t("Saved on this server · reconnect after a restart")}</p>
                 {!hand && isHost ? <fieldset className="room-settings" disabled={busy || !connected}>
-                  <legend>Table settings</legend>
-                  <label>Starting stack<input type="number" min={100} max={1000000} step={1} value={editedSettings.starting_stack} onChange={(event) => editSetting('starting_stack', Number(event.target.value))} /></label>
-                  <label>Small blind<input type="number" min={1} max={10000} step={1} value={editedSettings.small_blind} onChange={(event) => editSetting('small_blind', Number(event.target.value))} /></label>
-                  <label>Big blind<input type="number" min={2} max={20000} step={1} value={editedSettings.big_blind} onChange={(event) => editSetting('big_blind', Number(event.target.value))} /></label>
-                  <label>Seconds per turn<input type="number" min={10} max={120} step={1} value={editedSettings.turn_seconds} onChange={(event) => editSetting('turn_seconds', Number(event.target.value))} /></label>
-                  <button disabled={!validSettings} onClick={() => send('settings', { settings: editedSettings })}>Apply settings</button>
-                  <small>At least 20 big blinds in the starting stack. Applying changes clears everyone&apos;s readiness. Settings lock after the first deal.</small>
+                  <legend>{t("Table settings")}</legend>
+                  <label>{t("Starting stack")}<input type="number" min={100} max={1000000} step={1} value={editedSettings.starting_stack} onChange={(event) => editSetting('starting_stack', Number(event.target.value))} /></label>
+                  <label>{t("Small blind")}<input type="number" min={1} max={10000} step={1} value={editedSettings.small_blind} onChange={(event) => editSetting('small_blind', Number(event.target.value))} /></label>
+                  <label>{t("Big blind")}<input type="number" min={2} max={20000} step={1} value={editedSettings.big_blind} onChange={(event) => editSetting('big_blind', Number(event.target.value))} /></label>
+                  <label>{t("Seconds per turn")}<input type="number" min={10} max={120} step={1} value={editedSettings.turn_seconds} onChange={(event) => editSetting('turn_seconds', Number(event.target.value))} /></label>
+                  <button disabled={!validSettings} onClick={() => send('settings', { settings: editedSettings })}>{t("Apply settings")}</button>
+                  <small>{t("At least 20 big blinds in the starting stack. Applying changes clears everyone's readiness. Settings lock after the first deal.")}</small>
                 </fieldset> : null}
-                <h2>{betweenHands ? 'Ready for the next hand?' : 'Players at the table'}</h2>
-                {secondsLeft !== null ? <div className={`turn-clock ${secondsLeft <= 10 ? 'turn-clock-urgent' : ''}`} role="timer" aria-label="Time remaining">{secondsLeft}s to act <span>Timeout: check or fold, then sit out</span></div> : null}
-                <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{member.player_id === room.viewer_id ? ' (you)' : ''}</strong><span>{member.player_id === room.host_id ? 'Host · ' : ''}{member.connected ? 'Connected' : 'Disconnected'}</span></div><em>{member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing'}</em></li>)}</ul>
-                <button disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out })}>{me?.sitting_out ? 'Return to table' : 'Sit out'}</button>
-                {me?.sitting_out ? <p>You are sitting out. Current-hand decisions use check/fold automatically; return between hands.</p> : null}
-                {betweenHands ? <><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{me?.ready ? 'Not ready' : "I'm ready"}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{hand ? 'Deal next hand' : 'Deal first hand'}</button> : <p>The host deals when everyone is ready.</p>}</> : <p>{hand?.players.find((player) => player.id === hand.current_player_id)?.name}&apos;s turn. Streets advance automatically.</p>}
-                <p className="room-note">Blinds {settings.small_blind}/{settings.big_blind} · Starting stack {settings.starting_stack}. Virtual training chips: stacks below {settings.big_blind} receive {settings.starting_stack} extra chips between hands. Players can join between hands. Reopen this link in the same browser to restore your seat.</p>
-                <p className="room-note">Each turn has {settings.turn_seconds} seconds, including after disconnect. Timeout uses check if possible, otherwise fold, then sit-out. Leaving releases the seat after this hand; the host role transfers automatically.</p>
+                <h2>{t(betweenHands ? 'Ready for the next hand?' : 'Players at the table')}</h2>
+                {secondsLeft !== null ? <div className={`turn-clock ${secondsLeft <= 10 ? 'turn-clock-urgent' : ''}`} role="timer" aria-label={t("Time remaining")}>{secondsLeft}{t("s to act ")}<span>{t("Timeout: check or fold, then sit out")}</span></div> : null}
+                <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{t(member.player_id === room.viewer_id ? ' (you)' : '')}</strong><span>{t(member.player_id === room.host_id ? 'Host · ' : '')}{t(member.connected ? 'Connected' : 'Disconnected')}</span></div><em>{t(member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing')}</em></li>)}</ul>
+                <button disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
+                {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
+                {betweenHands ? <><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{t(hand ? 'Deal next hand' : 'Deal first hand')}</button> : <p>{t("The host deals when everyone is ready.")}</p>}</> : <p>{hand?.players.find((player) => player.id === hand.current_player_id)?.name}{t("'s turn. Streets advance automatically.")}</p>}
+                <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)}{t(" · Starting stack ")}{t(settings.starting_stack)}{t(". Virtual training chips: stacks below ")}{t(settings.big_blind)}{t(" receive ")}{t(settings.starting_stack)}{t(" extra chips between hands. Players can join between hands. Reopen this link in the same browser to restore your seat.")}</p>
+                <p className="room-note">{t("Each turn has ")}{t(settings.turn_seconds)}{t(" seconds, including after disconnect. Timeout uses check if possible, otherwise fold, then sit-out. Leaving releases the seat after this hand; the host role transfers automatically.")}</p>
               </section>
               <HandHistory hand={hand} />
               <HandArchive key={`${credentials.code}:${credentials.player_id}`} credentials={credentials} completedHandId={hand?.result ? hand.hand_id : null} />

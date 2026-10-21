@@ -1461,3 +1461,8 @@ h2 {
 .practice-progress > div { display: grid; gap: 6px; align-content: start; }
 .practice-progress strong { font-size: 22px; }
 @media (max-width: 600px) { .practice-question .archive-heading { align-items: stretch; flex-direction: column; } .practice-progress { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+
+.language-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 10px; max-width: 1600px; margin: 0 auto; padding: 12px 24px 0; color: var(--muted, #aab7c7); font-size: 14px; }
+.language-toolbar select { width: auto; padding: 6px 10px; border-radius: 8px; border: 1px solid #354353; background: #131e29; color: #f1f5f9; }
+.status-row { flex-wrap: wrap; }
+@media (max-width: 640px) { .language-toolbar { padding-inline: 14px; } }

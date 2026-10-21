@@ -1,5 +1,7 @@
 'use client';
 
+import { useI18n } from '@/i18n/LanguageProvider';
+
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import PokerTable from '@/components/PokerTable';
@@ -11,6 +13,7 @@ import type { ActionType } from '@/types/poker';
 const ACTIONS: ActionType[] = ['fold', 'check', 'call', 'bet', 'raise'];
 
 export default function PracticePage() {
+  const { t, locale } = useI18n();
   const [kind, setKind] = useState<ExerciseKind>('call_price');
   const [question, setQuestion] = useState<Exercise | null>(null);
   const [progress, setProgress] = useState<TrainingProgress | null>(null);
@@ -77,29 +80,29 @@ export default function PracticePage() {
 
   return (
     <main className="app-shell">
-      <section className="top-bar"><div><p className="eyebrow">Saved training · exact rules and call prices</p><h1>Practice &amp; decisions</h1></div><div className="status-row"><Link className="mode-link" href="/">AI training</Link><Link className="mode-link" href="/friends">Private tables</Link></div></section>
-      <section className="session-strip practice-progress"><div><span>Answered</span><strong>{progress?.attempts ?? 0}</strong></div><div><span>Correct answers</span><strong>{progress?.correct_attempts ?? 0}</strong></div><div><span>Questions correct on last try</span><strong>{progress?.last_answer_correct ?? 0}</strong></div><div><span>Questions to review</span><strong>{progress?.to_review ?? 0}</strong></div></section>
-      {error ? <div className="error-banner" role="alert"><span>{error}</span><button disabled={loading} onClick={() => void retry()}>Retry</button></div> : null}
+      <section className="top-bar"><div><p className="eyebrow">{t("Saved training · exact rules and call prices")}</p><h1>{t("Practice & decisions")}</h1></div><div className="status-row"><Link className="mode-link" href="/">{t("AI training")}</Link><Link className="mode-link" href="/friends">{t("Private tables")}</Link></div></section>
+      <section className="session-strip practice-progress"><div><span>{t("Answered")}</span><strong>{progress?.attempts ?? 0}</strong></div><div><span>{t("Correct answers")}</span><strong>{progress?.correct_attempts ?? 0}</strong></div><div><span>{t("Questions correct on last try")}</span><strong>{progress?.last_answer_correct ?? 0}</strong></div><div><span>{t("Questions to review")}</span><strong>{progress?.to_review ?? 0}</strong></div></section>
+      {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button disabled={loading} onClick={() => void retry()}>{t("Retry")}</button></div> : null}
       <section className="game-layout">
         <div className="table-column">
           <section className="control-panel practice-question">
-            <div className="archive-heading"><h2>{question?.kind === 'legal_actions' ? 'Legal actions' : 'Call price'}</h2><label>Exercise type<select disabled={loading} value={kind} onChange={(event) => void next(event.target.value as ExerciseKind)}><option value="call_price">Call price</option><option value="legal_actions">Legal actions</option></select></label></div>
-            <p className="eyebrow">{question?.source ?? 'Loading practice'}</p><p>{question?.prompt ?? 'Loading your saved profile…'}</p>
-            {question ? <p>Pot: {question.context.pot} · Call amount: {question.context.call_amount}{question.context.uncalled_return ? ` · Uncallable chips returned: ${question.context.uncalled_return}` : ''}</p> : null}
-            {question?.kind === 'legal_actions' ? <p className="room-note">Highest bet: {question.context.highest_bet} · Last full raise: {question.context.last_full_raise} · {question.context.hero_acted_at_bet === null ? 'You have not acted on this street' : `You last acted at bet ${question.context.hero_acted_at_bet}`}</p> : null}
-            {question?.kind === 'call_price' ? <label className="practice-percent">Your equity answer (%)<input type="number" min={0} max={100} step={0.1} inputMode="decimal" value={percent} disabled={loading || Boolean(result)} onChange={(event) => { setPercent(event.target.value); attempt.current = null; }} /></label> : <fieldset className="practice-actions" disabled={loading || Boolean(result)}><legend>Select all allowed actions</legend>{ACTIONS.map((action) => <label key={action}><input type="checkbox" checked={actions.includes(action)} onChange={(event) => { setActions((old) => event.target.checked ? [...old, action] : old.filter((value) => value !== action)); attempt.current = null; }} />{action}</label>)}</fieldset>}
-            <div className="practice-buttons"><button className="primary-button" disabled={loading || !question || !validAnswer || Boolean(result)} onClick={() => void submit()}>Check answer</button><button disabled={loading} onClick={() => void next(kind)}>{result ? 'Next exercise' : 'Skip exercise'}</button></div>
-            {result ? <div className={`practice-feedback ${result.correct ? 'practice-correct' : 'practice-retry'}`} role="status"><h3>{result.correct ? 'Correct' : 'Review this answer'}</h3><p>{result.explanation}</p>{result.tolerance_percentage_points !== null ? <small>Accepted rounding: ±{result.tolerance_percentage_points} percentage points.</small> : null}</div> : null}
+            <div className="archive-heading"><h2>{t(question?.kind === 'legal_actions' ? 'Legal actions' : 'Call price')}</h2><label>{t("Exercise type")}<select disabled={loading} value={kind} onChange={(event) => void next(event.target.value as ExerciseKind)}><option value="call_price">{t("Call price")}</option><option value="legal_actions">{t("Legal actions")}</option></select></label></div>
+            <p className="eyebrow">{t(question?.source ?? 'Loading practice')}</p><p>{t(question?.prompt ?? 'Loading your saved profile…')}</p>
+            {question ? <p>{t("Pot: ")}{question.context.pot}{t(" · Call amount: ")}{question.context.call_amount}{t(question.context.uncalled_return ? ` · Uncallable chips returned: ${question.context.uncalled_return}` : '')}</p> : null}
+            {question?.kind === 'legal_actions' ? <p className="room-note">{t("Highest bet: ")}{question.context.highest_bet}{t(" · Last full raise: ")}{question.context.last_full_raise} · {t(question.context.hero_acted_at_bet === null ? 'You have not acted on this street' : `You last acted at bet ${question.context.hero_acted_at_bet}`)}</p> : null}
+            {question?.kind === 'call_price' ? <label className="practice-percent">{t("Your equity answer (%)")}<input type="number" min={0} max={100} step={0.1} inputMode="decimal" value={percent} disabled={loading || Boolean(result)} onChange={(event) => { setPercent(event.target.value); attempt.current = null; }} /></label> : <fieldset className="practice-actions" disabled={loading || Boolean(result)}><legend>{t("Select all allowed actions")}</legend>{ACTIONS.map((action) => <label key={action}><input type="checkbox" checked={actions.includes(action)} onChange={(event) => { setActions((old) => event.target.checked ? [...old, action] : old.filter((value) => value !== action)); attempt.current = null; }} />{t(action)}</label>)}</fieldset>}
+            <div className="practice-buttons"><button className="primary-button" disabled={loading || !question || !validAnswer || Boolean(result)} onClick={() => void submit()}>{t("Check answer")}</button><button disabled={loading} onClick={() => void next(kind)}>{t(result ? 'Next exercise' : 'Skip exercise')}</button></div>
+            {result ? <div className={`practice-feedback ${result.correct ? 'practice-correct' : 'practice-retry'}`} role="status"><h3>{t(result.correct ? 'Correct' : 'Review this answer')}</h3><p>{t(result.explanation)}</p>{result.tolerance_percentage_points !== null ? <small>{t("Accepted rounding: ±")}{t(result.tolerance_percentage_points)}{t(" percentage points.")}</small> : null}</div> : null}
           </section>
           <PokerTable hand={question?.hand ?? null} seatCount={question?.hand.players.length ?? 2} />
           <HandHistory hand={question?.hand ?? null} />
         </div>
         <aside className="side-column">
-          <section className="control-panel"><h2>How practice works</h2><p>Incorrect answers return first, followed by unseen questions and then earlier correct answers.</p><p>Real decisions you make against the AI create exercises automatically. This browser keeps its saved profile across restarts.</p><p className="room-note">Call-price answers are checked mathematically. Legal actions use the betting rules. Strategic coach advice remains a heuristic; matching it is not a solver grade.</p></section>
-          <section className="control-panel saved-decisions"><div className="archive-heading"><h2>Saved AI decisions</h2><Link className="mode-link" href="/">Play a hand</Link></div>
-            {!decisions.length ? <p>Your choices against the AI will appear here after you play.</p> : null}
-            {decisions.map((decision) => <details key={decision.decision_id}><summary><strong>{decision.hand.street} · {decision.chosen_action}{decision.amount ? ` to ${decision.amount}` : ''}</strong><span>{decision.review.verdict === 'optimal' ? 'Matches coach heuristic' : 'Different from coach heuristic'}</span></summary><p>{new Date(decision.created_at.replace(' ', 'T')).toLocaleString()} · Hand {decision.hand.hand_id.slice(0, 8)}</p><p>{decision.review.summary}</p><div className="practice-buttons">{decision.exercises.call_price ? <button disabled={loading} onClick={() => void openExercise(decision.exercises.call_price!)}>Practice call price</button> : null}{decision.exercises.legal_actions ? <button disabled={loading} onClick={() => void openExercise(decision.exercises.legal_actions!)}>Practice actions</button> : null}</div></details>)}
-            {cursor ? <button disabled={loading} onClick={() => void moreDecisions()}>Load older decisions</button> : null}
+          <section className="control-panel"><h2>{t("How practice works")}</h2><p>{t("Incorrect answers return first, followed by unseen questions and then earlier correct answers.")}</p><p>{t("Real decisions you make against the AI create exercises automatically. This browser keeps its saved profile across restarts.")}</p><p className="room-note">{t("Call-price answers are checked mathematically. Legal actions use the betting rules. Strategic coach advice remains a heuristic; matching it is not a solver grade.")}</p></section>
+          <section className="control-panel saved-decisions"><div className="archive-heading"><h2>{t("Saved AI decisions")}</h2><Link className="mode-link" href="/">{t("Play a hand")}</Link></div>
+            {!decisions.length ? <p>{t("Your choices against the AI will appear here after you play.")}</p> : null}
+            {decisions.map((decision) => <details key={decision.decision_id}><summary><strong>{t(decision.hand.street)} · {t(decision.chosen_action)}{t(decision.amount ? ` to ${decision.amount}` : '')}</strong><span>{t(decision.review.verdict === 'optimal' ? 'Matches coach heuristic' : 'Different from coach heuristic')}</span></summary><p>{t(new Date(decision.created_at.replace(' ', 'T')).toLocaleString(locale === 'uk' ? 'uk-UA' : 'ru-RU'))}{t(" · Hand ")}{t(decision.hand.hand_id.slice(0, 8))}</p><p>{t(decision.review.summary)}</p><div className="practice-buttons">{decision.exercises.call_price ? <button disabled={loading} onClick={() => void openExercise(decision.exercises.call_price!)}>{t("Practice call price")}</button> : null}{decision.exercises.legal_actions ? <button disabled={loading} onClick={() => void openExercise(decision.exercises.legal_actions!)}>{t("Practice actions")}</button> : null}</div></details>)}
+            {cursor ? <button disabled={loading} onClick={() => void moreDecisions()}>{t("Load older decisions")}</button> : null}
           </section>
         </aside>
       </section>

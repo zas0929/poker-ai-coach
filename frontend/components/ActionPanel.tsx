@@ -1,3 +1,8 @@
+'use client';
+
+
+import { displayPlayer } from '@/i18n/translate';
+import { useI18n } from '@/i18n/LanguageProvider';
 import { useMemo, useState } from 'react';
 
 import type { ActionType, HandAnalysis, HandState } from '@/types/poker';
@@ -25,6 +30,7 @@ export default function ActionPanel({
   onAnalyze,
   onStartHand,
 }: ActionPanelProps) {
+  const { t } = useI18n();
   const [amountEntry, setAmountEntry] = useState<{ context: string; value: number } | null>(null);
   const currentPlayer = hand?.players.find((player) => player.id === hand.current_player_id);
   const handEnded = Boolean(hand?.result || hand?.street === 'showdown');
@@ -103,19 +109,19 @@ export default function ActionPanel({
     <section className="control-panel">
       <div className="turn-strip">
         <div>
-          <span>Turn</span>
+          <span>{t("Turn")}</span>
           <strong>
             {currentPlayer && currentPlayer.id !== viewerId
-              ? `${currentPlayer.name} thinking`
-              : currentPlayer?.name ?? (handEnded ? 'Hand complete' : 'Action closed')}
+              ? t('{0} thinking').replace('{0}', displayPlayer(currentPlayer, t))
+              : currentPlayer ? displayPlayer(currentPlayer, t) : t(handEnded ? 'Hand complete' : 'Action closed')}
           </strong>
         </div>
-        <em>{handEnded ? 'Result ready' : `${actionContext} · Stack ${heroStack || '-'}`}</em>
+        <em>{t(handEnded ? 'Result ready' : `${actionContext} · Stack ${heroStack || '-'}`)}</em>
       </div>
 
       <div className="sizing-panel">
         <div className="amount-control">
-          <label htmlFor="bet-amount">{highestBet > 0 ? 'Raise to' : 'Bet size'}</label>
+          <label htmlFor="bet-amount">{t(highestBet > 0 ? 'Raise to' : 'Bet size')}</label>
           <input
             id="bet-amount"
             min={minimumAmount}
@@ -140,43 +146,26 @@ export default function ActionPanel({
                 onAction(sizedAction, value);
               }}
             >
-              {preset.label}
+              {t(preset.label)}
             </button>
           ))}
         </div>
       </div>
 
       <div className="action-grid">
-        <button className={buttonClass('fold')} disabled={!allows('fold') || isLoading} onClick={() => onAction('fold')}>
-          Fold
+        <button className={buttonClass('fold')} disabled={!allows('fold') || isLoading} onClick={() => onAction('fold')}>{t("Fold")}</button>
+        <button className={buttonClass('check')} disabled={!allows('check') || isLoading} onClick={() => onAction('check')}>{t("Check")}</button>
+        <button className={buttonClass('call')} disabled={!allows('call') || isLoading} onClick={() => onAction('call')}>{t("Call ")}{t(callAmount || '')}
         </button>
-        <button className={buttonClass('check')} disabled={!allows('check') || isLoading} onClick={() => onAction('check')}>
-          Check
-        </button>
-        <button className={buttonClass('call')} disabled={!allows('call') || isLoading} onClick={() => onAction('call')}>
-          Call {callAmount || ''}
-        </button>
-        <button className={buttonClass('bet')} disabled={!allows('bet') || isLoading || !validAmount} onClick={() => onAction('bet', amount)}>
-          Bet
-        </button>
-        <button className={buttonClass('raise')} disabled={!allows('raise') || isLoading || !validAmount} onClick={() => onAction('raise', amount)}>
-          Raise
-        </button>
-        <button className="all-in-button" disabled={isLoading || (!canSize && !(allows('call') && callAmount === heroStack))} onClick={goAllIn}>
-          All in
-        </button>
+        <button className={buttonClass('bet')} disabled={!allows('bet') || isLoading || !validAmount} onClick={() => onAction('bet', amount)}>{t("Bet")}</button>
+        <button className={buttonClass('raise')} disabled={!allows('raise') || isLoading || !validAmount} onClick={() => onAction('raise', amount)}>{t("Raise")}</button>
+        <button className="all-in-button" disabled={isLoading || (!canSize && !(allows('call') && callAmount === heroStack))} onClick={goAllIn}>{t("All in")}</button>
       </div>
 
       {trainingControls ? <div className="secondary-actions">
-        <button className="primary-button next-hand-button" disabled={!handEnded || isLoading} onClick={onStartHand}>
-          Next hand
-        </button>
-        <button disabled={!actionClosed || isLoading} onClick={onAdvance}>
-          Advance
-        </button>
-        <button disabled={!hand || handEnded || isLoading} onClick={onAnalyze}>
-          Analyze
-        </button>
+        <button className="primary-button next-hand-button" disabled={!handEnded || isLoading} onClick={onStartHand}>{t("Next hand")}</button>
+        <button disabled={!actionClosed || isLoading} onClick={onAdvance}>{t("Advance")}</button>
+        <button disabled={!hand || handEnded || isLoading} onClick={onAnalyze}>{t("Analyze")}</button>
       </div> : null}
     </section>
   );

@@ -1,3 +1,8 @@
+'use client';
+
+
+import { displayPlayer } from '@/i18n/translate';
+import { useI18n } from '@/i18n/LanguageProvider';
 import type { HandState } from '@/types/poker';
 
 interface HandHistoryProps {
@@ -5,23 +10,24 @@ interface HandHistoryProps {
 }
 
 export default function HandHistory({ hand }: HandHistoryProps) {
+  const { t } = useI18n();
   return (
     <section className="history-panel">
       <div className="panel-heading">
         <div>
-          <p className="eyebrow">Hand Log</p>
-          <h2>Actions</h2>
+          <p className="eyebrow">{t("Hand Log")}</p>
+          <h2>{t("Actions")}</h2>
         </div>
       </div>
 
       <ol className="history-list">
         {(hand?.history ?? []).map((action, index) => (
           <li key={`${action.player_id}-${action.action}-${index}`}>
-            <span>{action.street}</span>
-            <strong>{hand?.players.find((p) => p.id === action.player_id)?.name ?? action.player_id}</strong>
+            <span>{t(action.street)}</span>
+            <strong>{displayPlayer(hand?.players.find((p) => p.id === action.player_id), t, action.player_id)}</strong>
             <em>
-              {action.action}
-              {action.amount ? ` ${action.amount}` : ''}
+              {t(action.action)}
+              {t(action.amount ? ` ${action.amount}` : '')}
             </em>
           </li>
         ))}

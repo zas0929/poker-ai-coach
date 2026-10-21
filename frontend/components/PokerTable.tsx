@@ -1,5 +1,8 @@
 'use client';
 
+import { displayPlayer } from '@/i18n/translate';
+import { useI18n } from '@/i18n/LanguageProvider';
+
 import { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 
@@ -30,7 +33,8 @@ function Seat({
   label?: string;
   slot: string;
 }) {
-  const displayName = player?.name ?? label ?? 'Waiting';
+  const { t } = useI18n();
+  const displayName = player ? displayPlayer(player, t) : t(label ?? 'Waiting');
   const displayPosition = player?.position ?? 'waiting';
   const displayStack = player?.stack ?? startingStack;
   const displayBet = player?.current_bet ?? 0;
@@ -41,18 +45,18 @@ function Seat({
       <div className="seat-bar">
         <div className="seat-info">
           <h2>{displayName}</h2>
-          <p>{displayPosition}</p>
+          <p>{t(displayPosition)}</p>
           {player ? (
             <span className={`action-badge action-${lastAction?.action ?? status}`}>
-              {formatAction(lastAction, status)}
+              {t(formatAction(lastAction, status))}
             </span>
           ) : (
-            <span className="action-badge action-waiting">Waiting</span>
+            <span className="action-badge action-waiting">{t("Waiting")}</span>
           )}
         </div>
         <div className="seat-stats">
-          <span>Stack {displayStack}</span>
-          <span>Bet {displayBet}</span>
+          <span>{t("Stack ")}{displayStack}</span>
+          <span>{t("Bet ")}{displayBet}</span>
         </div>
         {player ? <ChipStack amount={displayStack + displayBet} className="player-chip-stack" /> : null}
       </div>
@@ -73,12 +77,13 @@ export default function PokerTable(props: PokerTableProps) {
 }
 
 function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000 }: PokerTableProps) {
+  const { t } = useI18n();
   const [displayedBoardCount, setDisplayedBoardCount] = useState(() =>
     hand ? (isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand.board.length) : 0,
   );
   const [showChipFlight, setShowChipFlight] = useState(false);
   const revealVillainCards = hand?.result?.reason === 'showdown';
-  const winnerBadge = winnerText(hand);
+  const winnerBadge = winnerText(hand, t);
   const allInRunout = isAllInRunout(hand);
   const runoutComplete = !allInRunout || displayedBoardCount >= 5;
   const visibleBoard = useMemo(
@@ -127,7 +132,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000 }: P
 
         <div className="board-zone">
           <div className={`showdown-slot ${allInRunout || (runoutComplete && (winnerBadge || hand?.result)) ? 'showdown-slot-visible' : ''}`}>
-            {allInRunout && !runoutComplete ? <div className="runout-badge">All-in runout</div> : null}
+            {allInRunout && !runoutComplete ? <div className="runout-badge">{t("All-in runout")}</div> : null}
             {runoutComplete && (winnerBadge || hand?.result) ? (
               <>
                 {winnerBadge ? <div className="winner-badge">{winnerBadge}</div> : null}
@@ -149,10 +154,11 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000 }: P
 }
 
 function PotDisplay({ amount }: { amount: number }) {
+  const { t } = useI18n();
   return (
     <div className="pot-display">
       <ChipStack amount={amount} />
-      <span>Pot</span>
+      <span>{t("Pot")}</span>
       <strong>{amount}</strong>
     </div>
   );
@@ -216,15 +222,16 @@ function tableSeats(hand: HandState | null, seatCount: number, viewerId = 'hero'
 }
 
 function ShowdownSummary({ hand, result }: { hand: HandState; result: HandResult }) {
+  const { t } = useI18n();
   return (
     <div className="showdown-summary">
       {result.player_results.map((playerResult) => {
         const isWinner = result.winners.includes(playerResult.player_id);
         return (
           <div className={isWinner ? 'showdown-winner' : undefined} key={playerResult.player_id}>
-            <span>{playerName(hand, playerResult.player_id)}</span>
-            <strong>{label(playerResult.hand_strength?.category ?? playerResult.outcome)}</strong>
-            {playerResult.amount_won ? <em>+{playerResult.amount_won}</em> : null}
+            <span>{displayPlayer(hand.players.find(p => p.id === playerResult.player_id), t, playerResult.player_id)}</span>
+            <strong>{t(label(playerResult.hand_strength?.category ?? playerResult.outcome))}</strong>
+            {playerResult.amount_won ? <em>+{t(playerResult.amount_won)}</em> : null}
           </div>
         );
       })}
@@ -254,19 +261,15 @@ function formatAction(action: HandAction | undefined, status: Player['status']) 
   return action.amount ? `${actionLabel} ${action.amount}` : actionLabel;
 }
 
-function winnerText(hand: HandState | null) {
+function winnerText(hand: HandState | null, t: <T>(value: T) => T) {
   const result = hand?.result;
   if (!result) {
     return null;
   }
 
-  const winners = result.winners.map((winnerId) => playerName(hand, winnerId)).join(', ');
-  const outcome = (result.pots?.length ?? 0) > 1 ? 'Pots awarded' : result.winners.length > 1 ? 'Split pot' : `${winners} wins`;
+  const winners = result.winners.map((winnerId) => displayPlayer(hand.players.find(p => p.id === winnerId), t, winnerId)).join(', ');
+  const outcome = (result.pots?.length ?? 0) > 1 ? t('Pots awarded') : result.winners.length > 1 ? t('Split pot') : t('{0} wins').replace('{0}', winners);
   return `${outcome} ${result.pot_awarded}`;
-}
-
-function playerName(hand: HandState, playerId: string) {
-  return hand.players.find((player) => player.id === playerId)?.name ?? playerId;
 }
 
 function winnerSeatSlot(hand: HandState | null, seatCount: number, viewerId = 'hero') {
