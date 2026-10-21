@@ -9,3 +9,6 @@ node_modules/
 out/
 dist/
 
+
+# Local private room database and journal files
+.data/

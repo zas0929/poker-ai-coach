@@ -6,7 +6,7 @@ import ActionPanel from '@/components/ActionPanel';
 import HandHistory from '@/components/HandHistory';
 import PokerTable from '@/components/PokerTable';
 import { enterRoom, roomSocketUrl } from '@/services/roomApi';
-import type { RoomCredentials, RoomState } from '@/services/roomApi';
+import type { RoomCredentials, RoomState, RoomSettings } from '@/services/roomApi';
 import type { ActionType } from '@/types/poker';
 
 export default function FriendsPage() {
@@ -18,6 +18,7 @@ export default function FriendsPage() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [settingsEntry, setSettingsEntry] = useState<{ code: string; revision: number; value: RoomSettings } | null>(null);
   const [clock, setClock] = useState({ now: 0, offset: 0 });
   const socket = useRef<WebSocket | null>(null);
   const latest = useRef<RoomState | null>(null);
@@ -92,7 +93,7 @@ export default function FriendsPage() {
           pending.current = null;
           setBusy(false);
           setStatus('Seat unavailable');
-          setError('This seat or room is no longer available. Rooms are cleared on server restart.');
+          setError('This seat is no longer available. Check the invitation or join the room again.');
           return;
         }
         setStatus('Reconnecting');
@@ -153,6 +154,18 @@ export default function FriendsPage() {
   const isHost = room?.viewer_id === room?.host_id;
   const everyoneReady = Boolean(room && room.members.length >= 2 && room.members.filter((member) => !member.sitting_out).length >= 2 && room.members.filter((member) => !member.sitting_out).every((member) => member.ready && member.connected));
 
+  const settings = room?.settings ?? { starting_stack: 1000, small_blind: 5, big_blind: 10, turn_seconds: 30 };
+  const editedSettings = settingsEntry && settingsEntry.code === room?.code && settingsEntry.revision === room?.revision ? settingsEntry.value : settings;
+  const validSettings = Object.values(editedSettings).every(Number.isInteger)
+    && editedSettings.small_blind >= 1 && editedSettings.small_blind <= 10000
+    && editedSettings.big_blind > editedSettings.small_blind && editedSettings.big_blind <= 20000
+    && editedSettings.starting_stack >= Math.max(100, 20 * editedSettings.big_blind)
+    && editedSettings.starting_stack <= 1000000
+    && editedSettings.turn_seconds >= 10 && editedSettings.turn_seconds <= 120;
+  const editSetting = (key: keyof RoomSettings, value: number) => {
+    if (room) setSettingsEntry({ code: room.code, revision: room.revision, value: { ...editedSettings, [key]: value } });
+  };
+
   const secondsLeft = room?.deadline_at ? Math.max(0, Math.ceil((room.deadline_at - clock.now - clock.offset) / 1000)) : null;
 
   const copyInvite = async () => {
@@ -181,7 +194,7 @@ export default function FriendsPage() {
           <label>Your name<input autoComplete="nickname" maxLength={24} value={name} onChange={(event) => setName(event.target.value)} placeholder="Roman" /></label>
           <button className="primary-button" disabled={busy || !name.trim()} onClick={() => enter(false)}>Create room</button>
           <div className="room-join"><label>Room code<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder="Invitation code" /></label><button disabled={busy || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>Join room</button></div>
-          <p className="room-note">Local preview. Friends on other networks will need the hosting stage. Rooms and seats currently live in server memory.</p>
+          <p className="room-note">Local preview. Friends on other networks will need the hosting stage. Rooms, seats and hands are saved on this server.</p>
         </section>
       ) : (
         <>
@@ -194,19 +207,29 @@ export default function FriendsPage() {
           </section>
           <section className="game-layout">
             <div className="table-column">
-              <PokerTable hand={hand} seatCount={hand?.players.length ?? Math.max(2, room?.members.length ?? 2)} viewerId={room?.viewer_id} />
+              <PokerTable emptyStack={settings.starting_stack} hand={hand} seatCount={hand?.players.length ?? Math.max(2, room?.members.length ?? 2)} viewerId={room?.viewer_id} />
               {hand ? <ActionPanel analysis={null} hand={hand} isLoading={busy || !connected || Boolean(me?.sitting_out)} viewerId={room?.viewer_id} trainingControls={false} onAction={action} onAdvance={() => {}} onAnalyze={() => {}} onStartHand={() => {}} /> : null}
             </div>
             <aside className="side-column">
               <section className="control-panel room-lobby">
+                <p className="saved-room">Saved on this server · reconnect after a restart</p>
+                {!hand && isHost ? <fieldset className="room-settings" disabled={busy || !connected}>
+                  <legend>Table settings</legend>
+                  <label>Starting stack<input type="number" min={100} max={1000000} step={1} value={editedSettings.starting_stack} onChange={(event) => editSetting('starting_stack', Number(event.target.value))} /></label>
+                  <label>Small blind<input type="number" min={1} max={10000} step={1} value={editedSettings.small_blind} onChange={(event) => editSetting('small_blind', Number(event.target.value))} /></label>
+                  <label>Big blind<input type="number" min={2} max={20000} step={1} value={editedSettings.big_blind} onChange={(event) => editSetting('big_blind', Number(event.target.value))} /></label>
+                  <label>Seconds per turn<input type="number" min={10} max={120} step={1} value={editedSettings.turn_seconds} onChange={(event) => editSetting('turn_seconds', Number(event.target.value))} /></label>
+                  <button disabled={!validSettings} onClick={() => send('settings', { settings: editedSettings })}>Apply settings</button>
+                  <small>At least 20 big blinds in the starting stack. Applying changes clears everyone&apos;s readiness. Settings lock after the first deal.</small>
+                </fieldset> : null}
                 <h2>{betweenHands ? 'Ready for the next hand?' : 'Players at the table'}</h2>
                 {secondsLeft !== null ? <div className={`turn-clock ${secondsLeft <= 10 ? 'turn-clock-urgent' : ''}`} role="timer" aria-label="Time remaining">{secondsLeft}s to act <span>Timeout: check or fold, then sit out</span></div> : null}
                 <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{member.player_id === room.viewer_id ? ' (you)' : ''}</strong><span>{member.player_id === room.host_id ? 'Host · ' : ''}{member.connected ? 'Connected' : 'Disconnected'}</span></div><em>{member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing'}</em></li>)}</ul>
                 <button disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out })}>{me?.sitting_out ? 'Return to table' : 'Sit out'}</button>
                 {me?.sitting_out ? <p>You are sitting out. Current-hand decisions use check/fold automatically; return between hands.</p> : null}
                 {betweenHands ? <><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{me?.ready ? 'Not ready' : "I'm ready"}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{hand ? 'Deal next hand' : 'Deal first hand'}</button> : <p>The host deals when everyone is ready.</p>}</> : <p>{hand?.players.find((player) => player.id === hand.current_player_id)?.name}&apos;s turn. Streets advance automatically.</p>}
-                <p className="room-note">Blinds 5/10 · Starting stack 1000. Virtual training chips: stacks below 10 receive 1000 extra chips between hands. Players can join between hands. Reopen this link in the same browser to restore your seat.</p>
-                <p className="room-note">Each turn has 30 seconds, including after disconnect. Timeout uses check if possible, otherwise fold, then sit-out. Leaving releases the seat after this hand; the host role transfers automatically.</p>
+                <p className="room-note">Blinds {settings.small_blind}/{settings.big_blind} · Starting stack {settings.starting_stack}. Virtual training chips: stacks below {settings.big_blind} receive {settings.starting_stack} extra chips between hands. Players can join between hands. Reopen this link in the same browser to restore your seat.</p>
+                <p className="room-note">Each turn has {settings.turn_seconds} seconds, including after disconnect. Timeout uses check if possible, otherwise fold, then sit-out. Leaving releases the seat after this hand; the host role transfers automatically.</p>
               </section>
               <HandHistory hand={hand} />
             </aside>

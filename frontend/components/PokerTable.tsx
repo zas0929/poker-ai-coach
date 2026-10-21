@@ -10,12 +10,14 @@ interface PokerTableProps {
   hand: HandState | null;
   seatCount: number;
   viewerId?: string;
+  emptyStack?: number;
 }
 
 function Seat({
   player,
   active,
   cardsHidden = false,
+  startingStack = 1000,
   lastAction,
   label,
   slot,
@@ -23,13 +25,14 @@ function Seat({
   player?: Player;
   active: boolean;
   cardsHidden?: boolean;
+  startingStack?: number;
   lastAction?: HandAction;
   label?: string;
   slot: string;
 }) {
   const displayName = player?.name ?? label ?? 'Waiting';
   const displayPosition = player?.position ?? 'waiting';
-  const displayStack = player?.stack ?? 1000;
+  const displayStack = player?.stack ?? startingStack;
   const displayBet = player?.current_bet ?? 0;
   const status = player?.status ?? 'active';
 
@@ -69,7 +72,7 @@ export default function PokerTable(props: PokerTableProps) {
   return <TableScene key={key} {...props} />;
 }
 
-function TableScene({ hand, seatCount, viewerId = 'hero' }: PokerTableProps) {
+function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000 }: PokerTableProps) {
   const [displayedBoardCount, setDisplayedBoardCount] = useState(() =>
     hand ? (isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand.board.length) : 0,
   );
@@ -113,6 +116,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero' }: PokerTableProps) {
           <Seat
             key={seat.slot}
             player={seat.player}
+            startingStack={emptyStack}
             active={Boolean(seat.player && hand?.current_player_id === seat.player.id)}
             cardsHidden={Boolean(seat.player?.id !== viewerId && (!revealVillainCards || seat.player?.status === 'folded'))}
             lastAction={seat.player ? lastActionFor(hand, seat.player.id) : undefined}

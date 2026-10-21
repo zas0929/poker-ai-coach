@@ -31,7 +31,10 @@ continue; the host role transfers when the host leaves.
   hand projection. Other players' hole cards are empty arrays. At showdown only
   non-folded hands are revealed. Hidden cards are also removed from hand results.
 - Commands include unique `command_id`, current `revision`, and `kind`: `ready`,
-  `start`, `action`, `sit_out`, or `leave`. Sit-out adds a boolean `sit_out`.
+  `start`, `action`, `sit_out`, `leave`, or `settings`. Sit-out adds a boolean `sit_out`.
+  Settings adds `settings` with integer `starting_stack`, `small_blind`,
+  `big_blind`, and `turn_seconds`. Only the host may change these before the
+  first deal; changing settings clears readiness for everyone.
   Ready adds `ready`; action adds `hand_id`, `action` and an
   optional integer `amount`. The server derives player identity from the token.
 - Accepted commands get an `ack`. Repeating the same ID and payload cannot repeat
@@ -46,10 +49,14 @@ The AI training API does not access or manage room hands.
 
 ## Current limits and next work
 
-One backend process stores up to 200 rooms in memory. Restarting clears all rooms,
-seats and hands. Do not use multiple workers until shared persistence is added.
-Players may join between hands. Blinds are 5/10, initial stacks 1000.
-Stacks below 10 receive 1000 virtual chips between hands. Each turn has 30 seconds,
+One backend process serves up to 200 rooms, stored in SQLite. Do not use multiple
+workers: live state and socket ownership still belong to one process.
+Players may join between hands. Defaults: blinds 5/10, initial stack 1000,
+30 seconds per turn. The host may configure these before the first hand.
+Stack range: 100-1,000,000 and at least 20 BB; 1 <= SB < BB <= 20,000,
+SB <= 10,000; turn time 10-120 seconds. Values must be exact integers.
+Stacks below BB receive one initial-stack amount of virtual chips between hands.
+Each turn uses the configured time,
 including after disconnect. The server owns the deadline; reconnecting cannot
 extend it. On timeout it checks if legal, otherwise folds, then enables sit-out.
 Deadlines are checked with a monotonic clock; clients receive an epoch deadline
@@ -64,13 +71,34 @@ replacement may join once the hand ends, with a fresh identity and initial stack
 they cannot inherit the prior occupant's private cards. Existing stacks and the
 clockwise button position are preserved when the roster changes.
 
-Next: configurable stacks/blinds, mobile polish and persistent storage.
+## Persistence
+
+The default database is `backend/.data/poker.sqlite3`, resolved relative to the
+backend source, independently of the working directory. Override with
+`POKER_DB_PATH`. The database directory is excluded from Git. File permissions are
+owner-only (0600); snapshots contain private cards, the remaining deck and bearer
+tokens. Do not publish the database or expose its folder as static assets.
+
+Each accepted mutation commits the room snapshot, recent command IDs, an event
+journal entry and (when complete) the final hand in one SQLite transaction, before
+broadcast/ack. On write failure, in-memory state is restored and no ack is sent.
+The client receives an error and can choose again. Completed-hand insertion is
+idempotent, so another ready/leave command cannot duplicate a payout record.
+
+Startup restores rooms, tokens, cards, deck order, stacks, settings, button and
+turn deadline. Socket connections are fresh; saved invitation links restore the
+same browser seat. Restart does not reset the turn clock: downtime counts, and an
+expired deadline performs the normal check/fold and sit-out. An unsupported or
+corrupt database fails startup rather than silently creating empty rooms.
+
+The training `/api/hand` session is separate and still lives in memory.
+Next: training improvements, mobile polish, database backup/room cleanup and hosting.
 
 WebSocket Origin is restricted to http://localhost:3000 and http://127.0.0.1:3000.
 Set `POKER_ROOM_ORIGINS` to a comma-separated list of exact origins for another
 local port or a future HTTPS deployment. The frontend reads
 `NEXT_PUBLIC_API_BASE_URL` at build time; HTTPS URLs produce WSS connections.
 
-Friends on different networks need the hosting stage: HTTPS/WSS, persistence,
-room lifecycle, request limits and a real test from different devices/networks.
+Friends on different networks need the hosting stage: HTTPS/WSS, backup/cleanup,
+request limits and a real test from different devices/networks.
 The current server listens on loopback only.

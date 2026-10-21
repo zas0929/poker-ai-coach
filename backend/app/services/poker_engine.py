@@ -29,7 +29,10 @@ class PokerEngine:
     def start_hand(
         self, previous_state: HandState | None = None, player_count: int | None = None,
         starting_stacks: list[int] | None = None,
+        small_blind: int = 5, big_blind: int = 10,
     ) -> HandState:
+        if type(small_blind) is not int or type(big_blind) is not int or not 1 <= small_blind < big_blind:
+            raise ValueError('Blinds must be positive integers with small blind below big blind.')
         if previous_state is not None and previous_state.result is None:
             raise ValueError("Finish the current hand before starting another.")
         count = player_count if player_count is not None else len(previous_state.players) if previous_state else 2
@@ -44,7 +47,7 @@ class PokerEngine:
         button = (ids.index(previous_state.dealer_player_id) + 1) % count if continuing else 0
         sb, bb = (button, (button + 1) % count) if count == 2 else ((button + 1) % count, (button + 2) % count)
         stacks = starting_stacks or [
-            self._rebuy_if_needed(previous_state.players[i].stack, 10) if continuing else 1000
+            self._rebuy_if_needed(previous_state.players[i].stack, big_blind) if continuing else 1000
             for i in range(count)
         ]
         self.deck = self._create_deck()
@@ -58,12 +61,12 @@ class PokerEngine:
                 players[(button + offset) % count].cards.extend(self._draw(1))
         state = HandState(
             hand_id=str(uuid.uuid4()), street=Street.PREFLOP, pot=0,
-            small_blind=5, big_blind=10, last_full_raise=10, players=players,
+            small_blind=small_blind, big_blind=big_blind, last_full_raise=big_blind, players=players,
             dealer_player_id=ids[button], contributions={pid: 0 for pid in ids},
             notes=[f'New {count}-player training hand. Button: {ids[button]}.'],
         )
         state._deck = self.deck
-        for index, blind, label in [(sb, 5, 'small_blind'), (bb, 10, 'big_blind')]:
+        for index, blind, label in [(sb, small_blind, 'small_blind'), (bb, big_blind, 'big_blind')]:
             committed = self._commit_chips(state, players[index], blind)
             state.history.append(HandAction(player_id=ids[index], action=label, amount=committed, street=Street.PREFLOP))
         first = button if count == 2 else (bb + 1) % count

@@ -3,7 +3,9 @@
 Private rooms are available at [localhost:3000/friends](http://localhost:3000/friends).
 Create a table for 2-6 friends, share an invitation, confirm readiness and deal.
 Cards are filtered on the server; seats restore after reconnect. This is a local
-preview with virtual chips and in-memory rooms. Internet hosting is a later stage.
+preview with virtual chips and SQLite-backed rooms. Hands and seats survive
+server restarts. The host can configure stacks, blinds and turn time before the
+first deal. Internet hosting is a later stage.
 See [docs/ROOMS.md](docs/ROOMS.md) for setup, protocol and current limitations.
 
 Texas Hold'em AI Coach is a poker training app inspired by the Chess AI Coach architecture: a deterministic analysis backend, a focused frontend table, and an AI coach panel that explains decisions in natural language.

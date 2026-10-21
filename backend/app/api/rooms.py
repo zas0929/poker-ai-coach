@@ -3,14 +3,16 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel, Field, ValidationError, field_validator
 
 from app.services.room_service import RoomCommand, RoomStore
+from app.services.room_repository import RoomStorageError
 
 router = APIRouter()
-store = RoomStore()
+store = RoomStore(os.environ.get('POKER_DB_PATH', str(Path(__file__).resolve().parents[2] / '.data' / 'poker.sqlite3')))
 
 
 class JoinRequest(BaseModel):
@@ -39,7 +41,7 @@ async def join_room(code: str, request: JoinRequest):
     try:
         room = store.get(code)
         async with room.lock:
-            member = room.join(request.name)
+            member = store.apply(room, lambda: room.join(request.name), 'join')
             await room.broadcast()
             return {'code': room.code, 'token': member.token, 'player_id': member.player_id}
     except ValueError as exc:
@@ -80,10 +82,10 @@ async def room_socket(websocket: WebSocket, code: str):
             async with room.lock:
                 try:
                     command = RoomCommand.model_validate_json(raw)
-                    room.command(member, command)
+                    store.apply(room, lambda: room.command(member, command), command.kind, command.command_id, member.player_id)
                     await room.broadcast()
                     await websocket.send_json({'type': 'ack', 'command_id': command.command_id})
-                except (ValueError, ValidationError) as exc:
+                except (ValueError, ValidationError, RoomStorageError) as exc:
                     message = 'Invalid command format.' if isinstance(exc, ValidationError) else str(exc)
                     await websocket.send_json({'type': 'error', 'message': message})
                     await room.broadcast()

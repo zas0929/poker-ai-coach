@@ -3,12 +3,15 @@ from contextlib import asynccontextmanager, suppress
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from app.services.room_repository import RoomStorageError
 
 from app.api.hand import router as hand_router
 from app.api.rooms import router as room_router, store
 
 @asynccontextmanager
 async def lifespan(app):
+    store.open()
     task = asyncio.create_task(store.run_timers())
     try:
         yield
@@ -16,6 +19,7 @@ async def lifespan(app):
         task.cancel()
         with suppress(asyncio.CancelledError):
             await task
+        store.close()
 
 
 app = FastAPI(title="Poker AI Coach API", lifespan=lifespan)
@@ -36,3 +40,8 @@ app.include_router(room_router, prefix="/api/rooms", tags=["rooms"])
 @app.get("/")
 def root():
     return {"status": "ok", "app": "Poker AI Coach"}
+
+
+@app.exception_handler(RoomStorageError)
+async def storage_error(request, exc):
+    return JSONResponse(status_code=503, content={'detail': str(exc)})
