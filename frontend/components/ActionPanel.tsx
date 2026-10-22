@@ -72,6 +72,9 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
     ];
   }, [hand, highestBet, callAmount]);
 
+  const quickActions = quickAmounts.map(preset => ({ ...preset, value: clampAmount(preset.value) }))
+    .filter((preset, index, presets) => presets.findIndex(item => item.value === preset.value) === index);
+
   const submit = (action: ActionType, value?: number) => {
     if (isLoading || !allows(action)) return;
     setSizingContext(null);
@@ -100,6 +103,11 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
         {t(sizedAction === 'bet' ? 'Bet' : 'Raise')}<small>{t('Choose amount')} ↗</small>
       </button>
     </div>}
+    <div className={`quick-raises ${canSize && !pausedActions ? '' : 'quick-raises-empty'}`} aria-label={t('Quick bets and raises')} aria-hidden={!canSize || Boolean(pausedActions)}>
+      {canSize && !pausedActions ? quickActions.map(preset => <button type="button" key={preset.value} disabled={isLoading}
+        aria-label={`${t(sizedAction === 'bet' ? 'Bet' : 'Raise to')} ${preset.value}`} title={`${t(preset.label)} · ${t(sizedAction === 'bet' ? 'Bet' : 'Raise to')} ${preset.value}`}
+        onClick={() => submit(sizedAction, preset.value)}><span>{t(preset.label)}</span><b>{preset.value}</b></button>) : null}
+    </div>
     <div className="dock-tools">{tools}{trainingControls && hand && !handEnded ? <button disabled={isLoading} onClick={onAnalyze}>{t('Analyze')}</button> : null}</div>
     <Sheet open={open} title={t(sizedAction === 'bet' ? 'Bet size' : 'Raise to')} onClose={() => setSizingContext(null)}>
       <div className="bet-sheet">
