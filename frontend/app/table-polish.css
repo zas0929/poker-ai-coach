@@ -56,3 +56,7 @@
 .chip-legend span { display:flex; align-items:center; gap:4px; }
 .chip-legend i { width:14px; height:14px; border:2px dashed #eee; border-radius:50%; }
 @media(max-width:760px) { .classic-table .player-chip-stack { width:42px; left:calc(100% + 2px); gap:1px; } .chip-pile { width:19px; } .denomination-chip { width:19px; } .classic-table .seat-right .player-chip-stack,.classic-table .seat-top-right .player-chip-stack { right:calc(100% + 2px); } }
+
+.classic-table .seat-stats .seat-stack { font-size:17px; font-weight:800; font-variant-numeric:tabular-nums; color:#fff9dc; line-height:1.15; }
+.classic-table .seat-commitment { font-size:14px; font-weight:800; line-height:18px; min-width:26px; }
+@media(max-width:760px) { .classic-table .seat-stats .seat-stack { font-size:15px; } .classic-table .seat-commitment { font-size:12px; line-height:17px; } }
