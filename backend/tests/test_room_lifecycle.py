@@ -62,15 +62,20 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(self.room.revision, revision)
         self.assertIsNone(self.room.deadline_at)
 
-    def test_timeout_checks_when_free_and_skips_future_turns(self):
+    def test_timeout_checks_when_free_and_keeps_player_active(self):
         self.start()
         self.command(self.host, 'action', action='call', hand_id=self.room.hand.hand_id)
-        self.room.tick(self.room.deadline)
-        self.assertTrue(self.guest.sitting_out)
+        deadline = self.room.deadline
+        with patch('app.services.room_service.time.monotonic', return_value=deadline):
+            self.assertTrue(self.room.tick(deadline))
+        self.assertFalse(self.guest.sitting_out)
         self.assertEqual(self.room.hand.street.value, 'flop')
+        self.assertEqual(self.room.hand.current_player_id, self.guest.player_id)
+        self.assertEqual([a.action for a in self.room.hand.history[-2:]], ['call', 'check'])
+        self.assertEqual(self.room.deadline, deadline + 40)
+        self.assertFalse(self.room.tick(deadline + 1))
+        self.command(self.guest, 'action', action='check', hand_id=self.room.hand.hand_id)
         self.assertEqual(self.room.hand.current_player_id, self.host.player_id)
-        self.assertEqual([a.action for a in self.room.hand.history[-2:]], ['check', 'check'])
-        self.assertIsNotNone(self.room.deadline_at)
 
     def test_sit_out_preserves_timer_for_other_player(self):
         third = self.room.join('Third'); third.sockets.add(object())

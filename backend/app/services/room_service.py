@@ -311,8 +311,9 @@ class Room:
         if self.deadline is None or now < self.deadline or not self.hand or self.hand.result:
             return False
         actor = next(m for m in self.members if m.player_id == self.hand.current_player_id)
-        actor.sitting_out = True
-        actor.ready = False
+        if ActionType.CHECK not in self.hand.betting.legal_actions:
+            actor.sitting_out = True
+            actor.ready = False
         self._auto_action(actor)
         self._settle()
         self.revision += 1

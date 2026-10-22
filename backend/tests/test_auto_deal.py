@@ -134,3 +134,25 @@ class AutoDealTests(unittest.TestCase):
         self.assertFalse(self.guest.ready)
         self.assertFalse(self.tick(1000))
         self.assertIsNone(self.room.hand)
+
+    def test_free_timeout_checks_keep_readiness_and_allow_next_automatic_hand(self):
+        self.tick(1000); self.tick(1008)
+        first = self.room.hand.hand_id
+        self.command(self.host, 'action', hand_id=first, action='call')
+        for _ in range(7):
+            self.assertIsNone(self.room.hand.result)
+            deadline = self.room.deadline
+            with patch('app.services.room_service.time.monotonic', return_value=deadline):
+                self.assertTrue(self.store.apply(self.room, lambda: self.room.tick(deadline), 'timer'))
+            self.assertTrue(all(m.ready and not m.sitting_out for m in self.room.members))
+        self.assertIsNotNone(self.room.hand.result)
+        self.assertEqual(sum(a.action == 'check' for a in self.room.hand.history), 7)
+        self.assertEqual(sum(m.stack for m in self.room.members), 800)
+        code = self.room.code
+        self.store.close(); self.store.open()
+        self.room = self.store.get(code)
+        self.assertTrue(all(m.ready and not m.sitting_out for m in self.room.members))
+        for member in self.room.members: member.sockets.add(object())
+        self.tick(2000); self.tick(2008)
+        self.assertNotEqual(self.room.hand.hand_id, first)
+        self.assertEqual(len(self.room.hand.players), 2)

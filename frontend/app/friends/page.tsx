@@ -237,7 +237,7 @@ export default function FriendsPage() {
                 {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
                 <p>{autoDealStatus ?? t(settings.auto_deal ? 'Automatic hands enabled. Unready or sit out to pause.' : 'The host deals when everyone is ready.')}</p>
                 <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)} · {t('Virtual chips only. Choose your buy-in and add chips between hands. No automatic refills.')}</p>
-                <p className="room-note">{t("After {0} quiet seconds, the {1}-second countdown starts. The clock continues after disconnect; timeout checks or folds, then sits out.").replace('{0}', String(room?.turn_grace_seconds ?? 10)).replace('{1}', String(settings.turn_seconds))}</p>
+                <p className="room-note">{t("After {0} quiet seconds, the {1}-second countdown starts. The clock continues after disconnect. Timeout checks keep you active; otherwise you fold and sit out.").replace('{0}', String(room?.turn_grace_seconds ?? 10)).replace('{1}', String(settings.turn_seconds))}</p>
                               {!hand && isHost ? <details className="room-settings-disclosure"><summary>{t("Table settings")}</summary><fieldset className="room-settings" disabled={busy || !connected}>
                   <legend>{t("Table settings")}</legend>
                   <label>{t("Starting stack")}<input type="number" min={100} max={1000000} step={1} value={editedDraft.starting_stack} onChange={(event) => editSetting('starting_stack', event.target.value)} /></label>
