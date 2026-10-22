@@ -166,3 +166,8 @@
 @media(max-width:760px) {
  .action-dock { --status-row-height:18px; --action-row-height:44px; --tools-row-height:28px; }
 }
+
+.lobby-hand-controls { display:flex; flex-wrap:wrap; gap:8px; }
+.lobby-hand-controls>button { flex:1; min-width:0; min-height:44px; }
+.poker-sheet .sheet-heading { position:sticky; top:0; z-index:3; padding-block:4px; background:#192720; }
+.poker-sheet .sheet-heading>button { flex-shrink:0; }

@@ -39,7 +39,7 @@ export default function FriendsPage() {
   const [clock, setClock] = useState({ now: 0, offset: 0 });
   const socket = useRef<WebSocket | null>(null);
   const latest = useRef<RoomState | null>(null);
-  const pending = useRef<{ id: string; payload: string } | null>(null);
+  const pending = useRef<{ id: string; payload: string; closePanel: boolean } | null>(null);
   const commandTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const entering = useRef(false);
 
@@ -99,7 +99,8 @@ export default function FriendsPage() {
           pending.current = null;
           setBusy(false);
           setError(message.message);
-        } else if (message.type === 'ack' && pending.current?.id === message.command_id) {
+        } else if (message.type === 'ack' && pending.current && pending.current.id === message.command_id) {
+          if (pending.current.closePanel) setPanel(null);
           pending.current = null;
           setBusy(false);
           if (commandTimer.current) clearTimeout(commandTimer.current);
@@ -151,11 +152,11 @@ export default function FriendsPage() {
     finally { setBusy(false); entering.current = false; }
   };
 
-  const send = (kind: string, values: Record<string, unknown> = {}) => {
+  const send = (kind: string, values: Record<string, unknown> = {}, options: { closePanel?: boolean } = {}) => {
     if (pending.current || socket.current?.readyState !== WebSocket.OPEN || !latest.current) return;
     const id = crypto.randomUUID();
     const payload = JSON.stringify({ command_id: id, revision: latest.current.revision, kind, ...values });
-    pending.current = { id, payload };
+    pending.current = { id, payload, closePanel: Boolean(options.closePanel) };
     setBusy(true);
     setError(null);
     socket.current.send(payload);
@@ -214,8 +215,11 @@ export default function FriendsPage() {
                 <h2>{t(betweenHands ? 'Ready for the next hand?' : 'Players at the table')}</h2>
 
                 <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{t(member.player_id === room.viewer_id ? ' (you)' : '')}</strong><span>{t(member.player_id === room.host_id ? 'Host · ' : '')}{t(member.connected ? 'Connected' : 'Disconnected')}</span></div><b>{member.stack}</b><em>{t(member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing')}</em></li>)}</ul>
+                <div className="lobby-hand-controls">
+                  {betweenHands ? <button className={!me?.ready ? 'primary-button' : undefined} disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready }, { closePanel: true })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button> : null}
+                  <button className={me?.sitting_out ? 'primary-button' : undefined} disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out }, { closePanel: true })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
+                </div>
                 {betweenHands ? <div className="top-up-controls"><label>{t('Add chips')}<input type="number" inputMode="numeric" min={1} max={1000000 - (me?.stack ?? 0)} value={topUp} onChange={event => setTopUp(event.target.value)} /></label><button disabled={busy || !connected || topUp.trim() === '' || !Number.isInteger(Number(topUp)) || Number(topUp) <= 0 || (me?.stack ?? 0) + Number(topUp) > 1000000} onClick={() => send('top_up', { amount: Number(topUp) })}>{t('Add chips')}</button></div> : null}
-                <button disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
                 {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
                 <p>{t(settings.auto_deal ? 'Automatic hands enabled. Unready or sit out to pause.' : 'The host deals when everyone is ready.')}</p>
                 <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)} · {t('Virtual chips only. Choose your buy-in and add chips between hands. No automatic refills.')}</p>
