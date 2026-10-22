@@ -245,7 +245,17 @@ export default function FriendsPage() {
   return (
     <main className={`app-shell play-shell room-shell ${hand ? 'room-in-hand' : ''}`}>
       <AppHeader><span className={`connection-state ${connected ? 'is-connected' : ''}`} role="status" aria-label={t(status)} title={t(status)}>{t(status)}</span></AppHeader>
-      <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t('AI training')}</Link><Link href="/friends" aria-current="page">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link></nav>
+      <div className="room-navigation">
+        <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t('AI training')}</Link><Link href="/friends" aria-current="page">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link></nav>
+        {credentials ? (<section className="room-toolbar control-panel">
+            <div><span className="eyebrow">{t('Room')} {credentials.code}</span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
+            <button className="room-copy-invite" onClick={copyInvite} aria-label={t(copied ? 'Link copied' : 'Copy invitation')} title={t(copied ? 'Link copied' : 'Copy invitation')}><span className="room-invite-label">{t(copied ? 'Link copied' : 'Copy invitation')}</span><span className="room-invite-icon" aria-hidden="true">{copied ? '✓' : '⧉'}</span></button>
+            <details className="room-menu"><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content">
+              <label>{t('Invitation link')}<input className="invite-field" readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} /></label>
+              <button onClick={reset}>{t('Close table')}</button><button disabled={busy || !connected} onClick={() => send('leave')}>{t('Leave room')}</button>
+            </div></details>
+          </section>) : null}
+      </div>
       {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button onClick={() => setError(null)}>{t("Dismiss")}</button></div> : null}
       {!credentials ? (
         <section className="room-entry control-panel">
@@ -264,14 +274,6 @@ export default function FriendsPage() {
         </section>
       ) : (
         <>
-          <section className="room-toolbar control-panel">
-            <div><span className="eyebrow">{t('Room')} {credentials.code}</span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
-            <button className="room-copy-invite" onClick={copyInvite} aria-label={t(copied ? 'Link copied' : 'Copy invitation')} title={t(copied ? 'Link copied' : 'Copy invitation')}><span className="room-invite-label">{t(copied ? 'Link copied' : 'Copy invitation')}</span><span className="room-invite-icon" aria-hidden="true">{copied ? '✓' : '⧉'}</span></button>
-            <details className="room-menu"><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content">
-              <label>{t('Invitation link')}<input className="invite-field" readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} /></label>
-              <button onClick={reset}>{t('Close table')}</button><button disabled={busy || !connected} onClick={() => send('leave')}>{t('Leave room')}</button>
-            </div></details>
-          </section>
           {hand ? <div className="table-meta"><span>{t(hand.street)} · {hand.players.length} {t('players')}</span><span>{t('Blinds')} {settings.small_blind} / {settings.big_blind}</span></div> : null}
           <section className="game-layout">
             <div className="table-column">

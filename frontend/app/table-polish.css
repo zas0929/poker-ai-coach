@@ -192,3 +192,15 @@
  .classic-table .winner-badge strong { font-size:12px; }
  .classic-table .winning-hand { font-size:10px; }
 }
+
+@media(min-width:761px) {
+ .room-navigation { display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:1px solid var(--line); padding-bottom:8px; }
+ .room-navigation .play-modes { margin:0; padding:0; border:0; flex-shrink:0; }
+ .room-shell .room-navigation .room-toolbar { z-index:30; width:auto; max-width:360px; margin:0 0 0 auto; padding:4px 6px; flex-wrap:nowrap; gap:8px; border-radius:10px; }
+ .room-navigation .room-toolbar>div { gap:2px; }
+ .room-navigation .room-toolbar strong { max-width:160px; font-size:11px; }
+ .room-navigation .room-toolbar>button, .room-navigation .room-menu>summary { width:32px; height:32px; min-height:32px; padding:4px; }
+ .room-navigation .room-invite-label { display:none; }
+ .room-navigation .room-invite-icon { display:inline; font-size:18px; }
+ .room-navigation .room-menu-content { top:40px; }
+}
