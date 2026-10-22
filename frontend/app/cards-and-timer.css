@@ -1,0 +1,66 @@
+/* Classic two-colour deck; all art is local SVG and CSS. */
+.playing-card.stars-face, .playing-card.stars-back, .playing-card.card-placeholder { position:relative; display:block; overflow:hidden; container-type:size; padding:0; }
+.playing-card.stars-face { background:#fffef8; color:#171b1d; border:1px solid #d1d0c8; box-shadow:0 2px 5px #0004; border-radius:5px; }
+.playing-card.stars-face.red-card { color:#c61d31; }
+.playing-card.stars-face .card-corner { position:absolute; display:flex; flex-direction:column; align-items:center; gap:0; width:auto; line-height:1; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-size:30cqw; font-weight:700; z-index:2; }
+.playing-card.stars-face .card-corner b { font-size:inherit; letter-spacing:-.08em; line-height:1; }
+.playing-card.stars-face .card-corner i { font-family:Georgia,'Times New Roman',serif; font-style:normal; font-size:11px; font-size:34cqw; line-height:.95; }
+.card-corner.corner-top { top:4%; left:5%; }
+.card-corner.corner-bottom { bottom:4%; right:5%; transform:rotate(180deg); }
+.playing-card .card-art { position:absolute; width:60%; height:72%; left:20%; top:14%; overflow:visible; font-family:Georgia,'Times New Roman',serif; }
+.playing-card .court-art { width:58%; height:72%; left:21%; top:14%; }
+.playing-card.stars-back { border:1px solid #f6efe2; background:repeating-linear-gradient(45deg,#ffffff0e 0 1px,transparent 1px 4px),repeating-linear-gradient(-45deg,#ffffff0e 0 1px,transparent 1px 4px),linear-gradient(150deg,#d22439,#990d22); box-shadow:inset 0 0 0 2px #f7f1df,inset 0 0 0 3px #a5132a,0 2px 5px #0004; border-radius:4px; }
+.playing-card .card-back-art { position:absolute; inset:7%; width:86%; height:86%; }
+.playing-card.card-placeholder { background:#0d322550; border:1px solid #abc0a12b; box-shadow:none; border-radius:5px; }
+.classic-table .seat:not(.seat-bottom).concealed-seat .playing-card { width:27px; height:38px; }
+.classic-table .seat:not(.seat-bottom) .hole-cards { top:-31px; right:7px; z-index:0; }
+.classic-table .seat-top { top:14px; }
+.classic-table .seat-turn-timer { position:absolute; z-index:8; top:-23px; left:3px; display:flex; align-items:center; justify-content:center; gap:3px; min-width:49px; min-height:27px; padding:3px 6px; border:1px solid #fff1ba; border-radius:8px; background:#ecd083; color:#172c20; box-shadow:0 0 0 3px #d6c07822,0 3px 8px #0005; font-size:16px; font-weight:700; font-variant-numeric:tabular-nums; line-height:1; pointer-events:none; }
+.classic-table .seat-turn-timer small { font-size:10px; font-weight:400; }
+.classic-table .seat-turn-timer>span { font-size:15px; }
+.classic-table .timed-seat .seat-avatar { outline:2px solid #ecd083; outline-offset:2px; }
+.classic-table .timed-seat .seat-bar { border-color:#efd58b; box-shadow:0 0 0 2px #d6c07833,0 4px 18px #0004; }
+.classic-table .seat-time-urgent .seat-turn-timer { background:#c93737; border-color:#ffbcb6; color:#fff8f4; box-shadow:0 0 0 3px #e2565633,0 3px 8px #0005; }
+.classic-table .seat-time-urgent .seat-avatar { outline-color:#ee766c; }
+.classic-table .seat-time-urgent .seat-bar { border-color:#ee766c; box-shadow:0 0 0 2px #ee766c33; }
+@media(max-width:760px) {
+ .classic-table .seat:not(.seat-bottom).concealed-seat .playing-card { width:21px; height:30px; }
+ .classic-table .seat:not(.seat-bottom) .hole-cards { top:-24px; right:0; }
+ .classic-table .seat-top { top:14px; }
+ .classic-table .seat-turn-timer { min-height:25px; min-width:44px; width:44px; gap:1px; font-size:14px; top:-21px; left:2px; padding:3px 2px; }
+ .classic-table .seat-turn-timer small { font-size:9px; }
+ .classic-table .seat-turn-timer>span { font-size:12px; }
+}
+
+@media(max-width:350px) { .classic-table .seat:not(.seat-bottom).concealed-seat .playing-card { width:18px; height:26px; } }
+
+.playing-card .pip-art { width:64%; left:18%; }
+/* Keep the full card width available to the enlarged indices at every seat size. */
+.classic-table .seat .playing-card.stars-face,
+.classic-table .seat .playing-card.stars-back,
+.classic-table .board-cards .playing-card.stars-face,
+.classic-table .board-cards .playing-card.card-placeholder { padding:0; }
+
+/* Hole cards use the same dimensions at every occupied seat. */
+.classic-table { --hole-card-width:47px; --hole-card-height:66px; padding-top:28px; }
+.classic-table .seat .hole-cards .playing-card,
+.classic-table .seat.concealed-seat .hole-cards .playing-card {
+ width:var(--hole-card-width); height:var(--hole-card-height);
+}
+.classic-table .seat:not(.seat-bottom) .hole-cards {
+ position:static; order:0; top:auto; right:auto; min-height:0; justify-self:center;
+}
+.classic-table .seat-top { top:0; }
+@media(max-width:760px) {
+ .classic-table { --hole-card-width:42px; --hole-card-height:58px; padding-top:28px; }
+ .classic-table .seat-top,
+ .classic-table .seat-top-left,
+ .classic-table .seat-top-right,
+ .classic-table .table-seats-3 .seat-left,
+ .classic-table .table-seats-3 .seat-right,
+ .classic-table .table-seats-5 .seat-top-left,
+ .classic-table .table-seats-5 .seat-top-right { top:0; }
+}
+@media(max-width:350px) {
+ .classic-table { --hole-card-width:38px; --hole-card-height:53px; }
+}

@@ -8,12 +8,14 @@ import ActionPanel from '@/components/ActionPanel';
 import HandHistory from '@/components/HandHistory';
 import HandArchive from '@/components/HandArchive';
 import PokerTable from '@/components/PokerTable';
+import PanelSidebar from '@/components/PanelSidebar';
 import { enterRoom, roomSocketUrl } from '@/services/roomApi';
 import type { RoomCredentials, RoomState, RoomSettings } from '@/services/roomApi';
 import type { ActionType } from '@/types/poker';
 
 export default function FriendsPage() {
   const { t } = useI18n();
+  const [panel, setPanel] = useState<string | null>(null);
   const [credentials, setCredentials] = useState<RoomCredentials | null>(null);
   const [room, setRoom] = useState<RoomState | null>(null);
   const [name, setName] = useState('');
@@ -171,6 +173,11 @@ export default function FriendsPage() {
   };
 
   const secondsLeft = room?.deadline_at ? Math.max(0, Math.ceil((room.deadline_at - clock.now - clock.offset) / 1000)) : null;
+  // deadline_at includes the quiet phase; never start a new timer on reconnect.
+  const visibleSecondsLeft = secondsLeft !== null && secondsLeft <= settings.turn_seconds ? secondsLeft : null;
+  const turnTimer = hand?.current_player_id && !hand.result && visibleSecondsLeft !== null
+    ? { playerId: hand.current_player_id, remaining: visibleSecondsLeft, duration: settings.turn_seconds } : null;
+
 
   const copyInvite = async () => {
     try {
@@ -184,13 +191,35 @@ export default function FriendsPage() {
     window.history.replaceState(null, '', '/friends');
   };
 
+  const lobby = (
+<section className="control-panel room-lobby">
+                <p className="saved-room">{t("Saved on this server · reconnect after a restart")}</p>
+
+                <h2>{t(betweenHands ? 'Ready for the next hand?' : 'Players at the table')}</h2>
+
+                <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{t(member.player_id === room.viewer_id ? ' (you)' : '')}</strong><span>{t(member.player_id === room.host_id ? 'Host · ' : '')}{t(member.connected ? 'Connected' : 'Disconnected')}</span></div><em>{t(member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing')}</em></li>)}</ul>
+                <button disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
+                {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
+                {betweenHands ? <><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{t(hand ? 'Deal next hand' : 'Deal first hand')}</button> : <p>{t("The host deals when everyone is ready.")}</p>}</> : <p>{hand?.players.find((player) => player.id === hand.current_player_id)?.name}{t("'s turn. Streets advance automatically.")}</p>}
+                <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)}{t(" · Starting stack ")}{t(settings.starting_stack)}{t(". Virtual training chips: stacks below ")}{t(settings.big_blind)}{t(" receive ")}{t(settings.starting_stack)}{t(" extra chips between hands. Players can join between hands. Reopen this link in the same browser to restore your seat.")}</p>
+                <p className="room-note">{t("After {0} quiet seconds, the {1}-second countdown starts. The clock continues after disconnect; timeout checks or folds, then sits out.").replace('{0}', String(room?.turn_grace_seconds ?? 10)).replace('{1}', String(settings.turn_seconds))}</p>
+                              {!hand && isHost ? <details className="room-settings-disclosure"><summary>{t("Table settings")}</summary><fieldset className="room-settings" disabled={busy || !connected}>
+                  <legend>{t("Table settings")}</legend>
+                  <label>{t("Starting stack")}<input type="number" min={100} max={1000000} step={1} value={editedSettings.starting_stack} onChange={(event) => editSetting('starting_stack', Number(event.target.value))} /></label>
+                  <label>{t("Small blind")}<input type="number" min={1} max={10000} step={1} value={editedSettings.small_blind} onChange={(event) => editSetting('small_blind', Number(event.target.value))} /></label>
+                  <label>{t("Big blind")}<input type="number" min={2} max={20000} step={1} value={editedSettings.big_blind} onChange={(event) => editSetting('big_blind', Number(event.target.value))} /></label>
+                  <label>{t("Countdown seconds")}<input type="number" min={10} max={120} step={1} value={editedSettings.turn_seconds} onChange={(event) => editSetting('turn_seconds', Number(event.target.value))} /></label>
+                  <button disabled={!validSettings} onClick={() => send('settings', { settings: editedSettings })}>{t("Apply settings")}</button>
+                  <small>{t("At least 20 big blinds in the starting stack. Applying changes clears everyone's readiness. Settings lock after the first deal.")}</small>
+                </fieldset></details> : null}
+</section>
+  );
+
   return (
-    <main className="app-shell">
-      <section className="top-bar">
-        <div><p className="eyebrow">{t("Private tables · virtual chips")}</p><h1>{t("Play with friends")}</h1></div>
-        <div className="status-row"><span className="status-pill">{t(status)}</span><Link className="mode-link" href="/">{t("AI training")}</Link></div>
-      </section>
-      {error ? <div className="error-banner"><span>{t(error)}</span><button onClick={() => setError(null)}>{t("Dismiss")}</button></div> : null}
+    <main className={`app-shell play-shell room-shell ${hand ? 'room-in-hand' : ''}`}>
+      <header className="play-header"><h1><span aria-hidden="true">♠</span> Poker AI Coach</h1><span className={`connection-state ${connected ? 'is-connected' : ''}`} role="status">{t(status)}</span></header>
+      <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t('AI training')}</Link><Link href="/friends" aria-current="page">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link></nav>
+      {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button onClick={() => setError(null)}>{t("Dismiss")}</button></div> : null}
       {!credentials ? (
         <section className="room-entry control-panel">
           <h2>{t("Your private poker table")}</h2>
@@ -203,41 +232,24 @@ export default function FriendsPage() {
       ) : (
         <>
           <section className="room-toolbar control-panel">
-            <div><span className="eyebrow">{t("Room ")}{t(credentials.code)}</span><strong>{me?.name ?? t('Restoring your seat')} · {t(room?.members.length ?? 1)}{t("/6 players")}</strong></div>
+            <div><span className="eyebrow">{t('Room')} {credentials.code}</span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
             <button onClick={copyInvite}>{t(copied ? 'Link copied' : 'Copy invitation')}</button>
-            <button onClick={reset}>{t("Close table")}</button>
-            <button disabled={busy || !connected} onClick={() => send('leave')}>{t("Leave room")}</button>
-            <input className="invite-field" aria-label={t("Invitation link")} readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} />
+            <details className="room-menu"><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content">
+              <label>{t('Invitation link')}<input className="invite-field" readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} /></label>
+              <button onClick={reset}>{t('Close table')}</button><button disabled={busy || !connected} onClick={() => send('leave')}>{t('Leave room')}</button>
+            </div></details>
           </section>
+          {hand ? <div className="table-meta"><span>{t(hand.street)} · {hand.players.length} {t('players')}</span><span>{t('Blinds')} {settings.small_blind} / {settings.big_blind}</span></div> : null}
           <section className="game-layout">
             <div className="table-column">
-              <PokerTable emptyStack={settings.starting_stack} hand={hand} seatCount={hand?.players.length ?? Math.max(2, room?.members.length ?? 2)} viewerId={room?.viewer_id} />
-              {hand ? <ActionPanel analysis={null} hand={hand} isLoading={busy || !connected || Boolean(me?.sitting_out)} viewerId={room?.viewer_id} trainingControls={false} onAction={action} onAdvance={() => {}} onAnalyze={() => {}} onStartHand={() => {}} /> : null}
+              <PokerTable emptyStack={settings.starting_stack} hand={hand} seatCount={hand?.players.length ?? Math.max(2, room?.members.length ?? 2)} viewerId={room?.viewer_id} turnTimer={turnTimer} />
+              {hand ? <ActionPanel analysis={null} hand={hand} isLoading={busy} blocked={!connected || Boolean(me?.sitting_out)} waitingLabel={!connected ? t(status) : me?.sitting_out ? t("Sitting out") : undefined} viewerId={room?.viewer_id} trainingControls={false} secondsLeft={visibleSecondsLeft} tools={<><button aria-haspopup="dialog" onClick={() => setPanel('players')}>{t('Players')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('archive')}>{t('Hand archive')} ↑</button></>} onAction={action} onAdvance={() => {}} onAnalyze={() => {}} onStartHand={() => {}} /> : null}
             </div>
-            <aside className="side-column">
-              <section className="control-panel room-lobby">
-                <p className="saved-room">{t("Saved on this server · reconnect after a restart")}</p>
-                {!hand && isHost ? <fieldset className="room-settings" disabled={busy || !connected}>
-                  <legend>{t("Table settings")}</legend>
-                  <label>{t("Starting stack")}<input type="number" min={100} max={1000000} step={1} value={editedSettings.starting_stack} onChange={(event) => editSetting('starting_stack', Number(event.target.value))} /></label>
-                  <label>{t("Small blind")}<input type="number" min={1} max={10000} step={1} value={editedSettings.small_blind} onChange={(event) => editSetting('small_blind', Number(event.target.value))} /></label>
-                  <label>{t("Big blind")}<input type="number" min={2} max={20000} step={1} value={editedSettings.big_blind} onChange={(event) => editSetting('big_blind', Number(event.target.value))} /></label>
-                  <label>{t("Seconds per turn")}<input type="number" min={10} max={120} step={1} value={editedSettings.turn_seconds} onChange={(event) => editSetting('turn_seconds', Number(event.target.value))} /></label>
-                  <button disabled={!validSettings} onClick={() => send('settings', { settings: editedSettings })}>{t("Apply settings")}</button>
-                  <small>{t("At least 20 big blinds in the starting stack. Applying changes clears everyone's readiness. Settings lock after the first deal.")}</small>
-                </fieldset> : null}
-                <h2>{t(betweenHands ? 'Ready for the next hand?' : 'Players at the table')}</h2>
-                {secondsLeft !== null ? <div className={`turn-clock ${secondsLeft <= 10 ? 'turn-clock-urgent' : ''}`} role="timer" aria-label={t("Time remaining")}>{secondsLeft}{t("s to act ")}<span>{t("Timeout: check or fold, then sit out")}</span></div> : null}
-                <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{t(member.player_id === room.viewer_id ? ' (you)' : '')}</strong><span>{t(member.player_id === room.host_id ? 'Host · ' : '')}{t(member.connected ? 'Connected' : 'Disconnected')}</span></div><em>{t(member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing')}</em></li>)}</ul>
-                <button disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
-                {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
-                {betweenHands ? <><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{t(hand ? 'Deal next hand' : 'Deal first hand')}</button> : <p>{t("The host deals when everyone is ready.")}</p>}</> : <p>{hand?.players.find((player) => player.id === hand.current_player_id)?.name}{t("'s turn. Streets advance automatically.")}</p>}
-                <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)}{t(" · Starting stack ")}{t(settings.starting_stack)}{t(". Virtual training chips: stacks below ")}{t(settings.big_blind)}{t(" receive ")}{t(settings.starting_stack)}{t(" extra chips between hands. Players can join between hands. Reopen this link in the same browser to restore your seat.")}</p>
-                <p className="room-note">{t("Each turn has ")}{t(settings.turn_seconds)}{t(" seconds, including after disconnect. Timeout uses check if possible, otherwise fold, then sit-out. Leaving releases the seat after this hand; the host role transfers automatically.")}</p>
-              </section>
-              <HandHistory hand={hand} />
-              <HandArchive key={`${credentials.code}:${credentials.player_id}`} credentials={credentials} completedHandId={hand?.result ? hand.hand_id : null} />
-            </aside>
+            <PanelSidebar notice={visibleSecondsLeft !== null ? <p className={`sheet-timer ${visibleSecondsLeft !== null && visibleSecondsLeft <= 10 ? "urgent" : ""}`} role="timer">{t("Time remaining")}: {visibleSecondsLeft}s</p> : null} collapseOnMobile={Boolean(hand)} active={panel} onClose={() => setPanel(null)} panels={[
+              { id: 'players', title: t('Players'), content: lobby },
+              { id: 'history', title: t('History'), content: <HandHistory hand={hand} /> },
+              { id: 'archive', title: t('Hand archive'), content: <HandArchive key={`${credentials.code}:${credentials.player_id}`} credentials={credentials} completedHandId={hand?.result ? hand.hand_id : null} /> },
+            ]} />
           </section>
         </>
       )}

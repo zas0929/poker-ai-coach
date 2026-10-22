@@ -16,6 +16,8 @@ from app.services.poker_engine import PokerEngine
 from app.services.hand_projection import project_hand
 from app.services.room_repository import RoomRepository, RoomStorageError
 
+TURN_GRACE_SECONDS = 10
+
 SEAT_IDS = ['hero', 'villain', 'villain_2', 'villain_3', 'villain_4', 'villain_5']
 
 
@@ -125,6 +127,7 @@ class Room:
             'type': 'state', 'code': self.code, 'revision': self.revision,
             'viewer_id': viewer.player_id, 'host_id': self.host_id,
             'viewer_left': viewer.leaving, 'turn_seconds': self.turn_seconds,
+            'turn_grace_seconds': TURN_GRACE_SECONDS,
             'settings': self.settings.model_dump(), 'saved': True,
             'deadline_at': self.deadline_at, 'server_now': time.time() * 1000,
             'members': [{'player_id': m.player_id, 'name': m.name, 'ready': m.ready,
@@ -244,8 +247,8 @@ class Room:
         key = (self.hand.hand_id, len(self.hand.history), self.hand.current_player_id) if self.hand and not self.hand.result else None
         if key != self.turn_key:
             self.turn_key = key
-            self.deadline = time.monotonic() + self.turn_seconds if key else None
-            self.deadline_at = (time.time() + self.turn_seconds) * 1000 if key else None
+            self.deadline = time.monotonic() + TURN_GRACE_SECONDS + self.turn_seconds if key else None
+            self.deadline_at = (time.time() + TURN_GRACE_SECONDS + self.turn_seconds) * 1000 if key else None
 
     def tick(self, now=None):
         now = time.monotonic() if now is None else now
@@ -298,7 +301,7 @@ class Room:
             self.hand._deck = [Card.model_validate(c) for c in hand['_deck']]
         self.turn_key = (self.hand.hand_id, len(self.hand.history), self.hand.current_player_id) if self.hand and not self.hand.result else None
         self.deadline_at = record['deadline_at'] if self.turn_key else None
-        self.deadline = time.monotonic() + max(0, min(self.turn_seconds, self.deadline_at / 1000 - time.time())) if self.deadline_at else None
+        self.deadline = time.monotonic() + max(0, min(TURN_GRACE_SECONDS + self.turn_seconds, self.deadline_at / 1000 - time.time())) if self.deadline_at else None
 
     async def broadcast(self) -> None:
         # Caller holds the room lock: all clients receive snapshots in revision order.

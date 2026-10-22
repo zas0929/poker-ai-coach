@@ -9,17 +9,22 @@ import type { CSSProperties } from 'react';
 import CardView from '@/components/CardView';
 import type { HandAction, HandResult, HandState, Player, Street } from '@/types/poker';
 
+interface TurnTimer { playerId: string; remaining: number; duration: number }
+
 interface PokerTableProps {
   hand: HandState | null;
   seatCount: number;
   viewerId?: string;
   emptyStack?: number;
+  turnTimer?: TurnTimer | null;
 }
 
 function Seat({
   player,
   active,
+  timer,
   cardsHidden = false,
+  dealer = false,
   startingStack = 1000,
   lastAction,
   label,
@@ -27,7 +32,9 @@ function Seat({
 }: {
   player?: Player;
   active: boolean;
+  timer?: TurnTimer | null;
   cardsHidden?: boolean;
+  dealer?: boolean;
   startingStack?: number;
   lastAction?: HandAction;
   label?: string;
@@ -36,16 +43,20 @@ function Seat({
   const { t } = useI18n();
   const displayName = player ? displayPlayer(player, t) : t(label ?? 'Waiting');
   const displayPosition = player?.position ?? 'waiting';
+  const shortPosition = ({ small_blind_button: 'SB', small_blind: 'SB', big_blind: 'BB', button: 'BTN', under_the_gun: 'UTG', hijack: 'HJ', cutoff: 'CO', waiting: '—' } as Record<string, string>)[displayPosition] ?? displayPosition;
   const displayStack = player?.stack ?? startingStack;
   const displayBet = player?.current_bet ?? 0;
   const status = player?.status ?? 'active';
 
   return (
-    <div className={`seat seat-${slot} ${active ? 'active-seat' : ''} ${player ? '' : 'empty-seat'}`}>
+    <div className={`seat seat-${slot} ${active ? 'active-seat' : ''} ${timer ? 'timed-seat' : ''} ${timer && timer.remaining <= 10 ? 'seat-time-urgent' : ''} ${player ? '' : 'empty-seat'} ${cardsHidden ? 'concealed-seat' : ''} ${status === 'folded' ? 'folded-seat' : ''}`}>
+      {dealer ? <span className="dealer-marker" aria-label={t("Button")}>D</span> : null}
       <div className="seat-bar">
+        {timer ? <span className="seat-turn-timer" role="timer" aria-label={`${t("Time remaining")}: ${timer.remaining}`}><span aria-hidden="true">◷</span> {timer.remaining}<small>s</small></span> : null}
+        <span className="seat-avatar" aria-hidden="true">{player ? displayName.slice(0, 1).toUpperCase() : "+"}</span>
         <div className="seat-info">
-          <h2>{displayName}</h2>
-          <p>{t(displayPosition)}</p>
+          <h2 title={displayName}>{displayName}</h2>
+          <p title={t(displayPosition)}>{shortPosition}</p>
           {player ? (
             <span className={`action-badge action-${lastAction?.action ?? status}`}>
               {t(formatAction(lastAction, status))}
@@ -55,12 +66,12 @@ function Seat({
           )}
         </div>
         <div className="seat-stats">
-          <span>{t("Stack ")}{displayStack}</span>
-          <span>{t("Bet ")}{displayBet}</span>
+          <span className="seat-stack" aria-label={`${t("Stack")} ${displayStack}`}>{displayStack}</span>
         </div>
         {player ? <ChipStack amount={displayStack + displayBet} className="player-chip-stack" /> : null}
       </div>
-      {player ? (
+      {displayBet > 0 ? <span className="seat-commitment" aria-label={`${t("Bet")} ${displayBet}`}>{displayBet}</span> : null}
+      {player && status !== 'folded' ? (
         <div className="hole-cards">
           {Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
             <CardView key={`${player.id}-${index}`} card={card} hidden={cardsHidden} />
@@ -76,7 +87,7 @@ export default function PokerTable(props: PokerTableProps) {
   return <TableScene key={key} {...props} />;
 }
 
-function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000 }: PokerTableProps) {
+function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer }: PokerTableProps) {
   const { t } = useI18n();
   const [displayedBoardCount, setDisplayedBoardCount] = useState(() =>
     hand ? (isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand.board.length) : 0,
@@ -115,13 +126,15 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000 }: P
   }, [hand?.hand_id, runoutComplete, winnerSlot]);
 
   return (
-    <section className="table-surface">
-      <div className={`table-oval table-seats-${seatCount} ${seatCount > 2 ? 'table-multiway' : ''}`}>
+    <section className={`table-surface classic-table ${hand?.result ? "has-result" : ""}`} aria-label={t("Poker table")}>
+      <div className={`table-oval classic-oval table-seats-${seatCount} ${seatCount > 2 ? 'table-multiway' : ''}`}>
         {seats.map((seat) => (
           <Seat
             key={seat.slot}
             player={seat.player}
             startingStack={emptyStack}
+            timer={seat.player?.id === turnTimer?.playerId && seat.player?.id !== viewerId && hand?.current_player_id === seat.player?.id && !hand?.result ? turnTimer : null}
+            dealer={Boolean(seat.player && seat.player.id === hand?.dealer_player_id)}
             active={Boolean(seat.player && hand?.current_player_id === seat.player.id)}
             cardsHidden={Boolean(seat.player?.id !== viewerId && (!revealVillainCards || seat.player?.status === 'folded'))}
             lastAction={seat.player ? lastActionFor(hand, seat.player.id) : undefined}
@@ -131,7 +144,16 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000 }: P
         ))}
 
         <div className="board-zone">
-          <div className={`showdown-slot ${allInRunout || (runoutComplete && (winnerBadge || hand?.result)) ? 'showdown-slot-visible' : ''}`}>
+          <PotDisplay amount={hand?.pot ?? 0} />
+          <div className="board-cards">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <CardView key={`${hand?.hand_id ?? 'empty'}-${index}-${visibleBoard[index]?.rank ?? 'hidden'}`} card={visibleBoard[index]} hidden={!visibleBoard[index]} placeholder={!visibleBoard[index]} />
+            ))}
+          </div>
+        </div>
+        {showChipFlight && winnerSlot ? <ChipFlight target={winnerSlot} /> : null}
+      </div>
+      <div className={`showdown-slot ${allInRunout || (runoutComplete && (winnerBadge || hand?.result)) ? 'showdown-slot-visible' : ''}`}>
             {allInRunout && !runoutComplete ? <div className="runout-badge">{t("All-in runout")}</div> : null}
             {runoutComplete && (winnerBadge || hand?.result) ? (
               <>
@@ -140,15 +162,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000 }: P
               </>
             ) : null}
           </div>
-          <PotDisplay amount={hand?.pot ?? 0} />
-          <div className="board-cards">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CardView key={`${hand?.hand_id ?? 'empty'}-${index}-${visibleBoard[index]?.rank ?? 'hidden'}`} card={visibleBoard[index]} hidden={!visibleBoard[index]} />
-            ))}
-          </div>
-        </div>
-        {showChipFlight && winnerSlot ? <ChipFlight target={winnerSlot} /> : null}
-      </div>
+
     </section>
   );
 }

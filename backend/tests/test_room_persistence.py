@@ -80,6 +80,15 @@ class PersistenceTests(unittest.TestCase):
             self.command(self.host, 'settings', settings=RoomSettings())
         self.assertEqual(sum(p.stack for p in self.room.hand.players) + self.room.hand.pot, 8000)
 
+    def test_restart_during_quiet_phase_keeps_all_remaining_time(self):
+        self.start()
+        self.room.deadline_at = (time.time() + 35) * 1000
+        self.store.repository.save(self.room.to_record(), 'test_quiet_phase')
+        self.restart()
+        remaining = self.room.deadline - time.monotonic()
+        self.assertGreater(remaining, 34)
+        self.assertLessEqual(remaining, 35)
+
     def test_restart_preserves_hand_deck_tokens_and_secrets(self):
         self.start()
         before = self.room.to_record()

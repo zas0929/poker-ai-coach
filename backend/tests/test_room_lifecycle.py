@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from app.models.poker import ActionType
 from app.services.room_service import RoomCommand, RoomStore
 
@@ -20,6 +21,33 @@ class LifecycleTests(unittest.TestCase):
             if not member.sitting_out:
                 self.command(member, 'ready', ready=True)
         self.command(next(m for m in self.room.members if m.player_id == self.room.host_id), 'start')
+
+    def test_ten_second_quiet_phase_then_thirty_second_countdown(self):
+        with patch('app.services.room_service.time.monotonic', return_value=100), \
+             patch('app.services.room_service.time.time', return_value=1000):
+            self.start()
+            self.assertEqual(self.room.deadline, 140)
+            view = self.room.snapshot(self.host)
+            self.assertEqual(view['deadline_at'], 1040000)
+            self.assertEqual(view['turn_grace_seconds'], 10)
+            self.assertEqual(view['turn_seconds'], 30)
+            for point in [100, 109.999, 110, 130, 139.999]:
+                self.assertFalse(self.room.tick(point))
+                self.assertFalse(self.host.sitting_out)
+            self.assertTrue(self.room.tick(140))
+            self.assertTrue(self.host.sitting_out)
+
+    def test_new_actor_gets_a_fresh_quiet_phase_and_countdown(self):
+        with patch('app.services.room_service.time.monotonic', return_value=100), \
+             patch('app.services.room_service.time.time', return_value=1000):
+            self.start()
+        with patch('app.services.room_service.time.monotonic', return_value=112), \
+             patch('app.services.room_service.time.time', return_value=1012):
+            self.command(self.host, 'action', action='call', hand_id=self.room.hand.hand_id)
+            self.assertEqual(self.room.hand.current_player_id, self.guest.player_id)
+            self.assertEqual(self.room.deadline, 152)
+            self.assertEqual(self.room.deadline_at, 1052000)
+            self.assertFalse(self.room.tick(151.99))
 
     def test_timer_does_not_expire_early_and_cannot_act_twice(self):
         self.start()

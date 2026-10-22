@@ -8,7 +8,7 @@ export interface RoomState {
   type: 'state'; code: string; revision: number; viewer_id: string; host_id: string;
   members: RoomMember[]; hand: HandState | null; viewer_left: boolean;
   settings: RoomSettings; saved: boolean;
-  deadline_at: number | null; server_now: number; turn_seconds: number;
+  deadline_at: number | null; server_now: number; turn_seconds: number; turn_grace_seconds?: number;
 }
 export function roomSocketUrl(code: string) {
   const url = new URL(`${API_BASE}/api/rooms/${encodeURIComponent(code)}/ws`);

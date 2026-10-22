@@ -10,10 +10,12 @@ import ActionPanel from '@/components/ActionPanel';
 import CoachPanel from '@/components/CoachPanel';
 import HandHistory from '@/components/HandHistory';
 import PokerTable from '@/components/PokerTable';
+import PanelSidebar from '@/components/PanelSidebar';
 import { usePokerHand } from '@/hooks/usePokerHand';
 
 export default function HomePage() {
   const { t } = useI18n();
+  const [panel, setPanel] = useState<string | null>(null);
   const [seatCount, setSeatCount] = useState<number | null>(null);
   const {
     analysis,
@@ -30,34 +32,20 @@ export default function HomePage() {
   } = usePokerHand();
 
   return (
-    <main className="app-shell">
-      <section className="top-bar">
-        <div>
-          <p className="eyebrow">{t("Texas Hold'em AI Coach")}</p>
-          <h1>{t("Poker AI Coach")}</h1>
-        </div>
-        <div className="status-row">
-          <Link className="mode-link" href="/practice">{t("Practice & decisions")}</Link>
-          <Link className="mode-link" href="/friends">{t("Play with friends")}</Link>
-          <label className="seat-count-control">
-            <span>{t("Seats")}</span>
-            <select value={seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} onChange={(event) => setSeatCount(Number(event.target.value))}>
-              {[2, 3, 4, 5, 6].map((count) => (
-                <option key={count} value={count}>
-                  {count}
-                </option>
-              ))}
-            </select>
-          </label>
-          <span className="status-pill">{t(hand?.street ?? 'not started')}</span>
-          <button className="primary-button" onClick={() => startHand(seatCount ?? hand?.players.length ?? 2)} disabled={isLoading || Boolean(hand && !hand.result)}>{t("New hand")}</button>
-        </div>
-      </section>
-
-      <SessionStrip hand={hand} />
+    <main className="app-shell play-shell">
+      <header className="play-header">
+        <h1><span aria-hidden="true">♠</span> Poker AI Coach</h1>
+        <label className="seat-count-control"><span>{t('Seats')}</span><select aria-label={t('Seats')} value={seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} onChange={(event) => setSeatCount(Number(event.target.value))}>
+          {[2, 3, 4, 5, 6].map((count) => <option key={count} value={count}>{count}</option>)}
+        </select></label>
+      </header>
+      <nav className="play-modes" aria-label={t('Game mode')}>
+        <Link href="/" aria-current="page">{t('AI training')}</Link><Link href="/friends">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link>
+      </nav>
+      <div className="table-meta"><span>{t(hand?.street ?? 'not started')} · {hand?.players.length ?? 2} {t('players')}</span><span>{t('Blinds')} {hand?.small_blind ?? 5} / {hand?.big_blind ?? 10}</span></div>
 
       {error ? (
-        <div className="error-banner">
+        <div className="error-banner" role="alert">
           <span>{t(error)}</span>
           <button onClick={clearError}>{t("Dismiss")}</button>
         </div>
@@ -73,19 +61,15 @@ export default function HomePage() {
             onAction={action}
             onAdvance={advance}
             onAnalyze={analyze}
+            tools={<><button aria-haspopup="dialog" onClick={() => setPanel('coach')}>{t('Coach')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button></>}
             onStartHand={() => startHand(seatCount ?? hand?.players.length ?? 2)}
           />
         </div>
-        <aside className="side-column">
-          <CoachPanel
-            analysis={analysis}
-            actionReview={actionReview}
-            decisionLog={decisionLog}
-            hand={hand}
-            isLoading={isLoading}
-          />
-          <HandHistory hand={hand} />
-        </aside>
+        <PanelSidebar active={panel} onClose={() => setPanel(null)} panels={[
+          { id: 'coach', title: t('Coach'), content: <CoachPanel analysis={analysis} actionReview={actionReview} decisionLog={decisionLog} hand={hand} isLoading={isLoading} /> },
+          { id: 'history', title: t('History'), content: <HandHistory hand={hand} /> },
+          { id: 'session', title: t('Session'), content: <section className="control-panel session-panel"><h2>{t('Session')}</h2><SessionStrip hand={hand} /><Link className="mode-link" href="/practice">{t('Practice & decisions')} →</Link></section> },
+        ]} />
       </section>
     </main>
   );
