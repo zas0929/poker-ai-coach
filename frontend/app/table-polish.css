@@ -17,3 +17,11 @@
  .dock-tools>button { min-height:32px; padding-block:3px; }
  .table-meta { padding-block:6px; }
 }
+
+.quick-raises { display:flex; gap:5px; }
+.quick-raises>button { flex:1; min-width:0; min-height:28px; padding:3px 6px; font-size:11px; border-radius:7px; background:#24372e; }
+.quick-raises b { font-variant-numeric:tabular-nums; margin-left:4px; }
+@media(max-width:760px) {
+ .play-shell { --table-chrome:358px; padding-bottom:calc(174px + env(safe-area-inset-bottom)); }
+ .room-in-hand { --table-chrome:418px; }
+}
