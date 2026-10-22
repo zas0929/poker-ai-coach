@@ -49,6 +49,7 @@ class RoomCommand(BaseModel):
     amount: Optional[StrictInt] = None
     ready: Optional[bool] = None
     sit_out: Optional[bool] = None
+    auto_deal: Optional[bool] = Field(default=None, strict=True)
     settings: Optional[RoomSettings] = None
 
     class Config:
@@ -174,6 +175,17 @@ class Room:
             member.stack += command.amount
             if was_short and member.stack >= self.settings.big_blind and self.settings.auto_deal and not member.sitting_out:
                 member.ready = True
+        elif command.kind == 'auto_deal':
+            if member.player_id != self.host_id:
+                raise ValueError('Only the host can change table settings.')
+            if self.hand and not self.hand.result:
+                raise ValueError('Finish the current hand first.')
+            if command.auto_deal is None:
+                raise ValueError('Automatic dealing status is required.')
+            self.settings = self.settings.model_copy(update={'auto_deal': command.auto_deal})
+            self.next_hand_at = None
+            for seated in self.seated:
+                seated.ready = command.auto_deal and not seated.sitting_out and seated.stack >= self.settings.big_blind
         elif command.kind == 'settings':
             if member.player_id != self.host_id:
                 raise ValueError('Only the host can change table settings.')

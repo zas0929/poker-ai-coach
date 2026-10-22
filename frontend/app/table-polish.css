@@ -208,3 +208,7 @@
 @media(min-width:761px) {
  .side-column .lobby-ready-control, .side-column .lobby-hand-controls-paused { display:none; }
 }
+
+.room-menu-content .auto-deal-option { display:flex; align-items:center; gap:8px; line-height:1.4; }
+.room-menu-content .auto-deal-option input { flex:none; width:18px; height:18px; margin:0; }
+.room-menu-content>small { color:var(--muted); font-size:11px; line-height:1.5; }

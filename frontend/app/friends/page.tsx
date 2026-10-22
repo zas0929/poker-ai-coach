@@ -196,8 +196,8 @@ export default function FriendsPage() {
   // deadline_at includes the quiet phase; never start a new timer on reconnect.
   const nextHandSeconds = room?.next_hand_at ? Math.max(0, Math.ceil((room.next_hand_at - clock.now - clock.offset) / 1000)) : null;
   const autoDealPlayers = room?.members.filter(member => !member.sitting_out && member.stack >= settings.big_blind) ?? [];
-  const autoDealStatus = betweenHands && settings.auto_deal
-    ? nextHandSeconds !== null ? t('Next hand in {0}s').replace('{0}', String(nextHandSeconds))
+  const autoDealStatus = betweenHands
+    ? !settings.auto_deal ? t('Manual dealing') : nextHandSeconds !== null ? t('Next hand in {0}s').replace('{0}', String(nextHandSeconds))
       : autoDealPlayers.length < 2 ? t('Waiting for 2 players with chips')
       : autoDealPlayers.some(member => !member.connected) ? t('Waiting for players to reconnect')
       : autoDealPlayers.some(member => !member.ready) ? t('Waiting for all players to be ready')
@@ -259,6 +259,8 @@ export default function FriendsPage() {
             <div><span className="eyebrow">{t('Room')} {credentials.code}</span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
             <button className="room-copy-invite" onClick={copyInvite} aria-label={t(copied ? 'Link copied' : 'Copy invitation')} title={t(copied ? 'Link copied' : 'Copy invitation')}><span className="room-invite-label">{t(copied ? 'Link copied' : 'Copy invitation')}</span><span className="room-invite-icon" aria-hidden="true">{copied ? '✓' : '⧉'}</span></button>
             <details className="room-menu"><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content">
+              <label className="auto-deal-option"><input type="checkbox" checked={settings.auto_deal} disabled={!isHost || busy || !connected || !betweenHands} onChange={event => send('auto_deal', { auto_deal: event.target.checked })} />{t('Automatically ready and deal next hands')}</label>
+              <small>{t(!betweenHands ? 'Change automatic dealing between hands.' : isHost ? 'Enable to ready active players and start the next-hand countdown.' : 'Only the host can change automatic dealing.')}</small>
               <label>{t('Invitation link')}<input className="invite-field" readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} /></label>
               <button onClick={reset}>{t('Close table')}</button><button disabled={busy || !connected} onClick={() => send('leave')}>{t('Leave room')}</button>
             </div></details>
