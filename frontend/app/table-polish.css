@@ -49,8 +49,8 @@
 .classic-table .seat-right .table-bet { top:50%; left:auto; right:calc(100% + 62px); transform:translateY(-50%); }
 .table-bet>b { padding:2px 6px; border:1px solid #adc49770; background:#183e2a; color:#ebdfae; border-radius:12px; font-size:14px; font-variant-numeric:tabular-nums; }
 /* Upper seats keep their bankroll and committed chips in separate rows. */
-.classic-table :is(.table-seats-5,.table-seats-6) :is(.seat-top,.seat-top-left,.seat-top-right) .seat-money { position:absolute; top:calc(100% + 7px); left:50%; display:flex; flex-direction:column; align-items:center; gap:8px; transform:translateX(-50%); }
-.classic-table :is(.table-seats-5,.table-seats-6) :is(.seat-top,.seat-top-left,.seat-top-right) :is(.player-chip-cluster,.table-bet) { position:static; transform:none; }
+.classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) :is(.seat-top,.seat-top-left,.seat-top-right) .seat-money { position:absolute; top:calc(100% + 7px); left:50%; display:flex; flex-direction:column; align-items:center; gap:8px; transform:translateX(-50%); }
+.classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) :is(.seat-top,.seat-top-left,.seat-top-right) :is(.player-chip-cluster,.table-bet) { position:static; transform:none; }
 @media(max-width:760px) {
  /* Three card pairs across the top need room for separate chips and bets. */
  .classic-table .classic-oval.table-seats-6 { min-height:480px; }
@@ -223,4 +223,15 @@
  .quick-raises { gap:4px; height:24px; min-height:24px; }
  .quick-raises>button { height:24px; min-height:24px; padding:2px 4px; font-size:10px; gap:5px; }
  .quick-raises>button b { font-size:11px; }
+}
+
+/* Four-handed tables keep all opponents along the upper rail. */
+.classic-table .table-seats-4 :is(.seat-top-left,.seat-top,.seat-top-right) { top:0; }
+.classic-table .table-seats-4 .seat-top-left { left:20%; }
+.classic-table .table-seats-4 .seat-top-right { left:80%; }
+.classic-table .table-seats-4 .board-zone { top:47%; }
+@media(max-width:760px) {
+ .classic-table .table-seats-4 .seat-top-left { left:14%; }
+ .classic-table .table-seats-4 .seat-top-right { left:86%; }
+ .classic-table .table-seats-4 .board-zone { top:60%; }
 }
