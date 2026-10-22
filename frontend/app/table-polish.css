@@ -18,14 +18,6 @@
  .table-meta { padding-block:6px; }
 }
 
-.quick-raises { display:flex; gap:5px; }
-.quick-raises>button { flex:1; min-width:0; min-height:28px; padding:3px 6px; font-size:11px; border-radius:7px; background:#24372e; }
-.quick-raises b { font-variant-numeric:tabular-nums; margin-left:4px; }
-@media(max-width:760px) {
- .play-shell { --table-chrome:358px; padding-bottom:calc(174px + env(safe-area-inset-bottom)); }
- .room-in-hand { --table-chrome:418px; }
-}
-
 /* Brand stays left; all controls form a compact group at the right edge. */
 .play-header { justify-content:space-between; }
 .play-header-controls { flex:0 1 auto; margin-left:auto; justify-content:flex-end; gap:12px; }
@@ -67,11 +59,6 @@
 }
 .classic-table .pot-display>.denomination-stack { display:flex; }
 .classic-table { position:relative; }
-.chip-legend { position:absolute; z-index:16; top:0; left:0; font-size:9px; color:var(--muted); }
-.chip-legend summary { cursor:pointer; padding:3px; }
-.chip-legend>div { background:#14281f; padding:8px; border:1px solid var(--line); display:grid; grid-template-columns:repeat(4,auto); gap:8px; border-radius:8px; }
-.chip-legend span { display:flex; align-items:center; gap:4px; }
-.chip-legend i { width:14px; height:14px; border:2px dashed #eee; border-radius:50%; }
 @media(max-width:760px) { .chip-pile { width:19px; } .denomination-chip { width:19px; } .table-bet>b { font-size:12px; } .bet-chip-stack { gap:1px; } }
 
 .classic-table .seat-stats .seat-stack { font-size:17px; font-weight:800; font-variant-numeric:tabular-nums; color:#fff9dc; line-height:1.15; }
@@ -107,4 +94,63 @@
  .room-shell:not(.room-in-hand) .table-column { display:block; }
  .room-shell:not(.room-in-hand) .table-column>.classic-table { display:none; }
  .room-shell:not(.room-in-hand) { padding-bottom:calc(174px + env(safe-area-inset-bottom)); }
+}
+
+.room-invite-icon { display:none; }
+/* Give the table the remaining viewport instead of hiding it under a fixed dock. */
+@media(max-width:760px) {
+ .play-shell { height:100dvh; min-height:620px; display:flex; flex-direction:column; padding:4px 8px 0; }
+ .play-shell.room-shell:not(.room-in-hand) { height:auto; min-height:100dvh; padding-bottom:16px; }
+ .play-header { flex:none; min-height:40px; padding:2px 0; }
+ .play-header .is-connected { font-size:0; gap:0; }
+ .play-header .is-connected:before { font-size:10px; margin-right:0; }
+ .play-modes { flex:none; padding:2px; gap:2px; border-radius:9px; }
+ .play-modes a { min-height:30px; padding:4px 2px; font-size:10px; }
+ .room-shell .room-toolbar { flex:none; margin:4px 0 0; padding:3px 6px; gap:6px; min-height:34px; border-radius:8px; }
+ .room-toolbar>div { display:flex; align-items:center; gap:7px; min-width:0; }
+ .room-toolbar strong { max-width:115px; }
+ .room-toolbar>button, .room-toolbar .room-menu>summary { min-height:28px; height:28px; padding:3px 7px; }
+ .room-copy-invite .room-invite-label { display:none; }
+ .room-copy-invite .room-invite-icon { display:inline; font-size:18px; }
+ .table-meta { flex:none; padding:4px 2px; min-height:22px; font-size:10px; }
+ .play-shell .game-layout { display:flex; flex:1; min-height:0; margin:0; }
+ .play-shell .table-column { display:flex; flex-direction:column; flex:1; min-height:0; gap:4px; }
+ .play-shell .classic-table { display:flex; flex-direction:column; flex:1; min-height:0; padding:5px 0 3px; }
+ .play-shell .classic-table .classic-oval,
+ .play-shell .classic-table .classic-oval.table-seats-6 { flex:1; height:auto; min-height:0; }
+ .classic-oval:before { inset:22px 0 25px; border-width:6px; }
+ .classic-table .board-zone,
+ .classic-table .table-seats-6 .board-zone { top:50%; transform:translate(-50%,-50%); gap:6px; }
+ .classic-table .seat-bar { min-height:48px; padding:4px 5px; grid-template-rows:16px 16px; gap:2px; }
+ .classic-table .seat-info .action-badge { top:auto; bottom:4px; font-size:8px; }
+ .classic-table .seat:not(.seat-bottom) .seat-avatar { display:none; }
+ .classic-table .seat:not(.seat-bottom) .seat-bar { grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:14px 18px; }
+ .classic-table .seat:not(.seat-bottom) .seat-info { display:contents; }
+ .classic-table .seat:not(.seat-bottom) .seat-info h2 { grid-column:1 / -1; grid-row:1; }
+ .classic-table .seat:not(.seat-bottom) .seat-stats { grid-column:1; grid-row:2; }
+ .classic-table .seat:not(.seat-bottom) .action-badge { position:static; grid-column:2; grid-row:2; display:block; width:100%; min-width:0; margin:0; align-self:center; text-align:right; }
+ .classic-table .seat-bottom .seat-bar { min-height:40px; padding:4px 6px; }
+ .classic-table .seat:not(.seat-bottom) .seat-turn-timer { top:4px; left:-47px; }
+ .play-shell .action-dock { position:relative; flex:none; inset:auto; margin:0 -8px; padding:6px 10px max(6px,env(safe-area-inset-bottom)); gap:5px; box-shadow:none; }
+ .action-dock .turn-strip { min-height:18px; font-size:11px; }
+ .action-dock .dock-clock { display:none; }
+ .action-dock .action-grid { gap:6px; }
+ .action-dock .action-grid button { min-height:44px; padding:5px; }
+ .dock-tools { padding-top:2px; gap:4px; }
+ .dock-tools>button { min-height:28px; padding:3px 4px; }
+ .classic-table .showdown-slot-visible { position:absolute; z-index:10; top:calc(50% + 52px); left:50%; transform:translateX(-50%); width:max-content; max-width:100%; min-height:0; pointer-events:none; }
+ .classic-table .table-seats-2 + .showdown-slot-visible { top:calc(50% + 40px); }
+ .classic-table .showdown-slot .showdown-summary { display:none; }
+ /* More seats use the gaps beside the board, leaving the hero a separate lower row. */
+ .classic-table .table-multiway { --hole-card-width:34px; --hole-card-height:47px; }
+ .classic-table .table-multiway .seat { width:86px; }
+ .classic-table .table-multiway .seat-bar { min-height:40px; padding:3px 4px; }
+ .classic-table .table-multiway .seat-left { left:13%; top:61%; }
+ .classic-table .table-multiway .seat-right { left:87%; top:61%; }
+ .classic-table .table-seats-3 .seat-left,
+ .classic-table .table-seats-3 .seat-right { top:0; }
+ .classic-table .table-multiway :is(.seat-left,.seat-right) .player-chip-cluster { top:0; transform:translateY(-100%); }
+ .classic-table .table-multiway .seat-left .table-bet { left:calc(100% + 62px); top:-24px; transform:none; }
+ .classic-table .table-multiway .seat-right .table-bet { right:calc(100% + 62px); top:0; transform:none; }
+ .classic-table .table-seats-6 .board-zone { top:51%; }
 }

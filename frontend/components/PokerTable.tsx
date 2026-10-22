@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 
 import { useTableSound } from '@/components/TableSoundProvider';
-import { CHIP_VALUES, chipBreakdown } from '@/services/chips';
+import { chipBreakdown } from '@/services/chips';
 import CardView from '@/components/CardView';
 import type { HandAction, HandResult, HandState, Player, Street } from '@/types/poker';
 
@@ -178,7 +178,6 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
 
   return (
     <section className={`table-surface classic-table ${hand?.result ? "has-result" : ""}`} aria-label={t("Poker table")}>
-      <details className="chip-legend"><summary>{t('Chip values')}</summary><div>{CHIP_VALUES.slice().reverse().map(chip => <span key={chip.value}><i style={{ background: chip.color }} />{chip.value}</span>)}</div></details>
       <div ref={tableRef} className={`table-oval classic-oval table-seats-${seatCount} ${seatCount > 2 ? 'table-multiway' : ''}`}>
         {seats.map((seat) => (
           <Seat

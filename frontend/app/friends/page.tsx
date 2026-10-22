@@ -256,7 +256,7 @@ export default function FriendsPage() {
         <>
           <section className="room-toolbar control-panel">
             <div><span className="eyebrow">{t('Room')} {credentials.code}</span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
-            <button onClick={copyInvite}>{t(copied ? 'Link copied' : 'Copy invitation')}</button>
+            <button className="room-copy-invite" onClick={copyInvite} aria-label={t(copied ? 'Link copied' : 'Copy invitation')} title={t(copied ? 'Link copied' : 'Copy invitation')}><span className="room-invite-label">{t(copied ? 'Link copied' : 'Copy invitation')}</span><span className="room-invite-icon" aria-hidden="true">{copied ? '✓' : '⧉'}</span></button>
             <details className="room-menu"><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content">
               <label>{t('Invitation link')}<input className="invite-field" readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} /></label>
               <button onClick={reset}>{t('Close table')}</button><button disabled={busy || !connected} onClick={() => send('leave')}>{t('Leave room')}</button>
