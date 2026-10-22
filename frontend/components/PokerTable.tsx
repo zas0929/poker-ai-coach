@@ -3,7 +3,7 @@
 import { displayPlayer } from '@/i18n/translate';
 import { useI18n } from '@/i18n/LanguageProvider';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 
 import CardView from '@/components/CardView';
@@ -49,7 +49,7 @@ function Seat({
   const status = player?.status ?? 'active';
 
   return (
-    <div className={`seat seat-${slot} ${active ? 'active-seat' : ''} ${timer ? 'timed-seat' : ''} ${timer && timer.remaining <= 10 ? 'seat-time-urgent' : ''} ${player ? '' : 'empty-seat'} ${cardsHidden ? 'concealed-seat' : ''} ${status === 'folded' ? 'folded-seat' : ''}`}>
+    <div data-player-id={player?.id} className={`seat seat-${slot} ${active ? 'active-seat' : ''} ${timer ? 'timed-seat' : ''} ${timer && timer.remaining <= 10 ? 'seat-time-urgent' : ''} ${player ? '' : 'empty-seat'} ${cardsHidden ? 'concealed-seat' : ''} ${status === 'folded' ? 'folded-seat' : ''}`}>
       {dealer ? <span className="dealer-marker" aria-label={t("Button")}>D</span> : null}
       <div className="seat-bar">
         {timer ? <span className="seat-turn-timer" role="timer" aria-label={`${t("Time remaining")}: ${timer.remaining}`}><span aria-hidden="true">◷</span> {timer.remaining}<small>s</small></span> : null}
@@ -92,7 +92,8 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
   const [displayedBoardCount, setDisplayedBoardCount] = useState(() =>
     hand ? (isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand.board.length) : 0,
   );
-  const [showChipFlight, setShowChipFlight] = useState(false);
+  const tableRef = useRef<HTMLDivElement>(null);
+  const [flights, setFlights] = useState<{ id: string; amount: number; x: number; y: number; left: number; top: number }[]>([]);
   const revealVillainCards = hand?.result?.reason === 'showdown';
   const winnerBadge = winnerText(hand, t);
   const allInRunout = isAllInRunout(hand);
@@ -102,7 +103,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
     [displayedBoardCount, hand?.board],
   );
   const seats = tableSeats(hand, seatCount, viewerId);
-  const winnerSlot = winnerSeatSlot(hand, seatCount, viewerId);
+
 
   useEffect(() => {
     if (!hand || !allInRunout) return;
@@ -117,17 +118,29 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
   }, [hand, allInRunout]);
 
   useEffect(() => {
-    if (!winnerSlot || !runoutComplete) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => setShowChipFlight(true), 1000);
+    if (!hand?.result || !runoutComplete) return;
+    const timer = window.setTimeout(() => {
+      const table = tableRef.current;
+      const pot = table?.querySelector('.pot-display');
+      if (!table || !pot) return;
+      const origin = pot.getBoundingClientRect();
+      const bounds = table.getBoundingClientRect();
+      setFlights(hand.result!.player_results.filter(payout => payout.amount_won > 0).flatMap(payout => {
+        const seat = Array.from(table.querySelectorAll<HTMLElement>('[data-player-id]')).find(item => item.dataset.playerId === payout.player_id);
+        if (!seat) return [];
+        const target = seat.getBoundingClientRect();
+        return [{ id: payout.player_id, amount: payout.amount_won,
+          left: origin.left + origin.width / 2 - bounds.left, top: origin.top + origin.height / 2 - bounds.top,
+          x: target.left + target.width / 2 - origin.left - origin.width / 2,
+          y: target.top + target.height / 2 - origin.top - origin.height / 2 }];
+      }));
+    }, 1000);
     return () => window.clearTimeout(timer);
-  }, [hand?.hand_id, runoutComplete, winnerSlot]);
+  }, [hand, runoutComplete]);
 
   return (
     <section className={`table-surface classic-table ${hand?.result ? "has-result" : ""}`} aria-label={t("Poker table")}>
-      <div className={`table-oval classic-oval table-seats-${seatCount} ${seatCount > 2 ? 'table-multiway' : ''}`}>
+      <div ref={tableRef} className={`table-oval classic-oval table-seats-${seatCount} ${seatCount > 2 ? 'table-multiway' : ''}`}>
         {seats.map((seat) => (
           <Seat
             key={seat.slot}
@@ -151,7 +164,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
             ))}
           </div>
         </div>
-        {showChipFlight && winnerSlot ? <ChipFlight target={winnerSlot} /> : null}
+        {flights.map(flight => <div key={flight.id} className="payout-flight" style={{ left: flight.left, top: flight.top, '--flight-x': `${flight.x}px`, '--flight-y': `${flight.y}px` } as CSSProperties} aria-hidden="true"><ChipStack amount={flight.amount} /><b>+{flight.amount}</b></div>)}
       </div>
       <div className={`showdown-slot ${allInRunout || (runoutComplete && (winnerBadge || hand?.result)) ? 'showdown-slot-visible' : ''}`}>
             {allInRunout && !runoutComplete ? <div className="runout-badge">{t("All-in runout")}</div> : null}
@@ -189,16 +202,6 @@ function ChipStack({ amount, className = '' }: { amount: number; className?: str
       {Array.from({ length: chips }).map((_, index) => (
         <span key={index} style={{ '--chip-index': index } as CSSProperties} />
       ))}
-    </div>
-  );
-}
-
-function ChipFlight({ target }: { target: string }) {
-  return (
-    <div className={`chip-flight chip-flight-${target}`} aria-hidden="true">
-      <span />
-      <span />
-      <span />
     </div>
   );
 }
@@ -284,13 +287,6 @@ function winnerText(hand: HandState | null, t: <T>(value: T) => T) {
   const winners = result.winners.map((winnerId) => displayPlayer(hand.players.find(p => p.id === winnerId), t, winnerId)).join(', ');
   const outcome = (result.pots?.length ?? 0) > 1 ? t('Pots awarded') : result.winners.length > 1 ? t('Split pot') : t('{0} wins').replace('{0}', winners);
   return `${outcome} ${result.pot_awarded}`;
-}
-
-function winnerSeatSlot(hand: HandState | null, seatCount: number, viewerId = 'hero') {
-  // A single flight would misrepresent different winners of main and side pots.
-  if (hand?.result?.winners.length !== 1) return null;
-  const winner = hand.result.winners[0];
-  return tableSeats(hand, seatCount, viewerId).find((seat) => seat.player?.id === winner)?.slot ?? null;
 }
 
 function label(value: string) {

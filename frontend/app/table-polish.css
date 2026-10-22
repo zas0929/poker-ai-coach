@@ -34,3 +34,8 @@
  .play-header { gap:8px; }
  .play-header-controls { flex:0 1 auto; gap:8px; }
 }
+
+.payout-flight { position:absolute; z-index:15; pointer-events:none; display:grid; justify-items:center; color:#f3dc8a; font-weight:700; animation:payout-to-seat 1s ease-in-out both; }
+.payout-flight .chip-stack { display:block; }
+@keyframes payout-to-seat { from { transform:translate(-50%,-50%) scale(1); opacity:1; } 85% { opacity:1; } to { transform:translate(calc(-50% + var(--flight-x)),calc(-50% + var(--flight-y))) scale(.65); opacity:0; } }
+@media(prefers-reduced-motion:reduce) { .payout-flight { animation:none; display:none; } }
