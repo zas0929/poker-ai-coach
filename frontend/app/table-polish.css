@@ -154,3 +154,15 @@
  .classic-table .table-multiway .seat-right .table-bet { right:calc(100% + 62px); top:0; transform:none; }
  .classic-table .table-seats-6 .board-zone { top:51%; }
 }
+
+/* The table keeps its height when actions switch to the next-hand controls. */
+.action-dock { --status-row-height:32px; --action-row-height:54px; --tools-row-height:36px; }
+.action-dock .turn-strip { height:var(--status-row-height); min-height:var(--status-row-height); }
+.action-dock :is(.action-grid,.hand-actions) { height:var(--action-row-height); min-height:var(--action-row-height); }
+.action-dock :is(.action-grid,.hand-actions)>button { height:100%; min-height:0; }
+.action-dock .room-hand-controls { height:100%; flex-wrap:nowrap; }
+.action-dock .room-hand-controls>button { height:100%; min-height:0; padding-block:4px; }
+.action-dock .dock-tools { min-height:var(--tools-row-height); }
+@media(max-width:760px) {
+ .action-dock { --status-row-height:18px; --action-row-height:44px; --tools-row-height:28px; }
+}
