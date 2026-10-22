@@ -173,3 +173,8 @@
 .poker-sheet .sheet-heading>button { flex-shrink:0; }
 
 .poker-sheet .sheet-heading .sheet-close { display:grid; place-items:center; width:44px; height:44px; min-height:44px; padding:0; color:#f3df9b; background:#2b3c30; border:1px solid #bca65d; border-radius:12px; }
+
+.top-up-controls input { padding:10px; color:var(--text); background:#10211c; border:1px solid var(--line); border-radius:8px; }
+.top-up-controls button { flex-shrink:0; }
+.top-up-success { color:var(--success); }
+.top-up-error { color:#ffb7a7; }

@@ -166,11 +166,14 @@ class Room:
                 raise ValueError('Return from sit-out before getting ready.')
             member.ready = command.ready
         elif command.kind == 'top_up':
-            if self.hand and not self.hand.result:
+            if self.hand and not self.hand.result and any(player.id == member.player_id for player in self.hand.players):
                 raise ValueError('Add chips between hands only.')
             if type(command.amount) is not int or command.amount <= 0 or member.stack + command.amount > 1000000:
                 raise ValueError('Add a positive whole number without exceeding 1000000 chips.')
+            was_short = member.stack < self.settings.big_blind
             member.stack += command.amount
+            if was_short and member.stack >= self.settings.big_blind and self.settings.auto_deal and not member.sitting_out:
+                member.ready = True
         elif command.kind == 'settings':
             if member.player_id != self.host_id:
                 raise ValueError('Only the host can change table settings.')

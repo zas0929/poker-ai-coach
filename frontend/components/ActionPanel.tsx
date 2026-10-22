@@ -8,6 +8,7 @@ import type { ActionType, HandAnalysis, HandState } from '@/types/poker';
 
 interface ActionPanelProps {
   viewerId?: string;
+  stack?: number;
   trainingControls?: boolean;
   analysis: HandAnalysis | null;
   hand: HandState | null;
@@ -24,7 +25,7 @@ interface ActionPanelProps {
   secondsLeft?: number | null;
 }
 
-export default function ActionPanel({ viewerId = 'hero', trainingControls = true, analysis, hand,
+export default function ActionPanel({ stack, viewerId = 'hero', trainingControls = true, analysis, hand,
   isLoading, blocked = false, waitingLabel, onAction, onAdvance, onAnalyze, onStartHand, tools, secondsLeft, betweenActions, pausedActions }: ActionPanelProps) {
   const { t } = useI18n();
   const inputId = useId();
@@ -42,7 +43,7 @@ export default function ActionPanel({ viewerId = 'hero', trainingControls = true
   const minimumAmount = (sizedAction === 'bet' ? betting?.min_bet : betting?.min_raise_to) ?? 1;
   const maximumAmount = betting?.max_raise_to ?? 0;
   const callAmount = betting?.call_amount ?? 0;
-  const heroStack = viewer?.stack ?? 0;
+  const heroStack = stack ?? viewer?.stack ?? 0;
   const actionClosed = Boolean(hand && hand.current_player_id === null && !handEnded);
   const highestBet = Math.max(0, ...(hand?.players.map((player) => player.current_bet) ?? []),
     hand?.street === 'preflop' ? hand.big_blind : 0);

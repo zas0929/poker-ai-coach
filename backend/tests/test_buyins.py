@@ -70,3 +70,34 @@ class BuyInTests(unittest.TestCase):
         self.assertEqual(self.host.stack, before + 100)
         self.command(self.guest, 'ready', ready=True)
         self.assertEqual(self.host.stack, before + 100)
+
+    def test_top_up_restores_auto_readiness_after_busting(self):
+        self.room.settings.auto_deal = True
+        self.host.stack = 0
+        self.host.ready = False
+        self.command(self.host, 'top_up', amount=100)
+        self.assertEqual(self.host.stack, 100)
+        self.assertTrue(self.host.ready)
+
+    def test_top_up_respects_sit_out_and_manual_readiness(self):
+        for auto_deal, sitting_out in [(True, True), (False, False)]:
+            self.room.settings.auto_deal = auto_deal
+            self.host.stack = 0
+            self.host.ready = False
+            self.host.sitting_out = sitting_out
+            self.command(self.host, 'top_up', amount=100)
+            self.assertFalse(self.host.ready)
+
+    def test_busted_player_can_top_up_while_others_play(self):
+        third = self.store.apply(self.room, lambda: self.room.join('Third', 400), 'join')
+        third.sockets.add(object())
+        self.room.settings.auto_deal = True
+        self.host.stack = 0
+        self.host.ready = False
+        for member in (self.guest, third): self.command(member, 'ready', ready=True)
+        self.command(self.host, 'start')
+        before = self.room.hand.model_dump_json()
+        self.command(self.host, 'top_up', amount=400)
+        self.assertEqual(self.host.stack, 400)
+        self.assertTrue(self.host.ready)
+        self.assertEqual(self.room.hand.model_dump_json(), before)
