@@ -23,6 +23,7 @@ export default function FriendsPage() {
   const [room, setRoom] = useState<RoomState | null>(null);
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
+  const [invited, setInvited] = useState(false);
   const [status, setStatus] = useState('Choose a room');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -41,6 +42,7 @@ export default function FriendsPage() {
       // URL and local storage are available only after browser hydration.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCode(invitation);
+      setInvited(true);
       try {
         const saved = sessionStorage.getItem(`poker-room:${invitation}`) ?? localStorage.getItem(`poker-room:${invitation}`);
         if (saved) setCredentials(JSON.parse(saved));
@@ -193,7 +195,7 @@ export default function FriendsPage() {
   };
   const reset = () => {
     setCredentials(null); setRoom(null); latest.current = null; pending.current = null;
-    setBusy(false); setError(null); setStatus('Choose a room'); setCode('');
+    setBusy(false); setError(null); setStatus('Choose a room'); setCode(''); setInvited(false);
     window.history.replaceState(null, '', '/friends');
   };
 
@@ -231,8 +233,8 @@ export default function FriendsPage() {
           <h2>{t("Your private poker table")}</h2>
           <p>{t("Create a room and share its invitation. Bring 2–6 players, mark everyone ready, then deal.")}</p>
           <label>{t("Your name")}<input autoComplete="nickname" maxLength={24} value={name} onChange={(event) => setName(event.target.value)} placeholder="Roman" /></label>
-          <button className="primary-button" disabled={busy || !name.trim()} onClick={() => enter(false)}>{t("Create room")}</button>
-          <div className="room-join"><label>{t("Room code")}<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder={t("Invitation code")} /></label><button disabled={busy || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>{t("Join room")}</button></div>
+          <button className="primary-button" disabled={busy || !name.trim() || (invited && code.trim().length !== 8)} onClick={() => enter(invited)}>{t(invited ? "Join room" : "Create room")}</button>
+          <div className="room-join"><label>{t("Room code")}<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder={t("Invitation code")} /></label>{!invited ? <button disabled={busy || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>{t("Join room")}</button> : null}</div>
           <p className="room-note">{t("Local preview. Friends on other networks will need the hosting stage. Rooms, seats and hands are saved on this server.")}</p>
         </section>
       ) : (
