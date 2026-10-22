@@ -99,7 +99,7 @@ export default function ActionPanel({ viewerId = 'hero', trainingControls = true
       </button>
     </div>}
     {canSize && !handEnded ? <div className="quick-raises" aria-label={t('Quick raises')}>
-      {quickAmounts.map(preset => <button key={preset.label} disabled={isLoading} onClick={() => { setAmount(clampAmount(preset.value)); setSizingContext(amountContext); }} aria-haspopup="dialog">{t(preset.label)} <b>{clampAmount(preset.value)}</b></button>)}
+      {quickAmounts.map(preset => <button key={preset.label} disabled={isLoading} onClick={() => submit(sizedAction, clampAmount(preset.value))}>{t(preset.label)} <b>{clampAmount(preset.value)}</b></button>)}
     </div> : null}
     <div className="dock-tools">{tools}{trainingControls && hand && !handEnded ? <button disabled={isLoading} onClick={onAnalyze}>{t('Analyze')}</button> : null}</div>
     <Sheet open={open} title={t(sizedAction === 'bet' ? 'Bet size' : 'Raise to')} onClose={() => setSizingContext(null)}>
