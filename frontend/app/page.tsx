@@ -1,10 +1,11 @@
 'use client';
 
 import { displayPlayer } from '@/i18n/translate';
-import { LanguageSwitcher, useI18n } from '@/i18n/LanguageProvider';
+import { useI18n } from '@/i18n/LanguageProvider';
 
 import { useState } from 'react';
 import Link from 'next/link';
+import AppHeader from '@/components/AppHeader';
 
 import ActionPanel from '@/components/ActionPanel';
 import CoachPanel from '@/components/CoachPanel';
@@ -33,15 +34,11 @@ export default function HomePage() {
 
   return (
     <main className="app-shell play-shell">
-      <header className="play-header">
-        <h1><span aria-hidden="true">♠</span> Poker AI Coach</h1>
-        <div className="play-header-controls">
+      <AppHeader>
           <label className="seat-count-control"><span>{t('Seats')}</span><select aria-label={t('Seats')} value={seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} onChange={(event) => setSeatCount(Number(event.target.value))}>
             {[2, 3, 4, 5, 6].map((count) => <option key={count} value={count}>{count}</option>)}
           </select></label>
-          <LanguageSwitcher inline />
-        </div>
-      </header>
+      </AppHeader>
       <nav className="play-modes" aria-label={t('Game mode')}>
         <Link href="/" aria-current="page">{t('AI training')}</Link><Link href="/friends">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link>
       </nav>

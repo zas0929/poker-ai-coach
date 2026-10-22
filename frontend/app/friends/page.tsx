@@ -1,8 +1,9 @@
 'use client';
 
-import { LanguageSwitcher, useI18n } from '@/i18n/LanguageProvider';
+import { useI18n } from '@/i18n/LanguageProvider';
 
 import Link from 'next/link';
+import AppHeader from '@/components/AppHeader';
 import { useEffect, useRef, useState } from 'react';
 import ActionPanel from '@/components/ActionPanel';
 import HandHistory from '@/components/HandHistory';
@@ -217,7 +218,7 @@ export default function FriendsPage() {
 
   return (
     <main className={`app-shell play-shell room-shell ${hand ? 'room-in-hand' : ''}`}>
-      <header className="play-header"><h1><span aria-hidden="true">♠</span> Poker AI Coach</h1><div className="play-header-controls"><span className={`connection-state ${connected ? 'is-connected' : ''}`} role="status">{t(status)}</span><LanguageSwitcher inline /></div></header>
+      <AppHeader><span className={`connection-state ${connected ? 'is-connected' : ''}`} role="status" aria-label={t(status)} title={t(status)}>{t(status)}</span></AppHeader>
       <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t('AI training')}</Link><Link href="/friends" aria-current="page">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link></nav>
       {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button onClick={() => setError(null)}>{t("Dismiss")}</button></div> : null}
       {!credentials ? (

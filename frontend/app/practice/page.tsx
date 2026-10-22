@@ -1,8 +1,9 @@
 'use client';
 
-import { LanguageSwitcher, useI18n } from '@/i18n/LanguageProvider';
+import { useI18n } from '@/i18n/LanguageProvider';
 
 import Link from 'next/link';
+import AppHeader from '@/components/AppHeader';
 import { useEffect, useRef, useState } from 'react';
 import PokerTable from '@/components/PokerTable';
 import HandHistory from '@/components/HandHistory';
@@ -80,11 +81,9 @@ export default function PracticePage() {
 
   return (
     <main className="app-shell">
-      <header className="practice-header">
-        <div className="practice-title"><p className="eyebrow">{t("Saved training · exact rules and call prices")}</p><h1>{t("Practice & decisions")}</h1></div>
-        <LanguageSwitcher inline />
-      </header>
+      <AppHeader />
       <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t("AI training")}</Link><Link href="/friends">{t("Private tables")}</Link><Link href="/practice" aria-current="page">{t("Practice")}</Link></nav>
+      <section className="practice-title"><p className="eyebrow">{t("Saved training · exact rules and call prices")}</p><h2>{t("Practice & decisions")}</h2></section>
       <section className="session-strip practice-progress"><div><span>{t("Answered")}</span><strong>{progress?.attempts ?? 0}</strong></div><div><span>{t("Correct answers")}</span><strong>{progress?.correct_attempts ?? 0}</strong></div><div><span>{t("Questions correct on last try")}</span><strong>{progress?.last_answer_correct ?? 0}</strong></div><div><span>{t("Questions to review")}</span><strong>{progress?.to_review ?? 0}</strong></div></section>
       {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button disabled={loading} onClick={() => void retry()}>{t("Retry")}</button></div> : null}
       <section className="game-layout">

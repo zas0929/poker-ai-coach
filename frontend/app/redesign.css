@@ -292,23 +292,22 @@ button:not(:disabled):hover { transform:none; }
  .classic-table .seat-info .action-badge { left:22px; font-size:8px; }
 }
 
-/* Keep table preferences together on narrow phone screens. */
-.play-header-controls { display:flex; align-items:center; gap:20px; }
-.play-header-controls .language-toolbar-inline { margin:0; padding:0; height:auto; gap:6px; }
+/* One shared header row on every page, including narrow phones. */
+.play-header { flex-wrap:nowrap; }
+.play-header h1 { flex:0 0 auto; white-space:nowrap; }
+.play-header-controls { display:flex; align-items:center; gap:20px; min-width:0; }
+.play-header-controls .language-toolbar-inline { margin:0; padding:0; height:auto; gap:6px; flex-shrink:0; }
+.practice-title { margin:14px 0; }
+.practice-title h2 { margin:0; font-size:28px; }
 @media (max-width:640px) {
- .play-header { flex-wrap:wrap; gap:8px; padding-block:8px; }
- .play-header h1 { flex-basis:100%; }
- .play-header-controls { width:100%; justify-content:space-between; gap:12px; }
+ .play-header { gap:10px; padding-block:6px; }
+ .play-header h1 { flex-basis:auto; font-size:14px; letter-spacing:-.4px; }
+ .play-header-controls { flex:1; width:auto; justify-content:flex-end; gap:10px; }
+ .play-header .seat-count-control { flex-shrink:0; }
+ .play-header .seat-count-control>span, .play-header .language-toolbar-inline>label { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
  .play-header-controls .language-toolbar-inline { margin-left:auto; }
- .play-header-controls .language-toolbar-inline select { min-height:36px; }
-}
-
-.practice-header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:8px; }
-.practice-title { min-width:0; }
-.practice-header .language-toolbar-inline { flex-shrink:0; margin:0; padding:0; height:auto; gap:6px; }
-@media (max-width:640px) {
- .practice-header { gap:12px; }
- .practice-header h1 { font-size:18px; margin:0; }
- .practice-header .eyebrow { font-size:10px; line-height:1.4; }
- .practice-header .language-toolbar-inline select { min-height:36px; }
+ .play-header-controls .language-toolbar-inline select { min-height:36px; font-size:11px; padding-inline:5px; }
+ .play-header .connection-state { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10px; }
+ .practice-title h2 { font-size:20px; }
+ .practice-title .eyebrow { font-size:10px; line-height:1.4; }
 }
