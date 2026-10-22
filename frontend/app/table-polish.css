@@ -233,3 +233,37 @@
  .classic-table .table-seats-4 .seat-top-right { left:86%; }
  .classic-table .table-seats-4 .board-zone { top:60%; }
 }
+
+/* Room controls sit directly after the brand; global controls stay on the right. */
+.room-shell .play-header { gap:16px; }
+.room-shell .play-header .room-toolbar { flex:0 1 auto; min-width:0; width:auto; max-width:340px; margin:0; padding:3px 5px 3px 9px; gap:6px; border-radius:9px; z-index:35; backdrop-filter:none; }
+.play-header .room-toolbar>div { margin:0; gap:2px; }
+.play-header .room-toolbar strong { max-width:150px; font-size:11px; }
+.play-header .room-toolbar>button, .play-header .room-menu>summary { flex:none; width:30px; height:30px; min-height:30px; padding:3px; }
+.play-header .room-invite-label, .room-header-count { display:none; }
+.play-header .room-invite-icon { display:inline; font-size:18px; }
+.play-header .room-menu-content { top:38px; }
+.play-header .room-menu-content>strong { max-width:none; white-space:normal; overflow-wrap:anywhere; }
+@media(max-width:760px) {
+ .room-shell .play-header { gap:6px; }
+ .room-shell .play-header h1 { font-size:13px; letter-spacing:-.4px; }
+ .room-shell .play-header h1>span { margin-right:2px; }
+ .room-shell .play-header .room-toolbar { flex:none; gap:3px; padding:2px 3px; }
+ .play-header .room-toolbar>div { display:none; }
+ .play-header .room-header-count { display:inline; font-size:10px; color:var(--muted); }
+ .play-header .room-toolbar>button, .play-header .room-menu>summary { width:27px; height:30px; min-height:30px; }
+ .room-shell .play-header-controls { gap:5px; flex:none; }
+ .room-shell .play-header .connection-state { font-size:0; }
+ .room-shell .play-header .connection-state:before { font-size:8px; margin:0; }
+ .room-shell .play-header .language-toolbar-inline>label { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+ .room-shell .play-header .language-toolbar-inline select { width:78px; min-width:0; min-height:32px; padding-inline:3px; font-size:10px; }
+ .room-shell .play-header .sound-toggle { width:28px; height:32px; min-height:32px; }
+ .play-header .room-menu-content { position:fixed; top:var(--room-menu-top,50px); left:8px; right:8px; width:auto; max-height:calc(100dvh - var(--room-menu-top,50px) - 12px); overflow:auto; }
+}
+@media(max-width:350px) {
+ .room-shell .play-header { gap:4px; }
+ .room-shell .play-header h1 { font-size:12px; }
+ .play-header .room-header-count { display:none; }
+ .room-shell .play-header-controls { gap:4px; }
+ .room-shell .play-header .language-toolbar-inline select { width:70px; }
+}

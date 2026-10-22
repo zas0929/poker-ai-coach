@@ -42,6 +42,27 @@ export default function FriendsPage() {
   const pending = useRef<{ id: string; payload: string; closePanel: boolean } | null>(null);
   const commandTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const entering = useRef(false);
+  const roomMenu = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    const closeOutside = (event: PointerEvent) => {
+      const menu = roomMenu.current;
+      if (menu?.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      const menu = roomMenu.current;
+      if (event.key === 'Escape' && menu?.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    };
+    document.addEventListener('pointerdown', closeOutside);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, []);
 
   useEffect(() => {
     const invitation = new URLSearchParams(window.location.search).get('room')?.trim().toUpperCase();
@@ -250,21 +271,25 @@ export default function FriendsPage() {
 </section>
   );
 
-  return (
-    <main className={`app-shell play-shell room-shell ${hand ? 'room-in-hand' : ''}`}>
-      <AppHeader><span className={`connection-state ${connected ? 'is-connected' : ''}`} role="status" aria-label={t(status)} title={t(status)}>{t(status)}</span></AppHeader>
-      <div className="room-navigation">
-        <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t('AI training')}</Link><Link href="/friends" aria-current="page">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link></nav>
-        {credentials ? (<section className="room-toolbar control-panel">
+  const roomToolbar = credentials ? (<section className="room-toolbar control-panel">
             <div><span className="eyebrow">{t('Room')} {credentials.code}</span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
             <button className="room-copy-invite" onClick={copyInvite} aria-label={t(copied ? 'Link copied' : 'Copy invitation')} title={t(copied ? 'Link copied' : 'Copy invitation')}><span className="room-invite-label">{t(copied ? 'Link copied' : 'Copy invitation')}</span><span className="room-invite-icon" aria-hidden="true">{copied ? '✓' : '⧉'}</span></button>
-            <details className="room-menu"><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content">
+            <span className="room-header-count" aria-label={`${t('Players')}: ${room?.members.length ?? 1}/6`}>{room?.members.length ?? 1}/6</span>
+            <details className="room-menu" ref={roomMenu} onToggle={event => {
+              if (event.currentTarget.open) event.currentTarget.style.setProperty('--room-menu-top', `${event.currentTarget.getBoundingClientRect().bottom + 8}px`);
+            }}><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content"><strong>{t('Room')} {credentials.code} · {me?.name}</strong>
               <label className="auto-deal-option"><input type="checkbox" checked={settings.auto_deal} disabled={!isHost || busy || !connected || !betweenHands} onChange={event => send('auto_deal', { auto_deal: event.target.checked })} />{t('Automatically ready and deal next hands')}</label>
               <small>{t(!betweenHands ? 'Change automatic dealing between hands.' : isHost ? 'Enable to ready active players and start the next-hand countdown.' : 'Only the host can change automatic dealing.')}</small>
               <label>{t('Invitation link')}<input className="invite-field" readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} /></label>
               <button onClick={reset}>{t('Close table')}</button><button disabled={busy || !connected} onClick={() => send('leave')}>{t('Leave room')}</button>
             </div></details>
-          </section>) : null}
+          </section>) : null;
+
+  return (
+    <main className={`app-shell play-shell room-shell ${hand ? 'room-in-hand' : ''}`}>
+      <AppHeader afterLogo={roomToolbar}><span className={`connection-state ${connected ? 'is-connected' : ''}`} role="status" aria-label={t(status)} title={t(status)}>{t(status)}</span></AppHeader>
+      <div className="room-navigation">
+        <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t('AI training')}</Link><Link href="/friends" aria-current="page">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link></nav>
       </div>
       {isHost && pendingChipRequests.length > 0 ? <section className="chip-requests control-panel" aria-label={t('Chip requests')} aria-live="polite">
         <strong>{t('Chip requests')}</strong>
