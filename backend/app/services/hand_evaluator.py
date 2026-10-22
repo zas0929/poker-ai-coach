@@ -35,6 +35,45 @@ CATEGORY_NAMES = {
 
 
 class HandEvaluator:
+    def score(self, cards: list[Card]) -> tuple[int, list[int]]:
+        """Rank 5–7 cards directly when callers do not need the best five cards."""
+        if len(cards) < 5 or len(cards) > 7:
+            strength = self.evaluate(cards)
+            return strength.rank, strength.kickers
+        counts = [0] * 15
+        suits = {}
+        for card in cards:
+            value = RANK_VALUES[card.rank]
+            counts[value] += 1
+            suits.setdefault(card.suit, []).append(value)
+        values = [v for v in range(14, 1, -1) if counts[v]]
+        flush = next((sorted(v, reverse=True) for v in suits.values() if len(v) >= 5), None)
+        if flush:
+            straight_flush = self._straight_high(flush)
+            if straight_flush:
+                return 8, [straight_flush]
+        quads = [v for v in values if counts[v] == 4]
+        if quads:
+            return 7, [quads[0], next(v for v in values if v != quads[0])]
+        trips = [v for v in values if counts[v] >= 3]
+        pairs = [v for v in values if counts[v] >= 2]
+        if trips:
+            pair = next((v for v in pairs if v != trips[0]), None)
+            if pair:
+                return 6, [trips[0], pair]
+        if flush:
+            return 5, flush[:5]
+        straight = self._straight_high(values)
+        if straight:
+            return 4, [straight]
+        if trips:
+            return 3, [trips[0], *[v for v in values if v != trips[0]][:2]]
+        if len(pairs) >= 2:
+            return 2, [*pairs[:2], next(v for v in values if v not in pairs[:2])]
+        if pairs:
+            return 1, [pairs[0], *[v for v in values if v != pairs[0]][:3]]
+        return 0, values[:5]
+
     def evaluate(self, cards: list[Card]) -> HandStrength:
         if len(cards) < 5:
             return self._pre_showdown_strength(cards)
@@ -114,14 +153,13 @@ class HandEvaluator:
 
     def _straight_high(self, values: list[int]) -> int | None:
         unique_values = sorted(set(values), reverse=True)
-        if {14, 5, 4, 3, 2}.issubset(unique_values):
-            return 5
-
         for index in range(len(unique_values) - 4):
             window = unique_values[index : index + 5]
             if window[0] - window[4] == 4:
                 return window[0]
 
+        if {14, 5, 4, 3, 2}.issubset(unique_values):
+            return 5
         return None
 
     def _pre_showdown_strength(self, cards: list[Card]) -> HandStrength:

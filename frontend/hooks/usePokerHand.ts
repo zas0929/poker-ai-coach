@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { LatestAnalysis } from '@/services/latestAnalysis';
 import { PokerApi } from '@/services/pokerApi';
 import { TrainingApi } from '@/services/trainingApi';
 import type { ActionReview, ActionType, HandAnalysis, HandState } from '@/types/poker';
@@ -11,12 +12,21 @@ export function usePokerHand() {
   const [decisionLog, setDecisionLog] = useState<ActionReview[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const hints = useRef<LatestAnalysis | null>(null);
+  if (hints.current === null) {
+    hints.current = new LatestAnalysis(
+      (state, signal) => PokerApi.analyze('hero', state, signal),
+      setAnalysis, setIsAnalyzing, setError,
+    );
+  }
   const busy = useRef(false);
   const tableSize = useRef<number | null>(null);
 
   const run = useCallback(async <T,>(task: () => Promise<T>) => {
     if (busy.current) return null;
     busy.current = true;
+    hints.current?.cancel();
     setIsLoading(true);
     setError(null);
 
@@ -32,11 +42,8 @@ export function usePokerHand() {
   }, []);
 
   const analyze = useCallback(async () => {
-    const result = await run(() => PokerApi.analyze('hero'));
-    if (result) {
-      setAnalysis(result);
-    }
-  }, [run]);
+    if (!busy.current && hand && !hand.result) await hints.current?.request(hand);
+  }, [hand]);
 
   const applyState = useCallback(async (nextHand: HandState) => {
     let settledHand = nextHand;
@@ -48,7 +55,7 @@ export function usePokerHand() {
     }
     const hero = settledHand.players.find((p) => p.id === 'hero');
     if (!settledHand.result && hero?.status !== 'folded') {
-      setAnalysis(await PokerApi.analyze('hero'));
+      void hints.current?.request(settledHand);
     }
   }, []);
 
@@ -81,6 +88,7 @@ export function usePokerHand() {
 
   useEffect(() => {
     void startHand();
+    return () => hints.current?.cancel();
   }, [startHand]);
 
   return {
@@ -90,6 +98,7 @@ export function usePokerHand() {
     error,
     hand,
     isLoading,
+    isAnalyzing,
     action,
     advance,
     analyze,

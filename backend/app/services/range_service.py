@@ -122,16 +122,15 @@ class RangeService:
                    + (0.05 if high == 14 else 0))
 
     def _postflop_strength(self, cards: tuple[Card, Card], board: list[Card]) -> float:
-        strength = self.evaluator.evaluate([*cards, *board])
-        value = [0.12, 0.48, 0.68, 0.8, 0.88, 0.92, 0.96, 0.98, 1.0][strength.rank]
+        rank, kickers = self.evaluator.score([*cards, *board])
+        value = [0.12, 0.48, 0.68, 0.8, 0.88, 0.92, 0.96, 0.98, 1.0][rank]
         if len(board) == 5:
-            shared = self.evaluator.evaluate(board)
-            if (strength.rank, strength.kickers) == (shared.rank, shared.kickers):
+            if (rank, kickers) == self.evaluator.score(board):
                 return 0.15
-        if strength.rank == 1 and cards[0].rank != cards[1].rank:
-            if strength.kickers[0] not in {RANK_VALUES[c.rank] for c in cards}:
+        if rank == 1 and cards[0].rank != cards[1].rank:
+            if kickers[0] not in {RANK_VALUES[c.rank] for c in cards}:
                 value = 0.2  # A pair on the board alone is not a personal made pair.
-        if strength.rank == 0:
+        if rank == 0:
             value += 0.1 * max(RANK_VALUES[c.rank] for c in cards) / 14
         if len(board) < 5:
             all_cards = [*cards, *board]

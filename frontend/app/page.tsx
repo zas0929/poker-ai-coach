@@ -25,6 +25,7 @@ export default function HomePage() {
     error,
     hand,
     isLoading,
+    isAnalyzing,
     action,
     advance,
     analyze,
@@ -66,7 +67,7 @@ export default function HomePage() {
           />
         </div>
         <PanelSidebar active={panel} onClose={() => setPanel(null)} panels={[
-          { id: 'coach', title: t('Coach'), content: <CoachPanel analysis={analysis} actionReview={actionReview} decisionLog={decisionLog} hand={hand} isLoading={isLoading} /> },
+          { id: 'coach', title: t('Coach'), content: <CoachPanel analysis={analysis} actionReview={actionReview} decisionLog={decisionLog} hand={hand} isLoading={isLoading || isAnalyzing} /> },
           { id: 'history', title: t('History'), content: <HandHistory hand={hand} /> },
           { id: 'session', title: t('Session'), content: <section className="control-panel session-panel"><h2>{t('Session')}</h2><SessionStrip hand={hand} /><Link className="mode-link" href="/practice">{t('Practice & decisions')} →</Link></section> },
         ]} />

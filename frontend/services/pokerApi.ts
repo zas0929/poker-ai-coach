@@ -42,8 +42,14 @@ export const PokerApi = {
     return request<HandState>('/api/hand/state');
   },
 
-  analyze(playerId = 'hero') {
-    return request<HandAnalysis>(`/api/hand/analyze?player_id=${playerId}`);
+  analyze(playerId = 'hero', hand?: HandState, signal?: AbortSignal) {
+    const query = new URLSearchParams({ player_id: playerId });
+    if (hand) {
+      query.set('hand_id', hand.hand_id);
+      query.set('history_length', String(hand.history.length));
+      query.set('street', hand.street);
+    }
+    return request<HandAnalysis>(`/api/hand/analyze?${query}`, { signal });
   },
 
   action(payload: PlayerActionRequest) {

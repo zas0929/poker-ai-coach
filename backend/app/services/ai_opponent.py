@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from app.models.poker import ActionType, HandAnalysis, HandState, Player, Street
+from app.models.poker import ActionType, HandAnalysis, HandState, Player, PreflopProfile, Street
+from app.services.decision_engine import DecisionEngine
 from app.services.betting_rules import betting_options, highest_bet as table_highest_bet
 
 
@@ -17,7 +18,7 @@ class AIOpponentService:
     def __init__(self, profile: str = "balanced"):
         self.profile = profile
 
-    def choose_action(self, state: HandState, analysis: HandAnalysis, player_id: str = "villain") -> AIOpponentDecision:
+    def choose_action(self, state: HandState, analysis: HandAnalysis | None = None, player_id: str = "villain") -> AIOpponentDecision:
         player = self._get_player(state, player_id)
         highest_bet = table_highest_bet(state)
         call_amount = max(highest_bet - player.current_bet, 0)
@@ -26,8 +27,11 @@ class AIOpponentService:
         if not options.legal_actions:
             raise ValueError(f"Player {player_id} has no legal action.")
         if state.street == Street.PREFLOP:
-            decision = self._preflop_decision(state, analysis, player, call_amount, highest_bet)
+            profile = analysis.preflop_profile if analysis else DecisionEngine.preflop_profile(player.cards)
+            decision = self._preflop_decision(state, profile, player, call_amount, highest_bet)
         else:
+            if analysis is None:
+                raise ValueError("Postflop decisions require analysis.")
             decision = self._postflop_decision(state, analysis, player, call_amount, highest_bet)
         if decision.action not in options.legal_actions:
             fallback = ActionType.CALL if options.call_amount else ActionType.CHECK
@@ -41,29 +45,29 @@ class AIOpponentService:
     def _preflop_decision(
         self,
         state: HandState,
-        analysis: HandAnalysis,
+        profile: PreflopProfile,
         player: Player,
         call_amount: int,
         highest_bet: int,
     ) -> AIOpponentDecision:
-        category = analysis.preflop_profile.category
-        score = analysis.preflop_profile.score
+        category = profile.category
+        score = profile.score
 
         if call_amount > 0:
             if category in {"premium pair", "premium broadway", "strong"}:
                 return AIOpponentDecision(
                     action=ActionType.RAISE,
                     amount=self._raise_target(state, player, highest_bet, multiplier=3),
-                    reason=f"{self.profile} preflop 3-bet with {analysis.preflop_profile.notation}",
+                    reason=f"{self.profile} preflop 3-bet with {profile.notation}",
                 )
             if category == "playable" or (category == "speculative" and call_amount <= state.big_blind):
                 return AIOpponentDecision(
                     action=ActionType.CALL,
-                    reason=f"{self.profile} preflop continue with {analysis.preflop_profile.notation}",
+                    reason=f"{self.profile} preflop continue with {profile.notation}",
                 )
             return AIOpponentDecision(
                 action=ActionType.FOLD,
-                reason=f"{self.profile} preflop fold with {analysis.preflop_profile.notation}",
+                reason=f"{self.profile} preflop fold with {profile.notation}",
             )
 
         if category in {"premium pair", "premium broadway", "strong"}:
@@ -71,16 +75,16 @@ class AIOpponentService:
                 action=ActionType.RAISE if highest_bet > 0 else ActionType.BET,
                 amount=(self._raise_target(state, player, highest_bet, multiplier=3)
                         if highest_bet > 0 else self._open_size(state, player, multiplier=3)),
-                reason=f"{self.profile} preflop open with {analysis.preflop_profile.notation}",
+                reason=f"{self.profile} preflop open with {profile.notation}",
             )
         if category == "playable" or score >= 22:
             return AIOpponentDecision(
                 action=ActionType.CHECK,
-                reason=f"{self.profile} preflop check with {analysis.preflop_profile.notation}",
+                reason=f"{self.profile} preflop check with {profile.notation}",
             )
         return AIOpponentDecision(
             action=ActionType.CHECK,
-            reason=f"{self.profile} preflop pot control with {analysis.preflop_profile.notation}",
+            reason=f"{self.profile} preflop pot control with {profile.notation}",
         )
 
     def _postflop_decision(

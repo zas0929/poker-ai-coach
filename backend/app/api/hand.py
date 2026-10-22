@@ -78,11 +78,22 @@ def read_state():
     return get_current_state()
 
 
-@router.get("/analyze", response_model=HandAnalysis)
 @serialized
-def analyze_hand(player_id: str = "hero"):
+def analysis_snapshot():
+    return get_current_state().model_copy(deep=True)
+
+
+@router.get("/analyze", response_model=HandAnalysis)
+def analyze_hand(player_id: str = "hero", hand_id: Optional[str] = None,
+                 history_length: Optional[int] = None, street: Optional[Street] = None):
+    # Hold the table lock only while copying. A slow hint must not block play.
+    state = analysis_snapshot()
+    if ((hand_id is not None and state.hand_id != hand_id)
+            or (history_length is not None and len(state.history) != history_length)
+            or (street is not None and state.street != street)):
+        raise HTTPException(status_code=409, detail="Training table changed. The latest state must be loaded before choosing again.")
     try:
-        return decision_engine.analyze(get_current_state(), player_id=player_id)
+        return decision_engine.analyze(state, player_id=player_id)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
@@ -203,7 +214,7 @@ def _apply_ai_action_to_state(state: HandState, player_id: str) -> HandState:
     if state.current_player_id != player_id:
         raise ValueError(f"It is not {player_id}'s turn.")
 
-    analysis = decision_engine.analyze(state, player_id=player_id)
+    analysis = None if state.street == Street.PREFLOP else decision_engine.analyze(state, player_id=player_id)
     decision = ai_opponent.choose_action(state, analysis, player_id=player_id)
 
     next_state = engine.apply_action(

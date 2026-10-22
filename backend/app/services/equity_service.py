@@ -123,8 +123,7 @@ class EquityService:
                               round(sqrt(log(40) / (2 * simulations)), 4))
 
     def _score(self, cards: list[Card]) -> tuple:
-        strength = self.evaluator.evaluate(cards)
-        return strength.rank, strength.kickers
+        return self.evaluator.score(cards)
 
     @staticmethod
     def _outcome(hero_score: tuple, opponent_score: tuple) -> float:

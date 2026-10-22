@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from collections import OrderedDict
+from threading import Lock
+
 from app.models.poker import Card, DrawProfile, HandAnalysis, HandState, PreflopProfile, PlayerStatus, Rank, Street, Suit
 from app.services.equity_service import EquityService
 from app.services.hand_evaluator import HandEvaluator
@@ -16,8 +19,29 @@ class DecisionEngine:
         self.evaluator = evaluator or HandEvaluator()
         self.equity_service = equity_service or EquityService(self.evaluator)
         self.range_service = RangeService(self.evaluator)
+        self._analysis_cache = OrderedDict()
+        self._cache_lock = Lock()
+        self.cache_capacity = 128
 
     def analyze(self, state: HandState, player_id: str = "hero") -> HandAnalysis:
+        player = self._get_player(state, player_id)
+        # Do not read hidden holdings or deck order, even for cache identity.
+        key = (player_id, tuple((c.rank, c.suit) for c in player.cards),
+               state.model_dump_json(exclude={'players': {'__all__': {'cards'}}}))
+        with self._cache_lock:
+            cached = self._analysis_cache.get(key)
+            if cached is not None:
+                self._analysis_cache.move_to_end(key)
+                return cached.model_copy(deep=True)
+        result = self._analyze(state, player_id)
+        with self._cache_lock:
+            self._analysis_cache[key] = result.model_copy(deep=True)
+            self._analysis_cache.move_to_end(key)
+            while len(self._analysis_cache) > self.cache_capacity:
+                self._analysis_cache.popitem(last=False)
+        return result
+
+    def _analyze(self, state: HandState, player_id: str) -> HandAnalysis:
         player = self._get_player(state, player_id)
         call_amount = self._call_amount(state, player_id)
         opponents = [p for p in state.players if p.id != player_id and p.status != PlayerStatus.FOLDED]
@@ -37,7 +61,7 @@ class DecisionEngine:
         required_equity = self._required_equity(contestable_pot, call_amount)
         ev_call = 0.0 if multiway else round(equity * (contestable_pot + call_amount) - call_amount, 2)
         hand_strength = self.evaluator.evaluate([*player.cards, *state.board])
-        preflop_profile = self._preflop_profile(player.cards)
+        preflop_profile = self.preflop_profile(player.cards)
         draw_profile = self._draw_profile(player.cards, state.board, state.street)
         recommended_action = self._recommend_action(equity, required_equity, call_amount)
         if recommended_action == "bet" and highest_bet(state) > 0:
@@ -280,13 +304,14 @@ class DecisionEngine:
             return ""
         return f" plus {', '.join(draw_profile.draws)}"
 
-    def _preflop_profile(self, cards: list[Card]) -> PreflopProfile:
+    @classmethod
+    def preflop_profile(cls, cards: list[Card]) -> PreflopProfile:
         if len(cards) != 2:
             return PreflopProfile(notation="unknown", category="unknown", score=0, tags=[])
 
-        first, second = sorted(cards, key=lambda card: self._rank_value(card.rank), reverse=True)
-        first_value = self._rank_value(first.rank)
-        second_value = self._rank_value(second.rank)
+        first, second = sorted(cards, key=lambda card: cls._rank_value(card.rank), reverse=True)
+        first_value = cls._rank_value(first.rank)
+        second_value = cls._rank_value(second.rank)
         suited = first.suit == second.suit
         paired = first.rank == second.rank
         gap = abs(first_value - second_value) - 1
@@ -322,10 +347,11 @@ class DecisionEngine:
         elif gap >= 3:
             score -= 3
 
-        category = self._preflop_category(score, paired, first_value, second_value)
+        category = cls._preflop_category(score, paired, first_value, second_value)
         return PreflopProfile(notation=notation, category=category, score=score, tags=tags)
 
-    def _preflop_category(self, score: int, paired: bool, high: int, low: int) -> str:
+    @staticmethod
+    def _preflop_category(score: int, paired: bool, high: int, low: int) -> str:
         if paired and high >= 10:
             return "premium pair"
         if high == 14 and low >= 12:
@@ -338,7 +364,8 @@ class DecisionEngine:
             return "speculative"
         return "weak"
 
-    def _rank_value(self, rank: Rank) -> int:
+    @staticmethod
+    def _rank_value(rank: Rank) -> int:
         values = {
             Rank.TWO: 2,
             Rank.THREE: 3,
