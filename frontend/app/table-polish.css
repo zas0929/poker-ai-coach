@@ -64,3 +64,10 @@
 .top-up-controls { display:flex; align-items:flex-end; gap:8px; margin-block:10px; }
 .top-up-controls label { display:grid; gap:5px; min-width:0; }
 .top-up-controls input { width:100%; min-width:0; font-size:16px; }
+
+.classic-table .seat-bottom .seat-turn-timer { top:auto; left:-58px; bottom:8px; min-width:54px; min-height:36px; font-size:21px; }
+.classic-table .seat-bottom.seat-time-urgent .seat-turn-timer { animation:timer-alert 1s ease-in-out infinite; }
+.action-dock .dock-clock { min-width:52px; height:32px; font-size:20px; font-weight:800; }
+@keyframes timer-alert { 50% { box-shadow:0 0 0 5px #ee766c55; } }
+@media(max-width:760px) { .classic-table .seat-bottom .seat-turn-timer { left:-51px; min-width:47px; min-height:32px; font-size:18px; } }
+@media(prefers-reduced-motion:reduce) { .classic-table .seat-bottom.seat-time-urgent .seat-turn-timer { animation:none; } }

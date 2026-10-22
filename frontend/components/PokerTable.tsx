@@ -148,7 +148,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
             key={seat.slot}
             player={seat.player}
             startingStack={emptyStack}
-            timer={seat.player?.id === turnTimer?.playerId && seat.player?.id !== viewerId && hand?.current_player_id === seat.player?.id && !hand?.result ? turnTimer : null}
+            timer={seat.player?.id === turnTimer?.playerId && hand?.current_player_id === seat.player?.id && !hand?.result ? turnTimer : null}
             dealer={Boolean(seat.player && seat.player.id === hand?.dealer_player_id)}
             active={Boolean(seat.player && hand?.current_player_id === seat.player.id)}
             cardsHidden={Boolean(seat.player?.id !== viewerId && (!revealVillainCards || seat.player?.status === 'folded'))}
