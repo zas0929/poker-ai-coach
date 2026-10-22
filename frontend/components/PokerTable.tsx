@@ -47,7 +47,6 @@ function Seat({
   const displayPosition = player?.position ?? 'waiting';
   const shortPosition = ({ small_blind_button: 'SB', small_blind: 'SB', big_blind: 'BB', button: 'BTN', under_the_gun: 'UTG', hijack: 'HJ', cutoff: 'CO', waiting: '—' } as Record<string, string>)[displayPosition] ?? displayPosition;
   const displayStack = player?.stack ?? startingStack;
-  const displayBet = player?.current_bet ?? 0;
   const status = player?.status ?? 'active';
 
   return (
@@ -70,9 +69,7 @@ function Seat({
         <div className="seat-stats">
           <span className="seat-stack" aria-label={`${t("Stack")} ${displayStack}`}>{displayStack}</span>
         </div>
-        {player ? <ChipStack amount={displayStack} className="player-chip-stack" /> : null}
       </div>
-      {displayBet > 0 ? <span className="seat-commitment" aria-label={`${t("Bet")} ${displayBet}`}>{displayBet}<ChipStack amount={displayBet} className="bet-chip-stack" /></span> : null}
       {player && status !== 'folded' ? (
         <div className="hole-cards">
           {Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
@@ -176,6 +173,13 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
           />
         ))}
 
+        {seats.map(({ player, slot }) => player ? <div key={`chips-${player.id}`} className={`table-money table-money-${slot}`}>
+          <ChipStack amount={player.stack} className="player-chip-cluster" />
+          {player.current_bet > 0 ? <span className="table-bet" aria-label={`${t('Bet')} ${player.current_bet}`}>
+            <b>{player.current_bet}</b><ChipStack amount={player.current_bet} className="bet-chip-stack" />
+          </span> : null}
+        </div> : null)}
+
         <div className="board-zone">
           <PotDisplay amount={hand?.pot ?? 0} />
           <div className="board-cards">
@@ -215,11 +219,15 @@ function ChipStack({ amount, className = '' }: { amount: number; className?: str
   const { t } = useI18n();
   const piles = chipBreakdown(amount);
   if (!piles.length) return null;
-  return <div className={`denomination-stack ${className}`} role="img" aria-label={`${t('Chips')}: ${amount}`} title={piles.map(pile => `${pile.count} × ${pile.value}`).join(' + ')}>
-    {piles.map(pile => <div className="chip-pile" key={pile.value} style={{ '--chip-color': pile.color, '--chip-ink': pile.ink } as CSSProperties}>
-      {Array.from({ length: Math.min(pile.count, 8) }, (_, index) => <span className="denomination-chip" key={index} style={{ '--chip-index': index } as CSSProperties}><i>{pile.value >= 1000 ? `${pile.value / 1000}k` : pile.value}</i></span>)}
-      <small>×{pile.count}</small>
-    </div>)}
+  return <div className={`denomination-stack ${className}`} role="img" aria-label={`${t('Chips')}: ${amount}`}>
+    {piles.flatMap(pile => Array.from({ length: Math.ceil(pile.count / 10) }, (_, pileIndex) => {
+      const count = Math.min(10, pile.count - pileIndex * 10);
+      return <div className="chip-pile" key={`${pile.value}-${pileIndex}`} style={{ '--chip-color': pile.color, '--chip-ink': pile.ink, '--pile-count': count } as CSSProperties}>
+        {Array.from({ length: count }, (_, index) => <span className="denomination-chip" key={index} style={{ '--chip-index': index } as CSSProperties}>
+          {index === count - 1 ? <i>{pile.value >= 1000 ? `${pile.value / 1000}k` : pile.value}</i> : null}
+        </span>)}
+      </div>;
+    }))}
   </div>;
 }
 

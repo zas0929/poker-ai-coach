@@ -40,22 +40,42 @@
 @keyframes payout-to-seat { from { transform:translate(-50%,-50%) scale(1); opacity:1; } 85% { opacity:1; } to { transform:translate(calc(-50% + var(--flight-x)),calc(-50% + var(--flight-y))) scale(.65); opacity:0; } }
 @media(prefers-reduced-motion:reduce) { .payout-flight { animation:none; display:none; } }
 
-.denomination-stack { display:flex; align-items:flex-end; justify-content:center; gap:3px; flex-wrap:wrap; max-width:88px; }
-.chip-pile { position:relative; width:23px; height:37px; padding-bottom:9px; }
-.denomination-chip { position:absolute; left:0; bottom:calc(11px + var(--chip-index)*2.5px); width:23px; height:14px; border:2px dashed #ffffffc9; border-radius:50%; background:radial-gradient(ellipse at 40% 30%,#ffffff40,transparent 70%),var(--chip-color); box-shadow:0 1px 0 #000b,inset 0 0 0 1px #0008; display:grid; place-items:center; }
+/* Each physical pile contains one denomination; only its top chip is marked. */
+.denomination-stack { display:flex; align-items:flex-end; justify-content:center; gap:3px; flex-wrap:nowrap; }
+.chip-pile { position:relative; flex:none; width:23px; height:calc(14px + (var(--pile-count) - 1)*2.5px); }
+.denomination-chip { position:absolute; left:0; bottom:calc(var(--chip-index)*2.5px); width:23px; height:14px; border:2px dashed #ffffffc9; border-radius:50%; background:radial-gradient(ellipse at 40% 30%,#ffffff40,transparent 70%),var(--chip-color); box-shadow:0 1px 0 #000b,inset 0 0 0 1px #0008; display:grid; place-items:center; }
 .denomination-chip i { color:var(--chip-ink); font:bold 7px/1 Arial,sans-serif; font-style:normal; }
-.chip-pile>small { position:absolute; bottom:0; left:0; width:100%; text-align:center; font-size:8px; color:#f1e9cf; line-height:10px; }
-.classic-table .player-chip-stack { display:flex; position:absolute; left:calc(100% + 5px); top:4px; width:55px; }
-.classic-table .seat-right .player-chip-stack,.classic-table .seat-top-right .player-chip-stack { left:auto; right:calc(100% + 5px); }
-.classic-table .seat-commitment .bet-chip-stack { position:absolute; left:calc(100% + 3px); top:-6px; width:max-content; }
-.classic-table .pot-display>.denomination-stack { display:flex; max-width:120px; }
+/* Money anchors belong to the felt, independent of the player panels on the rim. */
+.table-money { position:absolute; inset:0; pointer-events:none; }
+.classic-table .player-chip-cluster { position:absolute; left:var(--chips-x); top:var(--chips-y); display:grid; width:max-content; grid-template-columns:repeat(2,max-content); align-items:end; justify-content:center; gap:4px 3px; transform:translate(-50%,-50%); }
+.classic-table .table-bet { position:absolute; left:var(--bet-x); top:var(--bet-y); transform:translate(-50%,-50%); display:flex; align-items:center; gap:5px; white-space:nowrap; }
+.table-bet>b { padding:2px 6px; border:1px solid #adc49770; background:#183e2a; color:#ebdfae; border-radius:12px; font-size:14px; font-variant-numeric:tabular-nums; }
+.table-money-bottom { --chips-x:71%; --chips-y:68%; --bet-x:27%; --bet-y:61%; }
+.table-money-top { --chips-x:71%; --chips-y:24%; --bet-x:24%; --bet-y:35%; }
+.table-money-left { --chips-x:27%; --chips-y:70%; --bet-x:30%; --bet-y:59%; }
+.table-money-right { --chips-x:73%; --chips-y:70%; --bet-x:70%; --bet-y:59%; }
+.table-money-top-left { --chips-x:28%; --chips-y:25%; --bet-x:30%; --bet-y:32%; }
+.table-money-top-right { --chips-x:72%; --chips-y:25%; --bet-x:70%; --bet-y:32%; }
+.table-seats-3 .table-money-left { --chips-x:26%; --chips-y:25%; --bet-y:32%; }
+.table-seats-3 .table-money-right { --chips-x:74%; --chips-y:25%; --bet-y:32%; }
+.table-seats-6 .table-money-top { --chips-x:50%; --chips-y:31%; --bet-x:50%; --bet-y:36%; }
+.table-seats-6 .table-money-top-left,.table-seats-6 .table-money-top-right { --chips-y:31%; --bet-y:38%; }
+@media(max-width:760px) {
+ /* Three card pairs across the top need room for three separate chip clusters. */
+ .classic-table .classic-oval.table-seats-6 { min-height:480px; }
+ .classic-table .table-seats-6 .board-zone { top:43%; }
+ .table-seats-6 .table-money-left { --chips-x:36%; --chips-y:68%; --bet-x:33%; --bet-y:62%; }
+ .table-seats-6 .table-money-right { --chips-x:64%; --chips-y:68%; --bet-x:67%; --bet-y:62%; }
+ .table-seats-6 .table-money-bottom { --chips-y:76%; --bet-x:50%; --bet-y:76%; }
+}
+.classic-table .pot-display>.denomination-stack { display:flex; }
 .classic-table { position:relative; }
 .chip-legend { position:absolute; z-index:16; top:0; left:0; font-size:9px; color:var(--muted); }
 .chip-legend summary { cursor:pointer; padding:3px; }
 .chip-legend>div { background:#14281f; padding:8px; border:1px solid var(--line); display:grid; grid-template-columns:repeat(4,auto); gap:8px; border-radius:8px; }
 .chip-legend span { display:flex; align-items:center; gap:4px; }
 .chip-legend i { width:14px; height:14px; border:2px dashed #eee; border-radius:50%; }
-@media(max-width:760px) { .classic-table .player-chip-stack { width:42px; left:calc(100% + 2px); gap:1px; } .chip-pile { width:19px; } .denomination-chip { width:19px; } .classic-table .seat-right .player-chip-stack,.classic-table .seat-top-right .player-chip-stack { right:calc(100% + 2px); } }
+@media(max-width:760px) { .chip-pile { width:19px; } .denomination-chip { width:19px; } .table-bet>b { font-size:12px; } .bet-chip-stack { gap:1px; } }
 
 .classic-table .seat-stats .seat-stack { font-size:17px; font-weight:800; font-variant-numeric:tabular-nums; color:#fff9dc; line-height:1.15; }
 .classic-table .seat-commitment { font-size:14px; font-weight:800; line-height:18px; min-width:26px; }
