@@ -1,5 +1,7 @@
 'use client';
 
+import { memo } from 'react';
+
 import { useI18n } from '@/i18n/LanguageProvider';
 import type { Card, Rank } from '@/types/poker';
 
@@ -26,7 +28,7 @@ function Court({ rank, suit }: { rank: Rank; suit: string }) {
   </svg>;
 }
 
-export default function CardView({ card, hidden = false, placeholder = false }: {
+function CardView({ card, hidden = false, placeholder = false }: {
   card?: Card; hidden?: boolean; placeholder?: boolean;
 }) {
   const { t } = useI18n();
@@ -64,3 +66,11 @@ export default function CardView({ card, hidden = false, placeholder = false }: 
     </svg>}
   </div>;
 }
+
+// Server snapshots replace card objects even when their rank and suit stay the same.
+export default memo(CardView, (previous, next) =>
+  previous.card?.rank === next.card?.rank &&
+  previous.card?.suit === next.card?.suit &&
+  Boolean(previous.hidden) === Boolean(next.hidden) &&
+  Boolean(previous.placeholder) === Boolean(next.placeholder),
+);

@@ -99,7 +99,7 @@ export default function PokerTable(props: PokerTableProps) {
     const turn = `${hand.hand_id}:${hand.history.length}:${props.turnTimer.playerId}`;
     if (lastTimer.current !== turn) { play('timer'); lastTimer.current = turn; }
   }, [props.hand, props.turnTimer, play]);
-  const key = `${props.hand?.hand_id}:${props.hand?.board.length}:${props.hand?.result?.reason ?? ''}`;
+  const key = props.hand?.hand_id ?? 'empty';
   return <TableScene key={key} {...props} />;
 }
 
@@ -113,17 +113,21 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
   const revealVillainCards = hand?.result?.reason === 'showdown';
   const winnerBadge = winnerText(hand, t);
   const allInRunout = isAllInRunout(hand);
-  const runoutComplete = !allInRunout || displayedBoardCount >= 5;
+  const runoutSchedule = allInRunout && hand ? runoutStages(hand).join(',') : '';
+  const boardCount = allInRunout
+    ? Math.max(Number(runoutSchedule.split(',')[0]), displayedBoardCount)
+    : hand?.board.length ?? 0;
+  const runoutComplete = !allInRunout || boardCount >= 5;
   const visibleBoard = useMemo(
-    () => hand?.board.slice(0, displayedBoardCount) ?? [],
-    [displayedBoardCount, hand?.board],
+    () => hand?.board.slice(0, boardCount) ?? [],
+    [boardCount, hand?.board],
   );
   const seats = tableSeats(hand, seatCount, viewerId);
 
 
   useEffect(() => {
-    if (!hand || !allInRunout) return;
-    const stages = runoutStages(hand);
+    if (!runoutSchedule) return;
+    const stages = runoutSchedule.split(',').map(Number);
     const timers = stages.slice(1).map((count, index) =>
       window.setTimeout(() => setDisplayedBoardCount(count), 850 * (index + 1)),
     );
@@ -131,7 +135,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
     return () => {
       timers.forEach(window.clearTimeout);
     };
-  }, [hand, allInRunout]);
+  }, [runoutSchedule]);
 
   useEffect(() => {
     if (!hand?.result || !runoutComplete) return;
