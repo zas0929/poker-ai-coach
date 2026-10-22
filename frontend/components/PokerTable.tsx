@@ -6,6 +6,7 @@ import { useI18n } from '@/i18n/LanguageProvider';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 
+import { useTableSound } from '@/components/TableSoundProvider';
 import { CHIP_VALUES, chipBreakdown } from '@/services/chips';
 import CardView from '@/components/CardView';
 import type { HandAction, HandResult, HandState, Player, Street } from '@/types/poker';
@@ -84,6 +85,23 @@ function Seat({
 }
 
 export default function PokerTable(props: PokerTableProps) {
+  const { play } = useTableSound();
+  const lastDeal = useRef<{ id: string; board: number } | null>(null);
+  const lastTimer = useRef('');
+  useEffect(() => {
+    const hand = props.hand;
+    if (!hand) return;
+    const previous = lastDeal.current;
+    if (previous?.id !== hand.hand_id) play('deal', hand.players.length * 2);
+    else if (hand.board.length > previous.board) play('deal', hand.board.length - previous.board);
+    lastDeal.current = { id: hand.hand_id, board: hand.board.length };
+  }, [props.hand, play]);
+  useEffect(() => {
+    const hand = props.hand;
+    if (!hand || hand.result || !props.turnTimer) return;
+    const turn = `${hand.hand_id}:${hand.history.length}:${props.turnTimer.playerId}`;
+    if (lastTimer.current !== turn) { play('timer'); lastTimer.current = turn; }
+  }, [props.hand, props.turnTimer, play]);
   const key = `${props.hand?.hand_id}:${props.hand?.board.length}:${props.hand?.result?.reason ?? ''}`;
   return <TableScene key={key} {...props} />;
 }

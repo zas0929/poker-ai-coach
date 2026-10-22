@@ -81,6 +81,10 @@
 .creation-settings .auto-deal-option { display:flex; align-items:center; gap:8px; }
 .auto-deal-option input { width:18px; height:18px; flex:none; }
 
+.play-header .sound-toggle { display:grid; place-items:center; flex:none; width:32px; height:34px; min-height:32px; padding:0; border:1px solid var(--line); border-radius:7px; color:var(--accent); background:#17251e; font-size:19px; }
+.play-header .sound-toggle[aria-pressed='false'] { color:var(--muted); }
+@media(max-width:350px) { .play-header-controls { gap:5px; } .play-header .sound-toggle { width:27px; } .play-header h1 { font-size:13px; } }
+
 /* Keep readiness/deal controls visible before the first hand too. */
 @media(max-width:760px) {
  .room-shell:not(.room-in-hand) .table-column { display:block; }
