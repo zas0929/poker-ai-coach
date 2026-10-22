@@ -32,9 +32,24 @@ export default function CardView({ card, hidden = false, placeholder = false }: 
   const { t } = useI18n();
   if (placeholder) return <div className="playing-card card-placeholder" role="img" aria-label={t('Undealt card')} />;
   if (!card || hidden) return <div className="playing-card card-back stars-back" role="img" aria-label={t('Hidden card')}>
-    <svg className="card-back-art" viewBox="0 0 60 86" aria-hidden="true">
-      <path d="M30 20C26 29 13 34 13 45c0 10 11 14 17 7-1 6-4 10-8 13h16c-4-3-7-7-8-13 6 7 17 3 17-7 0-11-13-16-17-25Z" fill="#fff" />
-      <path d="m30 34 2.5 7.5h8L34 46l2.5 7.5L30 49l-6.5 4.5L26 46l-6.5-4.5h8Z" fill="#b4192d" />
+    <svg className="card-back-art" viewBox="0 0 240 336" aria-hidden="true">
+      <rect width="240" height="336" rx="12" fill="#f4f0d9" />
+      <svg x="13" y="13" width="214" height="310" viewBox="0 0 214 310">
+        <rect width="214" height="310" fill="#172546" />
+        {Array.from({ length: 9 }, (_, row) => Array.from({ length: 6 }, (_, col) => (
+          <g key={`${row}-${col}`} transform={`translate(${col * 48 - 24 + (row % 2) * 24} ${row * 41.57 - 12})`} fill="none" stroke="#f4f0d9" strokeWidth="1.3" strokeLinejoin="miter">
+            <path d="M0 41.57 24 0 48 41.57ZM8 37 24 9.2 40 37ZM16 32.4 24 18.5 32 32.4Z" />
+            <path d="M24 0H72L48 41.57ZM32 4.6H64L48 32.4ZM40 9.2H56L48 23.1Z" />
+          </g>
+        )))}
+        {[false, true].map((flipped) => (
+          <g key={String(flipped)} transform={flipped ? 'translate(107 232) rotate(180)' : 'translate(107 78)'}>
+            <path d="M0-35 27 0 0 35-27 0Z" fill="#172546" stroke="#f4f0d9" strokeWidth="1.8" />
+            <path d="M0-24C-5-16-19-9-19 1c0 10 12 13 19 5-1 7-4 12-10 16H10C4 18 1 13 0 6c7 8 19 5 19-5C19-9 5-16 0-24Z" fill="#f4f0d9" />
+            <path d="m0-10 2.7 8.2h8.6L4.3 3.3 7 11.5 0 6.4-7 11.5-4.3 3.3-11.3-1.8h8.6Z" fill="#172546" />
+          </g>
+        ))}
+      </svg>
     </svg>
   </div>;
   const suit = suits[card.suit];

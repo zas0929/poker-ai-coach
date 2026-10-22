@@ -9,8 +9,8 @@
 .card-corner.corner-bottom { bottom:4%; right:5%; transform:rotate(180deg); }
 .playing-card .card-art { position:absolute; width:60%; height:72%; left:20%; top:14%; overflow:visible; font-family:Georgia,'Times New Roman',serif; }
 .playing-card .court-art { width:58%; height:72%; left:21%; top:14%; }
-.playing-card.stars-back { border:1px solid #f6efe2; background:repeating-linear-gradient(45deg,#ffffff0e 0 1px,transparent 1px 4px),repeating-linear-gradient(-45deg,#ffffff0e 0 1px,transparent 1px 4px),linear-gradient(150deg,#d22439,#990d22); box-shadow:inset 0 0 0 2px #f7f1df,inset 0 0 0 3px #a5132a,0 2px 5px #0004; border-radius:4px; }
-.playing-card .card-back-art { position:absolute; inset:7%; width:86%; height:86%; }
+.playing-card.stars-back { border:1px solid #e3dfca; background:#f4f0d9; box-shadow:0 2px 5px #0004; border-radius:5px; }
+.playing-card .card-back-art { position:absolute; inset:0; width:100%; height:100%; }
 .playing-card.card-placeholder { background:#0d322550; border:1px solid #abc0a12b; box-shadow:none; border-radius:5px; }
 .classic-table .seat:not(.seat-bottom).concealed-seat .playing-card { width:27px; height:38px; }
 .classic-table .seat:not(.seat-bottom) .hole-cards { top:-31px; right:7px; z-index:0; }
