@@ -14,6 +14,8 @@ import { enterRoom, roomSocketUrl } from '@/services/roomApi';
 import type { RoomCredentials, RoomState, RoomSettings } from '@/services/roomApi';
 import type { ActionType } from '@/types/poker';
 
+type SettingsDraft = Record<'starting_stack' | 'small_blind' | 'big_blind' | 'turn_seconds', string>;
+
 export default function FriendsPage() {
   const { t } = useI18n();
   const [panel, setPanel] = useState<string | null>(null);
@@ -25,7 +27,7 @@ export default function FriendsPage() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [settingsEntry, setSettingsEntry] = useState<{ code: string; revision: number; value: RoomSettings } | null>(null);
+  const [settingsEntry, setSettingsEntry] = useState<{ code: string; baseline: string; value: SettingsDraft } | null>(null);
   const [clock, setClock] = useState({ now: 0, offset: 0 });
   const socket = useRef<WebSocket | null>(null);
   const latest = useRef<RoomState | null>(null);
@@ -161,16 +163,19 @@ export default function FriendsPage() {
   const isHost = room?.viewer_id === room?.host_id;
   const everyoneReady = Boolean(room && room.members.length >= 2 && room.members.filter((member) => !member.sitting_out).length >= 2 && room.members.filter((member) => !member.sitting_out).every((member) => member.ready && member.connected));
 
-  const settings = room?.settings ?? { starting_stack: 1000, small_blind: 5, big_blind: 10, turn_seconds: 30 };
-  const editedSettings = settingsEntry && settingsEntry.code === room?.code && settingsEntry.revision === room?.revision ? settingsEntry.value : settings;
+  const settings = room?.settings ?? { starting_stack: 400, small_blind: 1, big_blind: 2, turn_seconds: 30 };
+  const settingsBaseline = JSON.stringify(settings);
+  const editedDraft: SettingsDraft = settingsEntry && settingsEntry.code === room?.code && settingsEntry.baseline === settingsBaseline
+    ? settingsEntry.value : { starting_stack: String(settings.starting_stack), small_blind: String(settings.small_blind), big_blind: String(settings.big_blind), turn_seconds: String(settings.turn_seconds) };
+  const editedSettings: RoomSettings = { starting_stack: Number(editedDraft.starting_stack), small_blind: Number(editedDraft.small_blind), big_blind: Number(editedDraft.big_blind), turn_seconds: Number(editedDraft.turn_seconds) };
   const validSettings = Object.values(editedSettings).every(Number.isInteger)
     && editedSettings.small_blind >= 1 && editedSettings.small_blind <= 10000
     && editedSettings.big_blind > editedSettings.small_blind && editedSettings.big_blind <= 20000
     && editedSettings.starting_stack >= Math.max(100, 20 * editedSettings.big_blind)
     && editedSettings.starting_stack <= 1000000
     && editedSettings.turn_seconds >= 10 && editedSettings.turn_seconds <= 120;
-  const editSetting = (key: keyof RoomSettings, value: number) => {
-    if (room) setSettingsEntry({ code: room.code, revision: room.revision, value: { ...editedSettings, [key]: value } });
+  const editSetting = (key: keyof SettingsDraft, value: string) => {
+    if (room) setSettingsEntry({ code: room.code, baseline: settingsBaseline, value: { ...editedDraft, [key]: value } });
   };
 
   const secondsLeft = room?.deadline_at ? Math.max(0, Math.ceil((room.deadline_at - clock.now - clock.offset) / 1000)) : null;
@@ -206,10 +211,10 @@ export default function FriendsPage() {
                 <p className="room-note">{t("After {0} quiet seconds, the {1}-second countdown starts. The clock continues after disconnect; timeout checks or folds, then sits out.").replace('{0}', String(room?.turn_grace_seconds ?? 10)).replace('{1}', String(settings.turn_seconds))}</p>
                               {!hand && isHost ? <details className="room-settings-disclosure"><summary>{t("Table settings")}</summary><fieldset className="room-settings" disabled={busy || !connected}>
                   <legend>{t("Table settings")}</legend>
-                  <label>{t("Starting stack")}<input type="number" min={100} max={1000000} step={1} value={editedSettings.starting_stack} onChange={(event) => editSetting('starting_stack', Number(event.target.value))} /></label>
-                  <label>{t("Small blind")}<input type="number" min={1} max={10000} step={1} value={editedSettings.small_blind} onChange={(event) => editSetting('small_blind', Number(event.target.value))} /></label>
-                  <label>{t("Big blind")}<input type="number" min={2} max={20000} step={1} value={editedSettings.big_blind} onChange={(event) => editSetting('big_blind', Number(event.target.value))} /></label>
-                  <label>{t("Countdown seconds")}<input type="number" min={10} max={120} step={1} value={editedSettings.turn_seconds} onChange={(event) => editSetting('turn_seconds', Number(event.target.value))} /></label>
+                  <label>{t("Starting stack")}<input type="number" min={100} max={1000000} step={1} value={editedDraft.starting_stack} onChange={(event) => editSetting('starting_stack', event.target.value)} /></label>
+                  <label>{t("Small blind")}<input type="number" min={1} max={10000} step={1} value={editedDraft.small_blind} onChange={(event) => editSetting('small_blind', event.target.value)} /></label>
+                  <label>{t("Big blind")}<input type="number" min={2} max={20000} step={1} value={editedDraft.big_blind} onChange={(event) => editSetting('big_blind', event.target.value)} /></label>
+                  <label>{t("Countdown seconds")}<input type="number" min={10} max={120} step={1} value={editedDraft.turn_seconds} onChange={(event) => editSetting('turn_seconds', event.target.value)} /></label>
                   <button disabled={!validSettings} onClick={() => send('settings', { settings: editedSettings })}>{t("Apply settings")}</button>
                   <small>{t("At least 20 big blinds in the starting stack. Applying changes clears everyone's readiness. Settings lock after the first deal.")}</small>
                 </fieldset></details> : null}

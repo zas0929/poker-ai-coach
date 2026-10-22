@@ -22,9 +22,9 @@ SEAT_IDS = ['hero', 'villain', 'villain_2', 'villain_3', 'villain_4', 'villain_5
 
 
 class RoomSettings(BaseModel):
-    starting_stack: StrictInt = Field(default=1000, ge=100, le=1000000)
-    small_blind: StrictInt = Field(default=5, ge=1, le=10000)
-    big_blind: StrictInt = Field(default=10, ge=2, le=20000)
+    starting_stack: StrictInt = Field(default=400, ge=100, le=1000000)
+    small_blind: StrictInt = Field(default=1, ge=1, le=10000)
+    big_blind: StrictInt = Field(default=2, ge=2, le=20000)
     turn_seconds: StrictInt = Field(default=30, ge=10, le=120)
 
     @model_validator(mode='after')
@@ -65,7 +65,7 @@ class Member:
     sitting_out: bool = False
     leaving: bool = False
     seat: int = 0
-    stack: int = 1000
+    stack: int = 400
 
 
 @dataclass
