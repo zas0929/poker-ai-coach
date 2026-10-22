@@ -5,3 +5,15 @@
 .info-tip summary::-webkit-details-marker { display:none; }
 .info-tip>span { position:absolute; z-index:70; top:27px; right:0; width:min(260px,70vw); padding:12px; border:1px solid var(--accent); border-radius:8px; background:#172321; color:#ecf0e9; font-size:12px; line-height:1.5; box-shadow:0 5px 20px #0008; }
 @media(hover:hover) { .info-tip:not([open]):hover>span { display:block; } }
+
+/* Reserve only the space actually used by the fixed mobile action dock. */
+@media(max-width:760px) {
+ .play-shell { --table-chrome:330px; padding-bottom:calc(146px + env(safe-area-inset-bottom)); }
+ .room-in-hand { --table-chrome:390px; }
+ .classic-table .classic-oval, .room-in-hand .classic-table .classic-oval { height:clamp(240px,calc(100svh - var(--table-chrome,330px)),510px); }
+ .classic-table .showdown-slot:not(.showdown-slot-visible) { display:none; }
+ .action-dock { gap:5px; padding-top:7px; }
+ .action-dock .action-grid button { min-height:44px; }
+ .dock-tools>button { min-height:32px; padding-block:3px; }
+ .table-meta { padding-block:6px; }
+}
