@@ -19,11 +19,12 @@ interface ActionPanelProps {
   onAnalyze: () => void;
   onStartHand: () => void;
   tools?: ReactNode;
+  betweenActions?: ReactNode;
   secondsLeft?: number | null;
 }
 
 export default function ActionPanel({ viewerId = 'hero', trainingControls = true, analysis, hand,
-  isLoading, blocked = false, waitingLabel, onAction, onAdvance, onAnalyze, onStartHand, tools, secondsLeft }: ActionPanelProps) {
+  isLoading, blocked = false, waitingLabel, onAction, onAdvance, onAnalyze, onStartHand, tools, secondsLeft, betweenActions }: ActionPanelProps) {
   const { t } = useI18n();
   const inputId = useId();
   const errorId = useId();
@@ -87,7 +88,7 @@ export default function ActionPanel({ viewerId = 'hero', trainingControls = true
     {!hand || handEnded || actionClosed ? <div className="hand-actions">
       {trainingControls && (!hand || handEnded) ? <button className="primary-button" disabled={isLoading} onClick={onStartHand}>{t(hand ? 'Next hand' : 'New hand')}</button> : null}
       {trainingControls && actionClosed ? <button className="primary-button" disabled={isLoading} onClick={onAdvance}>{t('Advance')}</button> : null}
-      {!trainingControls && handEnded ? <span>{t('Mark yourself ready for the next hand in Players.')}</span> : null}
+      {!trainingControls ? betweenActions : null}
     </div> : <div className="action-grid">
       <button className={`fold-action${isRecommended('fold')}`} disabled={!allows('fold') || isLoading} onClick={() => submit('fold')}>{t('Fold')}</button>
       <button className={`passive-action${isRecommended(passiveAction)}`} disabled={!allows(passiveAction) || isLoading} onClick={() => submit(passiveAction)}>

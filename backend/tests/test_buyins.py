@@ -1,7 +1,7 @@
 import tempfile
 import unittest
 from pathlib import Path
-from app.services.room_service import RoomCommand, RoomStore
+from app.services.room_service import RoomCommand, RoomStore, RoomSettings
 from app.services.room_repository import RoomStorageError
 
 
@@ -9,7 +9,7 @@ class BuyInTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.store = RoomStore(Path(self.temp.name) / 'room.sqlite3'); self.store.open()
-        self.room, self.host = self.store.create('Host', 600)
+        self.room, self.host = self.store.create('Host', 600, RoomSettings(auto_deal=False))
         self.guest = self.store.apply(self.room, lambda: self.room.join('Guest', 200), 'join')
         for member in self.room.members: member.sockets.add(object())
         self.counter = 0

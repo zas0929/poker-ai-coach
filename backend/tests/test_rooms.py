@@ -4,14 +4,14 @@ import unittest
 
 from pydantic import ValidationError
 
-from app.services.room_service import RoomCommand, RoomStore
+from app.services.room_service import RoomCommand, RoomStore, RoomSettings
 from app.models.poker import ActionType
 
 
 class RoomTests(unittest.TestCase):
     def setUp(self):
         self.store = RoomStore()
-        self.room, self.host = self.store.create('Roman')
+        self.room, self.host = self.store.create('Roman', settings=RoomSettings(starting_stack=1000, small_blind=5, big_blind=10, auto_deal=False))
         self.guest = self.room.join('Friend')
         # Connection presence is required to deal, without needing real sockets here.
         self.host.sockets.add(object())

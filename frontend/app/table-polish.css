@@ -71,3 +71,19 @@
 @keyframes timer-alert { 50% { box-shadow:0 0 0 5px #ee766c55; } }
 @media(max-width:760px) { .classic-table .seat-bottom .seat-turn-timer { left:-51px; min-width:47px; min-height:32px; font-size:18px; } }
 @media(prefers-reduced-motion:reduce) { .classic-table .seat-bottom.seat-time-urgent .seat-turn-timer { animation:none; } }
+
+.room-hand-controls { display:flex; flex-wrap:wrap; gap:7px; width:100%; align-items:center; }
+.room-hand-controls>button { flex:1; min-height:42px; }
+.room-hand-controls>span { width:100%; text-align:center; font-size:12px; color:var(--accent); }
+.creation-settings { margin-block:10px; }
+.creation-settings summary { cursor:pointer; padding:8px 0; }
+.creation-settings fieldset { display:grid; gap:9px; border:1px solid var(--line); padding:12px; border-radius:8px; }
+.creation-settings .auto-deal-option { display:flex; align-items:center; gap:8px; }
+.auto-deal-option input { width:18px; height:18px; flex:none; }
+
+/* Keep readiness/deal controls visible before the first hand too. */
+@media(max-width:760px) {
+ .room-shell:not(.room-in-hand) .table-column { display:block; }
+ .room-shell:not(.room-in-hand) .table-column>.classic-table { display:none; }
+ .room-shell:not(.room-in-hand) { padding-bottom:calc(174px + env(safe-area-inset-bottom)); }
+}

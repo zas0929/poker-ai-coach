@@ -1,12 +1,12 @@
 import unittest
 from unittest.mock import patch
 from app.models.poker import ActionType
-from app.services.room_service import RoomCommand, RoomStore
+from app.services.room_service import RoomCommand, RoomStore, RoomSettings
 
 
 class LifecycleTests(unittest.TestCase):
     def setUp(self):
-        self.room, self.host = RoomStore().create('Host')
+        self.room, self.host = RoomStore().create('Host', settings=RoomSettings(starting_stack=1000, small_blind=5, big_blind=10, auto_deal=False))
         self.guest = self.room.join('Guest')
         for member in self.room.members:
             member.sockets.add(object())

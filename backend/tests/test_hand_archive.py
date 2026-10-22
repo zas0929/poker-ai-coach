@@ -8,7 +8,7 @@ from fastapi import HTTPException
 from app.api import rooms as room_api
 from app.models.poker import ActionType
 from app.services.hand_archive import replay_hand
-from app.services.room_service import RoomCommand, RoomStore
+from app.services.room_service import RoomCommand, RoomStore, RoomSettings
 
 
 class HandArchiveTests(unittest.TestCase):
@@ -16,7 +16,7 @@ class HandArchiveTests(unittest.TestCase):
         self.directory = tempfile.TemporaryDirectory()
         self.store = RoomStore(Path(self.directory.name) / 'archive.sqlite3')
         self.store.open()
-        self.room, self.host = self.store.create('Host')
+        self.room, self.host = self.store.create('Host', settings=RoomSettings(starting_stack=1000, small_blind=5, big_blind=10, auto_deal=False))
         self.guest = self.store.apply(self.room, lambda: self.room.join('Guest'), 'join')
         for member in self.room.members:
             member.sockets.add(object())

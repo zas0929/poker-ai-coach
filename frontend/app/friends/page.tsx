@@ -24,6 +24,10 @@ export default function FriendsPage() {
   const [name, setName] = useState('');
   const [buyIn, setBuyIn] = useState('400');
   const [topUp, setTopUp] = useState('400');
+  const [autoDeal, setAutoDeal] = useState(true);
+  const [creationDraft, setCreationDraft] = useState<SettingsDraft>({ starting_stack: '400', small_blind: '1', big_blind: '2', turn_seconds: '30' });
+  const creationSettings: RoomSettings = { starting_stack: Number(creationDraft.starting_stack), small_blind: Number(creationDraft.small_blind), big_blind: Number(creationDraft.big_blind), turn_seconds: Number(creationDraft.turn_seconds), auto_deal: autoDeal };
+  const validCreation = Object.values(creationDraft).every(value => value.trim() !== '' && Number.isInteger(Number(value))) && creationSettings.small_blind >= 1 && creationSettings.small_blind <= 10000 && creationSettings.big_blind > creationSettings.small_blind && creationSettings.big_blind <= 20000 && creationSettings.starting_stack >= Math.max(100, 20 * creationSettings.big_blind) && creationSettings.starting_stack <= 1000000 && creationSettings.turn_seconds >= 10 && creationSettings.turn_seconds <= 120;
   const validBuyIn = buyIn.trim() !== '' && Number.isInteger(Number(buyIn)) && Number(buyIn) >= 2 && Number(buyIn) <= 1000000;
   const [code, setCode] = useState('');
   const [invited, setInvited] = useState(false);
@@ -126,18 +130,18 @@ export default function FriendsPage() {
   }, [credentials]);
 
   useEffect(() => {
-    if (!room?.deadline_at) return;
+    if (!room?.deadline_at && !room?.next_hand_at) return;
     const timer = setInterval(() => setClock((value) => ({ ...value, now: Date.now() })), 250);
     return () => clearInterval(timer);
-  }, [room?.deadline_at]);
+  }, [room?.deadline_at, room?.next_hand_at]);
 
   const enter = async (join: boolean) => {
-    if (entering.current || !validBuyIn) return;
+    if (entering.current || !validBuyIn || (!join && !validCreation)) return;
     entering.current = true;
     setBusy(true);
     setError(null);
     try {
-      const next = await enterRoom(name.trim(), join ? code.trim().toUpperCase() : undefined, Number(buyIn));
+      const next = await enterRoom(name.trim(), join ? code.trim().toUpperCase() : undefined, Number(buyIn), join ? undefined : creationSettings);
       try { sessionStorage.setItem(`poker-room:${next.code}`, JSON.stringify(next)); } catch { /* Keep this session. */ }
       try { localStorage.setItem(`poker-room:${next.code}`, JSON.stringify(next)); } catch { /* Keep this session. */ }
       window.history.replaceState(null, '', `/friends?room=${next.code}`);
@@ -166,14 +170,14 @@ export default function FriendsPage() {
   const betweenHands = !hand || Boolean(hand.result);
   const connected = status === 'Connected';
   const isHost = room?.viewer_id === room?.host_id;
-  const everyoneReady = Boolean(room && room.members.length >= 2 && room.members.filter((member) => !member.sitting_out).length >= 2 && room.members.filter((member) => !member.sitting_out).every((member) => member.ready && member.connected));
+  const everyoneReady = Boolean(room && room.members.length >= 2 && room.members.filter((member) => !member.sitting_out && member.stack >= room.settings.big_blind).length >= 2 && room.members.filter((member) => !member.sitting_out && member.stack >= room.settings.big_blind).every((member) => member.ready && member.connected));
 
-  const settings = room?.settings ?? { starting_stack: 400, small_blind: 1, big_blind: 2, turn_seconds: 30 };
+  const settings = room?.settings ?? { starting_stack: 400, small_blind: 1, big_blind: 2, turn_seconds: 30, auto_deal: true };
   const settingsBaseline = JSON.stringify(settings);
   const editedDraft: SettingsDraft = settingsEntry && settingsEntry.code === room?.code && settingsEntry.baseline === settingsBaseline
     ? settingsEntry.value : { starting_stack: String(settings.starting_stack), small_blind: String(settings.small_blind), big_blind: String(settings.big_blind), turn_seconds: String(settings.turn_seconds) };
-  const editedSettings: RoomSettings = { starting_stack: Number(editedDraft.starting_stack), small_blind: Number(editedDraft.small_blind), big_blind: Number(editedDraft.big_blind), turn_seconds: Number(editedDraft.turn_seconds) };
-  const validSettings = Object.values(editedSettings).every(Number.isInteger)
+  const editedSettings: RoomSettings = { starting_stack: Number(editedDraft.starting_stack), small_blind: Number(editedDraft.small_blind), big_blind: Number(editedDraft.big_blind), turn_seconds: Number(editedDraft.turn_seconds), auto_deal: settings.auto_deal };
+  const validSettings = Object.values(editedDraft).every(value => value.trim() !== '' && Number.isInteger(Number(value)))
     && editedSettings.small_blind >= 1 && editedSettings.small_blind <= 10000
     && editedSettings.big_blind > editedSettings.small_blind && editedSettings.big_blind <= 20000
     && editedSettings.starting_stack >= Math.max(100, 20 * editedSettings.big_blind)
@@ -185,6 +189,7 @@ export default function FriendsPage() {
 
   const secondsLeft = room?.deadline_at ? Math.max(0, Math.ceil((room.deadline_at - clock.now - clock.offset) / 1000)) : null;
   // deadline_at includes the quiet phase; never start a new timer on reconnect.
+  const nextHandSeconds = room?.next_hand_at ? Math.max(0, Math.ceil((room.next_hand_at - clock.now - clock.offset) / 1000)) : null;
   const visibleSecondsLeft = secondsLeft !== null && secondsLeft <= settings.turn_seconds ? secondsLeft : null;
   const turnTimer = hand?.current_player_id && !hand.result && visibleSecondsLeft !== null
     ? { playerId: hand.current_player_id, remaining: visibleSecondsLeft, duration: settings.turn_seconds } : null;
@@ -212,7 +217,7 @@ export default function FriendsPage() {
                 {betweenHands ? <div className="top-up-controls"><label>{t('Add chips')}<input type="number" inputMode="numeric" min={1} max={1000000 - (me?.stack ?? 0)} value={topUp} onChange={event => setTopUp(event.target.value)} /></label><button disabled={busy || !connected || topUp.trim() === '' || !Number.isInteger(Number(topUp)) || Number(topUp) <= 0 || (me?.stack ?? 0) + Number(topUp) > 1000000} onClick={() => send('top_up', { amount: Number(topUp) })}>{t('Add chips')}</button></div> : null}
                 <button disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
                 {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
-                {betweenHands ? <><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{t(hand ? 'Deal next hand' : 'Deal first hand')}</button> : <p>{t("The host deals when everyone is ready.")}</p>}</> : <p>{hand?.players.find((player) => player.id === hand.current_player_id)?.name}{t("'s turn. Streets advance automatically.")}</p>}
+                <p>{t(settings.auto_deal ? 'Automatic hands enabled. Unready or sit out to pause.' : 'The host deals when everyone is ready.')}</p>
                 <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)} · {t('Virtual chips only. Choose your buy-in and add chips between hands. No automatic refills.')}</p>
                 <p className="room-note">{t("After {0} quiet seconds, the {1}-second countdown starts. The clock continues after disconnect; timeout checks or folds, then sits out.").replace('{0}', String(room?.turn_grace_seconds ?? 10)).replace('{1}', String(settings.turn_seconds))}</p>
                               {!hand && isHost ? <details className="room-settings-disclosure"><summary>{t("Table settings")}</summary><fieldset className="room-settings" disabled={busy || !connected}>
@@ -237,8 +242,13 @@ export default function FriendsPage() {
           <h2>{t("Your private poker table")}</h2>
           <p>{t("Create a room and share its invitation. Bring 2–6 players, mark everyone ready, then deal.")}</p>
           <label>{t("Your name")}<input autoComplete="nickname" maxLength={24} value={name} onChange={(event) => setName(event.target.value)} placeholder="Roman" /></label>
+          {!invited ? <details className="creation-settings"><summary>{t('Table settings')}</summary><fieldset disabled={busy}>
+            {([['starting_stack', 'Starting stack'], ['small_blind', 'Small blind'], ['big_blind', 'Big blind'], ['turn_seconds', 'Countdown seconds']] as const).map(([key, label]) => <label key={key}>{t(label)}<input type="number" inputMode="numeric" value={creationDraft[key]} onChange={event => setCreationDraft(old => ({ ...old, [key]: event.target.value }))} /></label>)}
+            <label className="auto-deal-option"><input type="checkbox" checked={autoDeal} onChange={event => setAutoDeal(event.target.checked)} />{t('Automatically ready and deal next hands')}</label>
+            <p>{t('An eight-second pause between hands leaves time to review results or pause readiness.')}</p>
+          </fieldset></details> : null}
           <label>{t('Buy-in chips')}<input type="number" inputMode="numeric" min={2} max={1000000} value={buyIn} onChange={event => setBuyIn(event.target.value)} /></label>
-          <button className="primary-button" disabled={busy || !validBuyIn || !name.trim() || (invited && code.trim().length !== 8)} onClick={() => enter(invited)}>{t(invited ? "Join room" : "Create room")}</button>
+          <button className="primary-button" disabled={busy || !validBuyIn || (!invited && !validCreation) || !name.trim() || (invited && code.trim().length !== 8)} onClick={() => enter(invited)}>{t(invited ? "Join room" : "Create room")}</button>
           <div className="room-join"><label>{t("Room code")}<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder={t("Invitation code")} /></label>{!invited ? <button disabled={busy || !validBuyIn || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>{t("Join room")}</button> : null}</div>
           <p className="room-note">{t("Local preview. Friends on other networks will need the hosting stage. Rooms, seats and hands are saved on this server.")}</p>
         </section>
@@ -256,7 +266,7 @@ export default function FriendsPage() {
           <section className="game-layout">
             <div className="table-column">
               <PokerTable emptyStack={settings.starting_stack} hand={hand} seatCount={hand?.players.length ?? Math.max(2, room?.members.length ?? 2)} viewerId={room?.viewer_id} turnTimer={turnTimer} />
-              {hand ? <ActionPanel analysis={null} hand={hand} isLoading={busy} blocked={!connected || Boolean(me?.sitting_out)} waitingLabel={!connected ? t(status) : me?.sitting_out ? t("Sitting out") : undefined} viewerId={room?.viewer_id} trainingControls={false} secondsLeft={visibleSecondsLeft} tools={<><button aria-haspopup="dialog" onClick={() => setPanel('players')}>{t('Players')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('archive')}>{t('Hand archive')} ↑</button></>} onAction={action} onAdvance={() => {}} onAnalyze={() => {}} onStartHand={() => {}} /> : null}
+              <ActionPanel betweenActions={betweenHands ? <div className="room-hand-controls"><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{t(hand ? 'Deal next hand' : 'Deal first hand')}</button> : null}{nextHandSeconds !== null ? <span role="timer">{t('Next hand in {0}s').replace('{0}', String(nextHandSeconds))}</span> : null}</div> : null} analysis={null} hand={hand} isLoading={busy} blocked={!connected || Boolean(me?.sitting_out)} waitingLabel={!connected ? t(status) : me?.sitting_out ? t("Sitting out") : undefined} viewerId={room?.viewer_id} trainingControls={false} secondsLeft={visibleSecondsLeft} tools={<><button aria-haspopup="dialog" onClick={() => setPanel('players')}>{t('Players')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('archive')}>{t('Hand archive')} ↑</button></>} onAction={action} onAdvance={() => {}} onAnalyze={() => {}} onStartHand={() => {}} />
             </div>
             <PanelSidebar notice={visibleSecondsLeft !== null ? <p className={`sheet-timer ${visibleSecondsLeft !== null && visibleSecondsLeft <= 10 ? "urgent" : ""}`} role="timer">{t("Time remaining")}: {visibleSecondsLeft}s</p> : null} collapseOnMobile={Boolean(hand)} active={panel} onClose={() => setPanel(null)} panels={[
               { id: 'players', title: t('Players'), content: lobby },

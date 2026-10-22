@@ -9,7 +9,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect, Header, Query, Response
 from pydantic import BaseModel, Field, StrictInt, ValidationError, field_validator
 
-from app.services.room_service import RoomCommand, RoomStore
+from app.services.room_service import RoomCommand, RoomStore, RoomSettings
 from app.services.room_repository import RoomStorageError
 
 router = APIRouter()
@@ -34,10 +34,14 @@ class JoinRequest(BaseModel):
         return name
 
 
+class CreateRequest(JoinRequest):
+    settings: Optional[RoomSettings] = None
+
+
 @router.post('')
-async def create_room(request: JoinRequest):
+async def create_room(request: CreateRequest):
     try:
-        room, member = store.create(request.name, request.buy_in)
+        room, member = store.create(request.name, request.buy_in, request.settings)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     return {'code': room.code, 'token': member.token, 'player_id': member.player_id}

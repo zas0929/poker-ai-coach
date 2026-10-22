@@ -26,6 +26,7 @@ class RoomSettings(BaseModel):
     small_blind: StrictInt = Field(default=1, ge=1, le=10000)
     big_blind: StrictInt = Field(default=2, ge=2, le=20000)
     turn_seconds: StrictInt = Field(default=30, ge=10, le=120)
+    auto_deal: bool = Field(default=True, strict=True)
 
     @model_validator(mode='after')
     def validate_structure(self):
@@ -81,6 +82,7 @@ class Room:
     used_ids: set = field(default_factory=set)
     button_seat: int = -1
     settled_hand_id: Optional[str] = None
+    next_hand_at: Optional[float] = None
     settings: RoomSettings = field(default_factory=RoomSettings)
 
     @property
@@ -118,7 +120,7 @@ class Room:
         if player_id in self.used_ids:
             player_id = 'seat_' + secrets.token_hex(12)
         self.used_ids.add(player_id)
-        member = Member(player_id=player_id, name=name, seat=seat, stack=chips)
+        member = Member(player_id=player_id, name=name, seat=seat, stack=chips, ready=self.settings.auto_deal)
         if self.host_id is None:
             self.host_player_id = member.player_id
         self.members.append(member)
@@ -136,7 +138,7 @@ class Room:
             'viewer_left': viewer.leaving, 'turn_seconds': self.turn_seconds,
             'turn_grace_seconds': TURN_GRACE_SECONDS,
             'settings': self.settings.model_dump(), 'saved': True,
-            'deadline_at': self.deadline_at, 'server_now': time.time() * 1000,
+            'next_hand_at': self.next_hand_at, 'deadline_at': self.deadline_at, 'server_now': time.time() * 1000,
             'members': [{'player_id': m.player_id, 'name': m.name, 'ready': m.ready,
                          'connected': bool(m.sockets), 'sitting_out': m.sitting_out,
                          'seat': m.seat, 'stack': m.stack} for m in self.seated],
@@ -149,7 +151,8 @@ class Room:
             if member.commands[command.command_id] != fingerprint:
                 raise ValueError('Command ID has already been used for a different command.')
             return
-        self.tick()
+        if (self.hand and not self.hand.result) or (self.next_hand_at is not None and time.time() * 1000 >= self.next_hand_at):
+            self.tick()
         if member.leaving:
             raise ValueError('You have left this room. Join again for a new seat.')
         if command.revision != self.revision:
@@ -177,14 +180,14 @@ class Room:
                 raise ValueError('Table settings are required.')
             self.settings = command.settings
             for seated in self.members:
-                seated.ready = False
+                seated.ready = self.settings.auto_deal and not seated.sitting_out
         elif command.kind == 'sit_out':
             if command.sit_out is None:
                 raise ValueError('Sit-out status is required.')
             if not command.sit_out and self.hand and not self.hand.result:
                 raise ValueError('You can return after this hand finishes.')
             member.sitting_out = command.sit_out
-            member.ready = False
+            member.ready = self.settings.auto_deal and not command.sit_out
         elif command.kind == 'leave':
             member.leaving = True
             self.host_player_id = self.host_id
@@ -195,33 +198,7 @@ class Room:
                 raise ValueError('Only the host can deal the next hand.')
             if self.hand and not self.hand.result:
                 raise ValueError('Finish the current hand first.')
-            playing = [m for m in self.seated if not m.sitting_out]
-            if len(playing) < 2 or not all(m.ready and m.sockets for m in playing):
-                raise ValueError('At least two active players must be connected and ready.')
-            # Keep physical seats and clockwise button movement across roster changes.
-            button = next((m for m in playing if m.seat > self.button_seat), playing[0])
-            offset = playing.index(button)
-            playing = playing[offset:] + playing[:offset]
-            if any(m.stack < self.settings.big_blind for m in playing):
-                raise ValueError('Add chips or sit out before the next hand.')
-            stacks = [m.stack for m in playing]
-            self.hand = self.engine.start_hand(player_count=len(playing), starting_stacks=stacks,
-                                               small_blind=self.settings.small_blind, big_blind=self.settings.big_blind)
-            mapping = {p.id: m.player_id
-                       for p, m in zip(self.hand.players, playing)}
-            for player, seated in zip(self.hand.players, playing):
-                player.id = seated.player_id
-                player.name = seated.name
-            self.hand.current_player_id = mapping.get(self.hand.current_player_id)
-            self.hand.dealer_player_id = mapping[self.hand.dealer_player_id]
-            self.hand.contributions = {mapping[k]: v for k, v in self.hand.contributions.items()}
-            self.hand.acted_at_bet = {mapping[k]: v for k, v in self.hand.acted_at_bet.items()}
-            for action in self.hand.history:
-                action.player_id = mapping[action.player_id]
-            self.engine._refresh_betting(self.hand)
-            self.button_seat = button.seat
-            for seated in self.members:
-                seated.ready = False
+            self._deal()
         elif command.kind == 'action':
             if not self.hand or command.hand_id != self.hand.hand_id:
                 raise ValueError('This hand is no longer active.')
@@ -235,6 +212,36 @@ class Room:
         member.commands[command.command_id] = fingerprint
         while len(member.commands) > 128:
             member.commands.popitem(last=False)
+
+    def _deal(self):
+        self.next_hand_at = None
+        playing = [m for m in self.seated if not m.sitting_out and m.stack >= self.settings.big_blind]
+        if len(playing) < 2 or not all(m.ready and m.sockets for m in playing):
+            raise ValueError('At least two active players must be connected and ready.')
+        # Keep physical seats and clockwise button movement across roster changes.
+        button = next((m for m in playing if m.seat > self.button_seat), playing[0])
+        offset = playing.index(button)
+        playing = playing[offset:] + playing[:offset]
+        if any(m.stack < self.settings.big_blind for m in playing):
+            raise ValueError('Add chips or sit out before the next hand.')
+        stacks = [m.stack for m in playing]
+        self.hand = self.engine.start_hand(player_count=len(playing), starting_stacks=stacks,
+                                           small_blind=self.settings.small_blind, big_blind=self.settings.big_blind)
+        mapping = {p.id: m.player_id
+                   for p, m in zip(self.hand.players, playing)}
+        for player, seated in zip(self.hand.players, playing):
+            player.id = seated.player_id
+            player.name = seated.name
+        self.hand.current_player_id = mapping.get(self.hand.current_player_id)
+        self.hand.dealer_player_id = mapping[self.hand.dealer_player_id]
+        self.hand.contributions = {mapping[k]: v for k, v in self.hand.contributions.items()}
+        self.hand.acted_at_bet = {mapping[k]: v for k, v in self.hand.acted_at_bet.items()}
+        for action in self.hand.history:
+            action.player_id = mapping[action.player_id]
+        self.engine._refresh_betting(self.hand)
+        self.button_seat = button.seat
+        for seated in self.members:
+            seated.ready = self.settings.auto_deal and not seated.sitting_out
 
     def _settle(self):
         if self.hand:
@@ -251,6 +258,8 @@ class Room:
                 for player in self.hand.players:
                     member = next(m for m in self.members if m.player_id == player.id)
                     member.stack = player.stack
+                    if self.settings.auto_deal:
+                        member.ready = not member.sitting_out and player.stack >= self.settings.big_blind
         self._sync_clock()
 
     def _auto_action(self, actor):
@@ -266,6 +275,23 @@ class Room:
             self.deadline_at = (time.time() + TURN_GRACE_SECONDS + self.turn_seconds) * 1000 if key else None
 
     def tick(self, now=None):
+        if self.settings.auto_deal and (not self.hand or self.hand.result):
+            playing = [m for m in self.seated if not m.sitting_out and m.stack >= self.settings.big_blind]
+            can_deal = len(playing) >= 2 and all(m.ready and m.sockets for m in playing)
+            if not can_deal:
+                if self.next_hand_at is None: return False
+                self.next_hand_at = None
+                self.revision += 1
+                return True
+            if self.next_hand_at is None:
+                self.next_hand_at = time.time() * 1000 + 8000
+                self.revision += 1
+                return True
+            if time.time() * 1000 < self.next_hand_at: return False
+            self._deal()
+            self._settle()
+            self.revision += 1
+            return True
         now = time.monotonic() if now is None else now
         if self.deadline is None or now < self.deadline or not self.hand or self.hand.result:
             return False
@@ -285,7 +311,7 @@ class Room:
             'schema_version': 1, 'settled_hand_id': self.settled_hand_id, 'code': self.code, 'revision': self.revision,
             'host_player_id': self.host_player_id, 'used_ids': sorted(self.used_ids),
             'button_seat': self.button_seat, 'settings': self.settings.model_dump(),
-            'deadline_at': self.deadline_at, 'hand': hand,
+            'next_hand_at': self.next_hand_at, 'deadline_at': self.deadline_at, 'hand': hand,
             'members': [{key: getattr(m, key) for key in (
                 'player_id', 'name', 'token', 'ready', 'sitting_out', 'leaving', 'seat', 'stack'
             )} | {'commands': [list(entry) for entry in m.commands.items()]} for m in self.members],
@@ -298,7 +324,8 @@ class Room:
         self.host_player_id = record['host_player_id']
         self.used_ids = set(record['used_ids'])
         self.button_seat = record['button_seat']
-        self.settings = RoomSettings.model_validate(record['settings'])
+        self.settings = RoomSettings.model_validate({'auto_deal': False, **record['settings']})
+        self.next_hand_at = record.get('next_hand_at')
         existing = {m.player_id: m for m in self.members}
         members = []
         for values in record['members']:
@@ -389,10 +416,8 @@ class RoomStore:
     async def run_timers(self):
         async def check(room):
             async with room.lock:
-                if room.deadline is None or time.monotonic() < room.deadline:
-                    return
                 try:
-                    if self.apply(room, room.tick, 'timeout'):
+                    if self.apply(room, room.tick, 'timer'):
                         await room.broadcast()
                 except RoomStorageError:
                     logging.getLogger(__name__).exception('Could not persist room timeout')
@@ -400,14 +425,14 @@ class RoomStore:
             await asyncio.gather(*(check(room) for room in list(self.rooms.values())))
             await asyncio.sleep(0.25)
 
-    def create(self, name: str, buy_in: int | None = None) -> tuple[Room, Member]:
+    def create(self, name: str, buy_in: int | None = None, settings: RoomSettings | None = None) -> tuple[Room, Member]:
         if len(self.rooms) >= 200:
             raise ValueError('Room limit reached (200 rooms).')
         while True:
             code = secrets.token_hex(4).upper()
             if code not in self.rooms:
                 break
-        room = Room(code)
+        room = Room(code, settings=settings or RoomSettings())
         member = room.join(name, buy_in)
         if self.repository:
             try:

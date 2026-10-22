@@ -19,7 +19,7 @@ class PersistenceTests(unittest.TestCase):
         self.path = Path(self.directory.name) / 'private' / 'poker.sqlite3'
         self.store = RoomStore(self.path)
         self.store.open()
-        self.room, self.host = self.store.create('Host')
+        self.room, self.host = self.store.create('Host', settings=RoomSettings(starting_stack=1000, small_blind=5, big_blind=10, auto_deal=False))
         self.guest = self.store.apply(self.room, lambda: self.room.join('Guest'), 'join')
         self.counter = 0
         self.connect()
@@ -58,19 +58,19 @@ class PersistenceTests(unittest.TestCase):
 
     def test_settings_authority_validation_and_readiness_reset(self):
         self.command(self.host, 'ready', ready=True)
-        settings = dict(starting_stack=2000, small_blind=10, big_blind=20, turn_seconds=45)
+        settings = dict(starting_stack=2000, small_blind=10, big_blind=20, turn_seconds=45, auto_deal=False)
         with self.assertRaises(ValueError):
             self.command(self.guest, 'settings', settings=settings)
         self.command(self.host, 'settings', settings=settings)
-        self.assertTrue(all(not m.ready and m.stack == 2000 for m in self.room.seated))
+        self.assertTrue(all(m.stack == 1000 for m in self.room.seated))
         self.restart()
         self.assertEqual(self.room.settings.model_dump(), settings)
-        for invalid in [dict(big_blind=5), dict(starting_stack=100, big_blind=100), dict(turn_seconds=0), dict(small_blind=2.5)]:
+        for invalid in [dict(big_blind=1), dict(starting_stack=100, big_blind=100), dict(turn_seconds=0), dict(small_blind=2.5)]:
             with self.assertRaises(ValidationError):
                 RoomSettings(**invalid)
 
     def test_custom_blinds_reach_engine_and_lock_after_dealing(self):
-        self.command(self.host, 'settings', settings=dict(starting_stack=4000, small_blind=25, big_blind=50, turn_seconds=60))
+        self.command(self.host, 'settings', settings=dict(starting_stack=4000, small_blind=25, big_blind=50, turn_seconds=60, auto_deal=False))
         self.start()
         self.assertEqual(self.room.hand.pot, 75)
         self.assertEqual(self.room.hand.betting.call_amount, 25)
@@ -78,7 +78,7 @@ class PersistenceTests(unittest.TestCase):
         self.assertEqual(self.room.hand.last_full_raise, 50)
         with self.assertRaises(ValueError):
             self.command(self.host, 'settings', settings=RoomSettings())
-        self.assertEqual(sum(p.stack for p in self.room.hand.players) + self.room.hand.pot, 8000)
+        self.assertEqual(sum(p.stack for p in self.room.hand.players) + self.room.hand.pot, 2000)
 
     def test_restart_during_quiet_phase_keeps_all_remaining_time(self):
         self.start()
