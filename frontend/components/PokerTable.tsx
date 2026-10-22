@@ -70,11 +70,14 @@ function Seat({
           <span className="seat-stack" aria-label={`${t("Stack")} ${displayStack}`}>{displayStack}</span>
         </div>
       </div>
-      {player && status !== 'folded' ? (
-        <div className="hole-cards">
-          {Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
-            <CardView key={`${player.id}-${index}`} card={card} hidden={cardsHidden} />
-          ))}
+      {player ? (
+        <div className="seat-hand">
+          <div className="hole-cards" aria-hidden={status === 'folded' || undefined}>
+            {status !== 'folded' ? Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
+              <CardView key={`${player.id}-${index}`} card={card} hidden={cardsHidden} />
+            )) : null}
+          </div>
+          <ChipStack amount={displayStack} className="player-chip-cluster" />
         </div>
       ) : null}
     </div>
@@ -178,7 +181,6 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
         ))}
 
         {seats.map(({ player, slot }) => player ? <div key={`chips-${player.id}`} className={`table-money table-money-${slot}`}>
-          <ChipStack amount={player.stack} className="player-chip-cluster" />
           {player.current_bet > 0 ? <span className="table-bet" aria-label={`${t('Bet')} ${player.current_bet}`}>
             <b>{player.current_bet}</b><ChipStack amount={player.current_bet} className="bet-chip-stack" />
           </span> : null}
