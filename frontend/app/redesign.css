@@ -302,3 +302,13 @@ button:not(:disabled):hover { transform:none; }
  .play-header-controls .language-toolbar-inline { margin-left:auto; }
  .play-header-controls .language-toolbar-inline select { min-height:36px; }
 }
+
+.practice-header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:8px; }
+.practice-title { min-width:0; }
+.practice-header .language-toolbar-inline { flex-shrink:0; margin:0; padding:0; height:auto; gap:6px; }
+@media (max-width:640px) {
+ .practice-header { gap:12px; }
+ .practice-header h1 { font-size:18px; margin:0; }
+ .practice-header .eyebrow { font-size:10px; line-height:1.4; }
+ .practice-header .language-toolbar-inline select { min-height:36px; }
+}
