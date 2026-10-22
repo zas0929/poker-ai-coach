@@ -25,3 +25,12 @@
  .play-shell { --table-chrome:358px; padding-bottom:calc(174px + env(safe-area-inset-bottom)); }
  .room-in-hand { --table-chrome:418px; }
 }
+
+/* Brand stays left; all controls form a compact group at the right edge. */
+.play-header { justify-content:space-between; }
+.play-header-controls { flex:0 1 auto; margin-left:auto; justify-content:flex-end; gap:12px; }
+.play-header-controls .language-toolbar-inline { margin-left:0; }
+@media(max-width:640px) {
+ .play-header { gap:8px; }
+ .play-header-controls { flex:0 1 auto; gap:8px; }
+}
