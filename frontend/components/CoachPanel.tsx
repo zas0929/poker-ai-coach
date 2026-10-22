@@ -1,6 +1,7 @@
 'use client';
 
 
+import InfoTip from '@/components/InfoTip';
 import { displayPlayer } from '@/i18n/translate';
 import { useI18n } from '@/i18n/LanguageProvider';
 import type { ActionReview, HandAnalysis, HandState } from '@/types/poker';
@@ -52,15 +53,15 @@ export default function CoachPanel({
 
       <div className="metric-grid">
         <div>
-          <span>{t("Equity")}</span>
+          <InfoTip label="Equity" explanation="Equity estimates your share of the pot against assumed opponent ranges. It includes split pots and is not a guarantee." />
           <strong>{t(analysis ? percent(analysis.equity) : '—')}</strong>
         </div>
         <div>
-          <span>{t(analysis?.call_ev_available === false ? 'Price proxy' : 'Required')}</span>
+          <InfoTip label={analysis?.call_ev_available === false ? 'Price proxy' : 'Required'} explanation="The call threshold is call / (pot + call). In multiway pots the displayed proxy is approximate: side pots and eligibility matter." />
           <strong>{t(analysis ? percent(analysis.required_equity) : '—')}</strong>
         </div>
         <div>
-          <span>{t("Call EV · check-down")}</span>
+          <InfoTip label="Call EV · check-down" explanation="Call EV is the estimated average chip gain versus folding if there are no further bets. Rake and future betting are excluded; raise EV is not calculated." />
           <strong>{t(analysis?.call_ev_available === false ? 'Not calculated' : analysis?.ev_call ?? '—')}</strong>
         </div>
         <div>

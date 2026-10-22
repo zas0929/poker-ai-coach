@@ -1806,5 +1806,21 @@
   "After {0} quiet seconds, the {1}-second countdown starts. The clock continues after disconnect; timeout checks or folds, then sits out.": {
     "ru": "Первые {0} секунд без отсчёта, затем начинается таймер на {1} секунд. При потере связи время продолжает идти; по истечении — чек или фолд и пауза.",
     "uk": "Перші {0} секунд без відліку, потім починається таймер на {1} секунд. У разі втрати зв’язку час продовжує йти; після завершення — чек або фолд і пауза."
+  },
+  "Equity estimates your share of the pot against assumed opponent ranges. It includes split pots and is not a guarantee.": {
+    "ru": "Эквити — ожидаемая доля банка против предполагаемых диапазонов соперников, включая делёж. Это оценка, а не гарантия.",
+    "uk": "Еквіті — очікувана частка банку проти припущених діапазонів суперників, включно з поділом. Це оцінка, а не гарантія."
+  },
+  "The call threshold is call / (pot + call). In multiway pots the displayed proxy is approximate: side pots and eligibility matter.": {
+    "ru": "Порог колла: колл / (банк + колл). В мультипоте показан приблизительный ориентир: важны побочные банки и право на них.",
+    "uk": "Поріг колу: кол / (банк + кол). У мультипоті показано приблизний орієнтир: важливі побічні банки та право на них."
+  },
+  "Call EV is the estimated average chip gain versus folding if there are no further bets. Rake and future betting are excluded; raise EV is not calculated.": {
+    "ru": "EV колла — ожидаемый средний выигрыш в фишках относительно фолда без дальнейших ставок. Рейк и будущие ставки не учтены; EV рейза не рассчитано.",
+    "uk": "EV колу — очікуваний середній виграш у фішках відносно фолду без подальших ставок. Рейк і майбутні ставки не враховані; EV рейзу не розраховано."
+  },
+  "Explain {0}": {
+    "ru": "Объяснить: {0}",
+    "uk": "Пояснити: {0}"
   }
 }

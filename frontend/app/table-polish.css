@@ -1,0 +1,7 @@
+/* Accessible, touch-friendly explanations for trainer values. */
+.metric-label { display:flex; align-items:center; gap:5px; }
+.info-tip { position:relative; display:inline-block; text-transform:none; }
+.info-tip summary { display:grid; place-items:center; width:22px; height:22px; border:1px solid var(--line); border-radius:50%; cursor:pointer; list-style:none; font-size:12px; }
+.info-tip summary::-webkit-details-marker { display:none; }
+.info-tip>span { position:absolute; z-index:70; top:27px; right:0; width:min(260px,70vw); padding:12px; border:1px solid var(--accent); border-radius:8px; background:#172321; color:#ecf0e9; font-size:12px; line-height:1.5; box-shadow:0 5px 20px #0008; }
+@media(hover:hover) { .info-tip:not([open]):hover>span { display:block; } }
