@@ -204,3 +204,7 @@
  .room-navigation .room-invite-icon { display:inline; font-size:18px; }
  .room-navigation .room-menu-content { top:40px; }
 }
+
+@media(min-width:761px) {
+ .side-column .lobby-ready-control, .side-column .lobby-hand-controls-paused { display:none; }
+}

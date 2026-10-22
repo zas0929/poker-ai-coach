@@ -227,8 +227,8 @@ export default function FriendsPage() {
                 <h2>{t(betweenHands ? 'Ready for the next hand?' : 'Players at the table')}</h2>
 
                 <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{t(member.player_id === room.viewer_id ? ' (you)' : '')}</strong><span>{t(member.player_id === room.host_id ? 'Host · ' : '')}{t(member.connected ? 'Connected' : 'Disconnected')}</span></div><b>{member.stack}</b><em>{t(member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing')}</em></li>)}</ul>
-                <div className="lobby-hand-controls">
-                  {betweenHands ? <button className={!me?.ready ? 'primary-button' : undefined} disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready }, { closePanel: true })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button> : null}
+                <div className={`lobby-hand-controls ${me?.sitting_out ? 'lobby-hand-controls-paused' : ''}`}>
+                  {betweenHands ? <button className={`lobby-ready-control ${!me?.ready ? 'primary-button' : ''}`} disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready }, { closePanel: true })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button> : null}
                   <button className={me?.sitting_out ? 'primary-button' : undefined} disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out }, { closePanel: true })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
                 </div>
                 {error ? <p role="alert" className="top-up-error">{t(error)}</p> : null}
