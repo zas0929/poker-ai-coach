@@ -177,3 +177,18 @@
 .top-up-controls button { flex-shrink:0; }
 .top-up-success { color:var(--success); }
 .top-up-error { color:#ffb7a7; }
+
+/* Keep the result in unused space rather than adding a row below the table. */
+.classic-table .winner-badge { display:grid; gap:3px; max-width:100%; border-radius:12px; overflow-wrap:anywhere; }
+.classic-table .winner-badge strong { font-size:13px; }
+.classic-table .winning-hand { color:#c8d9ca; font-size:11px; font-weight:500; }
+@media(min-width:761px) {
+ .classic-table .showdown-slot-visible { position:absolute; z-index:10; left:10px; bottom:10px; width:min(220px,calc(50% - 110px)); max-width:none; padding:0; pointer-events:none; }
+ .classic-table .winner-badge { justify-self:start; text-align:left; padding:8px 12px; }
+}
+@media(max-width:760px) {
+ .classic-table .showdown-slot-visible { max-width:calc(100% - 24px); }
+ .classic-table .winner-badge { padding:5px 10px; gap:1px; }
+ .classic-table .winner-badge strong { font-size:12px; }
+ .classic-table .winning-hand { font-size:10px; }
+}

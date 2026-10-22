@@ -9,7 +9,7 @@ import type { CSSProperties } from 'react';
 import { useTableSound } from '@/components/TableSoundProvider';
 import { chipBreakdown } from '@/services/chips';
 import CardView from '@/components/CardView';
-import type { HandAction, HandResult, HandState, Player, Street } from '@/types/poker';
+import type { HandAction, HandState, Player, Street } from '@/types/poker';
 
 interface TurnTimer { playerId: string; remaining: number; duration: number }
 
@@ -208,8 +208,15 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
             {allInRunout && !runoutComplete ? <div className="runout-badge">{t("All-in runout")}</div> : null}
             {runoutComplete && (winnerBadge || hand?.result) ? (
               <>
-                {winnerBadge ? <div className="winner-badge">{winnerBadge}</div> : null}
-                {hand?.result ? <ShowdownSummary hand={hand} result={hand.result} /> : null}
+                {winnerBadge ? <div className="winner-badge" role="status"><strong>{winnerBadge}</strong>
+                  {hand?.result?.player_results.filter(player => hand.result!.winners.includes(player.player_id)).map(player => (
+                    <span className="winning-hand" key={player.player_id}>
+                      {hand.result!.winners.length > 1 ? `${displayPlayer(hand.players.find(item => item.id === player.player_id), t, player.player_id)}: ` : ''}
+                      {player.hand_strength ? t(label(player.hand_strength.category)) : t('Everyone else folded')}
+                      {hand.result!.winners.length > 1 ? ` · +${player.amount_won}` : ''}
+                    </span>
+                  ))}
+                </div> : null}
               </>
             ) : null}
           </div>
@@ -258,24 +265,6 @@ function tableSeats(hand: HandState | null, seatCount: number, viewerId = 'hero'
   return slots.map((slot, index) => ({ slot, player: hand?.players[(index + offset) % hand.players.length], label: `Seat ${index + 1}` }));
 }
 
-function ShowdownSummary({ hand, result }: { hand: HandState; result: HandResult }) {
-  const { t } = useI18n();
-  return (
-    <div className="showdown-summary">
-      {result.player_results.map((playerResult) => {
-        const isWinner = result.winners.includes(playerResult.player_id);
-        return (
-          <div className={isWinner ? 'showdown-winner' : undefined} key={playerResult.player_id}>
-            <span>{displayPlayer(hand.players.find(p => p.id === playerResult.player_id), t, playerResult.player_id)}</span>
-            <strong>{t(label(playerResult.hand_strength?.category ?? playerResult.outcome))}</strong>
-            {playerResult.amount_won ? <em>+{t(playerResult.amount_won)}</em> : null}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 function lastActionFor(hand: HandState | null, playerId: string) {
   return hand?.history
     .slice()
@@ -305,7 +294,8 @@ function winnerText(hand: HandState | null, t: <T>(value: T) => T) {
   }
 
   const winners = result.winners.map((winnerId) => displayPlayer(hand.players.find(p => p.id === winnerId), t, winnerId)).join(', ');
-  const outcome = (result.pots?.length ?? 0) > 1 ? t('Pots awarded') : result.winners.length > 1 ? t('Split pot') : t('{0} wins').replace('{0}', winners);
+  const trainerWinner = result.winners.length === 1 && hand.players.some(player => player.id === result.winners[0] && player.id === 'hero' && player.name === 'You');
+  const outcome = (result.pots?.length ?? 0) > 1 ? t('Pots awarded') : result.winners.length > 1 ? t('Split pot') : trainerWinner ? t('You win') : t('{0} wins').replace('{0}', winners);
   return `${outcome} ${result.pot_awarded}`;
 }
 
