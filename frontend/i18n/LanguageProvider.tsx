@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { translate, type Locale } from './translate';
+import { usePathname } from 'next/navigation';
 
 const STORAGE_KEY = 'poker-language';
 const LanguageContext = createContext({
@@ -38,7 +39,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
 export function useI18n() { return useContext(LanguageContext); }
 
-export function LanguageSwitcher() {
+export function GlobalLanguageSwitcher() {
+  const pathname = usePathname();
+  return pathname === '/' ? null : <LanguageSwitcher />;
+}
+
+export function LanguageSwitcher({ inline = false }: { inline?: boolean }) {
   const { locale, setLocale } = useI18n();
-  return <div className="language-toolbar"><label htmlFor="poker-language">{locale === 'en' ? 'Language' : locale === 'uk' ? 'Мова' : 'Язык'}</label><select id="poker-language" value={locale} onChange={event => setLocale(event.target.value as Locale)}><option value="en" lang="en">English</option><option value="ru" lang="ru">Русский</option><option value="uk" lang="uk">Українська</option></select></div>;
+  return <div className={`language-toolbar${inline ? ' language-toolbar-inline' : ''}`}><label htmlFor="poker-language">{locale === 'en' ? 'Language' : locale === 'uk' ? 'Мова' : 'Язык'}</label><select id="poker-language" value={locale} onChange={event => setLocale(event.target.value as Locale)}><option value="en" lang="en">English</option><option value="ru" lang="ru">Русский</option><option value="uk" lang="uk">Українська</option></select></div>;
 }

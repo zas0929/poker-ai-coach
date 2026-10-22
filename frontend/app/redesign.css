@@ -291,3 +291,14 @@ button:not(:disabled):hover { transform:none; }
 @media (max-width:350px) {
  .classic-table .seat-info .action-badge { left:22px; font-size:8px; }
 }
+
+/* Keep table preferences together on narrow phone screens. */
+.play-header-controls { display:flex; align-items:center; gap:20px; }
+.play-header-controls .language-toolbar-inline { margin:0; padding:0; height:auto; gap:6px; }
+@media (max-width:640px) {
+ .play-header { flex-wrap:wrap; gap:8px; padding-block:8px; }
+ .play-header h1 { flex-basis:100%; }
+ .play-header-controls { width:100%; justify-content:space-between; gap:12px; }
+ .play-header-controls .language-toolbar-inline { margin-left:auto; }
+ .play-header-controls .language-toolbar-inline select { min-height:36px; }
+}
