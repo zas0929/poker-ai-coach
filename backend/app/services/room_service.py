@@ -44,6 +44,7 @@ class RoomCommand(BaseModel):
     command_id: str = Field(min_length=1, max_length=80)
     revision: StrictInt
     kind: str
+    request_id: Optional[str] = Field(default=None, min_length=1, max_length=80)
     hand_id: Optional[str] = None
     action: Optional[ActionType] = None
     amount: Optional[StrictInt] = None
@@ -85,6 +86,7 @@ class Room:
     settled_hand_id: Optional[str] = None
     next_hand_at: Optional[float] = None
     settings: RoomSettings = field(default_factory=RoomSettings)
+    top_up_requests: list[dict] = field(default_factory=list)
 
     @property
     def turn_seconds(self):
@@ -144,6 +146,7 @@ class Room:
                          'connected': bool(m.sockets), 'sitting_out': m.sitting_out,
                          'seat': m.seat, 'stack': m.stack} for m in self.seated],
             'hand': hand,
+            'top_up_requests': [dict(request) for request in self.top_up_requests],
         }
 
     def command(self, member: Member, command: RoomCommand) -> None:
@@ -167,14 +170,29 @@ class Room:
                 raise ValueError('Return from sit-out before getting ready.')
             member.ready = command.ready
         elif command.kind == 'top_up':
-            if self.hand and not self.hand.result and any(player.id == member.player_id for player in self.hand.players):
-                raise ValueError('Add chips between hands only.')
-            if type(command.amount) is not int or command.amount <= 0 or member.stack + command.amount > 1000000:
-                raise ValueError('Add a positive whole number without exceeding 1000000 chips.')
-            was_short = member.stack < self.settings.big_blind
-            member.stack += command.amount
-            if was_short and member.stack >= self.settings.big_blind and self.settings.auto_deal and not member.sitting_out:
-                member.ready = True
+            self._validate_top_up(member, command.amount)
+            if any(r['player_id'] == member.player_id and r['status'] == 'pending' for r in self.top_up_requests):
+                raise ValueError('You already have a pending chip request.')
+            self.top_up_requests = [r for r in self.top_up_requests if r['status'] == 'pending'] + [
+                r for r in self.top_up_requests if r['status'] != 'pending'][-24:]
+            self.top_up_requests.append({'request_id': secrets.token_hex(16), 'player_id': member.player_id,
+                                         'name': member.name, 'amount': command.amount, 'status': 'pending'})
+            self.next_hand_at = None
+        elif command.kind in ('approve_top_up', 'decline_top_up'):
+            if member.player_id != self.host_id:
+                raise ValueError('Only the host can review chip requests.')
+            request = next((r for r in self.top_up_requests if r['request_id'] == command.request_id), None)
+            if request is None or request['status'] != 'pending':
+                raise ValueError('This chip request has already been reviewed or is unavailable.')
+            if command.kind == 'approve_top_up':
+                recipient = next(m for m in self.seated if m.player_id == request['player_id'])
+                self._validate_top_up(recipient, request['amount'])
+                was_short = recipient.stack < self.settings.big_blind
+                recipient.stack += request['amount']
+                if was_short and recipient.stack >= self.settings.big_blind and self.settings.auto_deal and not recipient.sitting_out:
+                    recipient.ready = True
+            request['status'] = 'approved' if command.kind == 'approve_top_up' else 'declined'
+            request['reviewed_by'] = member.player_id
         elif command.kind == 'auto_deal':
             if member.player_id != self.host_id:
                 raise ValueError('Only the host can change table settings.')
@@ -204,6 +222,9 @@ class Room:
             member.sitting_out = command.sit_out
             member.ready = self.settings.auto_deal and not command.sit_out
         elif command.kind == 'leave':
+            for request in self.top_up_requests:
+                if request['player_id'] == member.player_id and request['status'] == 'pending':
+                    request['status'] = 'cancelled'
             member.leaving = True
             self.host_player_id = self.host_id
             member.sitting_out = True
@@ -228,7 +249,15 @@ class Room:
         while len(member.commands) > 128:
             member.commands.popitem(last=False)
 
+    def _validate_top_up(self, member, amount):
+        if self.hand and not self.hand.result and any(player.id == member.player_id for player in self.hand.players):
+            raise ValueError('Add chips between hands only.')
+        if type(amount) is not int or amount <= 0 or member.stack + amount > 1000000:
+            raise ValueError('Add a positive whole number without exceeding 1000000 chips.')
+
     def _deal(self):
+        if any(r['status'] == 'pending' for r in self.top_up_requests):
+            raise ValueError('Review pending chip requests before dealing.')
         self.next_hand_at = None
         playing = [m for m in self.seated if not m.sitting_out and m.stack >= self.settings.big_blind]
         if len(playing) < 2 or not all(m.ready and m.sockets for m in playing):
@@ -292,7 +321,7 @@ class Room:
     def tick(self, now=None):
         if self.settings.auto_deal and (not self.hand or self.hand.result):
             playing = [m for m in self.seated if not m.sitting_out and m.stack >= self.settings.big_blind]
-            can_deal = len(playing) >= 2 and all(m.ready and m.sockets for m in playing)
+            can_deal = not any(r['status'] == 'pending' for r in self.top_up_requests) and len(playing) >= 2 and all(m.ready and m.sockets for m in playing)
             if not can_deal:
                 if self.next_hand_at is None: return False
                 self.next_hand_at = None
@@ -324,6 +353,7 @@ class Room:
         if hand is not None:
             hand['_deck'] = [card.model_dump(mode='json') for card in self.hand._deck]
         return {
+            'top_up_requests': [dict(request) for request in self.top_up_requests],
             'schema_version': 1, 'settled_hand_id': self.settled_hand_id, 'code': self.code, 'revision': self.revision,
             'host_player_id': self.host_player_id, 'used_ids': sorted(self.used_ids),
             'button_seat': self.button_seat, 'settings': self.settings.model_dump(),
@@ -336,6 +366,7 @@ class Room:
     def restore(self, record):
         if record['schema_version'] != 1:
             raise ValueError('Unsupported room database version.')
+        self.top_up_requests = [dict(request) for request in record.get('top_up_requests', [])]
         self.revision = record['revision']
         self.host_player_id = record['host_player_id']
         self.used_ids = set(record['used_ids'])

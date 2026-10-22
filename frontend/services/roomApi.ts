@@ -4,10 +4,11 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8000'
 export interface RoomSettings { starting_stack: number; small_blind: number; big_blind: number; turn_seconds: number; auto_deal: boolean }
 export interface RoomCredentials { code: string; token: string; player_id: string }
 export interface RoomMember { player_id: string; name: string; ready: boolean; connected: boolean; sitting_out: boolean; seat: number; stack: number }
+export interface TopUpRequest { request_id: string; player_id: string; name: string; amount: number; status: 'pending' | 'approved' | 'declined' | 'cancelled' }
 export interface RoomState {
   type: 'state'; code: string; revision: number; viewer_id: string; host_id: string;
   members: RoomMember[]; hand: HandState | null; viewer_left: boolean;
-  settings: RoomSettings; saved: boolean;
+  settings: RoomSettings; saved: boolean; top_up_requests?: TopUpRequest[];
   next_hand_at?: number | null; deadline_at: number | null; server_now: number; turn_seconds: number; turn_grace_seconds?: number;
 }
 export function roomSocketUrl(code: string) {

@@ -1466,3 +1466,15 @@ h2 {
 .language-toolbar select { width: auto; padding: 6px 10px; border-radius: 8px; border: 1px solid #354353; background: #131e29; color: #f1f5f9; }
 .status-row { flex-wrap: wrap; }
 @media (max-width: 640px) { .language-toolbar { padding-inline: 14px; } }
+
+/* Chip approval stays visible outside the players panel on every screen. */
+.chip-requests { margin: 8px 0; padding: 10px 14px; border-color: var(--gold, #d6c279); }
+.chip-request { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 8px; }
+.chip-request > span { min-width: 0; overflow-wrap: anywhere; }
+.chip-request > div { display: flex; flex-shrink: 0; gap: 6px; }
+.chip-request button { padding: 8px 12px; font-size: 13px; }
+.chip-request-status { margin: 6px 0; font-size: 13px; color: var(--gold, #d6c279); }
+@media (max-width: 480px) {
+  .chip-request { flex-wrap: wrap; }
+  .chip-request > div { margin-left: auto; }
+}

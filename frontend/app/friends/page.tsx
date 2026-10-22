@@ -24,7 +24,6 @@ export default function FriendsPage() {
   const [name, setName] = useState('');
   const [buyIn, setBuyIn] = useState('400');
   const [topUp, setTopUp] = useState('400');
-  const [topUpNotice, setTopUpNotice] = useState<number | null>(null);
   const [autoDeal, setAutoDeal] = useState(true);
   const [creationDraft, setCreationDraft] = useState<SettingsDraft>({ starting_stack: '400', small_blind: '1', big_blind: '2', turn_seconds: '30' });
   const creationSettings: RoomSettings = { starting_stack: Number(creationDraft.starting_stack), small_blind: Number(creationDraft.small_blind), big_blind: Number(creationDraft.big_blind), turn_seconds: Number(creationDraft.turn_seconds), auto_deal: autoDeal };
@@ -40,7 +39,7 @@ export default function FriendsPage() {
   const [clock, setClock] = useState({ now: 0, offset: 0 });
   const socket = useRef<WebSocket | null>(null);
   const latest = useRef<RoomState | null>(null);
-  const pending = useRef<{ id: string; payload: string; closePanel: boolean; topUpAmount: number | null } | null>(null);
+  const pending = useRef<{ id: string; payload: string; closePanel: boolean } | null>(null);
   const commandTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const entering = useRef(false);
 
@@ -102,7 +101,6 @@ export default function FriendsPage() {
           setError(message.message);
         } else if (message.type === 'ack' && pending.current && pending.current.id === message.command_id) {
           if (pending.current.closePanel) setPanel(null);
-          if (pending.current.topUpAmount !== null) setTopUpNotice(pending.current.topUpAmount);
           pending.current = null;
           setBusy(false);
           if (commandTimer.current) clearTimeout(commandTimer.current);
@@ -158,8 +156,7 @@ export default function FriendsPage() {
     if (pending.current || socket.current?.readyState !== WebSocket.OPEN || !latest.current) return;
     const id = crypto.randomUUID();
     const payload = JSON.stringify({ command_id: id, revision: latest.current.revision, kind, ...values });
-    pending.current = { id, payload, closePanel: Boolean(options.closePanel), topUpAmount: kind === 'top_up' ? Number(values.amount) : null };
-    setTopUpNotice(null);
+    pending.current = { id, payload, closePanel: Boolean(options.closePanel) };
     setBusy(true);
     setError(null);
     socket.current.send(payload);
@@ -175,7 +172,10 @@ export default function FriendsPage() {
   const canTopUp = betweenHands || !hand?.players.some(player => player.id === room?.viewer_id);
   const connected = status === 'Connected';
   const isHost = room?.viewer_id === room?.host_id;
-  const everyoneReady = Boolean(room && room.members.length >= 2 && room.members.filter((member) => !member.sitting_out && member.stack >= room.settings.big_blind).length >= 2 && room.members.filter((member) => !member.sitting_out && member.stack >= room.settings.big_blind).every((member) => member.ready && member.connected));
+  const chipRequests = room?.top_up_requests ?? [];
+  const pendingChipRequests = chipRequests.filter(request => request.status === 'pending');
+  const ownChipRequest = [...chipRequests].reverse().find(request => request.player_id === room?.viewer_id);
+  const everyoneReady = Boolean(!pendingChipRequests.length && room && room.members.length >= 2 && room.members.filter((member) => !member.sitting_out && member.stack >= room.settings.big_blind).length >= 2 && room.members.filter((member) => !member.sitting_out && member.stack >= room.settings.big_blind).every((member) => member.ready && member.connected));
 
   const settings = room?.settings ?? { starting_stack: 400, small_blind: 1, big_blind: 2, turn_seconds: 30, auto_deal: true };
   const settingsBaseline = JSON.stringify(settings);
@@ -197,7 +197,7 @@ export default function FriendsPage() {
   const nextHandSeconds = room?.next_hand_at ? Math.max(0, Math.ceil((room.next_hand_at - clock.now - clock.offset) / 1000)) : null;
   const autoDealPlayers = room?.members.filter(member => !member.sitting_out && member.stack >= settings.big_blind) ?? [];
   const autoDealStatus = betweenHands
-    ? !settings.auto_deal ? t('Manual dealing') : nextHandSeconds !== null ? t('Next hand in {0}s').replace('{0}', String(nextHandSeconds))
+    ? pendingChipRequests.length ? t('Waiting for host approval of chip requests') : !settings.auto_deal ? t('Manual dealing') : nextHandSeconds !== null ? t('Next hand in {0}s').replace('{0}', String(nextHandSeconds))
       : autoDealPlayers.length < 2 ? t('Waiting for 2 players with chips')
       : autoDealPlayers.some(member => !member.connected) ? t('Waiting for players to reconnect')
       : autoDealPlayers.some(member => !member.ready) ? t('Waiting for all players to be ready')
@@ -232,8 +232,8 @@ export default function FriendsPage() {
                   <button className={me?.sitting_out ? 'primary-button' : undefined} disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out }, { closePanel: true })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
                 </div>
                 {error ? <p role="alert" className="top-up-error">{t(error)}</p> : null}
-                {topUpNotice !== null ? <p role="status" className="top-up-success">{t('Added {0} chips.').replace('{0}', String(topUpNotice))}</p> : null}
-                {canTopUp ? <div className="top-up-controls"><label>{t('Add chips')}<input type="number" inputMode="numeric" min={1} max={1000000 - (me?.stack ?? 0)} value={topUp} onChange={event => setTopUp(event.target.value)} /></label><button disabled={busy || !connected || topUp.trim() === '' || !Number.isInteger(Number(topUp)) || Number(topUp) <= 0 || (me?.stack ?? 0) + Number(topUp) > 1000000} onClick={() => send('top_up', { amount: Number(topUp) })}>{t('Add chips')}</button></div> : null}
+                {canTopUp ? <div className="top-up-controls"><label>{t('Add chips')}<input type="number" inputMode="numeric" min={1} max={1000000 - (me?.stack ?? 0)} value={topUp} onChange={event => setTopUp(event.target.value)} /></label><button disabled={busy || !connected || ownChipRequest?.status === 'pending' || topUp.trim() === '' || !Number.isInteger(Number(topUp)) || Number(topUp) <= 0 || (me?.stack ?? 0) + Number(topUp) > 1000000} onClick={() => send('top_up', { amount: Number(topUp) }, { closePanel: true })}>{t('Request chips')}</button></div> : null}
+                <p className="room-note">{t('Added chips require host approval.')}</p>
                 {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
                 <p>{autoDealStatus ?? t(settings.auto_deal ? 'Automatic hands enabled. Unready or sit out to pause.' : 'The host deals when everyone is ready.')}</p>
                 <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)} · {t('Virtual chips only. Choose your buy-in and add chips between hands. No automatic refills.')}</p>
@@ -266,6 +266,14 @@ export default function FriendsPage() {
             </div></details>
           </section>) : null}
       </div>
+      {isHost && pendingChipRequests.length > 0 ? <section className="chip-requests control-panel" aria-label={t('Chip requests')} aria-live="polite">
+        <strong>{t('Chip requests')}</strong>
+        {pendingChipRequests.map(request => <div className="chip-request" key={request.request_id}>
+          <span><b>{request.name}</b> · {t('Requests {0} chips').replace('{0}', String(request.amount))}</span>
+          <div><button className="primary-button" disabled={busy || !connected} onClick={() => send('approve_top_up', { request_id: request.request_id })}>{t('Approve')}</button><button disabled={busy || !connected} onClick={() => send('decline_top_up', { request_id: request.request_id })}>{t('Decline')}</button></div>
+        </div>)}
+      </section> : null}
+      {ownChipRequest ? <p role="status" className="chip-request-status">{t(ownChipRequest.status === 'pending' ? 'Chip request: {0}. Waiting for host approval.' : ownChipRequest.status === 'approved' ? 'Host approved: {0} chips added.' : ownChipRequest.status === 'declined' ? 'Host declined the request for {0} chips.' : 'Chip request cancelled.').replace('{0}', String(ownChipRequest.amount))}</p> : null}
       {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button onClick={() => setError(null)}>{t("Dismiss")}</button></div> : null}
       {!credentials ? (
         <section className="room-entry control-panel">

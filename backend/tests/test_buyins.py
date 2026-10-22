@@ -23,6 +23,10 @@ class BuyInTests(unittest.TestCase):
         self.store.apply(self.room, lambda: self.room.command(member, command), kind, command.command_id, member.player_id)
         return command
 
+    def approve(self, member):
+        request = next(r for r in self.room.top_up_requests if r['player_id'] == member.player_id and r['status'] == 'pending')
+        return self.command(self.host, 'approve_top_up', request_id=request['request_id'])
+
     def start(self):
         for member in self.room.members: self.command(member, 'ready', ready=True)
         self.command(self.host, 'start')
@@ -34,6 +38,9 @@ class BuyInTests(unittest.TestCase):
     def test_top_up_retries_credit_only_once_and_survive_restart(self):
         command = self.command(self.guest, 'top_up', amount=50)
         self.store.apply(self.room, lambda: self.room.command(self.guest, command), 'top_up')
+        self.assertEqual(self.guest.stack, 200)
+        approval = self.approve(self.guest)
+        self.store.apply(self.room, lambda: self.room.command(self.host, approval), 'approve_top_up')
         self.assertEqual(self.guest.stack, 250)
         code, token = self.room.code, self.guest.token
         self.store.close(); self.store.open()
@@ -67,6 +74,7 @@ class BuyInTests(unittest.TestCase):
         self.command(self.host, 'action', hand_id=self.room.hand.hand_id, action='fold')
         before = self.host.stack
         self.command(self.host, 'top_up', amount=100)
+        self.approve(self.host)
         self.assertEqual(self.host.stack, before + 100)
         self.command(self.guest, 'ready', ready=True)
         self.assertEqual(self.host.stack, before + 100)
@@ -76,6 +84,7 @@ class BuyInTests(unittest.TestCase):
         self.host.stack = 0
         self.host.ready = False
         self.command(self.host, 'top_up', amount=100)
+        self.approve(self.host)
         self.assertEqual(self.host.stack, 100)
         self.assertTrue(self.host.ready)
 
@@ -86,6 +95,7 @@ class BuyInTests(unittest.TestCase):
             self.host.ready = False
             self.host.sitting_out = sitting_out
             self.command(self.host, 'top_up', amount=100)
+            self.approve(self.host)
             self.assertFalse(self.host.ready)
 
     def test_busted_player_can_top_up_while_others_play(self):
@@ -98,6 +108,80 @@ class BuyInTests(unittest.TestCase):
         self.command(self.host, 'start')
         before = self.room.hand.model_dump_json()
         self.command(self.host, 'top_up', amount=400)
+        self.approve(self.host)
         self.assertEqual(self.host.stack, 400)
         self.assertTrue(self.host.ready)
         self.assertEqual(self.room.hand.model_dump_json(), before)
+
+    def test_guest_cannot_review_or_duplicate_pending_request(self):
+        self.command(self.guest, 'top_up', amount=50)
+        request = self.room.top_up_requests[0]
+        for kind in ('approve_top_up', 'decline_top_up'):
+            with self.assertRaisesRegex(ValueError, 'Only the host'):
+                self.command(self.guest, kind, request_id=request['request_id'])
+        with self.assertRaisesRegex(ValueError, 'already have'):
+            self.command(self.guest, 'top_up', amount=60)
+        self.assertEqual(self.guest.stack, 200)
+        self.assertEqual(len(self.room.top_up_requests), 1)
+
+    def test_pending_request_survives_restart_and_decline_allows_retry(self):
+        self.command(self.guest, 'top_up', amount=50)
+        record = self.room.to_record()
+        self.room.restore(record)
+        request = self.room.snapshot(self.host)['top_up_requests'][0]
+        self.command(self.host, 'decline_top_up', request_id=request['request_id'])
+        self.assertEqual(self.guest.stack, 200)
+        self.assertEqual(self.room.snapshot(self.guest)['top_up_requests'][0]['status'], 'declined')
+        with self.assertRaisesRegex(ValueError, 'already been reviewed'):
+            self.command(self.host, 'approve_top_up', request_id=request['request_id'])
+        self.command(self.guest, 'top_up', amount=70)
+        self.approve(self.guest)
+        self.assertEqual(self.guest.stack, 270)
+
+    def test_pending_requests_pause_dealing_and_restart_full_countdown(self):
+        self.room.settings.auto_deal = True
+        for member in self.room.members: self.command(member, 'ready', ready=True)
+        self.room.tick()
+        self.assertIsNotNone(self.room.next_hand_at)
+        self.command(self.guest, 'top_up', amount=100)
+        self.assertIsNone(self.room.next_hand_at)
+        self.assertFalse(self.room.tick())
+        with self.assertRaisesRegex(ValueError, 'Review pending'):
+            self.command(self.host, 'start')
+        self.approve(self.guest)
+        self.room.tick()
+        self.assertIsNotNone(self.room.next_hand_at)
+        self.assertEqual(self.guest.stack, 300)
+
+    def test_failed_approval_rolls_back_credit_and_request_status(self):
+        self.command(self.guest, 'top_up', amount=50)
+        self.store.repository.connection.execute("CREATE TRIGGER fail_approval BEFORE INSERT ON room_events BEGIN SELECT RAISE(ABORT,'test failure'); END")
+        self.store.repository.connection.commit()
+        with self.assertRaises(RoomStorageError): self.approve(self.guest)
+        self.assertEqual(self.guest.stack, 200)
+        self.assertEqual(self.room.top_up_requests[0]['status'], 'pending')
+        self.store.repository.connection.execute('DROP TRIGGER fail_approval')
+        self.store.repository.connection.commit()
+        self.approve(self.guest)
+        self.assertEqual(self.guest.stack, 250)
+        with self.assertRaisesRegex(ValueError, 'already been reviewed'):
+            self.command(self.host, 'approve_top_up', request_id=self.room.top_up_requests[0]['request_id'])
+        self.assertEqual(self.guest.stack, 250)
+
+    def test_leaving_cancels_request_and_new_host_can_review_remaining_requests(self):
+        third = self.room.join('Third', 300)
+        self.command(self.guest, 'top_up', amount=50)
+        self.command(third, 'top_up', amount=70)
+        self.command(self.guest, 'leave')
+        self.assertEqual(self.room.top_up_requests[0]['status'], 'cancelled')
+        self.command(self.host, 'leave')
+        self.command(third, 'approve_top_up', request_id=self.room.top_up_requests[1]['request_id'])
+        self.assertEqual(third.stack, 370)
+
+    def test_approval_revalidates_stack_cap(self):
+        self.command(self.guest, 'top_up', amount=999800)
+        self.guest.stack = 201
+        with self.assertRaisesRegex(ValueError, '1000000'):
+            self.approve(self.guest)
+        self.assertEqual(self.room.top_up_requests[0]['status'], 'pending')
+        self.assertEqual(self.guest.stack, 201)
