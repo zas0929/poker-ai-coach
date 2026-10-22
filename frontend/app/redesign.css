@@ -218,7 +218,7 @@ button:not(:disabled):hover { transform:none; }
  .action-dock .action-grid button small { font-size:10px; }
  .dock-tools { padding-top:4px; }
  .dock-tools>button { min-height:38px; padding:6px 4px; font-size:11px; }
- .poker-sheet { position:fixed; top:auto; bottom:0; margin:0; width:100%; max-height:90vh; max-height:90dvh; border-radius:22px 22px 0 0; border-bottom:0; padding-bottom:env(safe-area-inset-bottom); }
+ .poker-sheet { position:fixed; top:auto; bottom:0; inset-inline:0; margin:0 auto; width:100%; max-height:90vh; max-height:90dvh; border-radius:22px 22px 0 0; border-bottom:0; padding-bottom:env(safe-area-inset-bottom); }
  .sheet-surface { padding:14px 16px 18px; }
  .sheet-surface:before { content:''; display:block; width:36px; height:4px; background:#536b57; border-radius:4px; margin:0 auto 12px; }
  .sheet-heading h2 { font-size:18px; }

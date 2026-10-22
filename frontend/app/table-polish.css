@@ -171,3 +171,5 @@
 .lobby-hand-controls>button { flex:1; min-width:0; min-height:44px; }
 .poker-sheet .sheet-heading { position:sticky; top:0; z-index:3; padding-block:4px; background:#192720; }
 .poker-sheet .sheet-heading>button { flex-shrink:0; }
+
+.poker-sheet .sheet-heading .sheet-close { display:grid; place-items:center; width:44px; height:44px; min-height:44px; padding:0; color:#f3df9b; background:#2b3c30; border:1px solid #bca65d; border-radius:12px; }
