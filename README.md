@@ -17,14 +17,22 @@ and offers call-price and legal-action exercises, including your own past spots.
 Answers, progress and the personal journal survive restarts. See
 [docs/TRAINING.md](docs/TRAINING.md) for grading, access and current limitations.
 
-Texas Hold'em AI Coach is a poker training app inspired by the Chess AI Coach architecture: a deterministic analysis backend, a focused frontend table, and an AI coach panel that explains decisions in natural language.
+## How the trainer works today
 
-The core idea is hybrid:
+The trainer uses a **rule-based poker bot, probability calculations and templated
+explanations**. There is no connected LLM, trained neural policy or GTO solver.
+“AI” in the interface currently refers to this algorithmic opponent and coach.
+An LLM explanation layer is a future idea, not an implemented feature.
 
-- Poker engine does the math: hand state, legal actions, hand evaluation, Monte Carlo equity, pot odds, EV, ranges, and decision recommendations.
-- LLM coach explains the result: why a fold, call, bet, or raise makes sense in the current spot.
+The engine infers heuristic opponent ranges from public actions, estimates equity,
+and selects advice using fixed thresholds. Bots use preflop hand categories and
+postflop recommendations; the coach formats the results into predefined text.
+A decision that “matches coach” agrees with that heuristic, not a proven optimal
+strategy. Calculated call EV excludes future betting and rake; side-pot call EV
+is unavailable at tables with more than two dealt players.
 
-The LLM should not guess poker strategy directly. It receives structured analysis from the engine and turns it into clear coaching.
+See **[Как работает тренер: расчёты, бот и ограничения](docs/TRAINER.md)** for the
+full flow, formulas, bot rules, performance costs and relevant source files.
 
 ## Current range analysis
 
@@ -37,7 +45,7 @@ are weak evidence and aggressive ranges retain possible bluffs.
 
 This is an **uncalibrated educational heuristic**, not GTO or an exact model of the
 AI opponent. Bet sizing, stack depth, rake and opponent-specific tendencies do not
-adjust range weights yet. On the river equity is exact *for the assumed range*;
+adjust range weights yet. Against one live opponent, river equity is exact *for the assumed range*;
 earlier streets use reproducible Monte Carlo samples. The displayed 95% sampling
 bound covers simulation noise only, not errors in the assumed range. Effective
 combos are `(sum(weights) ** 2) / sum(weight ** 2)`, a concentration measure rather
@@ -176,9 +184,9 @@ players, not decorative empty seats.
 
 The engine tracks `contributions` across all streets, resolves main/side pots in
 `result.pots`, keeps folded contributions as dead money, and refunds unmatched
-bets. Each hand has a private, non-serialized deck. API operations on the one
-in-memory training session are serialized; independent rooms and human players
-are still the next milestone.
+bets. Each hand has a private, non-serialized deck. Training profiles have separate in-memory hand states, but their operations are
+serialized by a shared lock. Private rooms with human players are available at
+`/friends`; see [docs/ROOMS.md](docs/ROOMS.md).
 
 Multiway equity samples every live opponent jointly and rejects card collisions.
 It includes split pots and ignores hidden AI holdings. It does not calculate
