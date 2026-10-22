@@ -39,3 +39,20 @@
 .payout-flight .chip-stack { display:block; }
 @keyframes payout-to-seat { from { transform:translate(-50%,-50%) scale(1); opacity:1; } 85% { opacity:1; } to { transform:translate(calc(-50% + var(--flight-x)),calc(-50% + var(--flight-y))) scale(.65); opacity:0; } }
 @media(prefers-reduced-motion:reduce) { .payout-flight { animation:none; display:none; } }
+
+.denomination-stack { display:flex; align-items:flex-end; justify-content:center; gap:3px; flex-wrap:wrap; max-width:88px; }
+.chip-pile { position:relative; width:23px; height:37px; padding-bottom:9px; }
+.denomination-chip { position:absolute; left:0; bottom:calc(11px + var(--chip-index)*2.5px); width:23px; height:14px; border:2px dashed #ffffffc9; border-radius:50%; background:radial-gradient(ellipse at 40% 30%,#ffffff40,transparent 70%),var(--chip-color); box-shadow:0 1px 0 #000b,inset 0 0 0 1px #0008; display:grid; place-items:center; }
+.denomination-chip i { color:var(--chip-ink); font:bold 7px/1 Arial,sans-serif; font-style:normal; }
+.chip-pile>small { position:absolute; bottom:0; left:0; width:100%; text-align:center; font-size:8px; color:#f1e9cf; line-height:10px; }
+.classic-table .player-chip-stack { display:flex; position:absolute; left:calc(100% + 5px); top:4px; width:55px; }
+.classic-table .seat-right .player-chip-stack,.classic-table .seat-top-right .player-chip-stack { left:auto; right:calc(100% + 5px); }
+.classic-table .seat-commitment .bet-chip-stack { position:absolute; left:calc(100% + 3px); top:-6px; width:max-content; }
+.classic-table .pot-display>.denomination-stack { display:flex; max-width:120px; }
+.classic-table { position:relative; }
+.chip-legend { position:absolute; z-index:16; top:0; left:0; font-size:9px; color:var(--muted); }
+.chip-legend summary { cursor:pointer; padding:3px; }
+.chip-legend>div { background:#14281f; padding:8px; border:1px solid var(--line); display:grid; grid-template-columns:repeat(4,auto); gap:8px; border-radius:8px; }
+.chip-legend span { display:flex; align-items:center; gap:4px; }
+.chip-legend i { width:14px; height:14px; border:2px dashed #eee; border-radius:50%; }
+@media(max-width:760px) { .classic-table .player-chip-stack { width:42px; left:calc(100% + 2px); gap:1px; } .chip-pile { width:19px; } .denomination-chip { width:19px; } .classic-table .seat-right .player-chip-stack,.classic-table .seat-top-right .player-chip-stack { right:calc(100% + 2px); } }

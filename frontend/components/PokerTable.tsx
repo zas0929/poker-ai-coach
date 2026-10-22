@@ -6,6 +6,7 @@ import { useI18n } from '@/i18n/LanguageProvider';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 
+import { CHIP_VALUES, chipBreakdown } from '@/services/chips';
 import CardView from '@/components/CardView';
 import type { HandAction, HandResult, HandState, Player, Street } from '@/types/poker';
 
@@ -68,9 +69,9 @@ function Seat({
         <div className="seat-stats">
           <span className="seat-stack" aria-label={`${t("Stack")} ${displayStack}`}>{displayStack}</span>
         </div>
-        {player ? <ChipStack amount={displayStack + displayBet} className="player-chip-stack" /> : null}
+        {player ? <ChipStack amount={displayStack} className="player-chip-stack" /> : null}
       </div>
-      {displayBet > 0 ? <span className="seat-commitment" aria-label={`${t("Bet")} ${displayBet}`}>{displayBet}</span> : null}
+      {displayBet > 0 ? <span className="seat-commitment" aria-label={`${t("Bet")} ${displayBet}`}>{displayBet}<ChipStack amount={displayBet} className="bet-chip-stack" /></span> : null}
       {player && status !== 'folded' ? (
         <div className="hole-cards">
           {Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
@@ -140,6 +141,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
 
   return (
     <section className={`table-surface classic-table ${hand?.result ? "has-result" : ""}`} aria-label={t("Poker table")}>
+      <details className="chip-legend"><summary>{t('Chip values')}</summary><div>{CHIP_VALUES.slice().reverse().map(chip => <span key={chip.value}><i style={{ background: chip.color }} />{chip.value}</span>)}</div></details>
       <div ref={tableRef} className={`table-oval classic-oval table-seats-${seatCount} ${seatCount > 2 ? 'table-multiway' : ''}`}>
         {seats.map((seat) => (
           <Seat
@@ -192,37 +194,15 @@ function PotDisplay({ amount }: { amount: number }) {
 }
 
 function ChipStack({ amount, className = '' }: { amount: number; className?: string }) {
-  const chips = chipCount(amount);
-  if (chips === 0) {
-    return null;
-  }
-
-  return (
-    <div className={`chip-stack ${className}`} aria-hidden="true">
-      {Array.from({ length: chips }).map((_, index) => (
-        <span key={index} style={{ '--chip-index': index } as CSSProperties} />
-      ))}
-    </div>
-  );
-}
-
-function chipCount(amount: number) {
-  if (amount <= 0) {
-    return 0;
-  }
-  if (amount < 100) {
-    return 1;
-  }
-  if (amount < 500) {
-    return 2;
-  }
-  if (amount < 1000) {
-    return 3;
-  }
-  if (amount < 2000) {
-    return 4;
-  }
-  return 5;
+  const { t } = useI18n();
+  const piles = chipBreakdown(amount);
+  if (!piles.length) return null;
+  return <div className={`denomination-stack ${className}`} role="img" aria-label={`${t('Chips')}: ${amount}`} title={piles.map(pile => `${pile.count} × ${pile.value}`).join(' + ')}>
+    {piles.map(pile => <div className="chip-pile" key={pile.value} style={{ '--chip-color': pile.color, '--chip-ink': pile.ink } as CSSProperties}>
+      {Array.from({ length: Math.min(pile.count, 8) }, (_, index) => <span className="denomination-chip" key={index} style={{ '--chip-index': index } as CSSProperties}><i>{pile.value >= 1000 ? `${pile.value / 1000}k` : pile.value}</i></span>)}
+      <small>×{pile.count}</small>
+    </div>)}
+  </div>;
 }
 
 function tableSeats(hand: HandState | null, seatCount: number, viewerId = 'hero') {
