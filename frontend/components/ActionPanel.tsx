@@ -20,11 +20,12 @@ interface ActionPanelProps {
   onStartHand: () => void;
   tools?: ReactNode;
   betweenActions?: ReactNode;
+  pausedActions?: ReactNode;
   secondsLeft?: number | null;
 }
 
 export default function ActionPanel({ viewerId = 'hero', trainingControls = true, analysis, hand,
-  isLoading, blocked = false, waitingLabel, onAction, onAdvance, onAnalyze, onStartHand, tools, secondsLeft, betweenActions }: ActionPanelProps) {
+  isLoading, blocked = false, waitingLabel, onAction, onAdvance, onAnalyze, onStartHand, tools, secondsLeft, betweenActions, pausedActions }: ActionPanelProps) {
   const { t } = useI18n();
   const inputId = useId();
   const errorId = useId();
@@ -85,7 +86,7 @@ export default function ActionPanel({ viewerId = 'hero', trainingControls = true
       </strong>
       {secondsLeft !== null && secondsLeft !== undefined && !handEnded ? <span className={`dock-clock ${secondsLeft <= 10 ? 'urgent' : ''}`} role="timer" aria-label={t('Time remaining')}>{secondsLeft}s</span> : <span>{t('Stack')} <b>{heroStack}</b></span>}
     </div>
-    {!hand || handEnded || actionClosed ? <div className="hand-actions">
+    {pausedActions ? <div className="hand-actions">{pausedActions}</div> : !hand || handEnded || actionClosed ? <div className="hand-actions">
       {trainingControls && (!hand || handEnded) ? <button className="primary-button" disabled={isLoading} onClick={onStartHand}>{t(hand ? 'Next hand' : 'New hand')}</button> : null}
       {trainingControls && actionClosed ? <button className="primary-button" disabled={isLoading} onClick={onAdvance}>{t('Advance')}</button> : null}
       {!trainingControls ? betweenActions : null}
