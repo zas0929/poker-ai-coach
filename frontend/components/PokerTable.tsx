@@ -118,6 +118,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
   );
   const tableRef = useRef<HTMLDivElement>(null);
   const [flights, setFlights] = useState<{ id: string; amount: number; x: number; y: number; left: number; top: number }[]>([]);
+  const [potTransferred, setPotTransferred] = useState(false);
   const revealVillainCards = hand?.result?.reason === 'showdown';
   const winnerBadge = winnerText(hand, t);
   const allInRunout = isAllInRunout(hand);
@@ -146,7 +147,8 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
   }, [runoutSchedule]);
 
   useEffect(() => {
-    if (!hand?.result || !runoutComplete) return;
+    if (!hand?.result || !runoutComplete || potTransferred) return;
+    let completionTimer: number | undefined;
     const timer = window.setTimeout(() => {
       const table = tableRef.current;
       const pot = table?.querySelector('.pot-display');
@@ -162,9 +164,17 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
           x: target.left + target.width / 2 - origin.left - origin.width / 2,
           y: target.top + target.height / 2 - origin.top - origin.height / 2 }];
       }));
+      // Match the one-second payout flight, including when reduced motion hides it.
+      completionTimer = window.setTimeout(() => {
+        setPotTransferred(true);
+        setFlights([]);
+      }, 1000);
     }, 1000);
-    return () => window.clearTimeout(timer);
-  }, [hand, runoutComplete]);
+    return () => {
+      window.clearTimeout(timer);
+      window.clearTimeout(completionTimer);
+    };
+  }, [hand, runoutComplete, potTransferred]);
 
   return (
     <section className={`table-surface classic-table ${hand?.result ? "has-result" : ""}`} aria-label={t("Poker table")}>
@@ -186,7 +196,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
         ))}
 
         <div className="board-zone">
-          <PotDisplay amount={hand?.result?.pot_awarded ?? hand?.pot ?? 0} />
+          <PotDisplay amount={potTransferred ? 0 : hand?.result?.pot_awarded ?? hand?.pot ?? 0} />
           <div className="board-cards">
             {Array.from({ length: 5 }).map((_, index) => (
               <CardView key={`${hand?.hand_id ?? 'empty'}-${index}-${visibleBoard[index]?.rank ?? 'hidden'}`} card={visibleBoard[index]} hidden={!visibleBoard[index]} placeholder={!visibleBoard[index]} />
