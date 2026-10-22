@@ -77,7 +77,12 @@ function Seat({
               <CardView key={`${player.id}-${index}`} card={card} hidden={cardsHidden} />
             )) : null}
           </div>
-          <ChipStack amount={displayStack} className="player-chip-cluster" />
+          <div className="seat-money">
+            <ChipStack amount={displayStack} className="player-chip-cluster" />
+            {player.current_bet > 0 ? <span className="table-bet" aria-label={`${t('Bet')} ${player.current_bet}`}>
+              <b>{player.current_bet}</b><ChipStack amount={player.current_bet} className="bet-chip-stack" />
+            </span> : null}
+          </div>
         </div>
       ) : null}
     </div>
@@ -179,12 +184,6 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
             slot={seat.slot}
           />
         ))}
-
-        {seats.map(({ player, slot }) => player ? <div key={`chips-${player.id}`} className={`table-money table-money-${slot}`}>
-          {player.current_bet > 0 ? <span className="table-bet" aria-label={`${t('Bet')} ${player.current_bet}`}>
-            <b>{player.current_bet}</b><ChipStack amount={player.current_bet} className="bet-chip-stack" />
-          </span> : null}
-        </div> : null)}
 
         <div className="board-zone">
           <PotDisplay amount={hand?.result?.pot_awarded ?? hand?.pot ?? 0} />
