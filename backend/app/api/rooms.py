@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect, Header, Query, Response
-from pydantic import BaseModel, Field, ValidationError, field_validator
+from pydantic import BaseModel, Field, StrictInt, ValidationError, field_validator
 
 from app.services.room_service import RoomCommand, RoomStore
 from app.services.room_repository import RoomStorageError
@@ -22,6 +22,7 @@ store = RoomStore(database_url or os.environ.get('POKER_DB_PATH', str(Path(__fil
 
 
 class JoinRequest(BaseModel):
+    buy_in: Optional[StrictInt] = Field(default=None, ge=1, le=1000000)
     name: str = Field(min_length=1, max_length=24)
 
     @field_validator('name')
@@ -36,7 +37,7 @@ class JoinRequest(BaseModel):
 @router.post('')
 async def create_room(request: JoinRequest):
     try:
-        room, member = store.create(request.name)
+        room, member = store.create(request.name, request.buy_in)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     return {'code': room.code, 'token': member.token, 'player_id': member.player_id}
@@ -47,7 +48,7 @@ async def join_room(code: str, request: JoinRequest):
     try:
         room = store.get(code)
         async with room.lock:
-            member = store.apply(room, lambda: room.join(request.name), 'join')
+            member = store.apply(room, lambda: room.join(request.name, request.buy_in), 'join')
             await room.broadcast()
             return {'code': room.code, 'token': member.token, 'player_id': member.player_id}
     except ValueError as exc:

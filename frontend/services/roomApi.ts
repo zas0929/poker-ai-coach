@@ -15,9 +15,9 @@ export function roomSocketUrl(code: string) {
   url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
   return url.toString();
 }
-export async function enterRoom(name: string, code?: string): Promise<RoomCredentials> {
+export async function enterRoom(name: string, code?: string, buyIn?: number): Promise<RoomCredentials> {
   const response = await fetch(`${API_BASE}/api/rooms${code ? `/${encodeURIComponent(code)}/join` : ''}`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name }),
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, buy_in: buyIn }),
   });
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));

@@ -60,3 +60,7 @@
 .classic-table .seat-stats .seat-stack { font-size:17px; font-weight:800; font-variant-numeric:tabular-nums; color:#fff9dc; line-height:1.15; }
 .classic-table .seat-commitment { font-size:14px; font-weight:800; line-height:18px; min-width:26px; }
 @media(max-width:760px) { .classic-table .seat-stats .seat-stack { font-size:15px; } .classic-table .seat-commitment { font-size:12px; line-height:17px; } }
+
+.top-up-controls { display:flex; align-items:flex-end; gap:8px; margin-block:10px; }
+.top-up-controls label { display:grid; gap:5px; min-width:0; }
+.top-up-controls input { width:100%; min-width:0; font-size:16px; }

@@ -22,6 +22,9 @@ export default function FriendsPage() {
   const [credentials, setCredentials] = useState<RoomCredentials | null>(null);
   const [room, setRoom] = useState<RoomState | null>(null);
   const [name, setName] = useState('');
+  const [buyIn, setBuyIn] = useState('400');
+  const [topUp, setTopUp] = useState('400');
+  const validBuyIn = buyIn.trim() !== '' && Number.isInteger(Number(buyIn)) && Number(buyIn) >= 2 && Number(buyIn) <= 1000000;
   const [code, setCode] = useState('');
   const [invited, setInvited] = useState(false);
   const [status, setStatus] = useState('Choose a room');
@@ -129,12 +132,12 @@ export default function FriendsPage() {
   }, [room?.deadline_at]);
 
   const enter = async (join: boolean) => {
-    if (entering.current) return;
+    if (entering.current || !validBuyIn) return;
     entering.current = true;
     setBusy(true);
     setError(null);
     try {
-      const next = await enterRoom(name.trim(), join ? code.trim().toUpperCase() : undefined);
+      const next = await enterRoom(name.trim(), join ? code.trim().toUpperCase() : undefined, Number(buyIn));
       try { sessionStorage.setItem(`poker-room:${next.code}`, JSON.stringify(next)); } catch { /* Keep this session. */ }
       try { localStorage.setItem(`poker-room:${next.code}`, JSON.stringify(next)); } catch { /* Keep this session. */ }
       window.history.replaceState(null, '', `/friends?room=${next.code}`);
@@ -205,11 +208,12 @@ export default function FriendsPage() {
 
                 <h2>{t(betweenHands ? 'Ready for the next hand?' : 'Players at the table')}</h2>
 
-                <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{t(member.player_id === room.viewer_id ? ' (you)' : '')}</strong><span>{t(member.player_id === room.host_id ? 'Host · ' : '')}{t(member.connected ? 'Connected' : 'Disconnected')}</span></div><em>{t(member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing')}</em></li>)}</ul>
+                <ul>{room?.members.map((member) => <li key={member.player_id}><div><strong>{member.name}{t(member.player_id === room.viewer_id ? ' (you)' : '')}</strong><span>{t(member.player_id === room.host_id ? 'Host · ' : '')}{t(member.connected ? 'Connected' : 'Disconnected')}</span></div><b>{member.stack}</b><em>{t(member.sitting_out ? 'Sitting out' : member.ready ? 'Ready' : betweenHands ? 'Waiting' : 'Playing')}</em></li>)}</ul>
+                {betweenHands ? <div className="top-up-controls"><label>{t('Add chips')}<input type="number" inputMode="numeric" min={1} max={1000000 - (me?.stack ?? 0)} value={topUp} onChange={event => setTopUp(event.target.value)} /></label><button disabled={busy || !connected || topUp.trim() === '' || !Number.isInteger(Number(topUp)) || Number(topUp) <= 0 || (me?.stack ?? 0) + Number(topUp) > 1000000} onClick={() => send('top_up', { amount: Number(topUp) })}>{t('Add chips')}</button></div> : null}
                 <button disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
                 {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
                 {betweenHands ? <><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{t(hand ? 'Deal next hand' : 'Deal first hand')}</button> : <p>{t("The host deals when everyone is ready.")}</p>}</> : <p>{hand?.players.find((player) => player.id === hand.current_player_id)?.name}{t("'s turn. Streets advance automatically.")}</p>}
-                <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)}{t(" · Starting stack ")}{t(settings.starting_stack)}{t(". Virtual training chips: stacks below ")}{t(settings.big_blind)}{t(" receive ")}{t(settings.starting_stack)}{t(" extra chips between hands. Players can join between hands. Reopen this link in the same browser to restore your seat.")}</p>
+                <p className="room-note">{t("Blinds ")}{t(settings.small_blind)}/{t(settings.big_blind)} · {t('Virtual chips only. Choose your buy-in and add chips between hands. No automatic refills.')}</p>
                 <p className="room-note">{t("After {0} quiet seconds, the {1}-second countdown starts. The clock continues after disconnect; timeout checks or folds, then sits out.").replace('{0}', String(room?.turn_grace_seconds ?? 10)).replace('{1}', String(settings.turn_seconds))}</p>
                               {!hand && isHost ? <details className="room-settings-disclosure"><summary>{t("Table settings")}</summary><fieldset className="room-settings" disabled={busy || !connected}>
                   <legend>{t("Table settings")}</legend>
@@ -233,8 +237,9 @@ export default function FriendsPage() {
           <h2>{t("Your private poker table")}</h2>
           <p>{t("Create a room and share its invitation. Bring 2–6 players, mark everyone ready, then deal.")}</p>
           <label>{t("Your name")}<input autoComplete="nickname" maxLength={24} value={name} onChange={(event) => setName(event.target.value)} placeholder="Roman" /></label>
-          <button className="primary-button" disabled={busy || !name.trim() || (invited && code.trim().length !== 8)} onClick={() => enter(invited)}>{t(invited ? "Join room" : "Create room")}</button>
-          <div className="room-join"><label>{t("Room code")}<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder={t("Invitation code")} /></label>{!invited ? <button disabled={busy || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>{t("Join room")}</button> : null}</div>
+          <label>{t('Buy-in chips')}<input type="number" inputMode="numeric" min={2} max={1000000} value={buyIn} onChange={event => setBuyIn(event.target.value)} /></label>
+          <button className="primary-button" disabled={busy || !validBuyIn || !name.trim() || (invited && code.trim().length !== 8)} onClick={() => enter(invited)}>{t(invited ? "Join room" : "Create room")}</button>
+          <div className="room-join"><label>{t("Room code")}<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder={t("Invitation code")} /></label>{!invited ? <button disabled={busy || !validBuyIn || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>{t("Join room")}</button> : null}</div>
           <p className="room-note">{t("Local preview. Friends on other networks will need the hosting stage. Rooms, seats and hands are saved on this server.")}</p>
         </section>
       ) : (

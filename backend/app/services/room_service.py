@@ -80,6 +80,7 @@ class Room:
     host_player_id: Optional[str] = None
     used_ids: set = field(default_factory=set)
     button_seat: int = -1
+    settled_hand_id: Optional[str] = None
     settings: RoomSettings = field(default_factory=RoomSettings)
 
     @property
@@ -104,17 +105,20 @@ class Room:
                 return member
         raise ValueError('Seat not found. Open the invitation to join this room.')
 
-    def join(self, name: str) -> Member:
+    def join(self, name: str, buy_in: int | None = None) -> Member:
         if self.hand is not None and not self.hand.result:
             raise ValueError('Wait until the hand finishes before joining.')
         if len(self.seated) >= 6:
             raise ValueError('This room is full (6 players).')
+        chips = self.settings.starting_stack if buy_in is None else buy_in
+        if type(chips) is not int or not self.settings.big_blind <= chips <= 1000000:
+            raise ValueError('Buy-in must cover the big blind and be at most 1000000 chips.')
         seat = next(i for i in range(6) if all(m.seat != i for m in self.seated))
         player_id = SEAT_IDS[seat]
         if player_id in self.used_ids:
             player_id = 'seat_' + secrets.token_hex(12)
         self.used_ids.add(player_id)
-        member = Member(player_id=player_id, name=name, seat=seat, stack=self.settings.starting_stack)
+        member = Member(player_id=player_id, name=name, seat=seat, stack=chips)
         if self.host_id is None:
             self.host_player_id = member.player_id
         self.members.append(member)
@@ -123,6 +127,9 @@ class Room:
 
     def snapshot(self, viewer: Member) -> dict:
         hand = project_hand(self.hand, viewer.player_id) if self.hand else None
+        if hand and self.hand.result:
+            for player in hand['players']:
+                player['stack'] = next(m.stack for m in self.members if m.player_id == player['id'])
         return {
             'type': 'state', 'code': self.code, 'revision': self.revision,
             'viewer_id': viewer.player_id, 'host_id': self.host_id,
@@ -155,6 +162,12 @@ class Room:
             if member.sitting_out:
                 raise ValueError('Return from sit-out before getting ready.')
             member.ready = command.ready
+        elif command.kind == 'top_up':
+            if self.hand and not self.hand.result:
+                raise ValueError('Add chips between hands only.')
+            if type(command.amount) is not int or command.amount <= 0 or member.stack + command.amount > 1000000:
+                raise ValueError('Add a positive whole number without exceeding 1000000 chips.')
+            member.stack += command.amount
         elif command.kind == 'settings':
             if member.player_id != self.host_id:
                 raise ValueError('Only the host can change table settings.')
@@ -164,7 +177,6 @@ class Room:
                 raise ValueError('Table settings are required.')
             self.settings = command.settings
             for seated in self.members:
-                seated.stack = self.settings.starting_stack
                 seated.ready = False
         elif command.kind == 'sit_out':
             if command.sit_out is None:
@@ -190,7 +202,9 @@ class Room:
             button = next((m for m in playing if m.seat > self.button_seat), playing[0])
             offset = playing.index(button)
             playing = playing[offset:] + playing[:offset]
-            stacks = [m.stack + (self.settings.starting_stack if m.stack < self.settings.big_blind else 0) for m in playing]
+            if any(m.stack < self.settings.big_blind for m in playing):
+                raise ValueError('Add chips or sit out before the next hand.')
+            stacks = [m.stack for m in playing]
             self.hand = self.engine.start_hand(player_count=len(playing), starting_stacks=stacks,
                                                small_blind=self.settings.small_blind, big_blind=self.settings.big_blind)
             mapping = {p.id: m.player_id
@@ -232,7 +246,8 @@ class Room:
                 if not actor.sitting_out and not actor.leaving:
                     break
                 self._auto_action(actor)
-            if self.hand.result:
+            if self.hand.result and self.settled_hand_id != self.hand.hand_id:
+                self.settled_hand_id = self.hand.hand_id
                 for player in self.hand.players:
                     member = next(m for m in self.members if m.player_id == player.id)
                     member.stack = player.stack
@@ -267,7 +282,7 @@ class Room:
         if hand is not None:
             hand['_deck'] = [card.model_dump(mode='json') for card in self.hand._deck]
         return {
-            'schema_version': 1, 'code': self.code, 'revision': self.revision,
+            'schema_version': 1, 'settled_hand_id': self.settled_hand_id, 'code': self.code, 'revision': self.revision,
             'host_player_id': self.host_player_id, 'used_ids': sorted(self.used_ids),
             'button_seat': self.button_seat, 'settings': self.settings.model_dump(),
             'deadline_at': self.deadline_at, 'hand': hand,
@@ -299,6 +314,7 @@ class Room:
         self.hand = HandState.model_validate({k: v for k, v in hand.items() if k != '_deck'}) if hand else None
         if self.hand:
             self.hand._deck = [Card.model_validate(c) for c in hand['_deck']]
+        self.settled_hand_id = record.get('settled_hand_id', self.hand.hand_id if self.hand and self.hand.result else None)
         self.turn_key = (self.hand.hand_id, len(self.hand.history), self.hand.current_player_id) if self.hand and not self.hand.result else None
         self.deadline_at = record['deadline_at'] if self.turn_key else None
         self.deadline = time.monotonic() + max(0, min(TURN_GRACE_SECONDS + self.turn_seconds, self.deadline_at / 1000 - time.time())) if self.deadline_at else None
@@ -384,7 +400,7 @@ class RoomStore:
             await asyncio.gather(*(check(room) for room in list(self.rooms.values())))
             await asyncio.sleep(0.25)
 
-    def create(self, name: str) -> tuple[Room, Member]:
+    def create(self, name: str, buy_in: int | None = None) -> tuple[Room, Member]:
         if len(self.rooms) >= 200:
             raise ValueError('Room limit reached (200 rooms).')
         while True:
@@ -392,7 +408,7 @@ class RoomStore:
             if code not in self.rooms:
                 break
         room = Room(code)
-        member = room.join(name)
+        member = room.join(name, buy_in)
         if self.repository:
             try:
                 self.repository.save(room.to_record(), 'create', player_id=member.player_id)
