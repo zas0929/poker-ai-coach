@@ -181,7 +181,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
         </div> : null)}
 
         <div className="board-zone">
-          <PotDisplay amount={hand?.pot ?? 0} />
+          <PotDisplay amount={hand?.result?.pot_awarded ?? hand?.pot ?? 0} />
           <div className="board-cards">
             {Array.from({ length: 5 }).map((_, index) => (
               <CardView key={`${hand?.hand_id ?? 'empty'}-${index}-${visibleBoard[index]?.rank ?? 'hidden'}`} card={visibleBoard[index]} hidden={!visibleBoard[index]} placeholder={!visibleBoard[index]} />
