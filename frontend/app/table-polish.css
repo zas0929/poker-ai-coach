@@ -473,3 +473,18 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
  .classic-table:has(:is(.table-seats-4,.table-seats-6)) { padding-top:52px; }
  .classic-table :is(.table-seats-4,.table-seats-6) .seat-top { top:-48px; }
 }
+
+/* Side bets follow the table diagonals; chip faces and amounts stay upright. */
+@media(min-width:761px) {
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) .seat-top-left .table-bet { --bet-angle:-45deg; position:absolute; left:calc(100% + 20px); right:auto; top:35px; bottom:auto; }
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) .seat-top-right .table-bet { --bet-angle:45deg; position:absolute; left:-20px; right:auto; top:35px; bottom:auto; }
+ .classic-table :is(.table-seats-5,.table-seats-6) .seat-left .table-bet { --bet-angle:45deg; left:calc(150% + 60px); right:auto; top:-48px; bottom:auto; }
+ .classic-table :is(.table-seats-5,.table-seats-6) .seat-right .table-bet { --bet-angle:-45deg; left:calc(-50% - 60px); right:auto; top:-48px; bottom:auto; }
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) :is(.seat-top-left,.seat-top-right,.seat-left,.seat-right) .table-bet { transform:translate(-50%,-50%) rotate(var(--bet-angle,0deg)); }
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) :is(.seat-top-left,.seat-top-right,.seat-left,.seat-right) .table-bet>b,
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) :is(.seat-top-left,.seat-top-right,.seat-left,.seat-right) .table-bet .chip-pile { transform:rotate(calc(0deg - var(--bet-angle,0deg))); }
+ /* The opposite bankroll mirrors hero's; its committed bet stays below the cards. */
+ .classic-table :is(.table-seats-4,.table-seats-6) .seat-top .seat-money { display:contents; position:static; transform:none; }
+ .classic-table :is(.table-seats-4,.table-seats-6) .seat-top .player-chip-cluster { position:absolute; left:calc(100% + 4px); right:auto; top:50%; display:grid; transform:translateY(-50%); }
+ .classic-table :is(.table-seats-4,.table-seats-6) .seat-top .table-bet { position:absolute; left:50%; right:auto; top:calc(100% + 8px); transform:translateX(-50%); }
+}
