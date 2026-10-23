@@ -361,7 +361,7 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
 
 /* Gold indicates the coach's current advice, rather than every raise button. */
 .trainer-actions .action-grid .size-action { background:var(--panel-soft); border-color:var(--line); color:var(--text); font-weight:400; }
-.trainer-actions .action-grid .recommended-action { background:var(--accent); border-color:var(--accent); color:#171f19; font-weight:700; box-shadow:inset 0 0 0 1px var(--accent); }
+.trainer-actions .action-grid .recommended-action { background:var(--panel-soft); border-color:var(--accent); color:var(--text); font-weight:400; box-shadow:inset 0 0 0 1px var(--accent); }
 .trainer-actions .turn-strip>.coach-action-hint { color:var(--accent); font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
 /* Room details live above the table rather than repeating in the header. */
