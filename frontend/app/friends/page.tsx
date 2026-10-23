@@ -1,5 +1,7 @@
 'use client';
 
+import ServerWakeLoader from '@/components/ServerWakeLoader';
+
 import RoomSession from '@/components/RoomSession';
 
 import { useI18n } from '@/i18n/LanguageProvider';
@@ -298,6 +300,7 @@ export default function FriendsPage() {
       <AppHeader afterLogo={roomToolbar}><span className={`connection-state ${connected ? 'is-connected' : ''}`} role="status" aria-label={t(status)} title={t(status)}>{t(status)}</span></AppHeader>
       <div className="room-navigation">
         <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t('AI training')}</Link><Link href="/friends" aria-current="page">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link></nav>
+      <ServerWakeLoader active={Boolean(!error && (credentials ? !connected : busy))} />
       </div>
       {isHost && pendingChipRequests.length > 0 ? <section className="chip-requests control-panel" aria-label={t('Chip requests')} aria-live="polite">
         <strong>{t('Chip requests')}</strong>

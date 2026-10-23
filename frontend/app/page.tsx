@@ -1,5 +1,7 @@
 'use client';
 
+import ServerWakeLoader from '@/components/ServerWakeLoader';
+
 import { displayPlayer } from '@/i18n/translate';
 import { useI18n } from '@/i18n/LanguageProvider';
 
@@ -48,6 +50,7 @@ export default function HomePage() {
       <nav className="play-modes" aria-label={t('Game mode')}>
         <Link href="/" aria-current="page">{t('AI training')}</Link><Link href="/friends">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link>
       </nav>
+      <ServerWakeLoader active={Boolean(!hand && isLoading && !error)} />
       <div className="table-meta"><span>{t(hand?.street ?? 'not started')} · {hand?.players.length ?? 2} {t('players')}</span><span>{t('Blinds')} {hand?.small_blind ?? 5} / {hand?.big_blind ?? 10}</span></div>
 
       {error ? (

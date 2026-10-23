@@ -441,3 +441,11 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
 .app-shell.play-shell .play-header:has(.room-toolbar) h1>span { font-size:inherit; margin:0; }
 @media(max-width:760px) { .app-shell.play-shell .play-header:has(.room-toolbar) h1 { font-size:13px; letter-spacing:-.4px; } }
 @media(max-width:350px) { .app-shell.play-shell .play-header:has(.room-toolbar) h1 { font-size:11px; } }
+
+/* Cold starts show progress without covering or intercepting the table. */
+.server-wake-loader { display:flex; align-items:center; gap:14px; max-width:620px; margin:14px auto; padding:16px; border:1px solid var(--line); border-radius:12px; background:var(--panel); color:var(--text); }
+.server-wake-loader strong { font-size:14px; }
+.server-wake-loader p { margin:6px 0 0; font-size:12px; line-height:1.5; color:var(--muted); }
+.server-wake-spinner { flex:none; width:26px; height:26px; border:3px solid var(--line); border-top-color:var(--accent); border-radius:50%; animation:server-wake-spin 1s linear infinite; }
+@keyframes server-wake-spin { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { .server-wake-spinner { animation:none; border-color:var(--accent); } }
