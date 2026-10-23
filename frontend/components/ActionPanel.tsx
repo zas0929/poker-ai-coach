@@ -17,7 +17,6 @@ interface ActionPanelProps {
   waitingLabel?: string;
   onAction: (action: ActionType, amount?: number) => void;
   onAdvance: () => void;
-  onAnalyze: () => void;
   onStartHand: () => void;
   tools?: ReactNode;
   betweenActions?: ReactNode;
@@ -26,7 +25,7 @@ interface ActionPanelProps {
 }
 
 export default function ActionPanel({ stack, viewerId = 'hero', trainingControls = true, analysis, hand,
-  isLoading, blocked = false, waitingLabel, onAction, onAdvance, onAnalyze, onStartHand, tools, secondsLeft, betweenActions, pausedActions }: ActionPanelProps) {
+  isLoading, blocked = false, waitingLabel, onAction, onAdvance, onStartHand, tools, secondsLeft, betweenActions, pausedActions }: ActionPanelProps) {
   const { t } = useI18n();
   const inputId = useId();
   const errorId = useId();
@@ -110,7 +109,7 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
         aria-label={`${t(sizedAction === 'bet' ? 'Bet' : 'Raise to')} ${preset.value}`} title={`${t(preset.label)} · ${t(sizedAction === 'bet' ? 'Bet' : 'Raise to')} ${preset.value}`}
         onClick={() => submit(sizedAction, preset.value)}><span>{t(preset.label)}</span><b>{preset.value}</b></button>) : null}
     </div>
-    <div className="dock-tools">{tools}{trainingControls && hand && !handEnded ? <button disabled={isLoading || !canAct} onClick={onAnalyze}>{t('Explain advice')}</button> : null}</div>
+    <div className="dock-tools">{tools}</div>
     <Sheet open={open} title={t(sizedAction === 'bet' ? 'Bet size' : 'Raise to')} onClose={() => setSizingContext(null)}>
       <div className="bet-sheet">
         {secondsLeft !== null && secondsLeft !== undefined ? <p className={`sheet-timer ${secondsLeft <= 10 ? "urgent" : ""}`} role="timer">{t("Time remaining")}: {secondsLeft}s</p> : null}

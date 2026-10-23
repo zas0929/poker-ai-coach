@@ -41,10 +41,6 @@ export function usePokerHand() {
     }
   }, []);
 
-  const analyze = useCallback(async () => {
-    if (!busy.current && hand && !hand.result) await hints.current?.request(hand);
-  }, [hand]);
-
   const applyState = useCallback(async (nextHand: HandState) => {
     let settledHand = nextHand;
     setAnalysis(null);
@@ -101,7 +97,6 @@ export function usePokerHand() {
     isAnalyzing,
     action,
     advance,
-    analyze,
     clearError: () => setError(null),
     startHand,
   };

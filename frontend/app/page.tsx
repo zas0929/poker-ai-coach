@@ -29,7 +29,6 @@ export default function HomePage() {
     isAnalyzing,
     action,
     advance,
-    analyze,
     clearError,
     startHand,
   } = usePokerHand();
@@ -67,7 +66,6 @@ export default function HomePage() {
             isLoading={isLoading}
             onAction={action}
             onAdvance={advance}
-            onAnalyze={() => { setPanel('coach'); void analyze(); }}
             tools={<><button aria-haspopup="dialog" onClick={() => setPanel('coach')}>{t('Coach')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button></>}
             onStartHand={() => { const [small, big] = (blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`).split('/').map(Number); void startHand(seatCount ?? hand?.players.length ?? 2, { small_blind: small, big_blind: big }); }}
           />
