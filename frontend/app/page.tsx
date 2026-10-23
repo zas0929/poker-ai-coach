@@ -27,6 +27,7 @@ export default function HomePage() {
     decisionLog,
     error,
     hand,
+    actionHand,
     isLoading,
     isAnalyzing,
     action,
@@ -65,7 +66,7 @@ export default function HomePage() {
           <PokerTable hand={hand} seatCount={hand?.players.length ?? 2} />
           <ActionPanel
             analysis={analysis}
-            hand={hand}
+            hand={actionHand}
             isLoading={isLoading}
             onAction={action}
             onAdvance={advance}

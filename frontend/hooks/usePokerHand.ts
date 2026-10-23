@@ -7,6 +7,7 @@ import type { ActionReview, ActionType, HandAnalysis, HandState } from '@/types/
 
 export function usePokerHand() {
   const [hand, setHand] = useState<HandState | null>(null);
+  const [actionHand, setActionHand] = useState<HandState | null>(null);
   const [analysis, setAnalysis] = useState<HandAnalysis | null>(null);
   const [actionReview, setActionReview] = useState<ActionReview | null>(null);
   const [decisionLog, setDecisionLog] = useState<ActionReview[]>([]);
@@ -49,6 +50,8 @@ export function usePokerHand() {
       settledHand = await PokerApi.autoPlay();
       setHand(settledHand);
     }
+    // Keep the prior action buttons until the entire bot/street transition finishes.
+    setActionHand(settledHand);
     const hero = settledHand.players.find((p) => p.id === 'hero');
     if (!settledHand.result && hero?.status !== 'folded') {
       void hints.current?.request(settledHand);
@@ -93,6 +96,7 @@ export function usePokerHand() {
     decisionLog,
     error,
     hand,
+    actionHand: isLoading ? actionHand : hand,
     isLoading,
     isAnalyzing,
     action,
