@@ -31,6 +31,39 @@ class BuyInTests(unittest.TestCase):
         for member in self.room.members: self.command(member, 'ready', ready=True)
         self.command(self.host, 'start')
 
+    def test_session_totals_exclude_pending_declined_and_duplicate_topups(self):
+        self.assertEqual(self.guest.session_buy_in, 200)
+        self.command(self.guest, 'top_up', amount=50)
+        self.assertEqual(self.guest.session_top_ups, 0)
+        request = self.room.top_up_requests[-1]
+        self.command(self.host, 'decline_top_up', request_id=request['request_id'])
+        self.assertEqual(self.guest.session_top_ups, 0)
+        self.command(self.guest, 'top_up', amount=60)
+        approval = self.approve(self.guest)
+        self.store.apply(self.room, lambda: self.room.command(self.host, approval), 'approve_top_up')
+        self.assertEqual(self.guest.session_top_ups, 60)
+        self.assertEqual(self.guest.stack - self.guest.session_buy_in - self.guest.session_top_ups, 0)
+        self.start()
+        self.assertEqual(self.guest.stack, 260)  # active bets do not change completed-hand P/L
+        self.command(self.host, 'action', hand_id=self.room.hand.hand_id, action='fold')
+        self.assertEqual(self.guest.stack - 200 - 60, self.room.settings.small_blind)
+        code, token = self.room.code, self.guest.token
+        self.store.close(); self.store.open()
+        restored = self.store.get(code).authenticate(token)
+        self.assertEqual((restored.session_buy_in, restored.session_top_ups), (200, 60))
+        self.assertFalse(restored.session_partial)
+
+    def test_legacy_session_starts_an_explicit_baseline(self):
+        record = self.room.to_record()
+        for member in record['members']:
+            for key in ('session_buy_in', 'session_top_ups', 'session_partial'):
+                member.pop(key)
+        self.room.restore(record)
+        guest = self.room.authenticate(self.guest.token)
+        self.assertEqual(guest.session_buy_in, guest.stack)
+        self.assertTrue(guest.session_partial)
+        self.assertTrue(self.room.snapshot(guest)['members'][1]['session_partial'])
+
     def test_custom_stacks_reach_engine_without_extra_chips(self):
         self.start()
         self.assertEqual(sum(p.stack for p in self.room.hand.players) + self.room.hand.pot, 800)

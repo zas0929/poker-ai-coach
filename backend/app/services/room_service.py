@@ -69,6 +69,9 @@ class Member:
     leaving: bool = False
     seat: int = 0
     stack: int = 400
+    session_buy_in: int = 400
+    session_top_ups: int = 0
+    session_partial: bool = False
 
 
 @dataclass
@@ -123,7 +126,7 @@ class Room:
         if player_id in self.used_ids:
             player_id = 'seat_' + secrets.token_hex(12)
         self.used_ids.add(player_id)
-        member = Member(player_id=player_id, name=name, seat=seat, stack=chips, ready=self.settings.auto_deal)
+        member = Member(player_id=player_id, name=name, seat=seat, stack=chips, session_buy_in=chips, ready=self.settings.auto_deal)
         if self.host_id is None:
             self.host_player_id = member.player_id
         self.members.append(member)
@@ -144,7 +147,9 @@ class Room:
             'next_hand_at': self.next_hand_at, 'deadline_at': self.deadline_at, 'server_now': time.time() * 1000,
             'members': [{'player_id': m.player_id, 'name': m.name, 'ready': m.ready,
                          'connected': bool(m.sockets), 'sitting_out': m.sitting_out,
-                         'seat': m.seat, 'stack': m.stack} for m in self.seated],
+                         'seat': m.seat, 'stack': m.stack,
+                         'session_buy_in': m.session_buy_in, 'session_top_ups': m.session_top_ups,
+                         'session_partial': m.session_partial} for m in self.seated],
             'hand': hand,
             'top_up_requests': [dict(request) for request in self.top_up_requests],
         }
@@ -189,6 +194,7 @@ class Room:
                 self._validate_top_up(recipient, request['amount'])
                 was_short = recipient.stack < self.settings.big_blind
                 recipient.stack += request['amount']
+                recipient.session_top_ups += request['amount']
                 if was_short and recipient.stack >= self.settings.big_blind and self.settings.auto_deal and not recipient.sitting_out:
                     recipient.ready = True
             request['status'] = 'approved' if command.kind == 'approve_top_up' else 'declined'
@@ -359,7 +365,8 @@ class Room:
             'button_seat': self.button_seat, 'settings': self.settings.model_dump(),
             'next_hand_at': self.next_hand_at, 'deadline_at': self.deadline_at, 'hand': hand,
             'members': [{key: getattr(m, key) for key in (
-                'player_id', 'name', 'token', 'ready', 'sitting_out', 'leaving', 'seat', 'stack'
+                'player_id', 'name', 'token', 'ready', 'sitting_out', 'leaving', 'seat', 'stack',
+                'session_buy_in', 'session_top_ups', 'session_partial'
             )} | {'commands': [list(entry) for entry in m.commands.items()]} for m in self.members],
         }
 
@@ -378,6 +385,9 @@ class Room:
         for values in record['members']:
             values = dict(values)
             commands = values.pop('commands')
+            if 'session_buy_in' not in values:
+                # Old records do not retain complete buy-in history. Start an explicit baseline.
+                values.update(session_buy_in=values['stack'], session_top_ups=0, session_partial=True)
             member = existing.get(values['player_id']) or Member(**values)
             for key, value in values.items():
                 setattr(member, key, value)

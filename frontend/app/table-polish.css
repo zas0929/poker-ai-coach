@@ -429,6 +429,12 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
  .app-shell .play-header { gap:4px; }
  .app-shell .play-header h1, .app-shell .play-header h1>span { font-size:11px; }
 }
+.room-session-list { display:grid; gap:8px; margin-top:14px; }
+.room-session-player { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:5px 12px; padding:10px 0; border-top:1px solid var(--line); }
+.room-session-player small { grid-column:1 / -1; color:var(--muted); line-height:1.5; }
+.room-session-player>strong:last-of-type { justify-self:end; }
+.room-session-player .session-profit { color:var(--success); }
+.room-session-player .session-loss { color:var(--danger); }
 
 /* Room presence must not change the brand size or spacing. */
 .app-shell.play-shell .play-header:has(.room-toolbar) h1 { font-size:22px; gap:4px; letter-spacing:-.6px; }
