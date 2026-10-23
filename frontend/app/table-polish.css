@@ -449,3 +449,18 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
 .server-wake-spinner { flex:none; width:26px; height:26px; border:3px solid var(--line); border-top-color:var(--accent); border-radius:50%; animation:server-wake-spin 1s linear infinite; }
 @keyframes server-wake-spin { to { transform:rotate(360deg); } }
 @media(prefers-reduced-motion:reduce) { .server-wake-spinner { animation:none; border-color:var(--accent); } }
+
+/* Two readable metrics per row fit both desktop sidebar widths. */
+@media(min-width:761px) {
+ .coach-panel .metric-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-block:14px; }
+ .coach-panel .metric-grid>.coach-metric { min-width:0; min-height:82px; align-content:start; gap:9px; padding:12px; border-radius:10px; background:#101c18; }
+ .coach-panel .coach-metric>.metric-label, .coach-panel .coach-metric>span { min-height:22px; line-height:1.35; }
+ .coach-panel .coach-metric .metric-label { justify-content:space-between; gap:6px; }
+ .coach-panel .coach-metric .info-tip { flex:none; margin-left:auto; }
+ .coach-panel .coach-metric .info-tip>button { width:22px; height:22px; min-height:22px; font-size:11px; }
+ .coach-panel .coach-metric>strong { font-size:21px; line-height:1.2; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+ .coach-panel .metric-grid>.coach-metric-ev { grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; min-height:66px; gap:18px; }
+ .coach-panel .coach-metric-ev>.metric-label { flex:1; min-width:0; }
+ .coach-panel .coach-metric-ev>strong { flex:none; max-width:45%; text-align:right; }
+ .coach-panel .coach-metric:nth-last-child(-n+2)>strong { font-size:17px; }
+}
