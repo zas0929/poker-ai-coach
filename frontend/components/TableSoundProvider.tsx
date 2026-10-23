@@ -76,5 +76,8 @@ export function SoundToggle() {
   const { t } = useI18n();
   const { enabled, toggle } = useTableSound();
   const label = t(enabled ? 'Mute sounds' : 'Enable sounds');
-  return <button type="button" className="sound-toggle" onClick={toggle} aria-label={label} title={label} aria-pressed={enabled}><span aria-hidden="true">{enabled ? '♫' : '♪̸'}</span></button>;
+  return <button type="button" className="sound-toggle" onClick={toggle} aria-label={label} title={label} aria-pressed={enabled}><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+    {enabled ? <><path d="M15 8a6 6 0 0 1 0 8" /><path d="M18 5a10 10 0 0 1 0 14" /></> : <><path d="m16 9 6 6" /><path d="m22 9-6 6" /></>}
+  </svg></button>;
 }
