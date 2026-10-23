@@ -387,3 +387,26 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
  .trainer-shell .play-header .sound-toggle { width:27px; }
  .trainer-shell .play-header .language-toolbar-inline select { width:38px; min-width:38px; padding-inline:3px 13px; font-size:10px; }
 }
+
+/* Keep room identity and its two actions together in a single compact row. */
+.room-shell .play-header .room-toolbar { flex:0 0 auto; min-width:0; max-width:none; justify-content:flex-start; gap:5px; height:36px; min-height:36px; box-sizing:border-box; border:1px solid var(--line); padding:3px 5px; }
+.play-header .room-toolbar>.room-identity { display:flex; flex:none; }
+.play-header .room-identity .eyebrow { display:flex; align-items:center; gap:5px; white-space:nowrap; font-size:10px; line-height:1.2; }
+.play-header .room-identity .eyebrow>b { font-size:11px; color:var(--text); letter-spacing:.1px; }
+.play-header .room-identity>strong { display:none; }
+.play-header .room-toolbar>button, .play-header .room-menu>summary { display:flex; align-items:center; justify-content:center; width:28px; min-width:28px; height:28px; min-height:28px; padding:0; border:0; box-shadow:none; border-radius:7px; }
+@media(max-width:760px) {
+ .room-shell .play-header .room-toolbar { gap:4px; padding:2px 3px; }
+ .play-header .room-identity .eyebrow { gap:4px; font-size:8px; }
+ .play-header .room-identity .eyebrow>b { font-size:10px; }
+ .play-header .room-toolbar>button, .play-header .room-menu>summary { width:26px; min-width:26px; height:26px; min-height:26px; }
+}
+@media(max-width:350px) {
+ .room-shell .play-header .room-toolbar { gap:3px; padding-inline:2px; }
+ .play-header .room-identity .eyebrow { gap:3px; font-size:7px; }
+ .play-header .room-identity .eyebrow>b { font-size:9px; }
+ .play-header .room-toolbar>button, .play-header .room-menu>summary { width:22px; min-width:22px; height:22px; min-height:22px; }
+ .play-header .room-invite-icon { font-size:16px; }
+}
+
+.room-shell .play-header .sound-toggle, .room-shell .play-header .language-toolbar-inline select { height:36px; min-height:36px; }
