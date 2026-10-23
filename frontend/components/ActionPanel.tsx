@@ -1,9 +1,10 @@
 'use client';
 
-import { useId, useMemo, useState, type ReactNode } from 'react';
+import { useId, useState, type ReactNode } from 'react';
 import { displayPlayer } from '@/i18n/translate';
 import { useI18n } from '@/i18n/LanguageProvider';
 import Sheet from '@/components/Sheet';
+import { betSizing } from '@/services/betSizing';
 import type { ActionType, HandAnalysis, HandState } from '@/types/poker';
 
 interface ActionPanelProps {
@@ -38,7 +39,7 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
   const betting = hand?.betting;
   const allows = (action: ActionType) => canAct && Boolean(betting?.legal_actions.includes(action));
   const canSize = allows('bet') || allows('raise');
-  const sizedAction: ActionType = allows('bet') ? 'bet' : 'raise';
+  const sizedAction: 'bet' | 'raise' = allows('bet') ? 'bet' : 'raise';
   const minimumAmount = (sizedAction === 'bet' ? betting?.min_bet : betting?.min_raise_to) ?? 1;
   const maximumAmount = betting?.max_raise_to ?? 0;
   const callAmount = betting?.call_amount ?? 0;
@@ -47,32 +48,21 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
   const highestBet = Math.max(0, ...(hand?.players.map((player) => player.current_bet) ?? []),
     hand?.street === 'preflop' ? hand.big_blind : 0);
   const amountContext = `${hand?.hand_id}:${hand?.street}:${hand?.history.length}:${hand?.current_player_id}`;
-  const suggestedAmount = analysis?.recommended_amount ?? Math.min(maximumAmount, Math.max(minimumAmount,
-    highestBet > 0 ? highestBet * 2 : Math.round((hand?.pot ?? 0) / 2)));
+  const sizing = betSizing({ action: sizedAction, pot: hand?.pot ?? 0, highestBet, callAmount,
+    minimum: minimumAmount, maximum: maximumAmount, stack: heroStack, currentBet: viewer?.current_bet ?? 0,
+    recommended: analysis?.recommended_action === sizedAction ? analysis.recommended_amount : null });
+  const suggestedAmount = sizing.defaultAmount;
   const amountText = amountEntry?.context === amountContext ? amountEntry.value : String(suggestedAmount);
   const amount = Number(amountText);
   const setAmount = (value: string | number) => setAmountEntry({ context: amountContext, value: String(value) });
   const validAmount = amountText.trim() !== '' && Number.isInteger(amount) && amount >= minimumAmount && amount <= maximumAmount;
   const amountToPay = validAmount ? Math.max(0, amount - (viewer?.current_bet ?? 0)) : 0;
-  const clampAmount = (value: number) => Math.min(maximumAmount, Math.max(minimumAmount, value));
   const open = sizingContext === amountContext && canSize && !isLoading;
-  const quickAmounts = useMemo(() => {
-    if (!hand) return [];
-    if (highestBet > 0) return [
-      { label: 'x2', value: highestBet * 2 },
-      { label: 'x3', value: highestBet * 3 },
-      // A pot-sized raise includes the call before raising the resulting pot.
-      { label: 'Pot', value: highestBet + hand.pot + callAmount },
-    ];
-    return [
-      { label: '1/2 pot', value: Math.round(hand.pot / 2) },
-      { label: '2/3 pot', value: Math.round(hand.pot * 2 / 3) },
-      { label: 'Pot', value: hand.pot },
-    ];
-  }, [hand, highestBet, callAmount]);
-
-  const quickActions = quickAmounts.map(preset => ({ ...preset, value: clampAmount(preset.value) }))
-    .filter((preset, index, presets) => presets.findIndex(item => item.value === preset.value) === index);
+  const quickActions = sizing.presets;
+  const allInTotal = heroStack + (viewer?.current_bet ?? 0);
+  const selectedAllIn = validAmount && amount === allInTotal;
+  const onlyAllIn = minimumAmount === maximumAmount && maximumAmount === allInTotal;
+  const actionLabel = selectedAllIn ? sizedAction === 'raise' ? 'All-in to' : 'All in' : sizedAction === 'bet' ? 'Bet' : 'Raise to';
 
   const submit = (action: ActionType, value?: number) => {
     if (isLoading || !allows(action)) return;
@@ -100,13 +90,13 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
       <button className={`passive-action${isRecommended(passiveAction)}`} disabled={!allows(passiveAction) || isLoading} onClick={() => submit(passiveAction)}>
         {t(passiveAction === 'check' ? 'Check' : 'Call')}{passiveAction === 'call' ? <small>{callAmount}</small> : null}
       </button>
-      <button className={`primary-button size-action${isRecommended(sizedAction)}`} disabled={!canSize || isLoading} onClick={() => setSizingContext(amountContext)} aria-haspopup="dialog">
+      <button className={`primary-button size-action${isRecommended(sizedAction)}`} disabled={!canSize || isLoading} onClick={() => { setAmount(amountText); setSizingContext(amountContext); }} aria-haspopup="dialog">
         {t(sizedAction === 'bet' ? 'Bet' : 'Raise')}<small>{analysis?.recommended_action === sizedAction && analysis.recommended_amount != null ? `${t('Coach size')}: ${analysis.recommended_amount}` : t('Choose amount')} ↗</small>
       </button>
     </div>}
     <div className={`quick-raises ${canSize && !pausedActions ? '' : 'quick-raises-empty'}`} aria-label={t('Quick bets and raises')} aria-hidden={!canSize || Boolean(pausedActions)}>
       {canSize && !pausedActions ? quickActions.map(preset => <button type="button" key={preset.value} disabled={isLoading}
-        aria-label={`${t(sizedAction === 'bet' ? 'Bet' : 'Raise to')} ${preset.value}`} title={`${t(preset.label)} · ${t(sizedAction === 'bet' ? 'Bet' : 'Raise to')} ${preset.value}`}
+        aria-label={`${t(preset.allIn ? sizedAction === 'raise' ? 'All-in to' : 'All in' : sizedAction === 'bet' ? 'Bet' : 'Raise to')} ${preset.value}`} title={`${t(preset.label)} · ${preset.value}`}
         onClick={() => submit(sizedAction, preset.value)}><span>{t(preset.label)}</span><b>{preset.value}</b></button>) : null}
     </div>
     <div className="dock-tools">{tools}</div>
@@ -114,18 +104,20 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
       <div className="bet-sheet">
         {secondsLeft !== null && secondsLeft !== undefined ? <p className={`sheet-timer ${secondsLeft <= 10 ? "urgent" : ""}`} role="timer">{t("Time remaining")}: {secondsLeft}s</p> : null}
         <p className="sheet-note">{t(sizedAction === 'bet' ? 'Choose your bet, then confirm.' : 'Total bet on this street. Choose an amount, then confirm.')}</p>
+        {onlyAllIn ? <p className="bet-sizing-help">{t('Only an all-in of {0} is available.').replace('{0}', String(maximumAmount))}</p>
+          : sizing.stackLimited ? <p className="bet-sizing-help">{t('Large presets reach your full stack. You can enter a smaller amount or use the slider.')}</p> : null}
         <label className="bet-entry" htmlFor={inputId}><span>{t(sizedAction === 'bet' ? 'Bet size' : 'Raise to')}</span>
-          <input autoFocus id={inputId} type="number" inputMode="numeric" min={minimumAmount} max={maximumAmount} step={1} value={amountText}
+          <input autoFocus id={inputId} readOnly={onlyAllIn} type="number" inputMode="numeric" min={minimumAmount} max={maximumAmount} step={1} value={amountText}
             aria-invalid={!validAmount} aria-describedby={!validAmount ? errorId : undefined} onChange={(event) => setAmount(event.target.value)} />
         </label>
         <label className="sr-only" htmlFor={`${inputId}-range`}>{t('Bet amount slider')}</label>
-        <input id={`${inputId}-range`} type="range" min={minimumAmount} max={maximumAmount} step={1} value={validAmount ? amount : minimumAmount} onChange={(event) => setAmount(event.target.value)} />
+        <input id={`${inputId}-range`} type="range" disabled={minimumAmount === maximumAmount} min={minimumAmount} max={maximumAmount} step={1} value={validAmount ? amount : minimumAmount} onChange={(event) => setAmount(event.target.value)} />
         <div className="bet-limits"><span>{t('Min.')} {minimumAmount}</span><span>{t('Max.')} {maximumAmount}</span></div>
-        <div className="quick-size-grid">{quickAmounts.map((preset) => <button type="button" key={preset.label} aria-pressed={validAmount && amount === clampAmount(preset.value)} onClick={() => setAmount(clampAmount(preset.value))}>{t(preset.label)}<small>{clampAmount(preset.value)}</small></button>)}</div>
+        <div className="quick-size-grid">{quickActions.map((preset) => <button type="button" key={preset.value} aria-pressed={validAmount && amount === preset.value} onClick={() => setAmount(preset.value)}>{t(preset.label)}<small>{preset.value}</small></button>)}</div>
         <p className="bet-payment">{t('To pay now')} <strong>{validAmount ? amountToPay : "—"}</strong> · {t('Stack')} {heroStack}</p>
         {!validAmount ? <p id={errorId} className="bet-error" role="alert">{t('Enter a whole number from {0} to {1}.').replace('{0}', String(minimumAmount)).replace('{1}', String(maximumAmount))}</p> : null}
-        <div className="bet-confirm"><button type="button" onClick={() => setSizingContext(null)}>{t('Cancel')}</button><button className="primary-button" disabled={!validAmount || isLoading} onClick={() => submit(sizedAction, amount)}>{t(sizedAction === 'bet' ? 'Bet' : 'Raise to')} {validAmount ? amount : '—'}</button></div>
-        <button className="all-in-choice" type="button" onClick={() => setAmount(maximumAmount)}>{t('All in')} · {maximumAmount} <span>{t('Select amount')}</span></button>
+        <div className="bet-confirm"><button type="button" onClick={() => setSizingContext(null)}>{t('Cancel')}</button><button className="primary-button" disabled={!validAmount || isLoading} onClick={() => submit(sizedAction, amount)}>{t(actionLabel)} {validAmount ? amount : '—'}</button></div>
+        {maximumAmount === allInTotal && !quickActions.some(preset => preset.allIn) ? <button className="all-in-choice" type="button" onClick={() => setAmount(maximumAmount)}>{t(sizedAction === 'raise' ? 'All-in to' : 'All in')} · {maximumAmount} <span>{t('Select amount')}</span></button> : null}
       </div>
     </Sheet>
   </section>;

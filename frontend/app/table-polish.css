@@ -464,3 +464,6 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
  .coach-panel .coach-metric-ev>strong { flex:none; max-width:45%; text-align:right; }
  .coach-panel .coach-metric:nth-last-child(-n+2)>strong { font-size:17px; }
 }
+
+.bet-sizing-help { margin:0 0 8px; color:var(--muted); font-size:12px; line-height:1.5; }
+.bet-sheet .quick-size-grid { grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); }
