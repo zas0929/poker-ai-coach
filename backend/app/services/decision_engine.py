@@ -41,6 +41,23 @@ class DecisionEngine:
                 self._analysis_cache.popitem(last=False)
         return result
 
+    @staticmethod
+    def recommended_size(state, player_id, action):
+        if action not in ('bet', 'raise'):
+            return None
+        options = betting_options(state, player_id)
+        if action not in options.legal_actions:
+            return None
+        highest = highest_bet(state)
+        if action == 'bet':
+            target = round(state.pot * 2 / 3)
+            minimum = options.min_bet
+        else:
+            target = (3 * highest if state.street == Street.PREFLOP
+                      else highest + round((state.pot + options.call_amount) * 2 / 3))
+            minimum = options.min_raise_to
+        return min(options.max_raise_to, max(minimum, target))
+
     def _analyze(self, state: HandState, player_id: str) -> HandAnalysis:
         player = self._get_player(state, player_id)
         call_amount = self._call_amount(state, player_id)
@@ -89,6 +106,7 @@ class DecisionEngine:
             equity_sampling_error=estimate.sampling_error,
             ev_call=ev_call,
             recommended_action=recommended_action,
+            recommended_amount=self.recommended_size(state, player_id, recommended_action),
             hand_strength=hand_strength,
             preflop_profile=preflop_profile,
             draw_profile=draw_profile,

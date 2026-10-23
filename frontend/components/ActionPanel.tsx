@@ -48,7 +48,7 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
   const highestBet = Math.max(0, ...(hand?.players.map((player) => player.current_bet) ?? []),
     hand?.street === 'preflop' ? hand.big_blind : 0);
   const amountContext = `${hand?.hand_id}:${hand?.street}:${hand?.history.length}:${hand?.current_player_id}`;
-  const suggestedAmount = Math.min(maximumAmount, Math.max(minimumAmount,
+  const suggestedAmount = analysis?.recommended_amount ?? Math.min(maximumAmount, Math.max(minimumAmount,
     highestBet > 0 ? highestBet * 2 : Math.round((hand?.pot ?? 0) / 2)));
   const amountText = amountEntry?.context === amountContext ? amountEntry.value : String(suggestedAmount);
   const amount = Number(amountText);
@@ -82,13 +82,14 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
   };
   const isRecommended = (action: ActionType) => analysis?.recommended_action === action && canAct ? ' recommended-action' : '';
   const passiveAction = allows('check') ? 'check' : 'call';
+  const adviceLabel = analysis ? `${t(analysis.recommended_action === 'raise' ? 'Raise to' : analysis.recommended_action)}${analysis.recommended_amount != null ? ` ${analysis.recommended_amount}` : ''}` : '';
 
   return <section className={`control-panel action-dock${trainingControls ? ' trainer-actions' : ''}`} aria-label={t('Table actions')}>
     <div className="turn-strip">
       <strong role="status">{isLoading ? t('Sending…') : waitingLabel ?? t(handEnded ? 'Hand complete' : canAct ? 'Your turn' : actionClosed ? 'Action closed' : 'Waiting')}
         {!isLoading && !handEnded && currentPlayer && !canAct ? <span> · {displayPlayer(currentPlayer, t)}</span> : null}
       </strong>
-      {trainingControls && canAct && analysis ? <span className="coach-action-hint" role="status">{t('Coach: {0}').replace('{0}', t(analysis.recommended_action))}</span> : null}
+      {trainingControls && canAct && analysis ? <span className="coach-action-hint" role="status">{t('Coach: {0}').replace('{0}', adviceLabel)}</span> : null}
       {secondsLeft !== null && secondsLeft !== undefined && !handEnded ? <span className={`dock-clock ${secondsLeft <= 10 ? 'urgent' : ''}`} role="timer" aria-label={t('Time remaining')}>{secondsLeft}s</span> : <span>{t('Stack')} <b>{heroStack}</b></span>}
     </div>
     {pausedActions ? <div className="hand-actions">{pausedActions}</div> : !hand || handEnded || actionClosed ? <div className="hand-actions">
@@ -101,7 +102,7 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
         {t(passiveAction === 'check' ? 'Check' : 'Call')}{passiveAction === 'call' ? <small>{callAmount}</small> : null}
       </button>
       <button className={`primary-button size-action${isRecommended(sizedAction)}`} disabled={!canSize || isLoading} onClick={() => setSizingContext(amountContext)} aria-haspopup="dialog">
-        {t(sizedAction === 'bet' ? 'Bet' : 'Raise')}<small>{t('Choose amount')} ↗</small>
+        {t(sizedAction === 'bet' ? 'Bet' : 'Raise')}<small>{analysis?.recommended_action === sizedAction && analysis.recommended_amount != null ? `${t('Coach size')}: ${analysis.recommended_amount}` : t('Choose amount')} ↗</small>
       </button>
     </div>}
     <div className={`quick-raises ${canSize && !pausedActions ? '' : 'quick-raises-empty'}`} aria-label={t('Quick bets and raises')} aria-hidden={!canSize || Boolean(pausedActions)}>

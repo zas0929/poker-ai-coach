@@ -182,6 +182,7 @@ class HandAnalysis(BaseModel):
     equity_sampling_error: float = 0.0
     ev_call: float
     recommended_action: str
+    recommended_amount: Optional[int] = None
     hand_strength: HandStrength
     preflop_profile: PreflopProfile
     draw_profile: DrawProfile

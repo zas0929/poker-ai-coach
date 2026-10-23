@@ -46,7 +46,7 @@ export default function CoachPanel({
       <div className="panel-heading">
         <div>
           <p className="eyebrow">{t("Coach Panel")}</p>
-          <h2>{t(analysis?.recommended_action ?? (result ? 'hand complete' : isLoading ? 'thinking' : 'waiting'))}</h2>
+          <h2>{t(analysis?.recommended_action === 'raise' ? 'Raise to' : analysis?.recommended_action ?? (result ? 'hand complete' : isLoading ? 'thinking' : 'waiting'))}{analysis?.recommended_amount != null ? ` ${analysis.recommended_amount}` : ''}</h2>
         </div>
         <span className="status-pill">{t(isLoading ? 'thinking' : hand?.street ?? 'idle')}</span>
       </div>
@@ -77,6 +77,7 @@ export default function CoachPanel({
       {analysis ? (
         <div className="coach-summary">
           <p>{t(analysis.coach_summary)}</p>
+          {analysis.recommended_amount != null ? <p>{t('Suggested size uses a simple betting heuristic, not a solved optimal size. Raises show the total bet on this street.')}</p> : null}
           <div className="summary-meta">
             <span>{t("Heuristic score ")}{t(percent(analysis.confidence))}</span>
             <span>{t("Risk ")}{t(label(analysis.risk_level))}</span>

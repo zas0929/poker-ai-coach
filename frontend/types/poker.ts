@@ -128,6 +128,7 @@ export interface HandAnalysis {
   equity_sampling_error?: number;
   ev_call: number;
   recommended_action: string;
+  recommended_amount?: number | null;
   hand_strength: HandStrength;
   preflop_profile: PreflopProfile;
   draw_profile: DrawProfile;
