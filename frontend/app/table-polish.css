@@ -467,3 +467,9 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
 
 .bet-sizing-help { margin:0 0 8px; color:var(--muted); font-size:12px; line-height:1.5; }
 .bet-sheet .quick-size-grid { grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); }
+
+/* Lift the opposite player so their committed chips clear the central pot. */
+@media(min-width:761px) {
+ .classic-table:has(:is(.table-seats-4,.table-seats-6)) { padding-top:52px; }
+ .classic-table :is(.table-seats-4,.table-seats-6) .seat-top { top:-48px; }
+}
