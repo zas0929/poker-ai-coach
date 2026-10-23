@@ -417,6 +417,8 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
 .app-shell .play-header h1 { display:flex; align-items:center; gap:4px; font-size:22px; letter-spacing:-.6px; margin:0; white-space:nowrap; }
 .app-shell .play-header h1>span { margin:0; font-size:inherit; }
 .app-shell .play-header .sound-toggle, .app-shell .play-header .language-toolbar-inline select { height:36px; min-height:36px; }
+.room-shell .play-header .room-toolbar { border:0; background:none; box-shadow:none; }
+.play-header .room-menu>summary { border:1px solid var(--line); background:var(--panel-soft); }
 @media(max-width:760px) {
  .app-shell.play-shell { padding-top:6px; padding-inline:8px; }
  .app-shell .play-header { min-height:48px; gap:6px; }
