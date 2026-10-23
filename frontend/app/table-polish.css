@@ -410,3 +410,26 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
 }
 
 .room-shell .play-header .sound-toggle, .room-shell .play-header .language-toolbar-inline select { height:36px; min-height:36px; }
+
+/* Shared header geometry across training, friends and practice. */
+.app-shell.play-shell { padding-top:8px; }
+.app-shell .play-header { min-height:52px; padding:0; gap:10px; }
+.app-shell .play-header h1 { display:flex; align-items:center; gap:4px; font-size:22px; letter-spacing:-.6px; margin:0; white-space:nowrap; }
+.app-shell .play-header h1>span { margin:0; font-size:inherit; }
+.app-shell .play-header .sound-toggle, .app-shell .play-header .language-toolbar-inline select { height:36px; min-height:36px; }
+@media(max-width:760px) {
+ .app-shell.play-shell { padding-top:6px; padding-inline:8px; }
+ .app-shell .play-header { min-height:48px; gap:6px; }
+ .app-shell .play-header h1 { font-size:13px; letter-spacing:-.4px; }
+ .app-shell .play-header h1>span { font-size:13px; }
+}
+@media(max-width:350px) {
+ .app-shell .play-header { gap:4px; }
+ .app-shell .play-header h1, .app-shell .play-header h1>span { font-size:11px; }
+}
+
+/* Room presence must not change the brand size or spacing. */
+.app-shell.play-shell .play-header:has(.room-toolbar) h1 { font-size:22px; gap:4px; letter-spacing:-.6px; }
+.app-shell.play-shell .play-header:has(.room-toolbar) h1>span { font-size:inherit; margin:0; }
+@media(max-width:760px) { .app-shell.play-shell .play-header:has(.room-toolbar) h1 { font-size:13px; letter-spacing:-.4px; } }
+@media(max-width:350px) { .app-shell.play-shell .play-header:has(.room-toolbar) h1 { font-size:11px; } }
