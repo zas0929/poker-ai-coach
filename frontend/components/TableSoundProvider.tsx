@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { tableAudioSamples } from '@/services/tableAudio';
 import { useI18n } from '@/i18n/LanguageProvider';
 
 export type TableSound = 'deal' | 'timer' | 'check' | 'chips' | 'win' | 'reveal';
@@ -53,28 +54,20 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
     const context = audio.current, output = master.current;
     if (!preference.current || !context || !output || context.state !== 'running') return;
     try {
-      const notes = kind === 'timer' ? 2 : kind === 'check' ? 2 : kind === 'win' ? 8 : Math.min(12, Math.max(1, count));
+      const notes = kind === 'timer' ? 2 : kind === 'check' ? 2 : kind === 'win' ? 5 : kind === 'chips' ? Math.min(4, Math.max(2, count * 2)) : Math.min(12, Math.max(1, count));
       for (let index = 0; index < notes; index++) {
-        const at = context.currentTime + .01 + index * (kind === 'timer' ? .14 : kind === 'check' ? .09 : .055);
+        const at = context.currentTime + .01 + index * (kind === 'timer' ? .14 : kind === 'check' ? .09 : kind === 'win' || kind === 'chips' ? .095 : .085);
         const gain = context.createGain();
         gain.connect(output);
         if (kind === 'deal' || kind === 'reveal' || kind === 'chips' || kind === 'win') {
-          // Short filtered noise gives cards a paper swish and chips a crisp rattle.
-          const duration = kind === 'reveal' ? .12 : .065;
-          const buffer = context.createBuffer(1, Math.ceil(context.sampleRate * duration), context.sampleRate);
-          const data = buffer.getChannelData(0);
-          for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
-          const noise = context.createBufferSource(), filter = context.createBiquadFilter();
-          noise.buffer = buffer;
-          filter.type = 'bandpass';
-          filter.frequency.value = kind === 'deal' || kind === 'reveal' ? 1600 : 3800 + index * 80;
-          filter.Q.value = kind === 'deal' || kind === 'reveal' ? .7 : 3;
-          gain.gain.setValueAtTime(.001, at);
-          gain.gain.exponentialRampToValueAtTime(.5, at + .004);
-          gain.gain.exponentialRampToValueAtTime(.001, at + duration);
-          noise.connect(filter); filter.connect(gain);
-          noise.start(at); noise.stop(at + duration);
-          noise.onended = () => { noise.disconnect(); filter.disconnect(); gain.disconnect(); };
+          const samples = tableAudioSamples(kind, context.sampleRate, index);
+          const buffer = context.createBuffer(1, samples.length, context.sampleRate);
+          buffer.getChannelData(0).set(samples);
+          const source = context.createBufferSource();
+          source.buffer = buffer;
+          source.connect(gain);
+          source.start(at);
+          source.onended = () => { source.disconnect(); gain.disconnect(); };
         } else {
           const oscillator = context.createOscillator();
           oscillator.type = 'sine';
