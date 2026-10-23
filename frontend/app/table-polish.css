@@ -32,17 +32,17 @@
 @media(prefers-reduced-motion:reduce) { .payout-flight { animation:none; display:none; } }
 
 /* Each physical pile contains one denomination; only its top chip is marked. */
-.denomination-stack { display:flex; align-items:flex-end; justify-content:center; gap:3px; flex-wrap:nowrap; }
-.chip-pile { position:relative; flex:none; width:23px; height:calc(14px + (var(--pile-count) - 1)*2.5px); }
-.denomination-chip { position:absolute; left:0; bottom:calc(var(--chip-index)*2.5px); width:23px; height:14px; border:2px dashed #ffffffc9; border-radius:50%; background:radial-gradient(ellipse at 40% 30%,#ffffff40,transparent 70%),var(--chip-color); box-shadow:0 1px 0 #000b,inset 0 0 0 1px #0008; display:grid; place-items:center; }
+.denomination-stack { display:flex; align-items:flex-end; justify-content:center; gap:2px; flex-wrap:nowrap; }
+.chip-pile { position:relative; flex:none; width:20px; height:calc(12px + (var(--pile-count) - 1)*1.8px); }
+.denomination-chip { position:absolute; left:0; bottom:calc(var(--chip-index)*1.8px); width:20px; height:12px; border:2px dashed #ffffffc9; border-radius:50%; background:radial-gradient(ellipse at 40% 30%,#ffffff40,transparent 70%),var(--chip-color); box-shadow:0 1px 0 #000b,inset 0 0 0 1px #0008; display:grid; place-items:center; }
 .denomination-chip i { color:var(--chip-ink); font:bold 7px/1 Arial,sans-serif; font-style:normal; }
 /* Bankroll and bets follow the cards, with bets pushed toward the middle. */
 .seat-money { display:contents; pointer-events:none; }
 .classic-table .seat-hand { position:relative; justify-self:center; width:calc(var(--hole-card-width)*2 + 4px); height:var(--hole-card-height); }
 .classic-table .seat-bottom .seat-hand { order:-1; }
-.classic-table .player-chip-cluster { position:absolute; left:calc(100% + 7px); top:50%; display:grid; width:max-content; grid-template-columns:repeat(2,max-content); align-items:end; justify-content:center; gap:4px 3px; transform:translateY(-50%); }
+.classic-table .player-chip-cluster { position:absolute; left:calc(100% + 4px); top:50%; display:grid; width:max-content; grid-template-columns:repeat(2,max-content); align-items:end; justify-content:center; gap:2px; transform:translateY(-50%); }
 .classic-table .seat-right .player-chip-cluster,
-.classic-table .seat-top-right .player-chip-cluster { left:auto; right:calc(100% + 7px); }
+.classic-table .seat-top-right .player-chip-cluster { left:auto; right:calc(100% + 4px); }
 .classic-table .table-bet { position:absolute; left:50%; top:calc(100% + 8px); transform:translateX(-50%); display:flex; align-items:center; gap:5px; width:max-content; white-space:nowrap; }
 .classic-table .seat-bottom .table-bet { top:auto; bottom:calc(100% + 8px); }
 .classic-table .seat-left .table-bet { top:50%; left:calc(100% + 62px); transform:translateY(-50%); }
@@ -58,7 +58,7 @@
 }
 .classic-table .pot-display>.denomination-stack { display:flex; }
 .classic-table { position:relative; }
-@media(max-width:760px) { .chip-pile { width:19px; } .denomination-chip { width:19px; } .table-bet>b { font-size:12px; } .bet-chip-stack { gap:1px; } }
+@media(max-width:760px) { .chip-pile { width:16px; height:calc(10px + (var(--pile-count) - 1)*1.4px); } .denomination-chip { width:16px; height:10px; bottom:calc(var(--chip-index)*1.4px); border-width:1.5px; } .denomination-chip i { font-size:6px; } .table-bet>b { font-size:12px; } .bet-chip-stack { gap:1px; } }
 
 .classic-table .seat-stats .seat-stack { font-size:17px; font-weight:800; font-variant-numeric:tabular-nums; color:#fff9dc; line-height:1.15; }
 .classic-table .seat-commitment { font-size:14px; font-weight:800; line-height:18px; min-width:26px; }
