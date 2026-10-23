@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { LatestAnalysis } from '@/services/latestAnalysis';
-import { PokerApi } from '@/services/pokerApi';
+import { PokerApi, type TrainingBlinds } from '@/services/pokerApi';
 import { TrainingApi } from '@/services/trainingApi';
 import type { ActionReview, ActionType, HandAnalysis, HandState } from '@/types/poker';
 
@@ -59,10 +59,10 @@ export function usePokerHand() {
     }
   }, []);
 
-  const startHand = useCallback(async (playerCount?: number) => run(async () => {
+  const startHand = useCallback(async (playerCount?: number, blinds?: TrainingBlinds) => run(async () => {
     setAnalysis(null);
     setActionReview(null);
-    const next = await PokerApi.startHand(playerCount);
+    const next = await PokerApi.startHand(playerCount, blinds);
     if (tableSize.current !== null && tableSize.current !== next.players.length) setDecisionLog([]);
     tableSize.current = next.players.length;
     await applyState(next);

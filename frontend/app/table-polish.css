@@ -367,3 +367,23 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
 /* Room details live above the table rather than repeating in the header. */
 .room-shell .play-header .room-toolbar { border:0; box-shadow:none; }
 @media(max-width:350px) { .room-shell .play-header:has(.room-toolbar) h1 { font-size:11px; } }
+
+/* All trainer controls share one height; labels sit inside their compact fields. */
+.trainer-shell .play-header-controls { align-items:center; gap:6px; }
+.trainer-settings { display:flex; align-items:center; gap:5px; }
+.trainer-shell .play-header .trainer-setting { display:block; position:relative; height:36px; margin:0; }
+.trainer-shell .play-header .trainer-setting>span { position:absolute; z-index:1; top:3px; left:6px; width:auto; height:auto; padding:0; margin:0; clip-path:none; overflow:visible; pointer-events:none; font-size:8px; line-height:10px; color:var(--muted); }
+.trainer-shell .play-header .trainer-setting select { height:36px; min-height:36px; background-color:var(--panel-soft); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:12px 14px 1px 6px; font-size:11px; background-position:right 4px bottom 6px; }
+.trainer-shell .play-header .seat-count-control select { width:42px; min-width:42px; }
+.trainer-shell .play-header .blind-level-control select { width:58px; min-width:58px; }
+.trainer-shell .play-header .sound-toggle, .trainer-shell .play-header .language-toolbar-inline select { height:36px; min-height:36px; }
+.trainer-shell .play-header .trainer-setting select:disabled { background-image:none; cursor:not-allowed; opacity:.55; }
+@media(max-width:350px) {
+ .trainer-shell .play-header { gap:4px; }
+ .trainer-shell .play-header h1 { font-size:12px; }
+ .trainer-shell .play-header-controls, .trainer-settings { gap:3px; }
+ .trainer-shell .play-header .seat-count-control select { width:36px; min-width:36px; }
+ .trainer-shell .play-header .blind-level-control select { width:52px; min-width:52px; }
+ .trainer-shell .play-header .sound-toggle { width:27px; }
+ .trainer-shell .play-header .language-toolbar-inline select { width:38px; min-width:38px; padding-inline:3px 13px; font-size:10px; }
+}

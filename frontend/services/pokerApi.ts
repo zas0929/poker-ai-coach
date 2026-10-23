@@ -2,6 +2,8 @@ import { ensureProfile } from './trainingApi';
 
 import type { HandAnalysis, HandState, PlayerActionRequest } from '@/types/poker';
 
+export interface TrainingBlinds { small_blind: number; big_blind: number }
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8000';
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
@@ -33,9 +35,14 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 export const PokerApi = {
-  startHand(playerCount?: number) {
-    const query = playerCount === undefined ? '' : `?player_count=${playerCount}`;
-    return request<HandState>(`/api/hand/start${query}`, { method: 'POST' });
+  startHand(playerCount?: number, blinds?: TrainingBlinds) {
+    const query = new URLSearchParams();
+    if (playerCount !== undefined) query.set('player_count', String(playerCount));
+    if (blinds) {
+      query.set('small_blind', String(blinds.small_blind));
+      query.set('big_blind', String(blinds.big_blind));
+    }
+    return request<HandState>(`/api/hand/start${query.size ? `?${query}` : ''}`, { method: 'POST' });
   },
 
   getState() {

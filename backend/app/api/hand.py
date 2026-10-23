@@ -59,16 +59,24 @@ def get_current_state() -> HandState:
 
 @router.post("/start", response_model=HandState)
 @serialized
-def start_hand(player_count: Optional[int] = None):
+def start_hand(player_count: Optional[int] = None, small_blind: Optional[int] = None, big_blind: Optional[int] = None):
     global current_state
     # Refreshing the browser must not discard a live pot or reset its stacks.
     if player_count is not None and (type(player_count) is not int or not 2 <= player_count <= 6):
         raise HTTPException(status_code=400, detail="Choose 2–6 players.")
+    small = small_blind if small_blind is not None else current_state.small_blind if current_state else 5
+    big = big_blind if big_blind is not None else current_state.big_blind if current_state else 10
+    if (type(small) is not int or type(big) is not int
+            or not 1 <= small <= 10000 or not 2 <= big <= 20000 or small >= big):
+        raise HTTPException(status_code=400, detail="Blinds must be positive integers with small blind below big blind (maximum 10000/20000).")
     if current_state is not None and current_state.result is None:
         if player_count is not None and player_count != len(current_state.players):
             raise HTTPException(status_code=409, detail="Finish the hand before changing table size.")
+        if (small, big) != (current_state.small_blind, current_state.big_blind):
+            raise HTTPException(status_code=409, detail="Finish the hand before changing blinds.")
         return current_state
-    current_state = engine.start_hand(previous_state=current_state, player_count=player_count)
+    current_state = engine.start_hand(previous_state=current_state, player_count=player_count,
+                                      small_blind=small, big_blind=big)
     return current_state
 
 

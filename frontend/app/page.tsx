@@ -18,6 +18,7 @@ export default function HomePage() {
   const { t } = useI18n();
   const [panel, setPanel] = useState<string | null>(null);
   const [seatCount, setSeatCount] = useState<number | null>(null);
+  const [blindLevel, setBlindLevel] = useState<string | null>(null);
   const {
     analysis,
     actionReview,
@@ -34,11 +35,16 @@ export default function HomePage() {
   } = usePokerHand();
 
   return (
-    <main className="app-shell play-shell">
+    <main className="app-shell play-shell trainer-shell">
       <AppHeader>
-          <label className="seat-count-control"><span>{t('Players')}</span><select aria-label={t('Players')} value={seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} onChange={(event) => setSeatCount(Number(event.target.value))}>
-            {[2, 3, 4, 5, 6].map((count) => <option key={count} value={count}>{count}</option>)}
-          </select></label>
+          <div className="trainer-settings">
+            <label className="seat-count-control trainer-setting"><span>{t('Players')}</span><select aria-label={t('Players')} value={hand && !hand.result ? hand.players.length : seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} title={hand && !hand.result ? t('Change table settings between hands.') : undefined} onChange={(event) => setSeatCount(Number(event.target.value))}>
+              {[2, 3, 4, 5, 6].map((count) => <option key={count} value={count}>{count}</option>)}
+            </select></label>
+            <label className="blind-level-control trainer-setting"><span>{t('Blinds')}</span><select aria-label={t('Blinds')} value={hand && !hand.result ? `${hand.small_blind}/${hand.big_blind}` : blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`} disabled={isLoading || Boolean(hand && !hand.result)} title={hand && !hand.result ? t('Change table settings between hands.') : undefined} onChange={event => setBlindLevel(event.target.value)}>
+              {['1/2', '2/4', '5/10', '10/20', '25/50', '50/100'].map(level => <option key={level} value={level}>{level}</option>)}
+            </select></label>
+          </div>
       </AppHeader>
       <nav className="play-modes" aria-label={t('Game mode')}>
         <Link href="/" aria-current="page">{t('AI training')}</Link><Link href="/friends">{t('Play with friends')}</Link><Link href="/practice">{t('Practice')}</Link>
@@ -63,7 +69,7 @@ export default function HomePage() {
             onAdvance={advance}
             onAnalyze={analyze}
             tools={<><button aria-haspopup="dialog" onClick={() => setPanel('coach')}>{t('Coach')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button></>}
-            onStartHand={() => startHand(seatCount ?? hand?.players.length ?? 2)}
+            onStartHand={() => { const [small, big] = (blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`).split('/').map(Number); void startHand(seatCount ?? hand?.players.length ?? 2, { small_blind: small, big_blind: big }); }}
           />
         </div>
         <PanelSidebar active={panel} onClose={() => setPanel(null)} panels={[
