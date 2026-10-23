@@ -282,7 +282,7 @@ export default function FriendsPage() {
     : chipNotice;
 
   const roomToolbar = credentials ? (<section className="room-toolbar control-panel">
-            <div><span className="eyebrow">{t('Room')} {credentials.code}</span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
+            <div className="room-identity"><span className="eyebrow"><span>{t('Room')}</span> <b>{credentials.code}</b></span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
             <button className="room-copy-invite" onClick={copyInvite} aria-label={t(copied ? 'Link copied' : 'Copy invitation')} title={t(copied ? 'Link copied' : 'Copy invitation')}><span className="room-invite-label">{t(copied ? 'Link copied' : 'Copy invitation')}</span><span className="room-invite-icon" aria-hidden="true">{copied ? '✓' : '⧉'}</span></button>
             <span className="room-header-context"><span className="room-header-count"><span>{t('Players')}</span><b>{room?.members.length ?? 1}/6</b></span><small className="room-header-blinds"><span>{t('Blinds')}</span><b>{settings.small_blind}/{settings.big_blind}</b></small></span>
             <details className="room-menu" ref={roomMenu} onToggle={event => {

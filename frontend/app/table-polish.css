@@ -290,7 +290,8 @@
 
 /* Labels remain visible even on the narrowest supported phones. */
 @media(min-width:761px) {
- .room-shell .play-header .room-toolbar { order:3; }
+ .room-shell .play-header .room-toolbar { order:0; margin-left:auto; }
+ .room-shell .play-header-controls { margin-left:0; }
 }
 @media(max-width:760px) {
  .play-header .room-header-context { gap:1px; min-width:0; }
@@ -305,4 +306,20 @@
  .room-shell .play-header .room-toolbar { gap:2px; padding-inline:2px; }
  .play-header .room-toolbar>button, .play-header .room-menu>summary { width:23px; }
  .room-shell .play-header .language-toolbar-inline select { width:66px; }
+}
+
+/* A centered second header row keeps the room code readable on phones. */
+@media(max-width:760px) {
+ .room-shell .play-header { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 8px; padding-bottom:6px; }
+ .room-shell .play-header h1 { grid-column:1; grid-row:1; font-size:16px; }
+ .room-shell .play-header-controls { grid-column:2; grid-row:1; margin-left:0; }
+ .room-shell .play-header .room-toolbar { grid-column:1 / -1; grid-row:2; justify-self:center; min-width:min(280px,100%); width:max-content; max-width:100%; padding:4px 6px; gap:10px; justify-content:space-between; }
+ .play-header .room-toolbar>.room-identity { display:grid; flex:none; }
+ .play-header .room-identity .eyebrow { display:grid; gap:2px; font-size:9px; line-height:1.15; }
+ .play-header .room-identity .eyebrow>b { font-size:11px; color:var(--text); letter-spacing:.3px; }
+ .play-header .room-identity>strong { display:none; }
+ .play-header .room-toolbar>button, .play-header .room-menu>summary { width:30px; height:32px; min-height:32px; }
+ .play-header .room-header-context > :is(.room-header-count,.room-header-blinds) { font-size:10px; }
+ .room-header-context b { font-size:10px; }
+ .room-toast { top:104px; }
 }
