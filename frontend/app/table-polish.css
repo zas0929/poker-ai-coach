@@ -275,9 +275,9 @@
  .room-shell .table-meta { display:none; }
 }
 
-/* Give the room group the remaining mobile header space. */
+/* Keep the room group compact on phones. */
 @media(max-width:760px) {
- .room-shell .play-header .room-toolbar { flex:1 1 auto; max-width:none; justify-content:space-between; }
+ .room-shell .play-header .room-toolbar { flex:0 0 auto; max-width:none; justify-content:flex-start; }
  .room-shell .play-header .connection-state { display:none; }
 }
 
@@ -287,3 +287,22 @@
 .room-toast>button { flex:none; display:grid; place-items:center; width:32px; height:32px; min-height:32px; padding:0; font-size:23px; line-height:1; border-radius:8px; }
 .room-toast-error { border-color:var(--danger); }
 @media(max-width:760px) { .room-toast { top:54px; left:12px; right:12px; width:auto; } }
+
+/* Labels remain visible even on the narrowest supported phones. */
+@media(min-width:761px) {
+ .room-shell .play-header .room-toolbar { order:3; }
+}
+@media(max-width:760px) {
+ .play-header .room-header-context { gap:1px; min-width:0; }
+ .play-header .room-header-context > :is(.room-header-count,.room-header-blinds) { display:flex; align-items:center; justify-content:space-between; gap:4px; font-size:9px; white-space:nowrap; }
+ .room-header-context b { font-size:10px; font-weight:600; }
+ .room-header-count b { color:var(--text); }
+}
+@media(max-width:350px) {
+ .room-shell .play-header h1 { font-size:11px; }
+ .play-header .room-header-context > :is(.room-header-count,.room-header-blinds) { font-size:8px; }
+ .room-header-context b { font-size:9px; }
+ .room-shell .play-header .room-toolbar { gap:2px; padding-inline:2px; }
+ .play-header .room-toolbar>button, .play-header .room-menu>summary { width:23px; }
+ .room-shell .play-header .language-toolbar-inline select { width:66px; }
+}
