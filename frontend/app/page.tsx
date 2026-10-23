@@ -36,7 +36,7 @@ export default function HomePage() {
   return (
     <main className="app-shell play-shell">
       <AppHeader>
-          <label className="seat-count-control"><span>{t('Seats')}</span><select aria-label={t('Seats')} value={seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} onChange={(event) => setSeatCount(Number(event.target.value))}>
+          <label className="seat-count-control"><span>{t('Players')}</span><select aria-label={t('Players')} value={seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} onChange={(event) => setSeatCount(Number(event.target.value))}>
             {[2, 3, 4, 5, 6].map((count) => <option key={count} value={count}>{count}</option>)}
           </select></label>
       </AppHeader>
