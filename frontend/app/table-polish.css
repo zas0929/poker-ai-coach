@@ -267,3 +267,23 @@
  .room-shell .play-header-controls { gap:4px; }
  .room-shell .play-header .language-toolbar-inline select { width:70px; }
 }
+
+.room-header-context, .room-header-blinds { display:none; }
+@media(max-width:760px) {
+ .room-header-context { display:grid; justify-items:center; line-height:1.15; }
+ .room-header-blinds { display:block; color:var(--accent); font-size:9px; }
+ .room-shell .table-meta { display:none; }
+}
+
+/* Give the room group the remaining mobile header space. */
+@media(max-width:760px) {
+ .room-shell .play-header .room-toolbar { flex:1 1 auto; max-width:none; justify-content:space-between; }
+ .room-shell .play-header .connection-state { display:none; }
+}
+
+.room-toast { position:fixed; inset:70px 12px auto auto; margin:0; width:max-content; max-width:min(420px,calc(100vw - 24px)); padding:10px 10px 10px 14px; border:1px solid var(--accent); border-radius:12px; background:#1b2a21; color:var(--text); box-shadow:0 8px 28px #0006; font-size:13px; line-height:1.45; }
+.room-toast:popover-open { display:flex; align-items:center; gap:12px; }
+.room-toast>span { min-width:0; overflow-wrap:anywhere; }
+.room-toast>button { flex:none; display:grid; place-items:center; width:32px; height:32px; min-height:32px; padding:0; font-size:23px; line-height:1; border-radius:8px; }
+.room-toast-error { border-color:var(--danger); }
+@media(max-width:760px) { .room-toast { top:54px; left:12px; right:12px; width:auto; } }

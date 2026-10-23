@@ -4,6 +4,7 @@ import { useI18n } from '@/i18n/LanguageProvider';
 
 import Link from 'next/link';
 import AppHeader from '@/components/AppHeader';
+import Toast from '@/components/Toast';
 import { useEffect, useRef, useState } from 'react';
 import ActionPanel from '@/components/ActionPanel';
 import HandHistory from '@/components/HandHistory';
@@ -35,6 +36,8 @@ export default function FriendsPage() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copyNotice, setCopyNotice] = useState(0);
+  const [dismissedChipNotice, setDismissedChipNotice] = useState<string | null>(null);
   const [settingsEntry, setSettingsEntry] = useState<{ code: string; baseline: string; value: SettingsDraft } | null>(null);
   const [clock, setClock] = useState({ now: 0, offset: 0 });
   const socket = useRef<WebSocket | null>(null);
@@ -233,11 +236,12 @@ export default function FriendsPage() {
     try {
       await navigator.clipboard.writeText(`${window.location.origin}/friends?room=${credentials?.code}`);
       setCopied(true);
+      setCopyNotice(value => value + 1);
     } catch { setError('Copy the invitation link from the field below.'); }
   };
   const reset = () => {
     setCredentials(null); setRoom(null); latest.current = null; pending.current = null;
-    setBusy(false); setError(null); setStatus('Choose a room'); setCode(''); setInvited(false);
+    setBusy(false); setError(null); setCopied(false); setDismissedChipNotice(null); setStatus('Choose a room'); setCode(''); setInvited(false);
     window.history.replaceState(null, '', '/friends');
   };
 
@@ -252,7 +256,6 @@ export default function FriendsPage() {
                   {betweenHands ? <button className={`lobby-ready-control ${!me?.ready ? 'primary-button' : ''}`} disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready }, { closePanel: true })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button> : null}
                   <button className={me?.sitting_out ? 'primary-button' : undefined} disabled={busy || !connected || (Boolean(me?.sitting_out) && !betweenHands)} onClick={() => send('sit_out', { sit_out: !me?.sitting_out }, { closePanel: true })}>{t(me?.sitting_out ? 'Return to table' : 'Sit out')}</button>
                 </div>
-                {error ? <p role="alert" className="top-up-error">{t(error)}</p> : null}
                 {canTopUp ? <div className="top-up-controls"><label>{t('Add chips')}<input type="number" inputMode="numeric" min={1} max={1000000 - (me?.stack ?? 0)} value={topUp} onChange={event => setTopUp(event.target.value)} /></label><button disabled={busy || !connected || ownChipRequest?.status === 'pending' || topUp.trim() === '' || !Number.isInteger(Number(topUp)) || Number(topUp) <= 0 || (me?.stack ?? 0) + Number(topUp) > 1000000} onClick={() => send('top_up', { amount: Number(topUp) }, { closePanel: true })}>{t('Request chips')}</button></div> : null}
                 <p className="room-note">{t('Added chips require host approval.')}</p>
                 {me?.sitting_out ? <p>{t("You are sitting out. Current-hand decisions use check/fold automatically; return between hands.")}</p> : null}
@@ -271,13 +274,20 @@ export default function FriendsPage() {
 </section>
   );
 
+  const chipNoticeId = ownChipRequest ? `${room?.code}:${ownChipRequest.request_id}:${ownChipRequest.status}` : null;
+  const chipNotice = ownChipRequest && ownChipRequest.status !== 'pending' && dismissedChipNotice !== chipNoticeId
+    ? { id: chipNoticeId!, message: t(ownChipRequest.status === 'approved' ? 'Host approved: {0} chips added.' : ownChipRequest.status === 'declined' ? 'Host declined the request for {0} chips.' : 'Chip request cancelled.').replace('{0}', String(ownChipRequest.amount)), error: false, dismiss: () => setDismissedChipNotice(chipNoticeId) } : null;
+  const notice = error ? { id: `error:${error}`, message: t(error), error: true, dismiss: () => setError(null) }
+    : copied ? { id: `copy:${copyNotice}`, message: t('Link copied'), error: false, dismiss: () => setCopied(false) }
+    : chipNotice;
+
   const roomToolbar = credentials ? (<section className="room-toolbar control-panel">
             <div><span className="eyebrow">{t('Room')} {credentials.code}</span><strong>{me?.name ?? t('Restoring your seat')} · {room?.members.length ?? 1}/6</strong></div>
             <button className="room-copy-invite" onClick={copyInvite} aria-label={t(copied ? 'Link copied' : 'Copy invitation')} title={t(copied ? 'Link copied' : 'Copy invitation')}><span className="room-invite-label">{t(copied ? 'Link copied' : 'Copy invitation')}</span><span className="room-invite-icon" aria-hidden="true">{copied ? '✓' : '⧉'}</span></button>
-            <span className="room-header-count" aria-label={`${t('Players')}: ${room?.members.length ?? 1}/6`}>{room?.members.length ?? 1}/6</span>
+            <span className="room-header-context"><span className="room-header-count" aria-label={`${t('Players')}: ${room?.members.length ?? 1}/6`}>{room?.members.length ?? 1}/6</span><small className="room-header-blinds" title={`${t('Blinds')} ${settings.small_blind}/${settings.big_blind}`} aria-label={`${t('Blinds')} ${settings.small_blind}/${settings.big_blind}`}>{settings.small_blind}/{settings.big_blind}</small></span>
             <details className="room-menu" ref={roomMenu} onToggle={event => {
               if (event.currentTarget.open) event.currentTarget.style.setProperty('--room-menu-top', `${event.currentTarget.getBoundingClientRect().bottom + 8}px`);
-            }}><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content"><strong>{t('Room')} {credentials.code} · {me?.name}</strong>
+            }}><summary aria-label={t('Table options')}>⋯</summary><div className="room-menu-content"><strong>{t('Room')} {credentials.code} · {me?.name}</strong><small>{t('Blinds')} {settings.small_blind} / {settings.big_blind}</small>
               <label className="auto-deal-option"><input type="checkbox" checked={settings.auto_deal} disabled={!isHost || busy || !connected || !betweenHands} onChange={event => send('auto_deal', { auto_deal: event.target.checked })} />{t('Automatically ready and deal next hands')}</label>
               <small>{t(!betweenHands ? 'Change automatic dealing between hands.' : isHost ? 'Enable to ready active players and start the next-hand countdown.' : 'Only the host can change automatic dealing.')}</small>
               <label>{t('Invitation link')}<input className="invite-field" readOnly value={typeof window === 'undefined' ? '' : `${window.location.origin}/friends?room=${credentials.code}`} /></label>
@@ -298,8 +308,8 @@ export default function FriendsPage() {
           <div><button className="primary-button" disabled={busy || !connected} onClick={() => send('approve_top_up', { request_id: request.request_id })}>{t('Approve')}</button><button disabled={busy || !connected} onClick={() => send('decline_top_up', { request_id: request.request_id })}>{t('Decline')}</button></div>
         </div>)}
       </section> : null}
-      {ownChipRequest ? <p role="status" className="chip-request-status">{t(ownChipRequest.status === 'pending' ? 'Chip request: {0}. Waiting for host approval.' : ownChipRequest.status === 'approved' ? 'Host approved: {0} chips added.' : ownChipRequest.status === 'declined' ? 'Host declined the request for {0} chips.' : 'Chip request cancelled.').replace('{0}', String(ownChipRequest.amount))}</p> : null}
-      {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button onClick={() => setError(null)}>{t("Dismiss")}</button></div> : null}
+      {ownChipRequest?.status === 'pending' ? <p role="status" className="chip-request-status">{t('Chip request: {0}. Waiting for host approval.').replace('{0}', String(ownChipRequest.amount))}</p> : null}
+      {notice ? <Toast key={notice.id} message={notice.message} error={notice.error} onDismiss={notice.dismiss} /> : null}
       {!credentials ? (
         <section className="room-entry control-panel">
           <h2>{t("Your private poker table")}</h2>
