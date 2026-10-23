@@ -92,15 +92,15 @@ function Seat({
 }
 
 export default function PokerTable(props: PokerTableProps) {
-  const { play } = useTableSound();
+  const { play, ready } = useTableSound();
   const lastDeal = useRef<{ id: string; board: number } | null>(null);
   const lastTimer = useRef('');
   const lastSoundHand = useRef<HandState | null>(null);
   useEffect(() => {
     const hand = props.hand;
-    if (!hand || props.silent) return;
+    if (!hand || props.silent || !ready) return;
     const previous = lastDeal.current;
-    if (previous?.id !== hand.hand_id) play('deal', hand.players.length * 2);
+    if (previous?.id !== hand.hand_id && !hand.result) play('deal', hand.players.length * 2);
     const events = newActionSounds(lastSoundHand.current, hand);
     for (const kind of ['check', 'chips'] as const) {
       const count = events.filter(event => event === kind).length;
@@ -108,13 +108,13 @@ export default function PokerTable(props: PokerTableProps) {
     }
     lastSoundHand.current = hand;
     lastDeal.current = { id: hand.hand_id, board: hand.board.length };
-  }, [props.hand, props.silent, play]);
+  }, [props.hand, props.silent, play, ready]);
   useEffect(() => {
     const hand = props.hand;
-    if (!hand || hand.result || !props.turnTimer || props.silent) return;
+    if (!hand || hand.result || !props.turnTimer || props.silent || !ready) return;
     const turn = `${hand.hand_id}:${hand.history.length}:${props.turnTimer.playerId}`;
     if (lastTimer.current !== turn) { play('timer'); lastTimer.current = turn; }
-  }, [props.hand, props.turnTimer, props.silent, play]);
+  }, [props.hand, props.turnTimer, props.silent, play, ready]);
   const key = props.hand?.hand_id ?? 'empty';
   return <TableScene key={key} {...props} />;
 }

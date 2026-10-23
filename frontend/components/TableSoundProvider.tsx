@@ -6,10 +6,11 @@ import { useI18n } from '@/i18n/LanguageProvider';
 
 export type TableSound = 'deal' | 'timer' | 'check' | 'chips' | 'win' | 'reveal';
 
-const SoundContext = createContext<{ enabled: boolean; toggle: () => void; play: (kind: TableSound, count?: number) => void }>({ enabled: true, toggle: () => {}, play: () => {} });
+const SoundContext = createContext<{ enabled: boolean; ready: boolean; toggle: () => void; play: (kind: TableSound, count?: number) => void }>({ enabled: true, ready: false, toggle: () => {}, play: () => {} });
 
 export function TableSoundProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(true);
+  const [ready, setReady] = useState(false);
   const preference = useRef(true);
   const audio = useRef<AudioContext | null>(null);
   const master = useRef<GainNode | null>(null);
@@ -31,12 +32,16 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
     try {
       if (!audio.current) {
         audio.current = new AudioContext();
+        const context = audio.current;
+        context.onstatechange = () => setReady(context.state === 'running');
         master.current = audio.current.createGain();
         master.current.gain.value = .18;
         master.current.connect(audio.current.destination);
       }
       prepareSamples(audio.current);
-      if (audio.current.state === 'suspended') void audio.current.resume().catch(() => {});
+      const context = audio.current;
+      if (context.state !== 'running') void context.resume().then(() => setReady(context.state === 'running')).catch(() => {});
+      else setReady(true);
     } catch { /* Audio is optional on unsupported or restricted devices. */ }
   }, [prepareSamples]);
   useEffect(() => {
@@ -49,12 +54,19 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
         setEnabled(false);
       }
     } catch { /* Storage is optional. */ }
-    window.addEventListener('pointerdown', unlock);
-    window.addEventListener('keydown', unlock);
+    window.addEventListener('pointerdown', unlock, true);
+    window.addEventListener('touchend', unlock, true);
+    window.addEventListener('click', unlock, true);
+    window.addEventListener('keydown', unlock, true);
     return () => {
-      window.removeEventListener('pointerdown', unlock);
-      window.removeEventListener('keydown', unlock);
-      if (audio.current) void audio.current.close().catch(() => {});
+      window.removeEventListener('pointerdown', unlock, true);
+      window.removeEventListener('touchend', unlock, true);
+      window.removeEventListener('click', unlock, true);
+      window.removeEventListener('keydown', unlock, true);
+      if (audio.current) {
+        audio.current.onstatechange = null;
+        void audio.current.close().catch(() => {});
+      }
       audio.current = null; master.current = null;
       sampleCache.clear();
     };
@@ -72,9 +84,9 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
     try {
       if (kind === 'chips' || kind === 'win') {
         prepareSamples(context);
-        const requestedAt = context.currentTime;
+        const requestedAt = Date.now();
         void chipSamples.current.get(kind)?.then(buffer => {
-          if (!preference.current || audio.current !== context || context.state !== 'running' || context.currentTime - requestedAt > .4) return;
+          if (!preference.current || audio.current !== context || context.state !== 'running' || Date.now() - requestedAt > 2000) return;
           // One recording per event: no synthetic repeats of the single chip drop.
           const source = context.createBufferSource(), gain = context.createGain();
           source.buffer = buffer;
@@ -114,7 +126,7 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
       }
     } catch { /* Never interrupt gameplay because of an audio error. */ }
   }, [prepareSamples]);
-  return <SoundContext.Provider value={{ enabled, toggle, play }}>{children}</SoundContext.Provider>;
+  return <SoundContext.Provider value={{ enabled, ready, toggle, play }}>{children}</SoundContext.Provider>;
 }
 
 export const useTableSound = () => useContext(SoundContext);
