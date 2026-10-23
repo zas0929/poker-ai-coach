@@ -255,15 +255,33 @@ function ChipStack({ amount, className = '' }: { amount: number; className?: str
   const { t } = useI18n();
   const piles = chipBreakdown(amount);
   if (!piles.length) return null;
-  return <div className={`denomination-stack ${className}`} role="img" aria-label={`${t('Chips')}: ${amount}`}>
-    {piles.flatMap(pile => Array.from({ length: Math.ceil(pile.count / 10) }, (_, pileIndex) => {
-      const count = Math.min(10, pile.count - pileIndex * 10);
-      return <div className="chip-pile" key={`${pile.value}-${pileIndex}`} style={{ '--chip-color': pile.color, '--chip-ink': pile.ink, '--pile-count': count } as CSSProperties}>
+  const physicalPiles = piles.flatMap(pile => Array.from({ length: Math.ceil(pile.count / 10) }, (_, pileIndex) => ({ ...pile, count: Math.min(10, pile.count - pileIndex * 10), pileIndex })));
+  const clustered = className.includes('player-chip-cluster');
+  // Concentric groups keep each denomination separate, including unusually large stacks.
+  const positions = physicalPiles.map((_, index) => {
+    if (physicalPiles.length <= 6) {
+      const radius = [0, 0, 12, 15, 17, 21, 23][physicalPiles.length];
+      const angle = -Math.PI / 2 + index * Math.PI * 2 / physicalPiles.length;
+      return { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius * .85 };
+    }
+    if (index === 0) return { x: 0, y: 0 };
+    let ring = 1, slot = index - 1;
+    while (slot >= ring * 6) { slot -= ring * 6; ring++; }
+    const angle = -Math.PI / 2 + slot * Math.PI * 2 / (ring * 6);
+    return { x: Math.cos(angle) * ring * 24, y: Math.sin(angle) * ring * 21 };
+  });
+  const radiusX = Math.max(...positions.map(p => Math.abs(p.x)));
+  const radiusY = Math.max(...positions.map(p => Math.abs(p.y)));
+  const clusterStyle = clustered ? { '--cluster-width': radiusX * 2 + 20, '--cluster-height': radiusY * 2 + 29, '--cluster-base': radiusY } as CSSProperties : undefined;
+  return <div className={`denomination-stack ${className}`} style={clusterStyle} role="img" aria-label={`${t('Chips')}: ${amount}`}>
+    {physicalPiles.map((pile, index) => {
+      const count = pile.count;
+      return <div className="chip-pile" key={`${pile.value}-${pile.pileIndex}`} style={{ '--chip-color': pile.color, '--chip-ink': pile.ink, '--pile-count': count, ...(clustered ? { '--pile-x': positions[index].x, '--pile-y': positions[index].y, zIndex: Math.round(positions[index].y + radiusY) } : {}) } as CSSProperties}>
         {Array.from({ length: count }, (_, index) => <span className="denomination-chip" key={index} style={{ '--chip-index': index } as CSSProperties}>
           {index === count - 1 ? <i>{pile.value >= 1000 ? `${pile.value / 1000}k` : pile.value}</i> : null}
         </span>)}
       </div>;
-    }))}
+    })}
   </div>;
 }
 

@@ -488,3 +488,26 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
  .classic-table :is(.table-seats-4,.table-seats-6) .seat-top .player-chip-cluster { position:absolute; left:calc(100% + 4px); right:auto; top:50%; display:grid; transform:translateY(-50%); }
  .classic-table :is(.table-seats-4,.table-seats-6) .seat-top .table-bet { position:absolute; left:50%; right:auto; top:calc(100% + 8px); transform:translateX(-50%); }
 }
+
+/* Bankroll piles form a compact circle, separate from the straight committed bets. */
+.classic-table .player-chip-cluster {
+ --cluster-unit:1px; display:block!important; width:calc(var(--cluster-width)*var(--cluster-unit)); height:calc(var(--cluster-height)*var(--cluster-unit));
+}
+.classic-table .player-chip-cluster>.chip-pile {
+ position:absolute; left:calc(50% + var(--pile-x)*var(--cluster-unit)); bottom:calc((var(--cluster-base) - var(--pile-y))*var(--cluster-unit)); transform:translateX(-50%);
+}
+@media(min-width:761px) {
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) :is(.seat-top-left,.seat-top-right) .seat-money { width:0; height:0; }
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) .seat-top-left .player-chip-cluster { position:absolute; left:-90px; right:auto; top:12px; transform:translate(-50%,-50%); }
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) .seat-top-right .player-chip-cluster { position:absolute; left:90px; right:auto; top:12px; transform:translate(-50%,-50%); }
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) .seat-top-left .table-bet { left:41px; }
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) .seat-top-right .table-bet { left:-41px; }
+ .classic-table :is(.table-seats-4,.table-seats-6) .seat-top .player-chip-cluster { left:calc(100% + 12px); top:85%; }
+ .classic-table :is(.table-seats-5,.table-seats-6) .seat-left .player-chip-cluster { left:calc(100% + 22px); top:25%; }
+ .classic-table :is(.table-seats-5,.table-seats-6) .seat-right .player-chip-cluster { right:calc(100% + 22px); top:25%; }
+}
+@media(max-width:760px) { .classic-table .player-chip-cluster { --cluster-unit:.8px; } }
+
+@media(max-width:760px) {
+ .classic-table :is(.table-seats-4,.table-seats-5,.table-seats-6) :is(.seat-top,.seat-top-left,.seat-top-right) .player-chip-cluster { position:relative; left:auto; right:auto; top:auto; transform:none; }
+}
