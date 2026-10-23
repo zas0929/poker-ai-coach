@@ -13,6 +13,19 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
   const preference = useRef(true);
   const audio = useRef<AudioContext | null>(null);
   const master = useRef<GainNode | null>(null);
+  const chipSamples = useRef(new Map<'chips' | 'win', Promise<AudioBuffer>>());
+  const prepareSamples = useCallback((context: AudioContext) => {
+    for (const kind of ['chips', 'win'] as const) {
+      if (chipSamples.current.has(kind)) continue;
+      const file = kind === 'chips' ? 'chip-bet.wav' : 'pot-win.wav';
+      const pending = fetch(`/audio/${file}`).then(response => {
+        if (!response.ok) throw new Error('Sound unavailable');
+        return response.arrayBuffer();
+      }).then(bytes => context.decodeAudioData(bytes));
+      chipSamples.current.set(kind, pending);
+      void pending.catch(() => { chipSamples.current.delete(kind); });
+    }
+  }, []);
   const unlock = useCallback(() => {
     if (!preference.current || typeof window === 'undefined' || !('AudioContext' in window)) return;
     try {
@@ -22,10 +35,12 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
         master.current.gain.value = .18;
         master.current.connect(audio.current.destination);
       }
+      prepareSamples(audio.current);
       if (audio.current.state === 'suspended') void audio.current.resume().catch(() => {});
     } catch { /* Audio is optional on unsupported or restricted devices. */ }
-  }, []);
+  }, [prepareSamples]);
   useEffect(() => {
+    const sampleCache = chipSamples.current;
     try {
       const saved = localStorage.getItem('poker-sound');
       if (saved === 'off') {
@@ -41,6 +56,7 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
       window.removeEventListener('keydown', unlock);
       if (audio.current) void audio.current.close().catch(() => {});
       audio.current = null; master.current = null;
+      sampleCache.clear();
     };
   }, [unlock]);
   const toggle = useCallback(() => {
@@ -54,12 +70,27 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
     const context = audio.current, output = master.current;
     if (!preference.current || !context || !output || context.state !== 'running') return;
     try {
-      const notes = kind === 'timer' ? 2 : kind === 'check' ? 2 : kind === 'win' ? 5 : kind === 'chips' ? Math.min(4, Math.max(2, count * 2)) : Math.min(12, Math.max(1, count));
+      if (kind === 'chips' || kind === 'win') {
+        prepareSamples(context);
+        const requestedAt = context.currentTime;
+        void chipSamples.current.get(kind)?.then(buffer => {
+          if (!preference.current || audio.current !== context || context.state !== 'running' || context.currentTime - requestedAt > .4) return;
+          // One recording per event: no synthetic repeats of the single chip drop.
+          const source = context.createBufferSource(), gain = context.createGain();
+          source.buffer = buffer;
+          gain.gain.value = .8;
+          source.connect(gain); gain.connect(output);
+          source.start();
+          source.onended = () => { source.disconnect(); gain.disconnect(); };
+        }).catch(() => {});
+        return;
+      }
+      const notes = kind === 'timer' ? 2 : kind === 'check' ? 2 : Math.min(12, Math.max(1, count));
       for (let index = 0; index < notes; index++) {
-        const at = context.currentTime + .01 + index * (kind === 'timer' ? .14 : kind === 'check' ? .09 : kind === 'win' || kind === 'chips' ? .095 : .085);
+        const at = context.currentTime + .01 + index * (kind === 'timer' ? .14 : kind === 'check' ? .09 : .085);
         const gain = context.createGain();
         gain.connect(output);
-        if (kind === 'deal' || kind === 'reveal' || kind === 'chips' || kind === 'win') {
+        if (kind === 'deal' || kind === 'reveal') {
           const samples = tableAudioSamples(kind, context.sampleRate, index);
           const buffer = context.createBuffer(1, samples.length, context.sampleRate);
           buffer.getChannelData(0).set(samples);
@@ -82,7 +113,7 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
         }
       }
     } catch { /* Never interrupt gameplay because of an audio error. */ }
-  }, []);
+  }, [prepareSamples]);
   return <SoundContext.Provider value={{ enabled, toggle, play }}>{children}</SoundContext.Provider>;
 }
 
