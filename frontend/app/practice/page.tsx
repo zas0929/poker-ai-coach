@@ -97,7 +97,7 @@ export default function PracticePage() {
             <div className="practice-buttons"><button className="primary-button" disabled={loading || !question || !validAnswer || Boolean(result)} onClick={() => void submit()}>{t("Check answer")}</button><button disabled={loading} onClick={() => void next(kind)}>{t(result ? 'Next exercise' : 'Skip exercise')}</button></div>
             {result ? <div className={`practice-feedback ${result.correct ? 'practice-correct' : 'practice-retry'}`} role="status"><h3>{t(result.correct ? 'Correct' : 'Review this answer')}</h3><p>{t(result.explanation)}</p>{result.tolerance_percentage_points !== null ? <small>{t("Accepted rounding: ±")}{t(result.tolerance_percentage_points)}{t(" percentage points.")}</small> : null}</div> : null}
           </section>
-          <PokerTable hand={question?.hand ?? null} seatCount={question?.hand.players.length ?? 2} />
+          <PokerTable silent hand={question?.hand ?? null} seatCount={question?.hand.players.length ?? 2} />
           <HandHistory hand={question?.hand ?? null} />
         </div>
         <aside className="side-column">

@@ -3,7 +3,9 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useI18n } from '@/i18n/LanguageProvider';
 
-const SoundContext = createContext<{ enabled: boolean; toggle: () => void; play: (kind: 'deal' | 'timer', count?: number) => void }>({ enabled: true, toggle: () => {}, play: () => {} });
+export type TableSound = 'deal' | 'timer' | 'check' | 'chips' | 'win' | 'reveal';
+
+const SoundContext = createContext<{ enabled: boolean; toggle: () => void; play: (kind: TableSound, count?: number) => void }>({ enabled: true, toggle: () => {}, play: () => {} });
 
 export function TableSoundProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(true);
@@ -47,23 +49,44 @@ export function TableSoundProvider({ children }: { children: ReactNode }) {
     if (next) unlock();
     if (master.current && audio.current) master.current.gain.setValueAtTime(next ? .18 : 0, audio.current.currentTime);
   }, [unlock]);
-  const play = useCallback((kind: 'deal' | 'timer', count = 1) => {
+  const play = useCallback((kind: TableSound, count = 1) => {
     const context = audio.current, output = master.current;
     if (!preference.current || !context || !output || context.state !== 'running') return;
     try {
-      const notes = kind === 'timer' ? 2 : Math.min(12, Math.max(1, count));
+      const notes = kind === 'timer' ? 2 : kind === 'check' ? 2 : kind === 'win' ? 8 : Math.min(12, Math.max(1, count));
       for (let index = 0; index < notes; index++) {
-        const at = context.currentTime + .01 + index * (kind === 'timer' ? .14 : .065);
-        const oscillator = context.createOscillator(), gain = context.createGain();
-        oscillator.type = kind === 'timer' ? 'sine' : 'triangle';
-        oscillator.frequency.setValueAtTime(kind === 'timer' ? (index ? 1046 : 784) : 700, at);
-        if (kind === 'deal') oscillator.frequency.exponentialRampToValueAtTime(180, at + .035);
-        gain.gain.setValueAtTime(.001, at);
-        gain.gain.exponentialRampToValueAtTime(kind === 'timer' ? .18 : .1, at + .006);
-        gain.gain.exponentialRampToValueAtTime(.001, at + (kind === 'timer' ? .11 : .045));
-        oscillator.connect(gain); gain.connect(output);
-        oscillator.start(at); oscillator.stop(at + .13);
-        oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+        const at = context.currentTime + .01 + index * (kind === 'timer' ? .14 : kind === 'check' ? .09 : .055);
+        const gain = context.createGain();
+        gain.connect(output);
+        if (kind === 'deal' || kind === 'reveal' || kind === 'chips' || kind === 'win') {
+          // Short filtered noise gives cards a paper swish and chips a crisp rattle.
+          const duration = kind === 'reveal' ? .12 : .065;
+          const buffer = context.createBuffer(1, Math.ceil(context.sampleRate * duration), context.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+          const noise = context.createBufferSource(), filter = context.createBiquadFilter();
+          noise.buffer = buffer;
+          filter.type = 'bandpass';
+          filter.frequency.value = kind === 'deal' || kind === 'reveal' ? 1600 : 3800 + index * 80;
+          filter.Q.value = kind === 'deal' || kind === 'reveal' ? .7 : 3;
+          gain.gain.setValueAtTime(.001, at);
+          gain.gain.exponentialRampToValueAtTime(.5, at + .004);
+          gain.gain.exponentialRampToValueAtTime(.001, at + duration);
+          noise.connect(filter); filter.connect(gain);
+          noise.start(at); noise.stop(at + duration);
+          noise.onended = () => { noise.disconnect(); filter.disconnect(); gain.disconnect(); };
+        } else {
+          const oscillator = context.createOscillator();
+          oscillator.type = 'sine';
+          oscillator.frequency.setValueAtTime(kind === 'timer' ? (index ? 1046 : 784) : 155, at);
+          if (kind === 'check') oscillator.frequency.exponentialRampToValueAtTime(65, at + .065);
+          gain.gain.setValueAtTime(.001, at);
+          gain.gain.exponentialRampToValueAtTime(kind === 'timer' ? .18 : .65, at + .004);
+          gain.gain.exponentialRampToValueAtTime(.001, at + (kind === 'timer' ? .11 : .07));
+          oscillator.connect(gain);
+          oscillator.start(at); oscillator.stop(at + .13);
+          oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+        }
       }
     } catch { /* Never interrupt gameplay because of an audio error. */ }
   }, []);

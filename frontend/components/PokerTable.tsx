@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 
 import { useTableSound } from '@/components/TableSoundProvider';
+import { newActionSounds } from '@/services/tableSounds';
 import { chipBreakdown } from '@/services/chips';
 import CardView from '@/components/CardView';
 import type { HandAction, HandState, Player, Street } from '@/types/poker';
@@ -19,6 +20,7 @@ interface PokerTableProps {
   viewerId?: string;
   emptyStack?: number;
   turnTimer?: TurnTimer | null;
+  silent?: boolean;
 }
 
 function Seat({
@@ -93,26 +95,34 @@ export default function PokerTable(props: PokerTableProps) {
   const { play } = useTableSound();
   const lastDeal = useRef<{ id: string; board: number } | null>(null);
   const lastTimer = useRef('');
+  const lastSoundHand = useRef<HandState | null>(null);
   useEffect(() => {
     const hand = props.hand;
-    if (!hand) return;
+    if (!hand || props.silent) return;
     const previous = lastDeal.current;
     if (previous?.id !== hand.hand_id) play('deal', hand.players.length * 2);
-    else if (hand.board.length > previous.board) play('deal', hand.board.length - previous.board);
+    const events = newActionSounds(lastSoundHand.current, hand);
+    for (const kind of ['check', 'chips'] as const) {
+      const count = events.filter(event => event === kind).length;
+      if (count) play(kind, count);
+    }
+    lastSoundHand.current = hand;
     lastDeal.current = { id: hand.hand_id, board: hand.board.length };
-  }, [props.hand, play]);
+  }, [props.hand, props.silent, play]);
   useEffect(() => {
     const hand = props.hand;
-    if (!hand || hand.result || !props.turnTimer) return;
+    if (!hand || hand.result || !props.turnTimer || props.silent) return;
     const turn = `${hand.hand_id}:${hand.history.length}:${props.turnTimer.playerId}`;
     if (lastTimer.current !== turn) { play('timer'); lastTimer.current = turn; }
-  }, [props.hand, props.turnTimer, play]);
+  }, [props.hand, props.turnTimer, props.silent, play]);
   const key = props.hand?.hand_id ?? 'empty';
   return <TableScene key={key} {...props} />;
 }
 
-function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer }: PokerTableProps) {
+function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer, silent = false }: PokerTableProps) {
   const { t } = useI18n();
+  const { play } = useTableSound();
+  const previousBoard = useRef(hand && isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand?.board.length ?? 0);
   const [displayedBoardCount, setDisplayedBoardCount] = useState(() =>
     hand ? (isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand.board.length) : 0,
   );
@@ -132,6 +142,10 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
     [boardCount, hand?.board],
   );
   const seats = tableSeats(hand, seatCount, viewerId);
+  useEffect(() => {
+    if (!silent && boardCount > previousBoard.current) play('reveal', boardCount - previousBoard.current);
+    previousBoard.current = boardCount;
+  }, [boardCount, play, silent]);
 
 
   useEffect(() => {
@@ -155,6 +169,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
       if (!table || !pot) return;
       const origin = pot.getBoundingClientRect();
       const bounds = table.getBoundingClientRect();
+      if (!silent) play('win');
       setFlights(hand.result!.player_results.filter(payout => payout.amount_won > 0).flatMap(payout => {
         const seat = Array.from(table.querySelectorAll<HTMLElement>('[data-player-id]')).find(item => item.dataset.playerId === payout.player_id);
         if (!seat) return [];
@@ -174,7 +189,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
       window.clearTimeout(timer);
       window.clearTimeout(completionTimer);
     };
-  }, [hand, runoutComplete, potTransferred]);
+  }, [hand, runoutComplete, potTransferred, play, silent]);
 
   return (
     <section className={`table-surface classic-table ${hand?.result ? "has-result" : ""}`} aria-label={t("Poker table")}>
