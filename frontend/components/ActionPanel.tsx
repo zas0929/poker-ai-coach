@@ -83,11 +83,12 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
   const isRecommended = (action: ActionType) => analysis?.recommended_action === action && canAct ? ' recommended-action' : '';
   const passiveAction = allows('check') ? 'check' : 'call';
 
-  return <section className="control-panel action-dock" aria-label={t('Table actions')}>
+  return <section className={`control-panel action-dock${trainingControls ? ' trainer-actions' : ''}`} aria-label={t('Table actions')}>
     <div className="turn-strip">
       <strong role="status">{isLoading ? t('Sending…') : waitingLabel ?? t(handEnded ? 'Hand complete' : canAct ? 'Your turn' : actionClosed ? 'Action closed' : 'Waiting')}
         {!isLoading && !handEnded && currentPlayer && !canAct ? <span> · {displayPlayer(currentPlayer, t)}</span> : null}
       </strong>
+      {trainingControls && canAct && analysis ? <span className="coach-action-hint" role="status">{t('Coach: {0}').replace('{0}', t(analysis.recommended_action))}</span> : null}
       {secondsLeft !== null && secondsLeft !== undefined && !handEnded ? <span className={`dock-clock ${secondsLeft <= 10 ? 'urgent' : ''}`} role="timer" aria-label={t('Time remaining')}>{secondsLeft}s</span> : <span>{t('Stack')} <b>{heroStack}</b></span>}
     </div>
     {pausedActions ? <div className="hand-actions">{pausedActions}</div> : !hand || handEnded || actionClosed ? <div className="hand-actions">
