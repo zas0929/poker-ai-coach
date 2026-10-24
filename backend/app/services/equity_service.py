@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 from itertools import accumulate
 import json
-from math import log, sqrt
+from math import isfinite, log, sqrt
 import random
 
 from app.models.poker import Card, HandState, PlayerStatus, Rank, Suit
@@ -40,15 +40,14 @@ class EquityService:
         known_cards = [*player.cards, *state.board]
         if len({(c.rank, c.suit) for c in known_cards}) != len(known_cards):
             raise ValueError("Player cards and board must be distinct.")
-        if simulations <= 0:
+        if type(simulations) is not int or simulations <= 0:
             raise ValueError("Simulation count must be positive.")
         live_opponents = [p for p in state.players if p.id != player_id and p.status != PlayerStatus.FOLDED]
         if len(live_opponents) > 1:
             ranges = opponent_ranges or [self.range_service.infer(state, player_id, p.id) for p in live_opponents]
             return self._estimate_multiway(state, player_id, ranges, simulations)
         inferred = opponent_range or self.range_service.infer(state, player_id)
-        if not inferred.combos:
-            raise ValueError("Opponent range has no legal combinations.")
+        self._validate_range(inferred, known_cards)
         cumulative = list(accumulate(c.weight for c in inferred.combos))
         total = cumulative[-1]
         if total <= 0 or any(c.weight < 0 for c in inferred.combos):
@@ -90,6 +89,8 @@ class EquityService:
         player = self._get_player(state, player_id)
         if len(ranges) != sum(p.id != player_id and p.status != PlayerStatus.FOLDED for p in state.players):
             raise ValueError("Provide one range per live opponent.")
+        for inferred in ranges:
+            self._validate_range(inferred, [*player.cards, *state.board])
         cumulative = [list(accumulate(c.weight for c in r.combos)) for r in ranges]
         if any(not c or c[-1] <= 0 for c in cumulative):
             raise ValueError("All opponent ranges need positive legal weight.")
@@ -121,6 +122,25 @@ class EquityService:
                 wins += 1 / scores.count(best)
         return EquityEstimate(round(wins / simulations, 4), 'monte_carlo_multiway', simulations,
                               round(sqrt(log(40) / (2 * simulations)), 4))
+
+    @staticmethod
+    def _validate_range(inferred: OpponentRange, known_cards: list[Card]) -> None:
+        """Validate supplied ranges as strictly as the internally inferred ones."""
+        known = {(c.rank, c.suit) for c in known_cards}
+        seen = set()
+        total = 0.0
+        for combo in inferred.combos:
+            keys = frozenset((c.rank, c.suit) for c in combo.cards)
+            if len(combo.cards) != 2 or len(keys) != 2 or keys.intersection(known):
+                raise ValueError("Opponent range contains duplicate or blocked cards.")
+            if keys in seen:
+                raise ValueError("Opponent range contains duplicate combinations.")
+            seen.add(keys)
+            if not isfinite(combo.weight) or combo.weight < 0:
+                raise ValueError("Opponent range weights must be finite and nonnegative.")
+            total += combo.weight
+        if not isfinite(total) or total <= 0:
+            raise ValueError("Opponent range needs a positive finite total weight.")
 
     def _score(self, cards: list[Card]) -> tuple:
         return self.evaluator.score(cards)
