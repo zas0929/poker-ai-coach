@@ -299,3 +299,9 @@ full-support controls (1081 hands per live seat): blockers alone distinguish eve
 hand. The audit does not run CFR or admit advice. See
 [docs/SOLVER_WIDE_RANGE_AUDIT.md](docs/SOLVER_WIDE_RANGE_AUDIT.md) for 27 bounded
 controls and the next strategy-abstraction experiment preserving original deals.
+
+An offline strategy-abstraction prototype now ties strategy rows while retaining
+all original deals and payoffs. Thirty small full-game controls and three longer
+failure probes found that simple category/equity bins are not reliable enough;
+quality is measured by unrestricted best responses after lifting to original hands.
+See [docs/SOLVER_STRATEGY_ABSTRACTION.md](docs/SOLVER_STRATEGY_ABSTRACTION.md).
