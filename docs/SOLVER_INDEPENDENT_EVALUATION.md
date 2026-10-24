@@ -155,3 +155,6 @@ PYTHONPATH=backend backend/.venv/bin/python -m unittest backend.tests.test_indep
 компиляции нет.
 
 Полная регрессия backend: 408 тестов, успешно, 3 пропущены.
+
+Следующий этап завершён отдельно:
+[фиксированный ответ и парная проверка на третьей выборке](SOLVER_FIXED_DEVIATION.md).

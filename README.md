@@ -374,3 +374,10 @@ ten known small exact games. Across 180 evaluations, naive sample estimates
 produced false refusals; conservative finite-response confidence envelopes
 covered exact values but admitted no policy. They remain too wide for a practical
 quality gate. See [docs/SOLVER_INDEPENDENT_EVALUATION.md](docs/SOLVER_INDEPENDENT_EVALUATION.md).
+
+A third-sample diagnostic now freezes a legal response before testing paired
+payoff differences. On the same ten small known games, pairing usually lowered
+variance, but 180 checks confirmed no small threshold violations; one candidate
+also missed a defect known to the exact best response. A separate obvious-blunder
+test confirms the detection path works. This never admits quality or live advice.
+See [docs/SOLVER_FIXED_DEVIATION.md](docs/SOLVER_FIXED_DEVIATION.md).
