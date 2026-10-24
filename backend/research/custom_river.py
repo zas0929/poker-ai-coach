@@ -1,6 +1,6 @@
 """Original, bounded multi-player river CFR experiment; NEVER a production GTO claim.
 
-Explicit bet/raise totals, bounded raises, equal stacks, one betting round, small ranges.
+Explicit bet/raise totals, bounded raises, unequal stacks/side pots, one betting round, small ranges.
 For 3+ players CFR is an experiment, without the 2-player zero-sum convergence
 claim. Exact unilateral best responses measure the resulting policy instead.
 """
@@ -23,33 +23,53 @@ class Node:
 
 class RiverGame:
     def __init__(self, board, ranges, pot=100, bet=50, stack=100, *,
-                 bet_sizes=None, raise_sizes=(), max_raises=0, min_bet=1, max_nodes=20000):
+                 bet_sizes=None, raise_sizes=(), max_raises=0, min_bet=1, max_nodes=20000,
+                 stacks=None, initial_contributions=None, dealer=None):
         n=len(ranges)
         if not 2<=n<=6 or len(board)!=5 or len(set(board))!=5 or not all(re.fullmatch(r'[2-9TJQKA][cdhs]', c) for c in board):
             raise ValueError('Two to six players and five distinct river cards required.')
         board_cards=cards(''.join(board))
         if len(board_cards)!=5:raise ValueError('Invalid board.')
-        if any(type(v) is not int or not 0<v<=10000 for v in ((pot,bet,stack) if bet_sizes is None else (pot,stack))) or (bet_sizes is None and bet>stack):
-            raise ValueError('Positive integer pot/bet/stack, bet <= equal stack required.')
-        if type(min_bet) is not int or not 1<=min_bet<=stack:
-            raise ValueError('Positive integer minimum bet no larger than stack required.')
+        if type(pot) is not int or not 0<pot<=10000:
+            raise ValueError('Positive integer pot up to 10000 required.')
+        if stacks is None:
+            if type(stack) is not int or not 0<stack<=10000:
+                raise ValueError('Positive integer equal stack required.')
+            stacks=(stack,)*n
+        self.stacks=tuple(stacks)
+        if len(self.stacks)!=n or any(type(v) is not int or not 0<=v<=10000 for v in self.stacks):
+            raise ValueError('One integer remaining stack (0–10000) per seat required.')
+        ceiling=max(self.stacks)
+        if type(min_bet) is not int or not 1<=min_bet<=10000:
+            raise ValueError('Positive integer minimum bet up to 10000 required.')
+        self.dealer=n-1 if dealer is None else dealer
+        if type(self.dealer) is not int or not 0<=self.dealer<n:
+            raise ValueError('Dealer must be a seat index.')
+        self.integer_payouts=initial_contributions is not None
+        self.initial_contributions=tuple(initial_contributions) if self.integer_payouts else (pot/n,)*n
+        if self.integer_payouts:
+            if len(self.initial_contributions)!=n or any(type(v) is not int or v<0 for v in self.initial_contributions) or sum(self.initial_contributions)!=pot:
+                raise ValueError('Nonnegative integer prior contributions must sum to pot.')
+            highest=max(self.initial_contributions)
+            if any(chips>0 and prior!=highest for chips,prior in zip(self.stacks,self.initial_contributions)):
+                raise ValueError('Funded players must have matched prior streets; lower contributors must be all-in.')
         if type(max_raises) is not int or not 0<=max_raises<=3:
             raise ValueError('0–3 raises per betting line required.')
         if type(max_nodes) is not int or not 1<=max_nodes<=20000:
             raise ValueError('1–20000 public nodes required.')
         def sizes(values):
             values=tuple(values)
-            if len(values)>4 or len(set(values))!=len(values) or any(type(v) is not int or not 1<=v<=stack for v in values):
-                raise ValueError('At most four distinct integer totals within stack required.')
+            if len(values)>4 or len(set(values))!=len(values) or any(type(v) is not int or not 1<=v<=(ceiling or 10000) for v in values):
+                raise ValueError('At most four distinct integer totals within largest remaining stack required.')
             return tuple(sorted(values))
         self.bet_sizes=sizes((bet,) if bet_sizes is None else bet_sizes)
         self.raise_sizes=sizes(raise_sizes)
-        if not self.bet_sizes or any(v<min_bet and v!=stack for v in self.bet_sizes):
+        if not self.bet_sizes or any(v<min_bet and v not in self.stacks for v in self.bet_sizes):
             raise ValueError('Opening sizes must meet minimum bet (except short all-in).')
         self.max_raises=max_raises;self.stack=stack;self.min_bet=min_bet
         if math.prod(len(r) for r in ranges)>64 or any(not r for r in ranges):
             raise ValueError('At most 64 raw joint combinations; ranges are never silently truncated.')
-        self.n=n;self.pot=pot;self.bet=bet;self.ranges=ranges;self.nodes=[]
+        self.board=tuple(board);self.n=n;self.pot=pot;self.bet=bet;self.ranges=ranges;self.nodes=[]
         evaluator=HandEvaluator();scores={}
         for r in ranges:
             seen=set()
@@ -74,50 +94,92 @@ class RiverGame:
                 raise ValueError('Public tree exceeds node budget; choose fewer sizes/raises.')
             self.nodes.append(node)
             return node
-        def build(history, pending, alive, invested, current, increment, raises):
-            if len(alive)==1 or not pending:
+        def build(history, pending, alive, invested, current, increment, raises, acted):
+            funded=tuple(p for p in alive if invested[p]<self.stacks[p])
+            pending=tuple(p for p in pending if p in funded)
+            if len(alive)==1 or not pending or (len(funded)==1 and invested[funded[0]]>=current):
                 return save(Node(-1,history,invested=invested,alive=alive))
             actor=pending[0];rest=pending[1:];actions=[];children=[]
             def add(action, next_pending, next_alive, next_invested,
                     next_current=current, next_increment=increment, next_raises=raises):
                 actions.append(action)
+                next_acted=list(acted);next_acted[actor]=next_current
                 children.append(build(history+((actor,action),),next_pending,next_alive,
-                                      next_invested,next_current,next_increment,next_raises))
+                                      next_invested,next_current,next_increment,next_raises,tuple(next_acted)))
             facing=current>invested[actor]
             if facing:
                 add('FOLD',rest,tuple(p for p in alive if p!=actor),invested)
-                called=list(invested);called[actor]=current
+                called=list(invested);called[actor]=min(current,self.stacks[actor])
                 add('CALL',rest,alive,tuple(called))
             else:
                 add('CHECK',rest,alive,invested)
-            # Sizes are total contributions on this street, not amounts added.
-            targets=self.bet_sizes if current==0 else (self.raise_sizes if raises<max_raises else ())
-            for total in targets:
-                if total<=current or (current and total-current<increment and total!=stack):
+            # Clamp configured totals at the actor's all-in, then deduplicate.
+            # Short raises reopen only after cumulative increases reach a full raise.
+            reopened=acted[actor] is None or current-acted[actor]>=increment
+            targets=self.bet_sizes if current==0 else (self.raise_sizes if raises<max_raises and reopened else ())
+            if len(funded)<2:targets=()
+            for total in sorted({min(v,self.stacks[actor]) for v in targets}):
+                minimum=increment if current==0 else current+increment
+                if total<=current or (total<minimum and total!=self.stacks[actor]):
                     continue
                 paid=list(invested);paid[actor]=total
                 responders=tuple((actor+offset)%n for offset in range(1,n)
-                                 if (actor+offset)%n in alive and invested[(actor+offset)%n]<stack)
+                                 if (actor+offset)%n in funded)
                 add(('BET ' if current==0 else 'RAISE ')+str(total),responders,alive,tuple(paid),
                     total,max(increment,total-current),raises+int(current>0))
             return save(Node(actor,history,tuple(actions),tuple(children),invested,alive))
-        self.root=build((),tuple(range(n)),tuple(range(n)),(0,)*n,0,min_bet,0)
+        order=tuple((self.dealer+offset)%n for offset in range(1,n+1))
+        self.root=build((),order,tuple(range(n)),(0,)*n,0,min_bet,0,(None,)*n)
         if len(self.nodes)*len(self.deals)>1000000:
             raise ValueError('Tree/deal product exceeds one million; reduce explicit ranges/tree.')
         self.utilities={}
         for node in self.nodes:
             if node.actor!=-1:continue
             for index,(_,_,scores_) in enumerate(self.deals):
-                best=max(scores_[p] for p in node.alive)
-                winners=[p for p in node.alive if scores_[p]==best]
-                award=(pot+sum(node.invested))/len(winners)
-                values=tuple((award if p in winners else 0)-node.invested[p]-pot/n for p in range(n))
+                awards,_,_=self.settle(node,scores_)
+                values=tuple(awards[p]-node.invested[p]-self.initial_contributions[p] for p in range(n))
                 if abs(sum(values))>1e-7:raise ValueError('Payoffs must be zero-sum.')
                 self.utilities[(id(node),index)]=values
         # An information set contains only the acting player's cards and public history.
         self.keys={(node.actor,texts[node.actor],node.history) for node in self.nodes if node.actor!=-1 for texts,_,_ in self.deals}
         self.action_counts={(node.actor,texts[node.actor],node.history):len(node.actions)
                             for node in self.nodes if node.actor!=-1 for texts,_,_ in self.deals}
+
+    def settle(self,node,scores):
+        """Independent terminal accounting: return uncalled street chips, layer pots.
+
+        Explicit integer prior contributions enable table-style odd-chip allocation.
+        Legacy implicit equal pot funding retains fractional mathematical splits.
+        Awards include refunds; neither refunds nor folded chips can win a side pot.
+        """
+        if node.actor!=-1:raise ValueError('Settlement requires a terminal node.')
+        paid=list(node.invested);refunds=[0]*self.n
+        order=sorted(range(self.n),key=lambda p:paid[p],reverse=True)
+        high,second=order[:2]
+        excess=paid[high]-paid[second]
+        paid[high]-=excess;refunds[high]=excess
+        totals=[self.initial_contributions[p]+paid[p] for p in range(self.n)]
+        awards=list(refunds);pots=[];prior=0
+        seats=[(self.dealer+i)%self.n for i in range(1,self.n+1)]
+        for level in sorted(set(totals)-{0}):
+            contributors=[p for p in range(self.n) if totals[p]>=level]
+            amount=(level-prior)*len(contributors);prior=level
+            eligible=[p for p in contributors if p in node.alive]
+            if not eligible:raise ValueError('Pot without eligible player.')
+            if pots and pots[-1]['eligible']==eligible:pots[-1]['amount']+=amount
+            else:pots.append({'amount':amount,'eligible':eligible})
+        for pot in pots:
+            best=max(scores[p] for p in pot['eligible'])
+            winners=[p for p in seats if p in pot['eligible'] and scores[p]==best]
+            if self.integer_payouts:
+                share,remainder=divmod(pot['amount'],len(winners))
+                payouts={p:share+int(i<remainder) for i,p in enumerate(winners)}
+            else:payouts={p:pot['amount']/len(winners) for p in winners}
+            pot.update(winners=winners,awards=payouts)
+            for p,value in payouts.items():awards[p]+=value
+        if abs(sum(awards)-self.pot-sum(node.invested))>1e-7:
+            raise ValueError('Settlement must conserve all chips.')
+        return tuple(awards),tuple(refunds),pots
 
     def key(self,node,deal):return (node.actor,self.deals[deal][0][node.actor],node.history)
 
@@ -227,18 +289,23 @@ if __name__=='__main__':
     parser.add_argument('--raise-sizes',type=int,nargs='*',default=[])
     parser.add_argument('--max-raises',type=int,default=0)
     parser.add_argument('--stack',type=int,default=100)
+    parser.add_argument('--stacks',type=int,nargs='+')
+    parser.add_argument('--pot',type=int,default=100)
+    parser.add_argument('--initial-contributions',type=int,nargs='+')
     parser.add_argument('--min-bet',type=int,default=1)
     args=parser.parse_args()
+    if (args.stacks is not None or args.initial_contributions is not None) and len(args.players)!=1:
+        parser.error('Use one explicit --players N with --stacks/--initial-contributions.')
     results=[]
     for n in args.players:
         started=time.perf_counter()
-        game=RiverGame(['2c','4d','7h','9s','Jc'],demo_ranges(n),stack=args.stack,
-                       bet_sizes=args.bet_sizes,raise_sizes=args.raise_sizes,
+        game=RiverGame(['2c','4d','7h','9s','Jc'],demo_ranges(n),stack=args.stack,pot=args.pot,
+                       stacks=args.stacks,initial_contributions=args.initial_contributions,bet_sizes=args.bet_sizes,raise_sizes=args.raise_sizes,
                        max_raises=args.max_raises,min_bet=args.min_bet)
         uniform={k:[1/m]*m for k,m in game.action_counts.items()}
         before=game.measure(uniform);policy=game.train(args.iterations,method=args.method);after=game.measure(policy)
-        results.append({'players':n,'joint_deals':len(game.deals),'public_nodes':len(game.nodes),'information_sets':len(game.keys),'iterations':args.iterations,'seconds':round(time.perf_counter()-started,3),'before':before,'after':after,'root_policy':[{'hand':combo,'actions':game.root.actions,'probabilities':policy[(0,combo,())]} for combo,_ in game.ranges[0]]})
+        results.append({'players':n,'stacks':game.stacks,'initial_contributions':game.initial_contributions,'integer_payouts':game.integer_payouts,'root_actor':game.root.actor,'joint_deals':len(game.deals),'public_nodes':len(game.nodes),'information_sets':len(game.keys),'iterations':args.iterations,'seconds':round(time.perf_counter()-started,3),'before':before,'after':after,'root_policy':[{'hand':combo,'actions':game.root.actions,'probabilities':policy[(game.root.actor,combo,())]} for combo,_ in game.ranges[game.root.actor]] if game.root.actor!=-1 else []})
     print(json.dumps({'method':args.method,'bet_sizes':args.bet_sizes,'raise_sizes':args.raise_sizes,
                       'max_raises':args.max_raises,'stack':args.stack,'min_bet':args.min_bet,
-                      'scope':'Restricted synthetic river game with explicit sizes and raise cap. Equal stacks, no side pots or future streets. Not production GTO.',
+                      'scope':'Restricted synthetic river game with explicit sizes and raise cap. Unequal stacks and layered pots; no future streets. Not production GTO.',
                       'platform':platform.platform(),'results':results},indent=2))

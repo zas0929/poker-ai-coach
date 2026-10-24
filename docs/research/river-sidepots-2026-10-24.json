@@ -1,0 +1,1704 @@
+{
+  "method": "cfr_plus",
+  "iterations": 200,
+  "scope": "14 fixed small-range river abstractions. At 5/6 seats only seat zero has two private hands. All players begin river live, some already all-in. Not representative full-game validation.",
+  "results": [
+    {
+      "scenario": "unequal",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ]
+        ],
+        "pot": 120,
+        "stacks": [
+          15,
+          30
+        ],
+        "initial_contributions": [
+          60,
+          60
+        ],
+        "bet_sizes": [
+          30
+        ],
+        "raise_sizes": [
+          30
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 9,
+      "joint_deals": 4,
+      "engine_comparison": {
+        "node_deal_visits": 36,
+        "terminal_deal_checks": 20
+      },
+      "uniform": {
+        "policy_payoffs": [
+          7.5,
+          -7.5
+        ],
+        "best_response_payoffs": [
+          30.0,
+          15.0
+        ],
+        "unilateral_gains": [
+          22.5,
+          22.5
+        ],
+        "nash_conv_chips": 45.0,
+        "max_unilateral_gain_pct_pot": 18.75
+      },
+      "trained": {
+        "policy_payoffs": [
+          6.666005078104913,
+          -6.6660050781049165
+        ],
+        "best_response_payoffs": [
+          6.6775564110679255,
+          -6.656371362480211
+        ],
+        "unilateral_gains": [
+          0.011551332963012584,
+          0.009633715624705275
+        ],
+        "nash_conv_chips": 0.02118504858771786,
+        "max_unilateral_gain_pct_pot": 0.009626110802510487
+      },
+      "training_seconds": 0.0224
+    },
+    {
+      "scenario": "tie_odd",
+      "input": {
+        "board": [
+          "As",
+          "Ks",
+          "Qs",
+          "Js",
+          "Ts"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ]
+        ],
+        "pot": 6,
+        "stacks": [
+          2,
+          5
+        ],
+        "initial_contributions": [
+          3,
+          3
+        ],
+        "bet_sizes": [
+          4
+        ],
+        "raise_sizes": [
+          5
+        ],
+        "max_raises": 1,
+        "min_bet": 1
+      },
+      "public_nodes": 9,
+      "joint_deals": 4,
+      "engine_comparison": {
+        "node_deal_visits": 36,
+        "terminal_deal_checks": 20
+      },
+      "uniform": {
+        "policy_payoffs": [
+          0.375,
+          -0.375
+        ],
+        "best_response_payoffs": [
+          1.5,
+          0.75
+        ],
+        "unilateral_gains": [
+          1.125,
+          1.125
+        ],
+        "nash_conv_chips": 2.25,
+        "max_unilateral_gain_pct_pot": 18.75
+      },
+      "trained": {
+        "policy_payoffs": [
+          5.5968292864038024e-05,
+          -5.596829286403801e-05
+        ],
+        "best_response_payoffs": [
+          7.462686567164179e-05,
+          3.7313432835820896e-05
+        ],
+        "unilateral_gains": [
+          1.8658572807603768e-05,
+          9.32817256998589e-05
+        ],
+        "nash_conv_chips": 0.00011194029850746267,
+        "max_unilateral_gain_pct_pot": 0.0015546954283309816
+      },
+      "training_seconds": 0.022
+    },
+    {
+      "scenario": "unequal",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "6h6d",
+              1
+            ]
+          ]
+        ],
+        "pot": 180,
+        "stacks": [
+          15,
+          30,
+          50
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          50
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 34,
+      "joint_deals": 8,
+      "engine_comparison": {
+        "node_deal_visits": 272,
+        "terminal_deal_checks": 152
+      },
+      "uniform": {
+        "policy_payoffs": [
+          22.94270833333333,
+          -9.127604166666664,
+          -13.815104166666668
+        ],
+        "best_response_payoffs": [
+          47.91666666666666,
+          17.1875,
+          14.921875
+        ],
+        "unilateral_gains": [
+          24.97395833333333,
+          26.315104166666664,
+          28.736979166666668
+        ],
+        "nash_conv_chips": 80.02604166666666,
+        "max_unilateral_gain_pct_pot": 15.964988425925927
+      },
+      "trained": {
+        "policy_payoffs": [
+          38.316146794476424,
+          -10.531560203016461,
+          -27.784586591459973
+        ],
+        "best_response_payoffs": [
+          38.34838938862056,
+          -10.511561427502247,
+          -27.77633491083356
+        ],
+        "unilateral_gains": [
+          0.03224259414413666,
+          0.019998775514213918,
+          0.008251680626411684
+        ],
+        "nash_conv_chips": 0.06049305028476226,
+        "max_unilateral_gain_pct_pot": 0.017912552302298147
+      },
+      "training_seconds": 0.2283
+    },
+    {
+      "scenario": "prior_sidepot",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "6h6d",
+              1
+            ]
+          ]
+        ],
+        "pot": 150,
+        "stacks": [
+          0,
+          30,
+          50
+        ],
+        "initial_contributions": [
+          30,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          50
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 9,
+      "joint_deals": 8,
+      "engine_comparison": {
+        "node_deal_visits": 72,
+        "terminal_deal_checks": 40
+      },
+      "uniform": {
+        "policy_payoffs": [
+          15.0,
+          -0.9375,
+          -14.0625
+        ],
+        "best_response_payoffs": [
+          15.0,
+          18.75,
+          5.625
+        ],
+        "unilateral_gains": [
+          0,
+          19.6875,
+          19.6875
+        ],
+        "nash_conv_chips": 39.375,
+        "max_unilateral_gain_pct_pot": 13.125
+      },
+      "trained": {
+        "policy_payoffs": [
+          15.0,
+          4.166044198906924,
+          -19.16604419890692
+        ],
+        "best_response_payoffs": [
+          15.0,
+          4.170580251400175,
+          -19.16081778991963
+        ],
+        "unilateral_gains": [
+          0,
+          0.004536052493250509,
+          0.005226408987290654
+        ],
+        "nash_conv_chips": 0.009762461480541162,
+        "max_unilateral_gain_pct_pot": 0.003484272658193769
+      },
+      "training_seconds": 0.0551
+    },
+    {
+      "scenario": "tie_odd",
+      "input": {
+        "board": [
+          "As",
+          "Ks",
+          "Qs",
+          "Js",
+          "Ts"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "6h6d",
+              1
+            ]
+          ]
+        ],
+        "pot": 9,
+        "stacks": [
+          2,
+          5,
+          8
+        ],
+        "initial_contributions": [
+          3,
+          3,
+          3
+        ],
+        "bet_sizes": [
+          4
+        ],
+        "raise_sizes": [
+          8
+        ],
+        "max_raises": 1,
+        "min_bet": 1
+      },
+      "public_nodes": 44,
+      "joint_deals": 8,
+      "engine_comparison": {
+        "node_deal_visits": 352,
+        "terminal_deal_checks": 200
+      },
+      "uniform": {
+        "policy_payoffs": [
+          0.6840277777777777,
+          -0.29166666666666663,
+          -0.3923611111111111
+        ],
+        "best_response_payoffs": [
+          2.0555555555555554,
+          1.25,
+          1.6458333333333333
+        ],
+        "unilateral_gains": [
+          1.3715277777777777,
+          1.5416666666666665,
+          2.038194444444444
+        ],
+        "nash_conv_chips": 4.951388888888888,
+        "max_unilateral_gain_pct_pot": 22.646604938271604
+      },
+      "trained": {
+        "policy_payoffs": [
+          0.00013689732605387433,
+          -3.6712915135800415e-05,
+          -0.00010018441091807394
+        ],
+        "best_response_payoffs": [
+          0.00020443259449023536,
+          7.881888912952135e-05,
+          0.0001388489675042985
+        ],
+        "unilateral_gains": [
+          6.753526843636103e-05,
+          0.00011553180426532177,
+          0.00023903337842237244
+        ],
+        "nash_conv_chips": 0.0004221004511240552,
+        "max_unilateral_gain_pct_pot": 0.0026559264269152495
+      },
+      "training_seconds": 0.2997
+    },
+    {
+      "scenario": "unequal",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "6h6d",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ],
+            [
+              "8h8d",
+              1
+            ]
+          ]
+        ],
+        "pot": 240,
+        "stacks": [
+          15,
+          30,
+          50,
+          70
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          70
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 139,
+      "joint_deals": 16,
+      "engine_comparison": {
+        "node_deal_visits": 2224,
+        "terminal_deal_checks": 1232
+      },
+      "uniform": {
+        "policy_payoffs": [
+          42.43489583333334,
+          -1.2565104166666714,
+          -20.197482638888886,
+          -20.980902777777775
+        ],
+        "best_response_payoffs": [
+          74.63541666666667,
+          30.885416666666664,
+          10.546875,
+          13.098958333333332
+        ],
+        "unilateral_gains": [
+          32.20052083333333,
+          32.141927083333336,
+          30.744357638888886,
+          34.07986111111111
+        ],
+        "nash_conv_chips": 129.16666666666666,
+        "max_unilateral_gain_pct_pot": 14.199942129629628
+      },
+      "trained": {
+        "policy_payoffs": [
+          67.52683788922607,
+          4.805310622770357,
+          -32.97108753619098,
+          -39.36106097580547
+        ],
+        "best_response_payoffs": [
+          67.600048942879,
+          4.882345631713989,
+          -32.858561018677975,
+          -39.21915042266402
+        ],
+        "unilateral_gains": [
+          0.07321105365292624,
+          0.07703500894363202,
+          0.11252651751300391,
+          0.14191055314145018
+        ],
+        "nash_conv_chips": 0.40468313325101235,
+        "max_unilateral_gain_pct_pot": 0.05912939714227091
+      },
+      "training_seconds": 2.453
+    },
+    {
+      "scenario": "prior_sidepot",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "6h6d",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ],
+            [
+              "8h8d",
+              1
+            ]
+          ]
+        ],
+        "pot": 210,
+        "stacks": [
+          0,
+          30,
+          50,
+          70
+        ],
+        "initial_contributions": [
+          30,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          70
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 44,
+      "joint_deals": 16,
+      "engine_comparison": {
+        "node_deal_visits": 704,
+        "terminal_deal_checks": 400
+      },
+      "uniform": {
+        "policy_payoffs": [
+          30.0,
+          11.979166666666664,
+          -20.156249999999996,
+          -21.822916666666664
+        ],
+        "best_response_payoffs": [
+          30.0,
+          33.75,
+          6.5624999999999964,
+          10.3125
+        ],
+        "unilateral_gains": [
+          0,
+          21.770833333333336,
+          26.718749999999993,
+          32.135416666666664
+        ],
+        "nash_conv_chips": 80.625,
+        "max_unilateral_gain_pct_pot": 15.302579365079364
+      },
+      "trained": {
+        "policy_payoffs": [
+          29.999999999999993,
+          29.321174282258397,
+          -22.490535594129465,
+          -36.83063868812892
+        ],
+        "best_response_payoffs": [
+          29.999999999999993,
+          29.330609479218694,
+          -22.466710847083405,
+          -36.81608674617915
+        ],
+        "unilateral_gains": [
+          0,
+          0.009435196960296821,
+          0.02382474704605997,
+          0.014551941949768832
+        ],
+        "nash_conv_chips": 0.04781188595612562,
+        "max_unilateral_gain_pct_pot": 0.011345117640980937
+      },
+      "training_seconds": 0.7044
+    },
+    {
+      "scenario": "tie_odd",
+      "input": {
+        "board": [
+          "As",
+          "Ks",
+          "Qs",
+          "Js",
+          "Ts"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "6h6d",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ],
+            [
+              "8h8d",
+              1
+            ]
+          ]
+        ],
+        "pot": 12,
+        "stacks": [
+          2,
+          5,
+          8,
+          11
+        ],
+        "initial_contributions": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "bet_sizes": [
+          4
+        ],
+        "raise_sizes": [
+          8
+        ],
+        "max_raises": 1,
+        "min_bet": 1
+      },
+      "public_nodes": 201,
+      "joint_deals": 16,
+      "engine_comparison": {
+        "node_deal_visits": 3216,
+        "terminal_deal_checks": 1776
+      },
+      "uniform": {
+        "policy_payoffs": [
+          0.7592592592592594,
+          -0.36950231481481466,
+          -0.22974537037037035,
+          -0.16001157407407407
+        ],
+        "best_response_payoffs": [
+          2.101851851851852,
+          2.239583333333333,
+          2.25,
+          2.5190972222222223
+        ],
+        "unilateral_gains": [
+          1.3425925925925926,
+          2.609085648148148,
+          2.4797453703703702,
+          2.6791087962962963
+        ],
+        "nash_conv_chips": 9.110532407407407,
+        "max_unilateral_gain_pct_pot": 22.32590663580247
+      },
+      "trained": {
+        "policy_payoffs": [
+          0.0002411465829240494,
+          1.1638877220181873e-05,
+          -0.00010577244063146674,
+          -0.00014701301951276443
+        ],
+        "best_response_payoffs": [
+          0.0003795606615338609,
+          0.0002491148153670005,
+          0.0002332132443902214,
+          0.00025211734487793757
+        ],
+        "unilateral_gains": [
+          0.00013841407860981154,
+          0.00023747593814681865,
+          0.0003389856850216881,
+          0.000399130364390702
+        ],
+        "nash_conv_chips": 0.0011140060661690202,
+        "max_unilateral_gain_pct_pot": 0.003326086369922517
+      },
+      "training_seconds": 3.6389
+    },
+    {
+      "scenario": "unequal",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ]
+          ]
+        ],
+        "pot": 300,
+        "stacks": [
+          15,
+          30,
+          50,
+          70,
+          90
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 560,
+      "joint_deals": 2,
+      "engine_comparison": {
+        "node_deal_visits": 1120,
+        "terminal_deal_checks": 606
+      },
+      "uniform": {
+        "policy_payoffs": [
+          69.65458622685185,
+          93.22084780092591,
+          -22.824676890432094,
+          -57.657335069444436,
+          -82.39342206790123
+        ],
+        "best_response_payoffs": [
+          113.43171296296296,
+          168.68055555555554,
+          21.623263888888886,
+          -28.361545138888886,
+          -59.42708333333333
+        ],
+        "unilateral_gains": [
+          43.777126736111114,
+          75.45970775462963,
+          44.44794077932098,
+          29.29578993055555,
+          22.9663387345679
+        ],
+        "nash_conv_chips": 215.94690393518516,
+        "max_unilateral_gain_pct_pot": 25.153235918209877
+      },
+      "trained": {
+        "policy_payoffs": [
+          97.14108413286516,
+          82.86991210628156,
+          -60.00147462908896,
+          -60.0030726042215,
+          -60.00644900583626
+        ],
+        "best_response_payoffs": [
+          97.1511101823852,
+          82.88353598907747,
+          -59.98954052938913,
+          -59.98957259389891,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.01002604952003594,
+          0.013623882795911868,
+          0.011934099699828948,
+          0.013500010322587741,
+          0.006449005836259403
+        ],
+        "nash_conv_chips": 0.0555330481746239,
+        "max_unilateral_gain_pct_pot": 0.004541294265303956
+      },
+      "training_seconds": 1.6153
+    },
+    {
+      "scenario": "prior_sidepot",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ]
+          ]
+        ],
+        "pot": 270,
+        "stacks": [
+          0,
+          30,
+          50,
+          70,
+          90
+        ],
+        "initial_contributions": [
+          30,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 201,
+      "joint_deals": 2,
+      "engine_comparison": {
+        "node_deal_visits": 402,
+        "terminal_deal_checks": 222
+      },
+      "uniform": {
+        "policy_payoffs": [
+          46.43229166666667,
+          134.79166666666666,
+          -32.20196759259259,
+          -65.05208333333333,
+          -83.96990740740739
+        ],
+        "best_response_payoffs": [
+          46.43229166666667,
+          194.79166666666666,
+          1.1111111111111072,
+          -40.3125,
+          -59.166666666666664
+        ],
+        "unilateral_gains": [
+          0,
+          60.0,
+          33.313078703703695,
+          24.73958333333333,
+          24.803240740740726
+        ],
+        "nash_conv_chips": 142.85590277777774,
+        "max_unilateral_gain_pct_pot": 22.22222222222222
+      },
+      "trained": {
+        "policy_payoffs": [
+          45.0000000193358,
+          135.00867550819873,
+          -60.00134594084819,
+          -60.002649461843596,
+          -60.00468012484279
+        ],
+        "best_response_payoffs": [
+          45.0000000193358,
+          135.0131778603283,
+          -59.99993726470839,
+          -59.9999998839843,
+          -60.00000000000001
+        ],
+        "unilateral_gains": [
+          0,
+          0.004502352129577503,
+          0.0014086761397962277,
+          0.0026495778592945385,
+          0.00468012484278546
+        ],
+        "nash_conv_chips": 0.013240730971453729,
+        "max_unilateral_gain_pct_pot": 0.0017333795714020222
+      },
+      "training_seconds": 0.5468
+    },
+    {
+      "scenario": "tie_odd",
+      "input": {
+        "board": [
+          "As",
+          "Ks",
+          "Qs",
+          "Js",
+          "Ts"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ]
+          ]
+        ],
+        "pot": 15,
+        "stacks": [
+          2,
+          5,
+          8,
+          11,
+          14
+        ],
+        "initial_contributions": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "bet_sizes": [
+          4
+        ],
+        "raise_sizes": [
+          8
+        ],
+        "max_raises": 1,
+        "min_bet": 1
+      },
+      "public_nodes": 838,
+      "joint_deals": 2,
+      "engine_comparison": {
+        "node_deal_visits": 1676,
+        "terminal_deal_checks": 898
+      },
+      "uniform": {
+        "policy_payoffs": [
+          1.157744984567901,
+          -0.4108555169753087,
+          -0.2823832947530865,
+          -0.21773726851851846,
+          -0.24676890432098772
+        ],
+        "best_response_payoffs": [
+          2.580246913580247,
+          2.7886284722222223,
+          2.700954861111111,
+          2.596643518518518,
+          2.5473090277777777
+        ],
+        "unilateral_gains": [
+          1.4225019290123457,
+          3.199483989197531,
+          2.983338155864198,
+          2.8143807870370368,
+          2.7940779320987654
+        ],
+        "nash_conv_chips": 13.213782793209877,
+        "max_unilateral_gain_pct_pot": 21.329893261316872
+      },
+      "trained": {
+        "policy_payoffs": [
+          0.0004918620012199204,
+          0.00018511597590356983,
+          -9.272294786987268e-05,
+          -0.00022651341656324502,
+          -0.0003577416126903724
+        ],
+        "best_response_payoffs": [
+          0.0006963437749290341,
+          0.0005771690703766466,
+          0.0004595704062274739,
+          0.0003043676899528428,
+          0.0002487445800765698
+        ],
+        "unilateral_gains": [
+          0.00020448177370911377,
+          0.0003920530944730767,
+          0.0005522933540973465,
+          0.0005308811065160878,
+          0.0006064861927669422
+        ],
+        "nash_conv_chips": 0.002286195521562567,
+        "max_unilateral_gain_pct_pot": 0.0040432412851129475
+      },
+      "training_seconds": 2.49
+    },
+    {
+      "scenario": "unequal",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ]
+          ],
+          [
+            [
+              "QcTc",
+              1
+            ]
+          ]
+        ],
+        "pot": 360,
+        "stacks": [
+          15,
+          30,
+          50,
+          70,
+          90,
+          110
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 2157,
+      "joint_deals": 2,
+      "engine_comparison": {
+        "node_deal_visits": 4314,
+        "terminal_deal_checks": 2282
+      },
+      "uniform": {
+        "policy_payoffs": [
+          98.45404730902777,
+          124.94466145833331,
+          -9.938120900848764,
+          -47.93633857381687,
+          -78.81257233796296,
+          -86.7116769547325
+        ],
+        "best_response_payoffs": [
+          154.5558449074074,
+          219.80179398148147,
+          45.46296296296296,
+          -10.337999131944443,
+          -56.896339699074076,
+          -59.704861111111114
+        ],
+        "unilateral_gains": [
+          56.10179759837962,
+          94.85713252314815,
+          55.40108386381173,
+          37.598339441872426,
+          21.916232638888886,
+          27.006815843621382
+        ],
+        "nash_conv_chips": 292.88140190972223,
+        "max_unilateral_gain_pct_pot": 26.349203478652267
+      },
+      "trained": {
+        "policy_payoffs": [
+          127.19812589508842,
+          112.82151701141154,
+          -60.003388795365105,
+          -60.00492826815804,
+          -60.00442610224269,
+          -60.00689974073413
+        ],
+        "best_response_payoffs": [
+          127.2155308295238,
+          112.84575286818917,
+          -59.98167528721281,
+          -59.98271677155543,
+          -59.99999994336013,
+          -59.999999999999986
+        ],
+        "unilateral_gains": [
+          0.017404934435376163,
+          0.02423585677762219,
+          0.021713508152295447,
+          0.02221149660260835,
+          0.00442615888255915,
+          0.006899740734141346
+        ],
+        "nash_conv_chips": 0.09689169558460264,
+        "max_unilateral_gain_pct_pot": 0.006732182438228386
+      },
+      "training_seconds": 7.9441
+    },
+    {
+      "scenario": "prior_sidepot",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ]
+          ],
+          [
+            [
+              "QcTc",
+              1
+            ]
+          ]
+        ],
+        "pot": 330,
+        "stacks": [
+          0,
+          30,
+          50,
+          70,
+          90,
+          110
+        ],
+        "initial_contributions": [
+          30,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10
+      },
+      "public_nodes": 838,
+      "joint_deals": 2,
+      "engine_comparison": {
+        "node_deal_visits": 1676,
+        "terminal_deal_checks": 898
+      },
+      "uniform": {
+        "policy_payoffs": [
+          63.0078125,
+          179.72800925925924,
+          -19.237557870370367,
+          -54.472415123456784,
+          -79.39091435185185,
+          -89.63493441358024
+        ],
+        "best_response_payoffs": [
+          63.0078125,
+          260.2083333333333,
+          22.037037037037038,
+          -22.53472222222222,
+          -55.03038194444444,
+          -59.513888888888886
+        ],
+        "unilateral_gains": [
+          0,
+          80.48032407407408,
+          41.274594907407405,
+          31.937692901234563,
+          24.360532407407405,
+          30.121045524691354
+        ],
+        "nash_conv_chips": 208.17418981481478,
+        "max_unilateral_gain_pct_pot": 24.38797699214366
+      },
+      "trained": {
+        "policy_payoffs": [
+          60.00000003790865,
+          180.01560775165729,
+          -60.00355183568128,
+          -60.005448134697225,
+          -60.00285380981086,
+          -60.003754009376564
+        ],
+        "best_response_payoffs": [
+          60.00000003790865,
+          180.01975195426752,
+          -59.99962407397461,
+          -59.999990222104046,
+          -59.99999995450042,
+          -59.999999999999986
+        ],
+        "unilateral_gains": [
+          0,
+          0.004144202610234515,
+          0.003927761706670196,
+          0.005457912593179515,
+          0.0028538553104411335,
+          0.0037540093765784377
+        ],
+        "nash_conv_chips": 0.020137741597103798,
+        "max_unilateral_gain_pct_pot": 0.0016539129070240954
+      },
+      "training_seconds": 2.8465
+    },
+    {
+      "scenario": "tie_odd",
+      "input": {
+        "board": [
+          "As",
+          "Ks",
+          "Qs",
+          "Js",
+          "Ts"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ]
+          ],
+          [
+            [
+              "QcTc",
+              1
+            ]
+          ]
+        ],
+        "pot": 18,
+        "stacks": [
+          2,
+          5,
+          8,
+          11,
+          14,
+          17
+        ],
+        "initial_contributions": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "bet_sizes": [
+          4
+        ],
+        "raise_sizes": [
+          8
+        ],
+        "max_raises": 1,
+        "min_bet": 1
+      },
+      "public_nodes": 3251,
+      "joint_deals": 2,
+      "engine_comparison": {
+        "node_deal_visits": 6502,
+        "terminal_deal_checks": 3406
+      },
+      "uniform": {
+        "policy_payoffs": [
+          1.3656623746141971,
+          -0.3828165187757202,
+          -0.3112722640174897,
+          -0.2710382908950617,
+          -0.2399992766203704,
+          -0.1605360243055556
+        ],
+        "best_response_payoffs": [
+          2.8341049382716044,
+          3.2150607638888884,
+          2.9880642361111107,
+          2.8109809027777777,
+          2.705295138888889,
+          2.784589602623457
+        ],
+        "unilateral_gains": [
+          1.4684425636574072,
+          3.5978772826646086,
+          3.2993365001286006,
+          3.0820191936728394,
+          2.945294415509259,
+          2.9451256269290127
+        ],
+        "nash_conv_chips": 17.338095582561728,
+        "max_unilateral_gain_pct_pot": 19.988207125914492
+      },
+      "trained": {
+        "policy_payoffs": [
+          0.000697231925698966,
+          0.00047297575002020056,
+          1.8625793606818223e-05,
+          -0.0002576418347158602,
+          -0.0004015878230928435,
+          -0.0005296038115172811
+        ],
+        "best_response_payoffs": [
+          0.0009454211760043163,
+          0.0009745424460006253,
+          0.0007179180047254466,
+          0.0003807442776677301,
+          0.0003045764523212133,
+          0.00033498411651587413
+        ],
+        "unilateral_gains": [
+          0.00024818925030535024,
+          0.0005015666959804247,
+          0.0006992922111186283,
+          0.0006383861123835903,
+          0.0007061642754140568,
+          0.0008645879280331553
+        ],
+        "nash_conv_chips": 0.003658186473235206,
+        "max_unilateral_gain_pct_pot": 0.004803266266850862
+      },
+      "training_seconds": 12.0566
+    }
+  ],
+  "summary": {
+    "worst_max_gain_pct_pot": 0.05912939714227091,
+    "node_deal_visits": 22602,
+    "terminal_deal_checks": 12152
+  }
+}

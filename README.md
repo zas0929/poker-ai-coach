@@ -216,3 +216,8 @@ The river research prototype also supports explicit bet/raise totals and bounded
 re-raises. Scope, engine cross-checks and reproducible expanded-tree measurements:
 [docs/SOLVER_RIVER_SIZING.md](docs/SOLVER_RIVER_SIZING.md). This is not connected
 to the live trainer.
+
+Unequal stacks, existing side pots, short all-ins and integer payouts are now
+supported in the offline river prototype. See
+[docs/SOLVER_RIVER_SIDEPOTS.md](docs/SOLVER_RIVER_SIDEPOTS.md) for the independent
+engine replay, scope limits and measurements.
