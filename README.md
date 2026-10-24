@@ -226,3 +226,7 @@ The offline prototype preserves folded seats/dead contributions and can build
 a bounded tree from a public start-of-river snapshot. Full ranges are never
 automatically truncated. See [docs/SOLVER_PUBLIC_RIVER_INPUT.md](docs/SOLVER_PUBLIC_RIVER_INPUT.md)
 for explicit subset inputs, reproducible engine checks and remaining limits.
+
+The wider all-seats-uncertain research suite measures quality, isolated-process
+latency and peak RSS, with explicit timeout/error reporting. See
+[docs/SOLVER_CAPACITY.md](docs/SOLVER_CAPACITY.md) for results and profiling.

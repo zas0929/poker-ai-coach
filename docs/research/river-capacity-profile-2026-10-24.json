@@ -1,0 +1,145 @@
+{
+  "scenario": "dry_4",
+  "iterations": 10,
+  "public_nodes": 341,
+  "joint_deals": 37,
+  "profiled_seconds": 1.0931901659999999,
+  "top_self_time": [
+    {
+      "file": "custom_river.py",
+      "line": 239,
+      "function": "visit",
+      "primitive_calls": 1480,
+      "calls": 504680,
+      "self_seconds": 0.796356175,
+      "cumulative_seconds": 1.0736205760000002
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.sum>",
+      "primitive_calls": 237048,
+      "calls": 237048,
+      "self_seconds": 0.095725502,
+      "cumulative_seconds": 0.16521221600000002
+    },
+    {
+      "file": "custom_river.py",
+      "line": 246,
+      "function": "<genexpr>",
+      "primitive_calls": 734080,
+      "calls": 734080,
+      "self_seconds": 0.069486714,
+      "cumulative_seconds": 0.069486714
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.id>",
+      "primitive_calls": 510452,
+      "calls": 510452,
+      "self_seconds": 0.034022758,
+      "cumulative_seconds": 0.034022758
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method math.prod>",
+      "primitive_calls": 57720,
+      "calls": 57720,
+      "self_seconds": 0.026543369,
+      "cumulative_seconds": 0.051270833
+    },
+    {
+      "file": "custom_river.py",
+      "line": 248,
+      "function": "<genexpr>",
+      "primitive_calls": 230880,
+      "calls": 230880,
+      "self_seconds": 0.024727464,
+      "cumulative_seconds": 0.024727464
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'append' of 'list' objects>",
+      "primitive_calls": 503200,
+      "calls": 503200,
+      "self_seconds": 0.024043893,
+      "cumulative_seconds": 0.024043893
+    },
+    {
+      "file": "custom_river.py",
+      "line": 223,
+      "function": "_train_plus",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.008762391000000001,
+      "cumulative_seconds": 1.0931515410000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.len>",
+      "primitive_calls": 64362,
+      "calls": 64362,
+      "self_seconds": 0.004228596,
+      "cumulative_seconds": 0.004228596
+    },
+    {
+      "file": "custom_river.py",
+      "line": 235,
+      "function": "<dictcomp>",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.002367999,
+      "cumulative_seconds": 0.004251083
+    },
+    {
+      "file": "custom_river.py",
+      "line": 238,
+      "function": "<dictcomp>",
+      "primitive_calls": 40,
+      "calls": 40,
+      "self_seconds": 0.002233421,
+      "cumulative_seconds": 0.002233421
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.max>",
+      "primitive_calls": 10200,
+      "calls": 10200,
+      "self_seconds": 0.0016482390000000001,
+      "cumulative_seconds": 0.0016482390000000001
+    },
+    {
+      "file": "custom_river.py",
+      "line": 190,
+      "function": "key",
+      "primitive_calls": 5772,
+      "calls": 5772,
+      "self_seconds": 0.001486099,
+      "cumulative_seconds": 0.001486099
+    },
+    {
+      "file": "custom_river.py",
+      "line": 258,
+      "function": "<listcomp>",
+      "primitive_calls": 3777,
+      "calls": 3777,
+      "self_seconds": 0.000619754,
+      "cumulative_seconds": 0.000619754
+    },
+    {
+      "file": "custom_river.py",
+      "line": 232,
+      "function": "<dictcomp>",
+      "primitive_calls": 2,
+      "calls": 2,
+      "self_seconds": 0.000290875,
+      "cumulative_seconds": 0.000290875
+    }
+  ],
+  "scope": "Training only under cProfile overhead; cumulative times overlap. No native/sampling implementation benchmarked."
+}
