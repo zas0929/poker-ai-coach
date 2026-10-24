@@ -293,3 +293,9 @@ blocker and showdown relations, preserving group mass. Seventeen full-vs-compres
 controls verified legal/illegal lineups, terminal payouts and lifted-policy best
 responses. Compression is conservative and often absent; live advice is unchanged.
 See [docs/SOLVER_EXACT_RANGE_QUOTIENT.md](docs/SOLVER_EXACT_RANGE_QUOTIENT.md).
+
+A tree-free audit of wide public ranges found no exact contraction in all 20
+full-support controls (1081 hands per live seat): blockers alone distinguish every
+hand. The audit does not run CFR or admit advice. See
+[docs/SOLVER_WIDE_RANGE_AUDIT.md](docs/SOLVER_WIDE_RANGE_AUDIT.md) for 27 bounded
+controls and the next strategy-abstraction experiment preserving original deals.

@@ -1,0 +1,1432 @@
+{
+  "scope": "27 tree-free audits; four boards, 2\u20136 seats with whole public supports; sampled and positive controls. No solver run or live-advice admission.",
+  "limits": {
+    "wall_seconds": 45,
+    "memory_mib": 128,
+    "max_pair_checks": 36000000,
+    "max_hands_per_live_seat": 1081
+  },
+  "source_sha256": {
+    "wide_range_audit.py": "0a8eb949ea1d7768c7eb5f1b5d25f2f53d4efa632038aef4ab41fbf9c04b4e62",
+    "benchmark_wide_ranges.py": "cdbf528f714fb51b7acb59f2b3adfe7c691bbf538d849fdacd907311a3e26716",
+    "benchmark_snapshot.py": "240e58248c155e986a3d6a11a35b600b945d48561b55c39a44103066a8af5e20"
+  },
+  "all_audited": true,
+  "results": [
+    {
+      "case": {
+        "name": "dry_full_2",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "3f3a799d42a5e051a00ad81784d1b3ccb22e9dbd81db730fb3d95fed6cf3214e",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "f92bde5724d31fb0c0598dc47546a0564c80932a6e10f7109032169aec21b4dc",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 2337122,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1168561,
+      "raw_product_after": 1168561,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "39caaf45d7f3d9e508941c517c4c8c05b42056d5923b5058150e6bb5059c8545",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.654922667,
+      "peak_rss_mib": 33.12890625,
+      "wall_seconds": 0.9808014580000001,
+      "sampled_peak_rss_mib": 29.94140625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_full_3",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "bbf70ec052da3e60267d47baa29e709fc5f337cdcc32619917264e579a0f2fbe",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "3850475239e9d44aca6f3c902537aa341fff1189afafd8e19e67d307aac4de39",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 7011366,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1263214441,
+      "raw_product_after": 1263214441,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "d9a5db3b5a7995f54e32db97aa3ad15f9821ffcea78552666e0e65f6aa64e7eb",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.8720813330000001,
+      "peak_rss_mib": 35.0859375,
+      "wall_seconds": 1.2283372920000002,
+      "sampled_peak_rss_mib": 32.046875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_full_4",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "c0443ecaa74b7d13e4cd4675b69f04b76cb04f881ed932ea3f4b1183ed7f3ae2",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "22c3b28d88950513adb62efe1c1318baaaba852d82965b4a7cc01c59b35cb775",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 14022732,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1365534810721,
+      "raw_product_after": 1365534810721,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "6dd099bcec71902e6c7a3eb283c2554d699a95bfed56d1cae22d47480baf5338",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 1.199404958,
+      "peak_rss_mib": 37.79296875,
+      "wall_seconds": 1.6735325419999998,
+      "sampled_peak_rss_mib": 37.3203125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_full_5",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "258e6bfa3a50f01da4518dd80cc2979f3b92c6b603598951c255699e1e001d36",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "d77121260008a41746e3ee5aa9b1359e019a81f1ce930ff6d1caf5fb192f45be",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 23371220,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1476143130389401,
+      "raw_product_after": 1476143130389401,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "51f09cb0a8ab2b22e7a28f9d54fcab38c80e5017bae91f84df2419eacf9dbcc9",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 1.6946519580000001,
+      "peak_rss_mib": 38.703125,
+      "wall_seconds": 2.140943417,
+      "sampled_peak_rss_mib": 33.94140625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_full_6",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "2192a0445d4177c1276393273bc96deaefe4ce394a5b123a5dbdec624a2536a1",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "fb042134a8f81381bf43314fa0f90c260fa345353ca40fcbc12d9a4a2a3fe36e",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 35056830,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1595710723950942481,
+      "raw_product_after": 1595710723950942481,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "b95c55ae41ea9e540edc93c9528a2460748ec89170832c9f1d62065414b28263",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 2.294171542,
+      "peak_rss_mib": 39.85546875,
+      "wall_seconds": 2.650077958,
+      "sampled_peak_rss_mib": 34.8984375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_full_2",
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "public_snapshot_key": "ee439cc587de22ae8c4e03591def6cde4f478868f402c08787d0a2c1d17debdd",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "d0ac6e301ba353b0c0e9669d7f2ef4d51aa02ac33a162d0e95cf3b42bde8d1c4",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 2337122,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1168561,
+      "raw_product_after": 1168561,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "7f67d4199b2b07000302788a1256f67eb740db11af0e559368d4b33f0f2a67c7",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.6344553340000001,
+      "peak_rss_mib": 33.1953125,
+      "wall_seconds": 0.9472129169999999,
+      "sampled_peak_rss_mib": 29.6171875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_full_3",
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "public_snapshot_key": "b6e201a8568b866eed6bc0b6f18a209e2a0dc8adc41e5e3875a9d2f8be398ada",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "13cbbe3094c0080f2a37190c66498680be069db38766f3b9496a2f1c4c3f7b95",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 7011366,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1263214441,
+      "raw_product_after": 1263214441,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "49a27a48bf45464cf1036a0dccd0da97fc441857049e792e40363ab2ab4fa675",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.8697763749999999,
+      "peak_rss_mib": 35.21875,
+      "wall_seconds": 1.2231010419999997,
+      "sampled_peak_rss_mib": 31.53515625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_full_4",
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "public_snapshot_key": "fd5a09fce925590ca6bc592e2f9fd7150574a8d5d8cdbf9bfab9dac915ef9f17",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "17a042a03997dbd122006cdfe897de15936cf294d9e01b8dbcf868eeec0e63ad",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 14022732,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1365534810721,
+      "raw_product_after": 1365534810721,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "e6fe0dbd9718067f448a80cdf5b77f0069274f189ef8f6b47081ccf22aebfd43",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 1.209043708,
+      "peak_rss_mib": 36.671875,
+      "wall_seconds": 1.6676052089999995,
+      "sampled_peak_rss_mib": 32.95703125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_full_5",
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "public_snapshot_key": "7ccabef5b5d7467183e3620f1edea9369c6adf3306a7581bf7afa5357bf77c1d",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "27bc0b97f58e1ddb640656ff5f4dacaa354eac0ee49127789fc9dac812e15fff",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 23371220,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1476143130389401,
+      "raw_product_after": 1476143130389401,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "0a1505c312871d86b59ed920eaed349b538c829aea3e2dea8a0c4126028ec545",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 1.6632065,
+      "peak_rss_mib": 38.76171875,
+      "wall_seconds": 2.141376874999999,
+      "sampled_peak_rss_mib": 38.76953125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_full_6",
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "public_snapshot_key": "01788fa145e506ceb0d2616d791a1134a648c3c228a8bd8eb78b1e81abbce65f",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "67baaa1cdb8a9b732fae46ebd229c7fe106f936640fdca26d8d8ab151b62e328",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 35056830,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1595710723950942481,
+      "raw_product_after": 1595710723950942481,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "3d10821577ab46fb4ecb2311cb763f4e441a5b3d00ff217216b0ae9a2f984210",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 2.2723310420000002,
+      "peak_rss_mib": 40.1015625,
+      "wall_seconds": 2.6130919169999984,
+      "sampled_peak_rss_mib": 34.80859375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "paired_full_2",
+        "board": [
+          "2c",
+          "2d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "af87390e361e27f32abcab5d866f78a9172bb38c2532aa288d5240300d5a6cfd",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "cfeae24344c9f90e61d656b53063a31cd9df7c953c8173c0ab82bbebbe7aa0a2",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 2337122,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1168561,
+      "raw_product_after": 1168561,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "8afc4772ac0a9e6bb65ca36ae5cd0f6d53cdb79678bcbbbc3c24a6cbcda7453e",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.628386208,
+      "peak_rss_mib": 33.23046875,
+      "wall_seconds": 0.9525499169999989,
+      "sampled_peak_rss_mib": 29.78125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "paired_full_3",
+        "board": [
+          "2c",
+          "2d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "ea06cc0a4e5a4eb9327b68c477f7ab91f7ff3fd009ad5a345951f177ef420fc8",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "5a4651e05c8651d5fa8e1db42e409c7d4f68e76e8fc517264c0ab721ef728c13",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 7011366,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1263214441,
+      "raw_product_after": 1263214441,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "49fdc1cddb8475ad2a0c8a21efecceaedcca2d8605555efa78ed5dc2c6ac4ee0",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.864443,
+      "peak_rss_mib": 34.86328125,
+      "wall_seconds": 1.214526124999999,
+      "sampled_peak_rss_mib": 31.7734375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "paired_full_4",
+        "board": [
+          "2c",
+          "2d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "825de4980c935bfebe336e300ea554fe322d4c512ecb67535dc4bc20d9d7dda9",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "c0431bc6695414640609b7dc8fa814e9cbaaed6379febde1be5c47628e3e49da",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 14022732,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1365534810721,
+      "raw_product_after": 1365534810721,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "b3baab961590dc7b572fabf0b0d96b50cbe938e17a52f41774f98b14915ed12f",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 1.230369,
+      "peak_rss_mib": 37.19921875,
+      "wall_seconds": 1.6861456660000016,
+      "sampled_peak_rss_mib": 33.15625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "paired_full_5",
+        "board": [
+          "2c",
+          "2d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "3fa41c1f005bc6ac887e431107f8ab71df80a00fef22aeb2c9b815e8516fb549",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "8afa15c078973fac4a0bded62363c6ff80dd91ba2fe78da70ab5f969e326cc2a",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 23371220,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1476143130389401,
+      "raw_product_after": 1476143130389401,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "19177c50e64e9b00037120c991a58fd93ae6ba2219203739c7772067a510e8ce",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 1.6722210000000002,
+      "peak_rss_mib": 38.625,
+      "wall_seconds": 2.169585583,
+      "sampled_peak_rss_mib": 38.6328125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "paired_full_6",
+        "board": [
+          "2c",
+          "2d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "public_snapshot_key": "1272242ed2ea3388b14a96105053c507a16c35fd84aaee5cfb26f66f71634c38",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "c66e863c8bf9711f597be416abaf42a4ae49c9b1baae2170e14a12bf3cde221c",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 35056830,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1595710723950942481,
+      "raw_product_after": 1595710723950942481,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "7b76f74e781f1cf7907e0f40a8e32760d10a9e737d41fe4a60369b9180fd3b59",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 2.259548333,
+      "peak_rss_mib": 40.625,
+      "wall_seconds": 2.627382833000002,
+      "sampled_peak_rss_mib": 34.94921875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "royal_full_2",
+        "board": [
+          "Ts",
+          "Js",
+          "Qs",
+          "Ks",
+          "As"
+        ],
+        "public_snapshot_key": "fa01f2e64c9fd886a716ac6ee06e1a77ba24fd56ec23ebac26307cd5c09daaa2",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "808a5215f2231bf1b204361e8732e83f184b7705b62fd374c5d23f1c5d92190d",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 2337122,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1168561,
+      "raw_product_after": 1168561,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "4b954dabff0a09bf198c476c1ce4500ce7ec1bd987d876e548a74ba2befe598e",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.586039667,
+      "peak_rss_mib": 33.2734375,
+      "wall_seconds": 0.9565705419999979,
+      "sampled_peak_rss_mib": 29.96484375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "royal_full_3",
+        "board": [
+          "Ts",
+          "Js",
+          "Qs",
+          "Ks",
+          "As"
+        ],
+        "public_snapshot_key": "01cdb91116a31406b046f392574934e3f2c997111ea8c863ba63a456fa599acd",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "ace864a2e62df80e50d228c93d07d5aff2446da75f83f2c815149bad0863bd20",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 7011366,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1263214441,
+      "raw_product_after": 1263214441,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "9855c99ff3139fd6be2c46acd748bb2accf90d01016dd0b14672cb63d1178cdb",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.822613416,
+      "peak_rss_mib": 34.70703125,
+      "wall_seconds": 1.2244827919999999,
+      "sampled_peak_rss_mib": 31.9296875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "royal_full_4",
+        "board": [
+          "Ts",
+          "Js",
+          "Qs",
+          "Ks",
+          "As"
+        ],
+        "public_snapshot_key": "fc87f5d7604143dd4b49efc1c1d2b2394c1ca05c580cb0710b32bf9cfa696477",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "6a6cebfa103d4f699428551758dae999877c27244e6ddfefeab1bf21d35ef9d0",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 14022732,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1365534810721,
+      "raw_product_after": 1365534810721,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "0951dc2ba064333636cafe26a5fb591a1eaa73c09535f09a940ddcf82c21c0bd",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 1.150054959,
+      "peak_rss_mib": 36.21484375,
+      "wall_seconds": 1.6819545419999997,
+      "sampled_peak_rss_mib": 32.46875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "royal_full_5",
+        "board": [
+          "Ts",
+          "Js",
+          "Qs",
+          "Ks",
+          "As"
+        ],
+        "public_snapshot_key": "7bceab9afc6a6a3c59cd5836e4d618c603eb78359a0509798ee1d09769968a81",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "c00473f91de087eaf938d8bccb799c7da33ff0807f50459be4ba1b73abb3ba52",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 23371220,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1476143130389401,
+      "raw_product_after": 1476143130389401,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "0a3df6b46f164993202d8b192ee689dad7012f439d82de69adb35f24939b829c",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 1.607635458,
+      "peak_rss_mib": 38.015625,
+      "wall_seconds": 1.9166339170000057,
+      "sampled_peak_rss_mib": 33.81640625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "royal_full_6",
+        "board": [
+          "Ts",
+          "Js",
+          "Qs",
+          "Ks",
+          "As"
+        ],
+        "public_snapshot_key": "89ae9fefe9133de44e04376a49338a5308c0eac0ed365db9e26402e0635e5192",
+        "source": "entire_public_range"
+      },
+      "range_source_sha256": "571efdfb01330057378fe96800259234680035a1390969ccf7dd253c321c103f",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "compressed_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "blocker_only_widths": [
+        1081,
+        1081,
+        1081,
+        1081,
+        1081,
+        1081
+      ],
+      "logical_pair_checks": 35056830,
+      "evaluated_pair_relations": 1168561,
+      "unique_relation_tables": 1,
+      "raw_product_before": 1595710723950942481,
+      "raw_product_after": 1595710723950942481,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "f782d27f8d4ff1aea12796c38e14e00457c0e702d74da48a2ea1fc49ec6a45d8",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 2.207931083,
+      "peak_rss_mib": 39.265625,
+      "wall_seconds": 2.628975500000003,
+      "sampled_peak_rss_mib": 35.0703125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_sample_32_2",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "source": "seeded_public_subset",
+        "seed": 20261024,
+        "public_snapshot_key": "3f3a799d42a5e051a00ad81784d1b3ccb22e9dbd81db730fb3d95fed6cf3214e"
+      },
+      "range_source_sha256": "6bd578586b0654c159181997e99c3cf02eb889678e82af22b591448d02fce7f7",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        32,
+        32
+      ],
+      "compressed_widths": [
+        30,
+        32
+      ],
+      "blocker_only_widths": [
+        28,
+        27
+      ],
+      "logical_pair_checks": 2048,
+      "evaluated_pair_relations": 2048,
+      "unique_relation_tables": 2,
+      "raw_product_before": 1024,
+      "raw_product_after": 960,
+      "raw_product_reduction_factor": 1.0666666666666667,
+      "within_raw_solver_budget": true,
+      "groups_sha256": "6b99878fe9ad6c905bd92bd1ed492acec113c95679dee12d117f2528b32e8d03",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.003733834000000019,
+      "peak_rss_mib": 26.26953125,
+      "wall_seconds": 0.47520404200000144,
+      "sampled_peak_rss_mib": 26.04296875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_sample_32_4",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "source": "seeded_public_subset",
+        "seed": 20261024,
+        "public_snapshot_key": "c0443ecaa74b7d13e4cd4675b69f04b76cb04f881ed932ea3f4b1183ed7f3ae2"
+      },
+      "range_source_sha256": "f83f5943dfb3e59fa37f5b0984e516dec4abe1a349b8836e15d144c6f5c19dfa",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "compressed_widths": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "blocker_only_widths": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "logical_pair_checks": 12288,
+      "evaluated_pair_relations": 12288,
+      "unique_relation_tables": 12,
+      "raw_product_before": 1048576,
+      "raw_product_after": 1048576,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "074a655327d12a5fffa3932e7ad890266281004e49c6289ceec3a2aa4a0ee8bc",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.01061662499999999,
+      "peak_rss_mib": 26.26953125,
+      "wall_seconds": 0.48340887500000207,
+      "sampled_peak_rss_mib": 25.296875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_sample_32_6",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "source": "seeded_public_subset",
+        "seed": 20261024,
+        "public_snapshot_key": "2192a0445d4177c1276393273bc96deaefe4ce394a5b123a5dbdec624a2536a1"
+      },
+      "range_source_sha256": "6526815e70f2709a74268c4a3a600807d1480e4ed1a80043fed5cf5b51d37743",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ],
+      "compressed_widths": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ],
+      "blocker_only_widths": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ],
+      "logical_pair_checks": 30720,
+      "evaluated_pair_relations": 30720,
+      "unique_relation_tables": 30,
+      "raw_product_before": 1073741824,
+      "raw_product_after": 1073741824,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "45f767be5ce3757c9083a808a16a2b6c6d5569159e2d5c0b924406e77446d424",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.020456583,
+      "peak_rss_mib": 27.26171875,
+      "wall_seconds": 0.4846518330000009,
+      "sampled_peak_rss_mib": 25.609375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_sample_128_2",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "source": "seeded_public_subset",
+        "seed": 20261024,
+        "public_snapshot_key": "3f3a799d42a5e051a00ad81784d1b3ccb22e9dbd81db730fb3d95fed6cf3214e"
+      },
+      "range_source_sha256": "299c9f3d6245d943a909c47fd652f7aaac643b4dd728f434f529629c27c5108a",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        128,
+        128
+      ],
+      "compressed_widths": [
+        128,
+        128
+      ],
+      "blocker_only_widths": [
+        128,
+        128
+      ],
+      "logical_pair_checks": 32768,
+      "evaluated_pair_relations": 32768,
+      "unique_relation_tables": 2,
+      "raw_product_before": 16384,
+      "raw_product_after": 16384,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "bb615ae55877a9d463bcb83cce9c4f71da3ac746ebb291b38ae50404d8986218",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.021267707999999996,
+      "peak_rss_mib": 27.1171875,
+      "wall_seconds": 0.47727145800000415,
+      "sampled_peak_rss_mib": 25.58203125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_sample_128_4",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "source": "seeded_public_subset",
+        "seed": 20261024,
+        "public_snapshot_key": "c0443ecaa74b7d13e4cd4675b69f04b76cb04f881ed932ea3f4b1183ed7f3ae2"
+      },
+      "range_source_sha256": "af05d6793703cc43a4ed5757ee2bf1a5d0d7cc7d97e1bea3b3f08ceef74bc410",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        128,
+        128,
+        128,
+        128
+      ],
+      "compressed_widths": [
+        128,
+        128,
+        128,
+        128
+      ],
+      "blocker_only_widths": [
+        128,
+        128,
+        128,
+        128
+      ],
+      "logical_pair_checks": 196608,
+      "evaluated_pair_relations": 196608,
+      "unique_relation_tables": 12,
+      "raw_product_before": 268435456,
+      "raw_product_after": 268435456,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "8cb179b527f93e8a6e85f4f77eb08a7a51f9ad52a5395adcb619fea06011de9e",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.098067709,
+      "peak_rss_mib": 27.51171875,
+      "wall_seconds": 0.47655120900000014,
+      "sampled_peak_rss_mib": 25.890625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_sample_128_6",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "source": "seeded_public_subset",
+        "seed": 20261024,
+        "public_snapshot_key": "2192a0445d4177c1276393273bc96deaefe4ce394a5b123a5dbdec624a2536a1"
+      },
+      "range_source_sha256": "7263ade29a32343d419da3c551ca7f9d94bb4c017c56f6296f5982142192bfa9",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        128,
+        128,
+        128,
+        128,
+        128,
+        128
+      ],
+      "compressed_widths": [
+        128,
+        128,
+        128,
+        128,
+        128,
+        128
+      ],
+      "blocker_only_widths": [
+        128,
+        128,
+        128,
+        128,
+        128,
+        128
+      ],
+      "logical_pair_checks": 491520,
+      "evaluated_pair_relations": 491520,
+      "unique_relation_tables": 30,
+      "raw_product_before": 4398046511104,
+      "raw_product_after": 4398046511104,
+      "raw_product_reduction_factor": 1.0,
+      "within_raw_solver_budget": false,
+      "groups_sha256": "9f36c8c648cddc3458fa3210efc8ce5aea43b957825fa326df662da355d323dd",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.24107787499999997,
+      "peak_rss_mib": 29.1953125,
+      "wall_seconds": 0.7235954580000055,
+      "sampled_peak_rss_mib": 28.25,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "positive_equivalent_6",
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "source": "deliberately_equivalent_positive_control"
+      },
+      "range_source_sha256": "9e24c2caf2ce43204cbacaae31d83067a815eb939d88f91471513fa3fb37b128",
+      "name": "wide_exact_relation_audit_v1",
+      "status": "audited",
+      "original_widths": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "compressed_widths": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "blocker_only_widths": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "logical_pair_checks": 120,
+      "evaluated_pair_relations": 120,
+      "unique_relation_tables": 30,
+      "raw_product_before": 64,
+      "raw_product_after": 1,
+      "raw_product_reduction_factor": 64.0,
+      "within_raw_solver_budget": true,
+      "groups_sha256": "0d4198c48ed1132dbd71560720b3b30a4ac99a15b12d73af55f3a2acb2933e35",
+      "live_advice_allowed": false,
+      "solver_quality_verified": false,
+      "scope": "Exact relation equivalence only. No joint deals, action tree, solve, EV, or quality admission.",
+      "audit_seconds": 0.0016106660000000106,
+      "peak_rss_mib": 26.23046875,
+      "wall_seconds": 0.4847032499999955,
+      "sampled_peak_rss_mib": 25.625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    }
+  ]
+}
