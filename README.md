@@ -305,3 +305,10 @@ all original deals and payoffs. Thirty small full-game controls and three longer
 failure probes found that simple category/equity bins are not reliable enough;
 quality is measured by unrestricted best responses after lifting to original hands.
 See [docs/SOLVER_STRATEGY_ABSTRACTION.md](docs/SOLVER_STRATEGY_ABSTRACTION.md).
+
+Bounded adaptive strategy refinement now splits hands with different preferred
+actions and rechecks unrestricted best responses in the original game. On the
+existing development corpus, 23/30 controls passed with at most 75% of the original
+strategy rows; seven were explicitly refused. Live advice remains disabled. See
+[docs/SOLVER_ADAPTIVE_STRATEGY.md](docs/SOLVER_ADAPTIVE_STRATEGY.md) for budgets,
+nonmonotonic refinement, full traces and independent-validation requirements.
