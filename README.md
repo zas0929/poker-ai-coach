@@ -334,3 +334,9 @@ timeouts now finish their adaptive stage in about 21–29 seconds and are still
 refused for quality within the row budget. See
 [docs/SOLVER_INDEXED_SPLIT.md](docs/SOLVER_INDEXED_SPLIT.md) for timing limits and
 why selector speedups do not imply the same whole-solve speedup.
+
+A separate gain-targeted refinement experiment was compared against the indexed
+baseline on the known 46-case regression corpus. Both admitted the same 22/42
+completed cases; two difficult cases had lower error but remained refused. The
+new rule is not promoted. See
+[docs/SOLVER_TARGETED_REFINEMENT.md](docs/SOLVER_TARGETED_REFINEMENT.md).
