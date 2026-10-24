@@ -13,12 +13,16 @@ from research.river_snapshot import build_river_from_snapshot
 from research.sidepot_reference import compare_every_path
 
 
-def control(n,mode='plain',river_actions=()):
+def control(n,mode='plain',river_actions=(),board=None,river_stacks=None):
     engine=PokerEngine()
     state=engine.start_hand(player_count=n,starting_stacks=[30,100,200] if mode=='prior_sidepot' else None)
-    board=['2c','4d','7h','9s','Jc']
+    board=['2c','4d','7h','9s','Jc'] if board is None else list(board)
     # Deterministic test setup only; the adapter never receives these holdings.
-    for p,r in zip(state.players,demo_ranges(n)):p.cards=cards(r[0][0])
+    holdings=[r[0][0] for r in demo_ranges(n)]
+    if any(t[i:i+2] in board for t in holdings for i in (0,2)):
+        available=[r+s for r in '23456789TJQKA' for s in 'cdhs' if r+s not in board]
+        holdings=[''.join(available[2*i:2*i+2]) for i in range(n)]
+    for p,text in zip(state.players,holdings):p.cards=cards(text)
     used={(c.rank,c.suit) for p in state.players for c in p.cards+cards(''.join(board))}
     state._deck=[c for c in engine._create_deck() if (c.rank,c.suit) not in used]+list(reversed(cards(''.join(board))))
     if mode=='prior_sidepot':
@@ -31,6 +35,10 @@ def control(n,mode='plain',river_actions=()):
         elif mode=='folded' and not folded and state.street==Street.FLOP:
             engine.apply_action(state,state.current_player_id,ActionType.FOLD);folded=True
         else:engine.apply_action(state,state.current_player_id,ActionType.CALL if state.betting.call_amount else ActionType.CHECK)
+    if river_stacks is not None:
+        if len(river_stacks)!=n or any(type(v) is not int or v<0 for v in river_stacks):
+            raise ValueError('One nonnegative integer river stack per fixture seat required.')
+        for player,stack in zip(state.players,river_stacks):player.stack=stack
     for action,amount in river_actions:
         engine.apply_action(state,state.current_player_id,ActionType(action),amount)
     return prepare_solver_snapshot(state)

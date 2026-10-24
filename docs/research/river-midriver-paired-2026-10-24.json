@@ -1,0 +1,32 @@
+{
+  "iterations": 20,
+  "scope": "Paired wider weighted public-prefix controls; no timing/RSS gate.",
+  "results": [
+    {
+      "name": "dry_3",
+      "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+      "task_key": "2166d15313bf6b41caa01588e26588414302b77d09efc6908aa35c0e0a8519f6",
+      "public_nodes": 41,
+      "joint_deals": 88,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.15150300000000005,
+        "cfr_plus_native": 0.010911749999999998
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0
+    },
+    {
+      "name": "short_reopened_4",
+      "source_information_key": "05ce60bf20ea64c8b84aa3b8f46e11ece047c91a2f246fe041dd6b0e11c08f4b",
+      "task_key": "ff2c5be4a8214366fd636b380ff7092372391e822931e62ff4a094d86e7d7954",
+      "public_nodes": 6,
+      "joint_deals": 48,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.008532708000000166,
+        "cfr_plus_native": 0.0017479580000001604
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0
+    }
+  ]
+}

@@ -1,0 +1,5875 @@
+{
+  "iterations": 100,
+  "method": "cfr_plus_native",
+  "timeout_seconds": 45,
+  "memory_mib": 128,
+  "quality_gate_pct_decision_pot": 0.5,
+  "python": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "scope": "Seeded explicit subsets of public heuristic ranges at mid-river decisions. Every live seat has multiple hands. Exact best responses in bounded continuations, not full-range GTO. RSS sampling is soft, every 0.2s.",
+  "results": [
+    {
+      "name": "dry_2",
+      "seed": 20261032,
+      "raw_combinations": 144,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Qd7d",
+            "weight": 0.476996153375632
+          },
+          {
+            "cards": "Ac4s",
+            "weight": 0.474506360481899
+          },
+          {
+            "cards": "Kh9d",
+            "weight": 0.5292363278696072
+          },
+          {
+            "cards": "KcJd",
+            "weight": 0.5945958796865506
+          },
+          {
+            "cards": "6h2h",
+            "weight": 0.3599297891896736
+          },
+          {
+            "cards": "AdJd",
+            "weight": 0.5943830243040971
+          },
+          {
+            "cards": "8h2h",
+            "weight": 0.41294665595909835
+          },
+          {
+            "cards": "9c8d",
+            "weight": 0.5268560399153802
+          },
+          {
+            "cards": "AsKc",
+            "weight": 0.1820031440518172
+          },
+          {
+            "cards": "Qc4s",
+            "weight": 0.4515587028376954
+          },
+          {
+            "cards": "Jh5h",
+            "weight": 0.5868016901494877
+          },
+          {
+            "cards": "8s6s",
+            "weight": 0.15093842198465068
+          }
+        ],
+        "villain": [
+          {
+            "cards": "6d5c",
+            "weight": 0.925692651763839
+          },
+          {
+            "cards": "6h4s",
+            "weight": 0.6978490051962983
+          },
+          {
+            "cards": "Ts3h",
+            "weight": 0.9820881545095043
+          },
+          {
+            "cards": "5d3d",
+            "weight": 0.9343122945567464
+          },
+          {
+            "cards": "3c2s",
+            "weight": 0.6987451792740055
+          },
+          {
+            "cards": "Th8c",
+            "weight": 0.6850107978599875
+          },
+          {
+            "cards": "8s6c",
+            "weight": 0.9085641666788155
+          },
+          {
+            "cards": "8d3h",
+            "weight": 1.0
+          },
+          {
+            "cards": "6d5h",
+            "weight": 0.925692651763839
+          },
+          {
+            "cards": "Kd6d",
+            "weight": 0.9102694630253426
+          },
+          {
+            "cards": "QhTc",
+            "weight": 0.9151870488290602
+          },
+          {
+            "cards": "AdKh",
+            "weight": 0.6192772073200741
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "small_blind_button",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "hero",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "hero",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": "bc2c37c4dba1e793e2fbf8b842d3d872b49b12baff9273e009192325d1b9477d",
+        "seat_ids": [
+          "hero",
+          "villain"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 12
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 12
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 20,
+          "decision_pot": 30,
+          "street_committed": [
+            10,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 10,
+            "villain": 0
+          },
+          "pending_ids": [
+            "villain"
+          ],
+          "observed_raises": 0,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        12,
+        12
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.03316366699999998,
+      "train_seconds": 0.012408749999999996,
+      "measure_seconds": 0.004179958000000011,
+      "peak_rss_mib": 29.45703125,
+      "public_nodes": 9,
+      "joint_deals": 136,
+      "information_sets": 36,
+      "metrics": {
+        "policy_payoffs": [
+          6.339096903841686,
+          -6.339096903841686
+        ],
+        "best_response_payoffs": [
+          6.361352754728626,
+          -6.278823102375306
+        ],
+        "unilateral_gains": [
+          0.02225585088694082,
+          0.06027380146637995
+        ],
+        "nash_conv_chips": 0.08252965235332077,
+        "max_unilateral_gain_pct_pot": 0.20091267155459983
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.49387283400000026,
+      "sampled_peak_rss_mib": 28.6875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_3",
+      "seed": 20261033,
+      "raw_combinations": 125,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "TdTc",
+            "weight": 0.26318422577000605
+          },
+          {
+            "cards": "JdTs",
+            "weight": 0.3112623060518137
+          },
+          {
+            "cards": "Kc8s",
+            "weight": 0.15368963785537604
+          },
+          {
+            "cards": "7d3d",
+            "weight": 0.22032560335827253
+          },
+          {
+            "cards": "KsQd",
+            "weight": 0.15637545917398277
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Ts7s",
+            "weight": 0.703904138024193
+          },
+          {
+            "cards": "7s3s",
+            "weight": 0.6057239621828617
+          },
+          {
+            "cards": "Ac5s",
+            "weight": 0.8866325605674881
+          },
+          {
+            "cards": "Td4s",
+            "weight": 0.6331980350315071
+          },
+          {
+            "cards": "KcTs",
+            "weight": 0.9832169145853511
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Jd5s",
+            "weight": 0.6029348704841837
+          },
+          {
+            "cards": "Jh9d",
+            "weight": 0.8581173875608564
+          },
+          {
+            "cards": "7d4h",
+            "weight": 0.6645995480437143
+          },
+          {
+            "cards": "Ac4c",
+            "weight": 0.44457483629435063
+          },
+          {
+            "cards": "5c2d",
+            "weight": 0.48607686267321576
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "hero",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+        "task_key": "2166d15313bf6b41caa01588e26588414302b77d09efc6908aa35c0e0a8519f6",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 30,
+          "decision_pot": 60,
+          "street_committed": [
+            20,
+            0,
+            10
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 20,
+            "villain": 0,
+            "villain_2": 10
+          },
+          "pending_ids": [
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        5,
+        5,
+        5
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.05212908299999999,
+      "train_seconds": 0.018058249999999998,
+      "measure_seconds": 0.017815082999999954,
+      "peak_rss_mib": 29.9453125,
+      "public_nodes": 41,
+      "joint_deals": 88,
+      "information_sets": 85,
+      "metrics": {
+        "policy_payoffs": [
+          -29.31420156916611,
+          -10.013658591803217,
+          39.32786016096932
+        ],
+        "best_response_payoffs": [
+          -29.25011826614667,
+          -9.999999999999995,
+          39.4378815758583
+        ],
+        "unilateral_gains": [
+          0.06408330301943721,
+          0.01365859180322282,
+          0.11002141488897621
+        ],
+        "nash_conv_chips": 0.18776330971163624,
+        "max_unilateral_gain_pct_pot": 0.18336902481496034
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.5037258330000007,
+      "sampled_peak_rss_mib": 29.1015625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_4",
+      "seed": 20261034,
+      "raw_combinations": 128,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "KsJs",
+            "weight": 0.994310509784465
+          },
+          {
+            "cards": "Ts9c",
+            "weight": 0.8871638516180695
+          },
+          {
+            "cards": "9d2h",
+            "weight": 0.5612820110658363
+          },
+          {
+            "cards": "Qc9c",
+            "weight": 0.8904661788455025
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Qh8h",
+            "weight": 0.9932630723048972
+          },
+          {
+            "cards": "JsTh",
+            "weight": 0.8557291319125307
+          },
+          {
+            "cards": "Tc2d",
+            "weight": 0.5923591756232706
+          },
+          {
+            "cards": "As3c",
+            "weight": 0.8791725276444587
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "8c6h",
+            "weight": 0.15745731182113148
+          },
+          {
+            "cards": "Qh4h",
+            "weight": 0.47384358137637933
+          },
+          {
+            "cards": "Td7d",
+            "weight": 0.4743166370332871
+          },
+          {
+            "cards": "Qd3h",
+            "weight": 0.17782164842615372
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "9d5d",
+            "weight": 0.27863521101062094
+          },
+          {
+            "cards": "8c6s",
+            "weight": 0.1293105211975507
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+        "task_key": "5f1be437d5a2fbcea366e03ea99c69da2619d8a2a3e650de08b4bf86ad388460",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "hero",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 70,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        4,
+        4,
+        4,
+        2
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.11713125000000002,
+      "train_seconds": 0.046619915999999983,
+      "measure_seconds": 0.08308895799999999,
+      "peak_rss_mib": 30.08984375,
+      "public_nodes": 153,
+      "joint_deals": 82,
+      "information_sets": 228,
+      "metrics": {
+        "policy_payoffs": [
+          41.18964408990078,
+          8.858969500931458,
+          -20.034027677282975,
+          -30.01458591354926
+        ],
+        "best_response_payoffs": [
+          41.25894033635281,
+          8.927112239904055,
+          -19.99803741211543,
+          -29.995316144039094
+        ],
+        "unilateral_gains": [
+          0.06929624645202637,
+          0.06814273897259682,
+          0.03599026516754478,
+          0.019269769510167123
+        ],
+        "nash_conv_chips": 0.19269902010233508,
+        "max_unilateral_gain_pct_pot": 0.09899463778860909
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.7347429999999999,
+      "sampled_peak_rss_mib": 30.0078125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_5",
+      "seed": 20261035,
+      "raw_combinations": 108,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "9d2s",
+            "weight": 0.5612820110658363
+          },
+          {
+            "cards": "Qh2d",
+            "weight": 0.7254255066163738
+          },
+          {
+            "cards": "As4s",
+            "weight": 0.7996547899895987
+          }
+        ],
+        "villain": [
+          {
+            "cards": "5d3c",
+            "weight": 0.5954240071874519
+          },
+          {
+            "cards": "Qs6s",
+            "weight": 0.9871535960238372
+          },
+          {
+            "cards": "KcQh",
+            "weight": 0.9931296877536384
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Qd9h",
+            "weight": 0.5265097605790604
+          },
+          {
+            "cards": "KhQh",
+            "weight": 0.1240854576201662
+          },
+          {
+            "cards": "9h4s",
+            "weight": 0.7243524168215428
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "Ks7c",
+            "weight": 0.25664762666689617
+          },
+          {
+            "cards": "KsKc",
+            "weight": 0.2632844893691561
+          }
+        ],
+        "villain_4": [
+          {
+            "cards": "9c8d",
+            "weight": 0.8774313620919275
+          },
+          {
+            "cards": "Ac9h",
+            "weight": 0.8879740844987252
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        },
+        {
+          "id": "villain_4",
+          "seat": 4,
+          "position": "cutoff",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+        "task_key": "17ac6f8b37e904b4dcfddfc0d5232ac82e4c49252fcc9d0c9351c23ef37e8aa9",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4"
+        ],
+        "actor_id": "villain_4",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 50,
+          "decision_pot": 80,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_4",
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        3,
+        3,
+        3,
+        2,
+        2
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.18796762499999997,
+      "train_seconds": 0.08651504200000004,
+      "measure_seconds": 0.18976374999999995,
+      "peak_rss_mib": 31.77734375,
+      "public_nodes": 521,
+      "joint_deals": 39,
+      "information_sets": 622,
+      "metrics": {
+        "policy_payoffs": [
+          -4.108703766971408,
+          -10.008121559600232,
+          44.63780217403512,
+          -20.509971718834365,
+          -10.01100512862912
+        ],
+        "best_response_payoffs": [
+          -3.974407954870575,
+          -10.000000000000002,
+          44.75611369301199,
+          -20.423389791162553,
+          -9.99322441814361
+        ],
+        "unilateral_gains": [
+          0.13429581210083352,
+          0.0081215596002302,
+          0.11831151897686709,
+          0.08658192767181205,
+          0.017780710485510554
+        ],
+        "nash_conv_chips": 0.3650915288352534,
+        "max_unilateral_gain_pct_pot": 0.1678697651260419
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.9794575830000003,
+      "sampled_peak_rss_mib": 31.52734375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_6",
+      "seed": 20261036,
+      "raw_combinations": 96,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Kc2d",
+            "weight": 0.7473571166069342
+          },
+          {
+            "cards": "8d7s",
+            "weight": 0.7620268133313399
+          },
+          {
+            "cards": "As6c",
+            "weight": 0.979212017858393
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Ks8s",
+            "weight": 0.9885267087376902
+          },
+          {
+            "cards": "9d8d",
+            "weight": 0.8039944006322983
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Qh4c",
+            "weight": 0.4814514408668681
+          },
+          {
+            "cards": "7c4c",
+            "weight": 0.662710132242492
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "Ah6s",
+            "weight": 0.15488529856935773
+          },
+          {
+            "cards": "Kc9d",
+            "weight": 0.28808470573398176
+          }
+        ],
+        "villain_4": [
+          {
+            "cards": "KhTd",
+            "weight": 0.9836420657267901
+          },
+          {
+            "cards": "Ks3d",
+            "weight": 0.9381501673129816
+          }
+        ],
+        "villain_5": [
+          {
+            "cards": "8d5s",
+            "weight": 0.7589296701569467
+          },
+          {
+            "cards": "Qd7c",
+            "weight": 0.7769773434467324
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        },
+        {
+          "id": "villain_4",
+          "seat": 4,
+          "position": "hijack",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_5",
+          "seat": 5,
+          "position": "cutoff",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+        "task_key": "52bde705febef99db0439811244a37351edf95375405ac2064011db494af02c2",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4",
+          "villain_5"
+        ],
+        "actor_id": "villain_4",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_5",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 60,
+          "decision_pot": 90,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            0,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_4",
+            "villain_5",
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        3,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.24318029099999997,
+      "train_seconds": 0.13383574999999992,
+      "measure_seconds": 0.31779225,
+      "peak_rss_mib": 33.94140625,
+      "public_nodes": 1689,
+      "joint_deals": 15,
+      "information_sets": 1782,
+      "metrics": {
+        "policy_payoffs": [
+          -10.041892141545148,
+          8.361227660501378,
+          21.01753868939124,
+          -0.28150046389043126,
+          -10.013952954593522,
+          -9.041420789863519
+        ],
+        "best_response_payoffs": [
+          -9.994874945188815,
+          8.420564095919332,
+          21.138269572260327,
+          -0.2217756902317518,
+          -9.999999999999998,
+          -9.014066755377295
+        ],
+        "unilateral_gains": [
+          0.04701719635633239,
+          0.05933643541795419,
+          0.12073088286908629,
+          0.05972477365867945,
+          0.01395295459352397,
+          0.02735403448622442
+        ],
+        "nash_conv_chips": 0.3281162773818007,
+        "max_unilateral_gain_pct_pot": 0.1341454254100959
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 1.2092827500000007,
+      "sampled_peak_rss_mib": 33.94140625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_2",
+      "seed": 20261132,
+      "raw_combinations": 144,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "9h5c",
+            "weight": 0.6503506260403394
+          },
+          {
+            "cards": "Ah7d",
+            "weight": 0.6732738899646565
+          },
+          {
+            "cards": "Qc3d",
+            "weight": 0.18707757220191246
+          },
+          {
+            "cards": "Tc8d",
+            "weight": 0.19299662554499442
+          },
+          {
+            "cards": "6s4h",
+            "weight": 0.11348402547869821
+          },
+          {
+            "cards": "KsJc",
+            "weight": 0.5259314879570363
+          },
+          {
+            "cards": "AhJd",
+            "weight": 0.6772160448026072
+          },
+          {
+            "cards": "5c2h",
+            "weight": 0.33603323046099465
+          },
+          {
+            "cards": "Tc8c",
+            "weight": 0.19732287184532604
+          },
+          {
+            "cards": "9c6d",
+            "weight": 0.4885741220891516
+          },
+          {
+            "cards": "Kc4c",
+            "weight": 0.6030484156416168
+          },
+          {
+            "cards": "9h7s",
+            "weight": 0.4431845885761048
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Jc6s",
+            "weight": 0.8336587898934386
+          },
+          {
+            "cards": "Qh4c",
+            "weight": 0.9523287891186649
+          },
+          {
+            "cards": "Qs4s",
+            "weight": 0.3655228890031021
+          },
+          {
+            "cards": "Ah6s",
+            "weight": 0.7009112570601304
+          },
+          {
+            "cards": "Jc9h",
+            "weight": 0.6701908943352977
+          },
+          {
+            "cards": "7c3c",
+            "weight": 0.9977151482210058
+          },
+          {
+            "cards": "9c5c",
+            "weight": 0.5265065193878776
+          },
+          {
+            "cards": "Qh7h",
+            "weight": 0.9157486911669331
+          },
+          {
+            "cards": "As6h",
+            "weight": 0.7009112570601304
+          },
+          {
+            "cards": "9c6c",
+            "weight": 0.6834301068959968
+          },
+          {
+            "cards": "Th4s",
+            "weight": 0.8457991735122431
+          },
+          {
+            "cards": "8h7d",
+            "weight": 0.8951422667380634
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "ff451a0b878a4563d5539eb8af7558d4831f2d23045a9a3d8c9fa662ece74013",
+      "board": [
+        "2s",
+        "5s",
+        "9s",
+        "Kh",
+        "Ad"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "small_blind_button",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "hero",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "hero",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "ff451a0b878a4563d5539eb8af7558d4831f2d23045a9a3d8c9fa662ece74013",
+        "task_key": "93f763b9d3998911325e2e7cfe6d9f42dfe0f23fafd17fa060186c80cdcb1df0",
+        "seat_ids": [
+          "hero",
+          "villain"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 12
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 12
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 20,
+          "decision_pot": 30,
+          "street_committed": [
+            10,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 10,
+            "villain": 0
+          },
+          "pending_ids": [
+            "villain"
+          ],
+          "observed_raises": 0,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        12,
+        12
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.03243195799999998,
+      "train_seconds": 0.012126208,
+      "measure_seconds": 0.003802625000000004,
+      "peak_rss_mib": 28.7265625,
+      "public_nodes": 9,
+      "joint_deals": 130,
+      "information_sets": 36,
+      "metrics": {
+        "policy_payoffs": [
+          3.4743567064443868,
+          -3.4743567064443868
+        ],
+        "best_response_payoffs": [
+          3.483486595317809,
+          -3.4444467695016447
+        ],
+        "unilateral_gains": [
+          0.009129888873422143,
+          0.02990993694274202
+        ],
+        "nash_conv_chips": 0.039039825816164164,
+        "max_unilateral_gain_pct_pot": 0.09969978980914006
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.5020052079999999,
+      "sampled_peak_rss_mib": 28.07421875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_3",
+      "seed": 20261133,
+      "raw_combinations": 125,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Th2d",
+            "weight": 0.26109370593508985
+          },
+          {
+            "cards": "KdJc",
+            "weight": 0.3525822318913454
+          },
+          {
+            "cards": "9h6h",
+            "weight": 0.30381640560971185
+          },
+          {
+            "cards": "Ac7h",
+            "weight": 0.3887842976084798
+          },
+          {
+            "cards": "Ac5c",
+            "weight": 0.7974027496136926
+          }
+        ],
+        "villain": [
+          {
+            "cards": "QdTc",
+            "weight": 0.9416324613834187
+          },
+          {
+            "cards": "6c5d",
+            "weight": 0.6102780420596913
+          },
+          {
+            "cards": "6d5c",
+            "weight": 0.6102780420596913
+          },
+          {
+            "cards": "QhJs",
+            "weight": 0.8201072064405125
+          },
+          {
+            "cards": "Qs3h",
+            "weight": 0.7963379566981651
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Th7h",
+            "weight": 0.17083929838182138
+          },
+          {
+            "cards": "Kd2h",
+            "weight": 0.7163192705055407
+          },
+          {
+            "cards": "8s2d",
+            "weight": 0.4125579339560811
+          },
+          {
+            "cards": "Qh3c",
+            "weight": 0.17685452759222786
+          },
+          {
+            "cards": "8s8h",
+            "weight": 0.28664559788955557
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "11b48dfe3e90aac9c2ca3f9ed56d4ac6897192a028cadb90a8b2ff19d333fa06",
+      "board": [
+        "2s",
+        "5s",
+        "9s",
+        "Kh",
+        "Ad"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "hero",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "11b48dfe3e90aac9c2ca3f9ed56d4ac6897192a028cadb90a8b2ff19d333fa06",
+        "task_key": "09512e952ffba3a60f9a2e6fc66b8cdbac721cf1b6cf7d3c0f561317f930453b",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 30,
+          "decision_pot": 60,
+          "street_committed": [
+            20,
+            0,
+            10
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 20,
+            "villain": 0,
+            "villain_2": 10
+          },
+          "pending_ids": [
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        5,
+        5,
+        5
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.055172749999999965,
+      "train_seconds": 0.01869237500000004,
+      "measure_seconds": 0.01986883300000003,
+      "peak_rss_mib": 29.328125,
+      "public_nodes": 41,
+      "joint_deals": 95,
+      "information_sets": 85,
+      "metrics": {
+        "policy_payoffs": [
+          17.680518451273656,
+          -10.013272968917233,
+          -7.667245482356418
+        ],
+        "best_response_payoffs": [
+          17.681249510176833,
+          -10.0,
+          -7.642444096012115
+        ],
+        "unilateral_gains": [
+          0.0007310589031774839,
+          0.013272968917233285,
+          0.02480138634430329
+        ],
+        "nash_conv_chips": 0.03880541416471406,
+        "max_unilateral_gain_pct_pot": 0.04133564390717215
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.5057812080000001,
+      "sampled_peak_rss_mib": 28.35546875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_4",
+      "seed": 20261134,
+      "raw_combinations": 128,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "4s4h",
+            "weight": 0.6822136367579271
+          },
+          {
+            "cards": "JcTh",
+            "weight": 0.9532887415158431
+          },
+          {
+            "cards": "Qc6h",
+            "weight": 0.9592393944964379
+          },
+          {
+            "cards": "Qh6c",
+            "weight": 0.9592393944964379
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Qc3s",
+            "weight": 0.7963379566981651
+          },
+          {
+            "cards": "Jh2c",
+            "weight": 0.6217141042674669
+          },
+          {
+            "cards": "5c3s",
+            "weight": 0.3770633568199527
+          },
+          {
+            "cards": "Qh3s",
+            "weight": 0.7963379566981651
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "9h3h",
+            "weight": 0.4801185395761069
+          },
+          {
+            "cards": "AhJc",
+            "weight": 0.5120520433462477
+          },
+          {
+            "cards": "6d4c",
+            "weight": 0.1556286144430146
+          },
+          {
+            "cards": "8d6d",
+            "weight": 0.1550451783644743
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "3c2c",
+            "weight": 0.23187011031324553
+          },
+          {
+            "cards": "As9d",
+            "weight": 0.6808775760043196
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "87030f65ce9a730f6fba47a47b72b31abeb51fc7420837d331623fcb34a1daae",
+      "board": [
+        "2s",
+        "5s",
+        "9s",
+        "Kh",
+        "Ad"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "87030f65ce9a730f6fba47a47b72b31abeb51fc7420837d331623fcb34a1daae",
+        "task_key": "93b5264a908eea5f5c338b45163a7afd11ab0f001329599514656ad652f66ab6",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "hero",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 70,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        4,
+        4,
+        4,
+        2
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.12210587500000003,
+      "train_seconds": 0.04965958299999995,
+      "measure_seconds": 0.08852604199999997,
+      "peak_rss_mib": 31.1796875,
+      "public_nodes": 153,
+      "joint_deals": 89,
+      "information_sets": 228,
+      "metrics": {
+        "policy_payoffs": [
+          -10.011156431868844,
+          -10.013616530739526,
+          -16.11784087276729,
+          36.14261383537565
+        ],
+        "best_response_payoffs": [
+          -10.000000000000002,
+          -9.999805683879014,
+          -16.03323697523239,
+          36.154621400507146
+        ],
+        "unilateral_gains": [
+          0.011156431868842631,
+          0.013810846860511816,
+          0.0846038975348975,
+          0.0120075651314977
+        ],
+        "nash_conv_chips": 0.12157874139574965,
+        "max_unilateral_gain_pct_pot": 0.12086271076413929
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.7300288330000004,
+      "sampled_peak_rss_mib": 30.8828125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_5",
+      "seed": 20261135,
+      "raw_combinations": 108,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "8d6h",
+            "weight": 0.8387897796149699
+          },
+          {
+            "cards": "Qc5c",
+            "weight": 0.7891445702112893
+          },
+          {
+            "cards": "6h6d",
+            "weight": 0.8035258436120262
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Qh2h",
+            "weight": 0.6899000145339109
+          },
+          {
+            "cards": "Td8h",
+            "weight": 0.978075292236154
+          },
+          {
+            "cards": "7s7c",
+            "weight": 0.6130063132304175
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Ah6s",
+            "weight": 0.4890284356943451
+          },
+          {
+            "cards": "5h3c",
+            "weight": 0.4831552204753666
+          },
+          {
+            "cards": "8d3c",
+            "weight": 0.17236091021843195
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "9h3s",
+            "weight": 0.21758913630795076
+          },
+          {
+            "cards": "QhQc",
+            "weight": 0.3190182418223058
+          }
+        ],
+        "villain_4": [
+          {
+            "cards": "3s3c",
+            "weight": 0.6779259380447205
+          },
+          {
+            "cards": "Jd7s",
+            "weight": 0.833171692115125
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "19bbe762c0da5ee9739d0c9227041f351ff754fa967181c38d4c2f8a2a956833",
+      "board": [
+        "2s",
+        "5s",
+        "9s",
+        "Kh",
+        "Ad"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        },
+        {
+          "id": "villain_4",
+          "seat": 4,
+          "position": "cutoff",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "19bbe762c0da5ee9739d0c9227041f351ff754fa967181c38d4c2f8a2a956833",
+        "task_key": "07d1f2854fa6edc51239211949d8f9053733f0ab6cb9a496be01ab43d829df8d",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4"
+        ],
+        "actor_id": "villain_4",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 50,
+          "decision_pot": 80,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_4",
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        3,
+        3,
+        3,
+        2,
+        2
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.135627166,
+      "train_seconds": 0.05808158299999999,
+      "measure_seconds": 0.12294495899999996,
+      "peak_rss_mib": 31.94140625,
+      "public_nodes": 521,
+      "joint_deals": 25,
+      "information_sets": 622,
+      "metrics": {
+        "policy_payoffs": [
+          -10.05089843035429,
+          -10.006847782955932,
+          39.94440190737189,
+          -9.873524194016891,
+          -10.01313150004477
+        ],
+        "best_response_payoffs": [
+          -10.000000000000004,
+          -10.000000000000005,
+          40.056003227461055,
+          -9.80807328213282,
+          -10.000000000000005
+        ],
+        "unilateral_gains": [
+          0.05089843035428565,
+          0.0068477829559263625,
+          0.11160132008916435,
+          0.0654509118840707,
+          0.013131500044764266
+        ],
+        "nash_conv_chips": 0.24792994532821133,
+        "max_unilateral_gain_pct_pot": 0.13950165011145543
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.7389212080000007,
+      "sampled_peak_rss_mib": 31.74609375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_6",
+      "seed": 20261136,
+      "raw_combinations": 96,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "4s4c",
+            "weight": 0.6822136367579271
+          },
+          {
+            "cards": "Jd7h",
+            "weight": 0.9585798463263863
+          },
+          {
+            "cards": "4d3h",
+            "weight": 0.6155733799238243
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Ks4d",
+            "weight": 0.6560977663147022
+          },
+          {
+            "cards": "7s6d",
+            "weight": 0.7445470769630655
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "7h6s",
+            "weight": 0.13453387067402356
+          },
+          {
+            "cards": "Ah5d",
+            "weight": 0.7548168485714203
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "Th3c",
+            "weight": 0.16188893717670041
+          },
+          {
+            "cards": "7h6h",
+            "weight": 0.16862607640839558
+          }
+        ],
+        "villain_4": [
+          {
+            "cards": "Qs7d",
+            "weight": 0.8407003253727459
+          },
+          {
+            "cards": "7h7c",
+            "weight": 0.8046689394177009
+          }
+        ],
+        "villain_5": [
+          {
+            "cards": "QdQc",
+            "weight": 0.8062920571100145
+          },
+          {
+            "cards": "As8d",
+            "weight": 0.8547378795068116
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "c6870bd3ac550b024e822b5a3b475859fd9c9b5cf9a854bc6ae5d4474ed6f9cd",
+      "board": [
+        "2s",
+        "5s",
+        "9s",
+        "Kh",
+        "Ad"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        },
+        {
+          "id": "villain_4",
+          "seat": 4,
+          "position": "hijack",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_5",
+          "seat": 5,
+          "position": "cutoff",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "c6870bd3ac550b024e822b5a3b475859fd9c9b5cf9a854bc6ae5d4474ed6f9cd",
+        "task_key": "247ba7e695accba1e0613169a2af26510fea75ea9df98d54c20894f29249510a",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4",
+          "villain_5"
+        ],
+        "actor_id": "villain_4",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_5",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 60,
+          "decision_pot": 90,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            0,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_4",
+            "villain_5",
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        3,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.414377875,
+      "train_seconds": 0.23371399999999998,
+      "measure_seconds": 0.5345230419999999,
+      "peak_rss_mib": 34.5703125,
+      "public_nodes": 1689,
+      "joint_deals": 28,
+      "information_sets": 1782,
+      "metrics": {
+        "policy_payoffs": [
+          24.156364787003852,
+          -10.044137023737584,
+          35.959376870959005,
+          -30.039719908347532,
+          -10.013861712579295,
+          -10.018023013298432
+        ],
+        "best_response_payoffs": [
+          24.26714140711553,
+          -9.999999865058811,
+          36.022619716407895,
+          -29.995560796809315,
+          -9.999999999999998,
+          -10.0
+        ],
+        "unilateral_gains": [
+          0.11077662011167888,
+          0.04413715867877244,
+          0.06324284544889025,
+          0.04415911153821739,
+          0.013861712579297247,
+          0.018023013298432033
+        ],
+        "nash_conv_chips": 0.29420046165528824,
+        "max_unilateral_gain_pct_pot": 0.12308513345742098
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 1.6673968749999997,
+      "sampled_peak_rss_mib": 34.58203125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "river_fold_4",
+      "seed": 20261040,
+      "raw_combinations": 125,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "AcQc",
+            "weight": 0.19782137555502674
+          },
+          {
+            "cards": "3c2d",
+            "weight": 0.35626740708144045
+          },
+          {
+            "cards": "6h2d",
+            "weight": 0.37173773894342044
+          },
+          {
+            "cards": "3s3h",
+            "weight": 0.6907211206441706
+          },
+          {
+            "cards": "9h3c",
+            "weight": 0.6300209966319905
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "As6s",
+            "weight": 0.16030707911128786
+          },
+          {
+            "cards": "Ts9h",
+            "weight": 0.5248398312160056
+          },
+          {
+            "cards": "8c4s",
+            "weight": 0.48513099422263184
+          },
+          {
+            "cards": "Tc6s",
+            "weight": 0.16689227077977253
+          },
+          {
+            "cards": "Kh3s",
+            "weight": 0.17905122406919505
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "Ks3c",
+            "weight": 0.14765468854133465
+          },
+          {
+            "cards": "5d2d",
+            "weight": 0.17711705698592337
+          },
+          {
+            "cards": "Tc5h",
+            "weight": 0.14118670556537832
+          },
+          {
+            "cards": "Js3h",
+            "weight": 0.29253894144924636
+          },
+          {
+            "cards": "7s4h",
+            "weight": 0.3946053614819732
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "5074ef1e648c64ccc54b70b10c57e0d515453f6837691d96415abdefd3ce0545",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "folded",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 20,
+          "street": "river"
+        },
+        {
+          "player_id": "villain",
+          "action": "fold",
+          "amount_added": null,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "5074ef1e648c64ccc54b70b10c57e0d515453f6837691d96415abdefd3ce0545",
+        "task_key": "68e0fdc01ffbb91eda2e2056b5a1b3cc4ce3a8c775bd084c7774e0584ccbf01f",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [
+          1
+        ],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 0,
+            "selected": 0
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 90,
+          "street_committed": [
+            20,
+            0,
+            10,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 20,
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        5,
+        0,
+        5,
+        5
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.04102741699999998,
+      "train_seconds": 0.012999166000000006,
+      "measure_seconds": 0.010307791999999982,
+      "peak_rss_mib": 29.36328125,
+      "public_nodes": 17,
+      "joint_deals": 87,
+      "information_sets": 35,
+      "metrics": {
+        "policy_payoffs": [
+          -17.6978910444244,
+          -10.0,
+          -5.388286897365676,
+          33.08617794179007
+        ],
+        "best_response_payoffs": [
+          -17.697372044485824,
+          -10.0,
+          -5.362932638206774,
+          33.086184012440654
+        ],
+        "unilateral_gains": [
+          0.0005189999385741828,
+          0,
+          0.02535425915890155,
+          6.070650584888426e-06
+        ],
+        "nash_conv_chips": 0.02587932974806062,
+        "max_unilateral_gain_pct_pot": 0.028171399065446162
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.5051486250000004,
+      "sampled_peak_rss_mib": 28.5546875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "prior_allin_3",
+      "seed": 20261041,
+      "raw_combinations": 125,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "KcJd",
+            "weight": 0.9322925195400757
+          },
+          {
+            "cards": "8c4c",
+            "weight": 0.4566502103343387
+          },
+          {
+            "cards": "Qc8c",
+            "weight": 0.8898656746718785
+          },
+          {
+            "cards": "Ts3h",
+            "weight": 0.3454285289249528
+          },
+          {
+            "cards": "9c5d",
+            "weight": 0.36528507689689943
+          }
+        ],
+        "villain": [
+          {
+            "cards": "6s4h",
+            "weight": 0.01901414401407332
+          },
+          {
+            "cards": "Td4c",
+            "weight": 0.02866471712081454
+          },
+          {
+            "cards": "6s3s",
+            "weight": 0.006750059267622663
+          },
+          {
+            "cards": "Kd6h",
+            "weight": 0.029191653034215833
+          },
+          {
+            "cards": "Qs6c",
+            "weight": 0.022280600344215116
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Kh2d",
+            "weight": 0.26096239534836263
+          },
+          {
+            "cards": "9c2s",
+            "weight": 0.08666011687725689
+          },
+          {
+            "cards": "6c3h",
+            "weight": 0.06157218431294435
+          },
+          {
+            "cards": "4s2h",
+            "weight": 0.03358608807457522
+          },
+          {
+            "cards": "5c2d",
+            "weight": 0.037236922225512635
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "adb6f75520d3bd00d13d171359a7cf78b0c9a0f527ae08482ee76f02b62bc6ef",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "all_in",
+          "stack": 0,
+          "street_committed": 0,
+          "total_committed": 30
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 30,
+          "street_committed": 10,
+          "total_committed": 70
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 140,
+          "street_committed": 0,
+          "total_committed": 60
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "raise",
+          "amount_added": 30,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "raise",
+          "amount_added": 55,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "call",
+          "amount_added": 50,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "adb6f75520d3bd00d13d171359a7cf78b0c9a0f527ae08482ee76f02b62bc6ef",
+        "task_key": "7f438d4c6db4b09490da5332f47949cc5edfc14869b332a96b06270663e4dbcd",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 150,
+          "decision_pot": 160,
+          "street_committed": [
+            0,
+            10,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 10
+          },
+          "pending_ids": [
+            "villain_2"
+          ],
+          "observed_raises": 0,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        5,
+        5,
+        5
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.035266875,
+      "train_seconds": 0.011568999999999996,
+      "measure_seconds": 0.004662833000000005,
+      "peak_rss_mib": 29.46875,
+      "public_nodes": 9,
+      "joint_deals": 106,
+      "information_sets": 15,
+      "metrics": {
+        "policy_payoffs": [
+          9.97376180358048,
+          -30.390100225763277,
+          20.416338422182783
+        ],
+        "best_response_payoffs": [
+          9.97376180358048,
+          -30.38833142573369,
+          20.42474271899375
+        ],
+        "unilateral_gains": [
+          0,
+          0.0017688000295876805,
+          0.008404296810965661
+        ],
+        "nash_conv_chips": 0.010173096840553342,
+        "max_unilateral_gain_pct_pot": 0.005252685506853538
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.4924850000000003,
+      "sampled_peak_rss_mib": 28.515625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "short_closed_3",
+      "seed": 20261042,
+      "raw_combinations": 125,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "KhTh",
+            "weight": 0.1858309790459565
+          },
+          {
+            "cards": "8d3s",
+            "weight": 0.1024476545231293
+          },
+          {
+            "cards": "6h3c",
+            "weight": 0.06581272090171407
+          },
+          {
+            "cards": "8h5h",
+            "weight": 0.11658731825226515
+          },
+          {
+            "cards": "Td6c",
+            "weight": 0.13687858749364631
+          }
+        ],
+        "villain": [
+          {
+            "cards": "8c7s",
+            "weight": 0.45756106577259986
+          },
+          {
+            "cards": "Qs5d",
+            "weight": 0.16866271010706796
+          },
+          {
+            "cards": "Kh4c",
+            "weight": 0.46059540113954006
+          },
+          {
+            "cards": "Qs9h",
+            "weight": 0.5270334263977966
+          },
+          {
+            "cards": "Tc8d",
+            "weight": 0.978075292236154
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "5s5d",
+            "weight": 0.23723944623124651
+          },
+          {
+            "cards": "AhKh",
+            "weight": 0.0779106395016627
+          },
+          {
+            "cards": "As7d",
+            "weight": 0.24733729260356993
+          },
+          {
+            "cards": "8s7s",
+            "weight": 0.2563330540167974
+          },
+          {
+            "cards": "KsTd",
+            "weight": 0.14979564204409634
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "8a0b89aca281ebbd8f4d13e2e1afdcb5a791818eb6a85a05288266ac40748b52",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 140,
+          "street_committed": 60,
+          "total_committed": 70
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 160,
+          "street_committed": 40,
+          "total_committed": 50
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "all_in",
+          "stack": 0,
+          "street_committed": 60,
+          "total_committed": 70
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "bet",
+          "amount_added": 40,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "raise",
+          "amount_added": 60,
+          "street": "river"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 60,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "8a0b89aca281ebbd8f4d13e2e1afdcb5a791818eb6a85a05288266ac40748b52",
+        "task_key": "1874fec02c17dfd17de1ccd5bac04d7aa1aea40e0dd5319e61374df8fabd86ed",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 30,
+          "decision_pot": 190,
+          "street_committed": [
+            60,
+            40,
+            60
+          ],
+          "last_full_raise": 40,
+          "acted_at_bet": {
+            "hero": 60,
+            "villain": 40,
+            "villain_2": 60
+          },
+          "pending_ids": [
+            "villain"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        5,
+        5,
+        5
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.03192679200000001,
+      "train_seconds": 0.009090500000000001,
+      "measure_seconds": 0.001333250000000008,
+      "peak_rss_mib": 29.5546875,
+      "public_nodes": 3,
+      "joint_deals": 92,
+      "information_sets": 5,
+      "metrics": {
+        "policy_payoffs": [
+          -69.61192120842745,
+          89.77045415600827,
+          -20.158532947580838
+        ],
+        "best_response_payoffs": [
+          -69.61192120842745,
+          89.78441301983389,
+          -20.158532947580838
+        ],
+        "unilateral_gains": [
+          0,
+          0.013958863825621393,
+          0
+        ],
+        "nash_conv_chips": 0.013958863825621393,
+        "max_unilateral_gain_pct_pot": 0.007346770434537574
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.49391266599999994,
+      "sampled_peak_rss_mib": 28.76171875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "short_reopened_4",
+      "seed": 20261043,
+      "raw_combinations": 128,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Js2s",
+            "weight": 0.6244373316347044
+          },
+          {
+            "cards": "3d3c",
+            "weight": 0.2591064895541891
+          },
+          {
+            "cards": "Kc5d",
+            "weight": 0.15081326733212727
+          },
+          {
+            "cards": "8d5c",
+            "weight": 0.11711959502302313
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Js5h",
+            "weight": 0.9320446867397513
+          },
+          {
+            "cards": "9h5s",
+            "weight": 0.7788174026128207
+          },
+          {
+            "cards": "AcKs",
+            "weight": 0.25181156364728424
+          },
+          {
+            "cards": "3d2s",
+            "weight": 0.4088860393425852
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "KhJh",
+            "weight": 0.4799195711721357
+          },
+          {
+            "cards": "Td6c",
+            "weight": 0.16689227077977253
+          },
+          {
+            "cards": "8h5c",
+            "weight": 0.15795527195396866
+          },
+          {
+            "cards": "Kh8d",
+            "weight": 0.17509228052125572
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "5s3d",
+            "weight": 0.08922083372619558
+          },
+          {
+            "cards": "6s3c",
+            "weight": 0.08449452295327127
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "05ce60bf20ea64c8b84aa3b8f46e11ece047c91a2f246fe041dd6b0e11c08f4b",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "all_in",
+          "stack": 0,
+          "street_committed": 80,
+          "total_committed": 90
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 120,
+          "street_committed": 80,
+          "total_committed": 90
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 160,
+          "street_committed": 40,
+          "total_committed": 50
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "all_in",
+          "stack": 0,
+          "street_committed": 60,
+          "total_committed": 70
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 40,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 60,
+          "street": "river"
+        },
+        {
+          "player_id": "hero",
+          "action": "raise",
+          "amount_added": 80,
+          "street": "river"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 80,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "05ce60bf20ea64c8b84aa3b8f46e11ece047c91a2f246fe041dd6b0e11c08f4b",
+        "task_key": "ff2c5be4a8214366fd636b380ff7092372391e822931e62ff4a094d86e7d7954",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 300,
+          "street_committed": [
+            80,
+            80,
+            40,
+            60
+          ],
+          "last_full_raise": 40,
+          "acted_at_bet": {
+            "hero": 80,
+            "villain": 80,
+            "villain_2": 40,
+            "villain_3": 60
+          },
+          "pending_ids": [
+            "villain_2"
+          ],
+          "observed_raises": 2,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        3,
+        4,
+        4,
+        2
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.03534179100000001,
+      "train_seconds": 0.009368792000000015,
+      "measure_seconds": 0.002226790999999978,
+      "peak_rss_mib": 31.375,
+      "public_nodes": 6,
+      "joint_deals": 48,
+      "information_sets": 8,
+      "metrics": {
+        "policy_payoffs": [
+          70.02725283305512,
+          -34.84818740867032,
+          34.82093457561523,
+          -70.00000000000001
+        ],
+        "best_response_payoffs": [
+          70.02725283305512,
+          -34.84092979623527,
+          34.84271140264643,
+          -70.00000000000001
+        ],
+        "unilateral_gains": [
+          0,
+          0.007257612435047633,
+          0.021776827031196433,
+          0
+        ],
+        "nash_conv_chips": 0.029034439466244066,
+        "max_unilateral_gain_pct_pot": 0.007258942343732144
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.48759933300000036,
+      "sampled_peak_rss_mib": 30.3203125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "wide_2_4096",
+      "seed": 20261044,
+      "raw_combinations": 4096,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "KdJs",
+            "weight": 0.5945958796865506
+          },
+          {
+            "cards": "As3c",
+            "weight": 0.16206210619490344
+          },
+          {
+            "cards": "8h5d",
+            "weight": 0.128013024675967
+          },
+          {
+            "cards": "Qh6h",
+            "weight": 0.17522676863344225
+          },
+          {
+            "cards": "Qc3s",
+            "weight": 0.1637747875801583
+          },
+          {
+            "cards": "3s3d",
+            "weight": 0.4760008578361278
+          },
+          {
+            "cards": "Kc2d",
+            "weight": 0.44875260660771055
+          },
+          {
+            "cards": "6h5c",
+            "weight": 0.13234303413031293
+          },
+          {
+            "cards": "Kh4s",
+            "weight": 0.46059540113954006
+          },
+          {
+            "cards": "Kh6h",
+            "weight": 0.17794310576397201
+          },
+          {
+            "cards": "Jd8c",
+            "weight": 0.5544708487973143
+          },
+          {
+            "cards": "Js8s",
+            "weight": 0.5685961494714622
+          },
+          {
+            "cards": "6s4h",
+            "weight": 0.35623622756030693
+          },
+          {
+            "cards": "AcTc",
+            "weight": 0.18182861393694547
+          },
+          {
+            "cards": "9d4h",
+            "weight": 0.6009932844813449
+          },
+          {
+            "cards": "8h7d",
+            "weight": 0.45756106577259986
+          },
+          {
+            "cards": "Ts2h",
+            "weight": 0.39582642016596103
+          },
+          {
+            "cards": "Js5c",
+            "weight": 0.5596487587463614
+          },
+          {
+            "cards": "8h5h",
+            "weight": 0.1447505483496278
+          },
+          {
+            "cards": "AhTh",
+            "weight": 0.18182861393694547
+          },
+          {
+            "cards": "6c5h",
+            "weight": 0.13234303413031293
+          },
+          {
+            "cards": "5d4h",
+            "weight": 0.36798345120702275
+          },
+          {
+            "cards": "7s4c",
+            "weight": 0.4705842342272778
+          },
+          {
+            "cards": "6c4h",
+            "weight": 0.35623622756030693
+          },
+          {
+            "cards": "KcQc",
+            "weight": 0.1799205658445348
+          },
+          {
+            "cards": "Ks4c",
+            "weight": 0.46059540113954006
+          },
+          {
+            "cards": "Kc9h",
+            "weight": 0.5292363278696072
+          },
+          {
+            "cards": "Jh5d",
+            "weight": 0.5596487587463614
+          },
+          {
+            "cards": "Ts3c",
+            "weight": 0.14866387330255307
+          },
+          {
+            "cards": "As8s",
+            "weight": 0.18162937525184683
+          },
+          {
+            "cards": "8d2s",
+            "weight": 0.33472435993793376
+          },
+          {
+            "cards": "Tc5c",
+            "weight": 0.16778166172232292
+          },
+          {
+            "cards": "7d4s",
+            "weight": 0.4705842342272778
+          },
+          {
+            "cards": "6d4s",
+            "weight": 0.35623622756030693
+          },
+          {
+            "cards": "Qs8h",
+            "weight": 0.17318649536192196
+          },
+          {
+            "cards": "Tc6h",
+            "weight": 0.1531515562535159
+          },
+          {
+            "cards": "Jh7d",
+            "weight": 0.7502211507008332
+          },
+          {
+            "cards": "7c3c",
+            "weight": 0.4047570417176555
+          },
+          {
+            "cards": "9d2h",
+            "weight": 0.5500162666450812
+          },
+          {
+            "cards": "Qc4h",
+            "weight": 0.4515587028376954
+          },
+          {
+            "cards": "AdQc",
+            "weight": 0.181813887307808
+          },
+          {
+            "cards": "As5c",
+            "weight": 0.16343724999179696
+          },
+          {
+            "cards": "9d3h",
+            "weight": 0.43417021123072075
+          },
+          {
+            "cards": "Qc8s",
+            "weight": 0.17318649536192196
+          },
+          {
+            "cards": "QcJs",
+            "weight": 0.5982956112622908
+          },
+          {
+            "cards": "JhTs",
+            "weight": 0.5718155687556737
+          },
+          {
+            "cards": "Ts8d",
+            "weight": 0.978075292236154
+          },
+          {
+            "cards": "8d6d",
+            "weight": 0.15093842198465068
+          },
+          {
+            "cards": "QdTs",
+            "weight": 0.17623070026753157
+          },
+          {
+            "cards": "9h4s",
+            "weight": 0.6009932844813449
+          },
+          {
+            "cards": "Js3h",
+            "weight": 0.5374191411411631
+          },
+          {
+            "cards": "Td4c",
+            "weight": 0.42311577464622974
+          },
+          {
+            "cards": "Jh9c",
+            "weight": 0.864870280628591
+          },
+          {
+            "cards": "Kh6c",
+            "weight": 0.17450201525548129
+          },
+          {
+            "cards": "Ts7c",
+            "weight": 0.45033827911652574
+          },
+          {
+            "cards": "7s6h",
+            "weight": 0.4393395113370249
+          },
+          {
+            "cards": "As5d",
+            "weight": 0.16343724999179696
+          },
+          {
+            "cards": "7d2d",
+            "weight": 0.5327832728915494
+          },
+          {
+            "cards": "Kc7s",
+            "weight": 0.47148371569249947
+          },
+          {
+            "cards": "Ks4h",
+            "weight": 0.46059540113954006
+          },
+          {
+            "cards": "6h4h",
+            "weight": 0.4251990162529957
+          },
+          {
+            "cards": "Ks2h",
+            "weight": 0.44875260660771055
+          },
+          {
+            "cards": "7d3c",
+            "weight": 0.3211333813321917
+          },
+          {
+            "cards": "Jd6s",
+            "weight": 0.5680545523961847
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Tc8d",
+            "weight": 0.6850107978599875
+          },
+          {
+            "cards": "AdTh",
+            "weight": 0.843136139723272
+          },
+          {
+            "cards": "9h3h",
+            "weight": 0.780412952037122
+          },
+          {
+            "cards": "7s7c",
+            "weight": 0.35133456832380666
+          },
+          {
+            "cards": "As3d",
+            "weight": 0.8446994270315636
+          },
+          {
+            "cards": "Js9h",
+            "weight": 0.6923884642362802
+          },
+          {
+            "cards": "8c7d",
+            "weight": 0.6905097094069533
+          },
+          {
+            "cards": "Ks6h",
+            "weight": 0.9414865488957858
+          },
+          {
+            "cards": "Tc8h",
+            "weight": 0.6850107978599875
+          },
+          {
+            "cards": "AhTh",
+            "weight": 0.7253907640074679
+          },
+          {
+            "cards": "6c4s",
+            "weight": 0.6978490051962983
+          },
+          {
+            "cards": "Ad5s",
+            "weight": 0.8316968384426007
+          },
+          {
+            "cards": "5c3h",
+            "weight": 0.9360306528270287
+          },
+          {
+            "cards": "Th4c",
+            "weight": 0.695734742056799
+          },
+          {
+            "cards": "Kh4s",
+            "weight": 0.6893197329834679
+          },
+          {
+            "cards": "AhTc",
+            "weight": 0.843136139723272
+          },
+          {
+            "cards": "5c3s",
+            "weight": 0.9360306528270287
+          },
+          {
+            "cards": "Ac3c",
+            "weight": 0.8083452237785239
+          },
+          {
+            "cards": "4c2d",
+            "weight": 0.5368497231029783
+          },
+          {
+            "cards": "Qc6d",
+            "weight": 0.9552513253418808
+          },
+          {
+            "cards": "9d4h",
+            "weight": 0.5844576333250653
+          },
+          {
+            "cards": "Kd8s",
+            "weight": 0.9304315270087191
+          },
+          {
+            "cards": "As3s",
+            "weight": 0.8083452237785239
+          },
+          {
+            "cards": "Qs9h",
+            "weight": 0.7569958591363061
+          },
+          {
+            "cards": "5s2d",
+            "weight": 0.6988629647832311
+          },
+          {
+            "cards": "Kd3c",
+            "weight": 0.9514691528805425
+          },
+          {
+            "cards": "8h6d",
+            "weight": 0.9085641666788155
+          },
+          {
+            "cards": "QsTd",
+            "weight": 0.9151870488290602
+          },
+          {
+            "cards": "4s2h",
+            "weight": 0.5368497231029783
+          },
+          {
+            "cards": "Qs6c",
+            "weight": 0.9552513253418808
+          },
+          {
+            "cards": "Kc4c",
+            "weight": 0.6741265959765802
+          },
+          {
+            "cards": "Kh7c",
+            "weight": 0.6803880418349566
+          },
+          {
+            "cards": "Ts5h",
+            "weight": 0.9798998202295065
+          },
+          {
+            "cards": "Qc4h",
+            "weight": 0.6922127079099053
+          },
+          {
+            "cards": "AsKc",
+            "weight": 0.6192772073200741
+          },
+          {
+            "cards": "AcTs",
+            "weight": 0.843136139723272
+          },
+          {
+            "cards": "9h6d",
+            "weight": 0.7819131383531684
+          },
+          {
+            "cards": "Jh8h",
+            "weight": 0.7995772579033095
+          },
+          {
+            "cards": "Kd4c",
+            "weight": 0.6893197329834679
+          },
+          {
+            "cards": "Kc7s",
+            "weight": 0.6803880418349566
+          },
+          {
+            "cards": "Ks8h",
+            "weight": 0.9304315270087191
+          },
+          {
+            "cards": "8s4c",
+            "weight": 0.6975030308295049
+          },
+          {
+            "cards": "5s4h",
+            "weight": 0.697653757166927
+          },
+          {
+            "cards": "Jh8c",
+            "weight": 0.820996232472338
+          },
+          {
+            "cards": "Ah9c",
+            "weight": 0.7004871118240618
+          },
+          {
+            "cards": "6d3c",
+            "weight": 0.9285257884592092
+          },
+          {
+            "cards": "8h2d",
+            "weight": 0.6981270135313449
+          },
+          {
+            "cards": "8c5h",
+            "weight": 0.9114375088430995
+          },
+          {
+            "cards": "9h5h",
+            "weight": 0.7772413330301764
+          },
+          {
+            "cards": "5d2d",
+            "weight": 0.6982243261095964
+          },
+          {
+            "cards": "QsJh",
+            "weight": 0.7780173325438898
+          },
+          {
+            "cards": "Tc4s",
+            "weight": 0.695734742056799
+          },
+          {
+            "cards": "Qh7d",
+            "weight": 0.6858070637326382
+          },
+          {
+            "cards": "Qc6s",
+            "weight": 0.9552513253418808
+          },
+          {
+            "cards": "Jh4c",
+            "weight": 0.6358601869081877
+          },
+          {
+            "cards": "Jh6s",
+            "weight": 0.8649991383843234
+          },
+          {
+            "cards": "6d5s",
+            "weight": 0.925692651763839
+          },
+          {
+            "cards": "Ah4s",
+            "weight": 0.6743638805179748
+          },
+          {
+            "cards": "9d6c",
+            "weight": 0.7819131383531684
+          },
+          {
+            "cards": "Ts9h",
+            "weight": 0.7545948977343898
+          },
+          {
+            "cards": "KcTc",
+            "weight": 0.8490667325710647
+          },
+          {
+            "cards": "QdTd",
+            "weight": 0.8430829628896667
+          },
+          {
+            "cards": "Kc5d",
+            "weight": 0.9455300242196263
+          },
+          {
+            "cards": "Qs4h",
+            "weight": 0.6922127079099053
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "small_blind_button",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "hero",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "hero",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": "18c95745678599d5329ee36c28c7d8c70f39ad5f46546040f13c56abea230d7d",
+        "seat_ids": [
+          "hero",
+          "villain"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 64
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 64
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 20,
+          "decision_pot": 30,
+          "street_committed": [
+            10,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 10,
+            "villain": 0
+          },
+          "pending_ids": [
+            "villain"
+          ],
+          "observed_raises": 0,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        64,
+        64
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 0.24232733299999998,
+      "train_seconds": 0.05495024999999998,
+      "measure_seconds": 0.09821270900000001,
+      "peak_rss_mib": 29.6875,
+      "public_nodes": 9,
+      "joint_deals": 3738,
+      "information_sets": 192,
+      "metrics": {
+        "policy_payoffs": [
+          3.265583054969556,
+          -3.265583054969555
+        ],
+        "best_response_payoffs": [
+          3.2881261011742975,
+          -3.2338053260735475
+        ],
+        "unilateral_gains": [
+          0.022543046204741568,
+          0.031777728896007496
+        ],
+        "nash_conv_chips": 0.054320775100749064,
+        "max_unilateral_gain_pct_pot": 0.10592576298669165
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.7324297499999997,
+      "sampled_peak_rss_mib": 29.4453125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "six_729",
+      "seed": 20261045,
+      "raw_combinations": 729,
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Td9c",
+            "weight": 0.8871638516180695
+          },
+          {
+            "cards": "Js5d",
+            "weight": 0.9320446867397513
+          },
+          {
+            "cards": "5s4s",
+            "weight": 0.7187056023589001
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Kh6c",
+            "weight": 0.9651862569607559
+          },
+          {
+            "cards": "As8c",
+            "weight": 0.980459544207493
+          },
+          {
+            "cards": "Ks5c",
+            "weight": 0.9578045934178204
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "8s6s",
+            "weight": 0.15589303577721617
+          },
+          {
+            "cards": "7d3c",
+            "weight": 0.48566086208632053
+          },
+          {
+            "cards": "Jd5c",
+            "weight": 0.6029348704841837
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "Ks5s",
+            "weight": 0.1545070923492324
+          },
+          {
+            "cards": "KcTd",
+            "weight": 0.15481462127436801
+          },
+          {
+            "cards": "9c3d",
+            "weight": 0.23633637933426113
+          }
+        ],
+        "villain_4": [
+          {
+            "cards": "Jh7s",
+            "weight": 0.7655876048502598
+          },
+          {
+            "cards": "As3s",
+            "weight": 0.8949915175726576
+          },
+          {
+            "cards": "9c4s",
+            "weight": 0.6133031690286798
+          }
+        ],
+        "villain_5": [
+          {
+            "cards": "Qh7d",
+            "weight": 0.7769773434467324
+          },
+          {
+            "cards": "JhTs",
+            "weight": 0.9523074148286221
+          },
+          {
+            "cards": "8s4c",
+            "weight": 0.6256526346610503
+          }
+        ]
+      },
+      "input": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "public_players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "button",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "small_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_2",
+          "seat": 2,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 980,
+          "street_committed": 10,
+          "total_committed": 20
+        },
+        {
+          "id": "villain_3",
+          "seat": 3,
+          "position": "under_the_gun",
+          "status": "active",
+          "stack": 970,
+          "street_committed": 20,
+          "total_committed": 30
+        },
+        {
+          "id": "villain_4",
+          "seat": 4,
+          "position": "hijack",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        },
+        {
+          "id": "villain_5",
+          "seat": 5,
+          "position": "cutoff",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10
+        }
+      ],
+      "public_history": [
+        {
+          "player_id": "villain",
+          "action": "small_blind",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "big_blind",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "hero",
+          "action": "call",
+          "amount_added": 10,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "call",
+          "amount_added": 5,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "preflop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "flop"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_4",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain_5",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "hero",
+          "action": "check",
+          "amount_added": null,
+          "street": "turn"
+        },
+        {
+          "player_id": "villain",
+          "action": "check",
+          "amount_added": null,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_2",
+          "action": "bet",
+          "amount_added": 10,
+          "street": "river"
+        },
+        {
+          "player_id": "villain_3",
+          "action": "raise",
+          "amount_added": 20,
+          "street": "river"
+        }
+      ],
+      "public_input_metadata": {
+        "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+        "task_key": "3e87ac15e544c4cd7977bf721fab7cd6a45b28308d12e7cf9adb8fe14baf1536",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4",
+          "villain_5"
+        ],
+        "actor_id": "villain_4",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_5",
+            "public": 1081,
+            "selected": 3
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 60,
+          "decision_pot": 90,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            0,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_4",
+            "villain_5",
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "compatible_range_counts": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 1.937241916,
+      "train_seconds": 1.280034917,
+      "measure_seconds": 2.509288584,
+      "peak_rss_mib": 40.5546875,
+      "public_nodes": 1689,
+      "joint_deals": 146,
+      "information_sets": 2439,
+      "metrics": {
+        "policy_payoffs": [
+          -7.546873310920152,
+          -10.013986179189214,
+          -15.888927720102965,
+          -29.28824977942908,
+          47.29103635739766,
+          15.447000632243753
+        ],
+        "best_response_payoffs": [
+          -7.471552206099853,
+          -10.000000000000007,
+          -15.767086946929496,
+          -29.242109828564278,
+          47.44892957236566,
+          15.53317916475937
+        ],
+        "unilateral_gains": [
+          0.07532110482029886,
+          0.013986179189206638,
+          0.12184077317346897,
+          0.04613995086480216,
+          0.15789321496799857,
+          0.08617853251561591
+        ],
+        "nash_conv_chips": 0.5013597555313911,
+        "max_unilateral_gain_pct_pot": 0.1754369055199984
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 6.1240401250000005,
+      "sampled_peak_rss_mib": 40.5546875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    }
+  ],
+  "summary": {
+    "total": 16,
+    "completed": 16,
+    "quality_passed": 16,
+    "statuses": {
+      "completed": 16
+    }
+  }
+}

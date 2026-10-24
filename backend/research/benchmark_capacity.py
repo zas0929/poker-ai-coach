@@ -50,14 +50,21 @@ def peak_rss_mib():
 def worker(case,iterations,method='cfr_plus',include_policy=False):
     def progress(phase):print(json.dumps({'phase':phase,'observed_peak_rss_mib':peak_rss_mib()}),flush=True)
     progress('build');start=time.perf_counter()
-    try:game=RiverGame(**case['input'])
+    metadata={}
+    try:
+        if 'snapshot' in case:
+            from research.river_snapshot import build_river_from_snapshot
+            game,metadata=build_river_from_snapshot(case['snapshot'],case['selected_hands'],**case['input'])
+        else:game=RiverGame(**case['input'])
     except ValueError as error:
         return {'status':'rejected','reason':str(error),'build_seconds':time.perf_counter()-start,'peak_rss_mib':peak_rss_mib()}
     build=time.perf_counter()-start
     progress('train');start=time.perf_counter();policy=game.train(iterations,method=method);train=time.perf_counter()-start
     progress('measure');start=time.perf_counter();metrics=game.measure(policy);measure=time.perf_counter()-start
     exported={'policy':[[key,policy[key]] for key in sorted(policy)]} if include_policy else {}
-    return {**exported,'method':method,'status':'completed','build_seconds':build,'train_seconds':train,'measure_seconds':measure,
+    restored={'public_input_metadata':metadata,
+              'compatible_range_counts':[len({deal[0][p] for deal in game.deals}) if p in game.live else 0 for p in range(game.n)]} if metadata else {}
+    return {**exported,**restored,'method':method,'status':'completed','build_seconds':build,'train_seconds':train,'measure_seconds':measure,
             'peak_rss_mib':peak_rss_mib(),'public_nodes':len(game.nodes),'joint_deals':len(game.deals),
             'information_sets':len(game.keys),'metrics':metrics,
             'passes_quality_gate':metrics['max_unilateral_gain_pct_pot']<=GATE_PCT}

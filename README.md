@@ -247,3 +247,8 @@ The public river adapter also reconstructs decisions after checks, wagers, calls
 raises and folds. See [docs/SOLVER_RIVER_CONTINUATION.md](docs/SOLVER_RIVER_CONTINUATION.md)
 for replay rules, chip accounting and paired Python/native controls. This remains
 offline research with explicit public range subsets.
+
+Wider public mid-river controls now measure isolated-process latency, RSS and
+exact best-response quality with uncertainty at every live seat. All 16 fixed
+controls passed their bounded-game gate; this does not validate full-range NLHE
+or public range calibration. See [docs/SOLVER_MIDRIVER_RANGES.md](docs/SOLVER_MIDRIVER_RANGES.md).

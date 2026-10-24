@@ -75,6 +75,14 @@ class NativeCfrTests(unittest.TestCase):
             river_actions=((1,'check',None),(2,'bet',40),(0,'raise',80),(1,'fold',None)),
             bet_sizes=(40,),raise_sizes=(120,),max_raises=1))
 
+    def test_wider_public_prefix_controls_match_indexed(self):
+        from research.benchmark_midriver_ranges import paired_controls
+        report=paired_controls(5)
+        self.assertEqual(len(report['results']),2)
+        for row in report['results']:
+            self.assertEqual(row['max_policy_difference'],0)
+            self.assertEqual(row['max_metric_difference'],0)
+
     def test_terminal_tie_and_repeated_native_calls(self):
         game,policy=self.equivalent(dict(board=['As','Ks','Qs','Js','Ts'],ranges=[[('2h2d',1)],[('3h3d',1)]],
                                           stacks=(0,0),pot=3,initial_contributions=(1,2),bet_sizes=(1,)))
