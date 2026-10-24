@@ -347,3 +347,10 @@ Nine of ten selected known cases completed; one timed out during the added audit
 Similar strategies can still worsen best-response quality, so every merge is
 rechecked and the experiment is not promoted. See
 [docs/SOLVER_GROUP_REALLOCATION.md](docs/SOLVER_GROUP_REALLOCATION.md).
+
+A checkpointed reallocation coordinator now retains the best completed policy
+while bounded child processes try merges and resplits within a shared 45-second
+budget. On the known corpus it increased admissions from 22 to 25 of 42 available
+baselines, with no lost passes; one timed-out extra trial preserved its baseline.
+This is regression evidence, not independent validation or live integration. See
+[docs/SOLVER_REALLOCATION_CYCLE.md](docs/SOLVER_REALLOCATION_CYCLE.md).
