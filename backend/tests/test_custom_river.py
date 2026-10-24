@@ -70,3 +70,30 @@ class CustomRiverTests(unittest.TestCase):
         self.assertEqual(set(policy),game.keys)
         self.assertTrue(all(abs(sum(row)-1)<1e-12 for row in policy.values()))
         self.assertAlmostEqual(sum(game.measure(policy)['policy_payoffs']),0)
+
+    def test_plus_has_normalized_policies_for_every_player_count(self):
+        for n in range(2,7):
+            game=RiverGame(BOARD,[r[:1] for r in demo_ranges(n)])
+            policy=game.train(8,method='cfr_plus')
+            self.assertEqual(set(policy),game.keys)
+            for row in policy.values():
+                self.assertAlmostEqual(sum(row),1)
+                self.assertTrue(all(0<=v<=1 for v in row))
+            self.assertAlmostEqual(sum(game.measure(policy)['policy_payoffs']),0)
+
+    def test_plus_meets_headsup_control_threshold_at_same_iteration_budget(self):
+        game=RiverGame(BOARD,demo_ranges(2))
+        classic=game.measure(game.train(200))
+        improved=game.measure(game.train(200,method='cfr_plus'))
+        self.assertLess(improved['max_unilateral_gain_pct_pot'],.1)
+        self.assertLess(improved['nash_conv_chips'],classic['nash_conv_chips']/10)
+
+    def test_plus_is_repeatable_and_handles_joint_card_collisions(self):
+        game=RiverGame(BOARD,[[('AhAd',1),('QhQd',.2)],[('AhAd',.5),('KhKd',1)]])
+        first=game.train(30,method='cfr_plus')
+        second=game.train(30,method='cfr_plus')
+        self.assertEqual(first,second)
+        self.assertAlmostEqual(sum(game.measure(first)['policy_payoffs']),0)
+        for bad in (0,True,2001,1.5):
+            with self.assertRaises(ValueError):game.train(bad,method='cfr_plus')
+        with self.assertRaises(ValueError):game.train(20,method='unknown')

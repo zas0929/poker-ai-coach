@@ -85,7 +85,14 @@ class RiverGame:
 
     def key(self,node,deal):return (node.actor,self.deals[deal][0][node.actor],node.history)
 
-    def train(self, iterations=200):
+    def train(self, iterations=200, method='cfr'):
+        if method not in ('cfr', 'cfr_plus'):
+            raise ValueError('Choose cfr or cfr_plus.')
+        if method == 'cfr_plus':
+            return self._train_plus(iterations)
+        return self._train_classic(iterations)
+
+    def _train_classic(self, iterations):
         if type(iterations) is not int or not 1<=iterations<=2000:raise ValueError('1–2000 iterations required.')
         regrets={k:[0.,0.] for k in self.keys};average={k:[0.,0.] for k in self.keys}
         for _ in range(iterations):
@@ -107,6 +114,44 @@ class RiverGame:
             for deal,(_,chance,_) in enumerate(self.deals):visit(self.root,deal,[1.]*self.n,chance)
             for key in regrets:
                 for a in range(2):regrets[key][a]+=delta[key][a]
+        return {k:[v/sum(row) for v in row] if sum(row)>0 else [.5,.5] for k,row in average.items()}
+
+    def _train_plus(self, iterations):
+        """Alternating regret-matching+ updates with linear policy averaging.
+
+        Each player's policy is frozen across ALL compatible chance deals before
+        its regrets are clipped. Other players update only on their own pass.
+        This is not a convergence guarantee for multi-player games.
+        """
+        if type(iterations) is not int or not 1<=iterations<=2000:
+            raise ValueError('1–2000 iterations required.')
+        regrets={k:[0.,0.] for k in self.keys};average={k:[0.,0.] for k in self.keys}
+        policy={k:[.5,.5] for k in self.keys}
+        # Cache information-set keys so recursive traversal does not rebuild histories.
+        keys={(id(node),d):self.key(node,d) for node in self.nodes if node.actor!=-1 for d in range(len(self.deals))}
+        for iteration in range(1,iterations+1):
+            for target in range(self.n):
+                delta={k:[0.,0.] for k in self.keys if k[0]==target}
+                def visit(node,deal,reach,chance):
+                    if node.actor==-1:return self.utilities[(id(node),deal)][target]
+                    actor=node.actor;key=keys[(id(node),deal)];strategy=policy[key]
+                    values=[]
+                    for a,child in enumerate(node.children):
+                        next_reach=list(reach);next_reach[actor]*=strategy[a]
+                        values.append(visit(child,deal,next_reach,chance))
+                    value=strategy[0]*values[0]+strategy[1]*values[1]
+                    if actor==target:
+                        counterfactual=chance*math.prod(reach[p] for p in range(self.n) if p!=actor)
+                        for a in range(2):
+                            delta[key][a]+=counterfactual*(values[a]-value)
+                            average[key][a]+=iteration*chance*reach[actor]*strategy[a]
+                    return value
+                for deal,(_,chance,_) in enumerate(self.deals):
+                    visit(self.root,deal,[1.]*self.n,chance)
+                for key,changes in delta.items():
+                    r=regrets[key]
+                    for a in range(2):r[a]=max(0.,r[a]+changes[a])
+                    total=sum(r);policy[key]=[v/total for v in r] if total else [.5,.5]
         return {k:[v/sum(row) for v in row] if sum(row)>0 else [.5,.5] for k,row in average.items()}
 
     def measure(self,policy):
@@ -138,10 +183,10 @@ def demo_ranges(n):
 
 if __name__=='__main__':
     import argparse,json,platform
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--iterations',type=int,default=100);args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--iterations',type=int,default=100);parser.add_argument('--method',choices=['cfr','cfr_plus'],default='cfr_plus');args=parser.parse_args()
     results=[]
     for n in range(2,7):
         started=time.perf_counter();game=RiverGame(['2c','4d','7h','9s','Jc'],demo_ranges(n));uniform={k:[.5,.5] for k in game.keys}
-        before=game.measure(uniform);policy=game.train(args.iterations);after=game.measure(policy)
+        before=game.measure(uniform);policy=game.train(args.iterations,method=args.method);after=game.measure(policy)
         results.append({'players':n,'joint_deals':len(game.deals),'public_nodes':len(game.nodes),'information_sets':len(game.keys),'iterations':args.iterations,'seconds':round(time.perf_counter()-started,3),'before':before,'after':after,'root_policy':[{'hand':combo,'actions':game.root.actions,'probabilities':policy[(0,combo,())]} for combo,_ in game.ranges[0]]})
-    print(json.dumps({'scope':'Restricted synthetic river game. No raises, side pots or future streets. Not production GTO.','platform':platform.platform(),'results':results},indent=2))
+    print(json.dumps({'method':args.method,'scope':'Restricted synthetic river game. No raises, side pots or future streets. Not production GTO.','platform':platform.platform(),'results':results},indent=2))

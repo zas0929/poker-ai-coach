@@ -208,3 +208,6 @@ snapshot adapter and provider feasibility. No multiway solver is configured yet.
 The original restricted 2–6 player river CFR experiment and its measured limits
 are described in [docs/CUSTOM_SOLVER.md](docs/CUSTOM_SOLVER.md). It is offline research,
 not an enabled production coach or a full-game GTO solver.
+
+Training improvements and the fixed 20-case research quality gate are recorded
+in [docs/SOLVER_TRAINING_QUALITY.md](docs/SOLVER_TRAINING_QUALITY.md).

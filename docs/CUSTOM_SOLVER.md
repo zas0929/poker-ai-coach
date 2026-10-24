@@ -43,7 +43,10 @@ CFR не переносит автоматически свою гарантию
 сверять с [OpenSpiel](https://github.com/google-deepmind/open_spiel/blob/master/open_spiel/python/algorithms/cfr.py),
 но его код не встроен в этот прототип.
 
-## Измерение
+## Первоначальное измерение CFR
+
+Ниже исторический baseline исходного CFR. Последующее улучшение CFR+ и полный
+контрольный набор: [SOLVER_TRAINING_QUALITY.md](SOLVER_TRAINING_QUALITY.md).
 
 Два варианта руки у каждого игрока, одинаковый контрольный борд; 200 итераций.
 Максимальное одностороннее улучшение — сколько один игрок может прибавить к
@@ -93,7 +96,7 @@ CFR не переносит автоматически свою гарантию
 Из корня репозитория:
 
 ```bash
-PYTHONPATH=backend backend/.venv/bin/python backend/research/custom_river.py --iterations 200
+PYTHONPATH=backend backend/.venv/bin/python backend/research/custom_river.py --iterations 200 --method cfr
 PYTHONPATH=backend backend/.venv/bin/python -m unittest tests.test_custom_river
 ```
 
