@@ -1,0 +1,35 @@
+{
+  "scope": "Identical two-player restricted all-in river tree, no action-frequency identity assumption.",
+  "custom_200_iterations": {
+    "policy_payoffs": [
+      16.20629063203416,
+      -16.206290632034154
+    ],
+    "best_response_payoffs": [
+      16.728564914897056,
+      -14.549419691908318
+    ],
+    "unilateral_gains": [
+      0.5222742828628952,
+      1.6568709401258364
+    ],
+    "nash_conv_chips": 2.1791452229887316,
+    "max_unilateral_gain_pct_pot": 1.6568709401258364
+  },
+  "texas_solver": {
+    "policy_payoffs": [
+      16.671807973743753,
+      -16.671807973743753
+    ],
+    "best_response_payoffs": [
+      17.429893238243256,
+      -16.554395351075847
+    ],
+    "unilateral_gains": [
+      0.7580852644995026,
+      0.11741262266790642
+    ],
+    "nash_conv_chips": 0.8754978871674091,
+    "max_unilateral_gain_pct_pot": 0.7580852644995026
+  }
+}

@@ -1,0 +1,386 @@
+{
+  "scope": "Restricted synthetic river game. No raises, side pots or future streets. Not production GTO.",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "results": [
+    {
+      "players": 2,
+      "joint_deals": 4,
+      "public_nodes": 9,
+      "information_sets": 8,
+      "iterations": 200,
+      "seconds": 0.023,
+      "before": {
+        "policy_payoffs": [
+          6.25,
+          -6.25
+        ],
+        "best_response_payoffs": [
+          25.0,
+          12.5
+        ],
+        "unilateral_gains": [
+          18.75,
+          18.75
+        ],
+        "nash_conv_chips": 37.5,
+        "max_unilateral_gain_pct_pot": 18.75
+      },
+      "after": {
+        "policy_payoffs": [
+          16.20629063203416,
+          -16.206290632034154
+        ],
+        "best_response_payoffs": [
+          16.728564914897056,
+          -14.549419691908318
+        ],
+        "unilateral_gains": [
+          0.5222742828628952,
+          1.6568709401258364
+        ],
+        "nash_conv_chips": 2.1791452229887316,
+        "max_unilateral_gain_pct_pot": 1.6568709401258364
+      },
+      "root_policy": [
+        {
+          "hand": "AhAd",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.02843311251151484,
+            0.9715668874884851
+          ]
+        },
+        {
+          "hand": "3h3d",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.6104099001878477,
+            0.3895900998121523
+          ]
+        }
+      ]
+    },
+    {
+      "players": 3,
+      "joint_deals": 8,
+      "public_nodes": 25,
+      "information_sets": 24,
+      "iterations": 200,
+      "seconds": 0.135,
+      "before": {
+        "policy_payoffs": [
+          19.010416666666657,
+          -7.161458333333343,
+          -11.84895833333334
+        ],
+        "best_response_payoffs": [
+          44.79166666666666,
+          8.854166666666659,
+          3.385416666666657
+        ],
+        "unilateral_gains": [
+          25.78125,
+          16.015625,
+          15.234374999999996
+        ],
+        "nash_conv_chips": 57.03125,
+        "max_unilateral_gain_pct_pot": 25.78125
+      },
+      "after": {
+        "policy_payoffs": [
+          33.84233076511053,
+          -13.389497957806949,
+          -20.452832807303608
+        ],
+        "best_response_payoffs": [
+          38.11125505088185,
+          -10.526358701575715,
+          -19.45146371769099
+        ],
+        "unilateral_gains": [
+          4.26892428577132,
+          2.863139256231234,
+          1.0013690896126164
+        ],
+        "nash_conv_chips": 8.13343263161517,
+        "max_unilateral_gain_pct_pot": 4.26892428577132
+      },
+      "root_policy": [
+        {
+          "hand": "AhAd",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.5194448992660765,
+            0.4805551007339235
+          ]
+        },
+        {
+          "hand": "3h3d",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.8066280195806166,
+            0.19337198041938333
+          ]
+        }
+      ]
+    },
+    {
+      "players": 4,
+      "joint_deals": 16,
+      "public_nodes": 65,
+      "information_sets": 64,
+      "iterations": 200,
+      "seconds": 0.79,
+      "before": {
+        "policy_payoffs": [
+          30.46875,
+          -1.66015625,
+          -13.57421875,
+          -15.234375
+        ],
+        "best_response_payoffs": [
+          68.75,
+          21.875,
+          -1.171875,
+          -5.46875
+        ],
+        "unilateral_gains": [
+          38.28125,
+          23.53515625,
+          12.40234375,
+          9.765625
+        ],
+        "nash_conv_chips": 83.984375,
+        "max_unilateral_gain_pct_pot": 38.28125
+      },
+      "after": {
+        "policy_payoffs": [
+          42.78795447977918,
+          -5.375676196414458,
+          -18.673224353861272,
+          -18.739053929503456
+        ],
+        "best_response_payoffs": [
+          48.968902922248034,
+          -1.5854498042074372,
+          -17.30792085268352,
+          -17.6976814721043
+        ],
+        "unilateral_gains": [
+          6.180948442468853,
+          3.790226392207021,
+          1.3653035011777526,
+          1.0413724573991558
+        ],
+        "nash_conv_chips": 12.377850793252783,
+        "max_unilateral_gain_pct_pot": 6.180948442468853
+      },
+      "root_policy": [
+        {
+          "hand": "AhAd",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.4265084839410891,
+            0.5734915160589109
+          ]
+        },
+        {
+          "hand": "3h3d",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.8097881182692342,
+            0.19021188173076573
+          ]
+        }
+      ]
+    },
+    {
+      "players": 5,
+      "joint_deals": 32,
+      "public_nodes": 161,
+      "information_sets": 160,
+      "iterations": 200,
+      "seconds": 4.417,
+      "before": {
+        "policy_payoffs": [
+          16.328125,
+          -7.65869140625,
+          -16.331787109375,
+          -17.406005859375,
+          25.068359375
+        ],
+        "best_response_payoffs": [
+          49.921875,
+          12.8125,
+          -5.888671875,
+          -11.4794921875,
+          91.71875
+        ],
+        "unilateral_gains": [
+          33.59375,
+          20.47119140625,
+          10.443115234375,
+          5.926513671875,
+          66.650390625
+        ],
+        "nash_conv_chips": 137.0849609375,
+        "max_unilateral_gain_pct_pot": 66.650390625
+      },
+      "after": {
+        "policy_payoffs": [
+          -4.8754222399344425,
+          -14.534381648701473,
+          -17.64809803430996,
+          -17.9244198183587,
+          54.98232174130456
+        ],
+        "best_response_payoffs": [
+          -0.1876148455112574,
+          -13.628106382674567,
+          -16.864715712780242,
+          -16.954995293396962,
+          60.48383363873957
+        ],
+        "unilateral_gains": [
+          4.687807394423185,
+          0.9062752660269062,
+          0.783382321529718,
+          0.9694245249617381,
+          5.501511897435009
+        ],
+        "nash_conv_chips": 12.848401404376556,
+        "max_unilateral_gain_pct_pot": 5.501511897435009
+      },
+      "root_policy": [
+        {
+          "hand": "AhAd",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.7155877052356547,
+            0.2844122947643453
+          ]
+        },
+        {
+          "hand": "3h3d",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.7266838926761838,
+            0.27331610732381617
+          ]
+        }
+      ]
+    },
+    {
+      "players": 6,
+      "joint_deals": 64,
+      "public_nodes": 385,
+      "information_sets": 384,
+      "iterations": 200,
+      "seconds": 23.79,
+      "before": {
+        "policy_payoffs": [
+          4.8024495442708215,
+          -13.032023111979168,
+          -19.30338541666667,
+          -19.88321940104168,
+          13.460286458333318,
+          33.955891927083314
+        ],
+        "best_response_payoffs": [
+          34.35872395833332,
+          4.842122395833336,
+          -9.52555338541667,
+          -13.70035807291667,
+          67.17122395833331,
+          107.94270833333329
+        ],
+        "unilateral_gains": [
+          29.5562744140625,
+          17.874145507812504,
+          9.777832031250002,
+          6.182861328125009,
+          53.7109375,
+          73.98681640624997
+        ],
+        "nash_conv_chips": 191.08886718749997,
+        "max_unilateral_gain_pct_pot": 73.98681640624997
+      },
+      "after": {
+        "policy_payoffs": [
+          -10.63638850588905,
+          -14.761007846043352,
+          -16.26983720806818,
+          -16.19291748739287,
+          3.5627643706674643,
+          54.297386676726
+        ],
+        "best_response_payoffs": [
+          -9.761737364716002,
+          -13.320612727102645,
+          -15.033643401151988,
+          -15.08846921306484,
+          8.13528891363617,
+          56.07711110475815
+        ],
+        "unilateral_gains": [
+          0.8746511411730484,
+          1.4403951189407067,
+          1.2361938069161909,
+          1.1044482743280284,
+          4.572524542968706,
+          1.7797244280321536
+        ],
+        "nash_conv_chips": 11.007937312358834,
+        "max_unilateral_gain_pct_pot": 4.572524542968706
+      },
+      "root_policy": [
+        {
+          "hand": "AhAd",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.9793868730487257,
+            0.02061312695127434
+          ]
+        },
+        {
+          "hand": "3h3d",
+          "actions": [
+            "CHECK",
+            "BET 50"
+          ],
+          "probabilities": [
+            0.9975,
+            0.0025
+          ]
+        }
+      ]
+    }
+  ]
+}
