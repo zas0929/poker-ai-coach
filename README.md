@@ -326,3 +326,11 @@ had bit-for-bit matching policies/traces and descriptive speedups of 1.7–2.9×
 two heavy six-seat cases still timed out for both paths. Frozen reference modules
 and live advice remain unchanged. See
 [docs/SOLVER_FUSED_RESPONSE.md](docs/SOLVER_FUSED_RESPONSE.md).
+
+Indexed split selection now counts exact row deltas from history-support
+intersections instead of rebuilding a strategy view for every candidate. Two
+completed adaptive pairs matched policies/traces exactly; two former six-seat
+timeouts now finish their adaptive stage in about 21–29 seconds and are still
+refused for quality within the row budget. See
+[docs/SOLVER_INDEXED_SPLIT.md](docs/SOLVER_INDEXED_SPLIT.md) for timing limits and
+why selector speedups do not imply the same whole-solve speedup.
