@@ -211,3 +211,8 @@ not an enabled production coach or a full-game GTO solver.
 
 Training improvements and the fixed 20-case research quality gate are recorded
 in [docs/SOLVER_TRAINING_QUALITY.md](docs/SOLVER_TRAINING_QUALITY.md).
+
+The river research prototype also supports explicit bet/raise totals and bounded
+re-raises. Scope, engine cross-checks and reproducible expanded-tree measurements:
+[docs/SOLVER_RIVER_SIZING.md](docs/SOLVER_RIVER_SIZING.md). This is not connected
+to the live trainer.
