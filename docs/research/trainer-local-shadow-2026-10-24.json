@@ -1,0 +1,228 @@
+{
+  "scope": "Local opt-in trainer integration, exact controlled plan; existing hint unchanged. No HTTP deployment.",
+  "bridge_source_sha256": "eb2f4c26622d0cf4aecfbe0d74264d30be169c96f8af52fb482e51f86f826432",
+  "source_information_key": "fb8c6d25310ad415a2fe50b66e30645e5e9264e228e64dac974212ab318aa7b2",
+  "selected_public_hands": {
+    "hero": [
+      "AhAd",
+      "3h3d"
+    ],
+    "villain": [
+      "KhKd",
+      "5h5d"
+    ]
+  },
+  "baseline_action": "BET 13",
+  "hint_route_seconds": 0.06802399999999997,
+  "comparison": {
+    "sequence": 4,
+    "event": "comparison",
+    "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+    "source_key": "fb8c6d25310ad415a2fe50b66e30645e5e9264e228e64dac974212ab318aa7b2",
+    "baseline_action": "BET 13",
+    "represented_exactly": true,
+    "solver_most_likely_actions": [
+      "BET 40"
+    ],
+    "baseline_probability": 0.001515606466497158,
+    "matches_most_likely": false,
+    "quality_pct_pot": 0.08318432035796963,
+    "live_advice_allowed": false
+  },
+  "before_action": {
+    "enabled": true,
+    "bridge": {
+      "contexts": 1,
+      "pending_preparations": 0,
+      "preparing": false,
+      "closed": false
+    },
+    "events": [
+      {
+        "sequence": 1,
+        "event": "observed",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "revision": "5e581974e37b86dd5edc4cac5290c49225e921a625266150644696219e3ebb2c"
+      },
+      {
+        "sequence": 2,
+        "event": "captured",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "revision": "5e581974e37b86dd5edc4cac5290c49225e921a625266150644696219e3ebb2c"
+      },
+      {
+        "sequence": 3,
+        "event": "submitted",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "revision": "5e581974e37b86dd5edc4cac5290c49225e921a625266150644696219e3ebb2c",
+        "source_key": "fb8c6d25310ad415a2fe50b66e30645e5e9264e228e64dac974212ab318aa7b2",
+        "job_id": "job-1"
+      },
+      {
+        "sequence": 4,
+        "event": "comparison",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "source_key": "fb8c6d25310ad415a2fe50b66e30645e5e9264e228e64dac974212ab318aa7b2",
+        "baseline_action": "BET 13",
+        "represented_exactly": true,
+        "solver_most_likely_actions": [
+          "BET 40"
+        ],
+        "baseline_probability": 0.001515606466497158,
+        "matches_most_likely": false,
+        "quality_pct_pot": 0.08318432035796963,
+        "live_advice_allowed": false
+      }
+    ],
+    "executor_events": [
+      {
+        "sequence": 1,
+        "time_monotonic": 0.854986833,
+        "event": "queued",
+        "ticket_id": "ticket-2",
+        "job_id": "job-1",
+        "context_key": "f3def66f07ad71f219a7b2f16b4a13ffb55dad41967f490f61fb67cfca01ebdc",
+        "source_key": "fb8c6d25310ad415a2fe50b66e30645e5e9264e228e64dac974212ab318aa7b2"
+      },
+      {
+        "sequence": 2,
+        "time_monotonic": 0.8551665,
+        "event": "started",
+        "job_id": "job-1",
+        "queue_wait_seconds": 0.0001879590000000153
+      },
+      {
+        "sequence": 3,
+        "time_monotonic": 1.379001625,
+        "event": "finished",
+        "job_id": "job-1",
+        "analysis_status": "ready",
+        "analysis_wall_seconds": 0.5096075000000001,
+        "last_phase": null
+      },
+      {
+        "sequence": 4,
+        "time_monotonic": 1.379131917,
+        "event": "delivered",
+        "job_id": "job-1",
+        "ticket_id": "ticket-2",
+        "status": "ready",
+        "reason_codes": [],
+        "total_seconds": 0.5241501249999999
+      }
+    ]
+  },
+  "after_action": {
+    "enabled": true,
+    "bridge": {
+      "contexts": 1,
+      "pending_preparations": 0,
+      "preparing": false,
+      "closed": false
+    },
+    "events": [
+      {
+        "sequence": 1,
+        "event": "observed",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "revision": "5e581974e37b86dd5edc4cac5290c49225e921a625266150644696219e3ebb2c"
+      },
+      {
+        "sequence": 2,
+        "event": "captured",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "revision": "5e581974e37b86dd5edc4cac5290c49225e921a625266150644696219e3ebb2c"
+      },
+      {
+        "sequence": 3,
+        "event": "submitted",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "revision": "5e581974e37b86dd5edc4cac5290c49225e921a625266150644696219e3ebb2c",
+        "source_key": "fb8c6d25310ad415a2fe50b66e30645e5e9264e228e64dac974212ab318aa7b2",
+        "job_id": "job-1"
+      },
+      {
+        "sequence": 4,
+        "event": "comparison",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "source_key": "fb8c6d25310ad415a2fe50b66e30645e5e9264e228e64dac974212ab318aa7b2",
+        "baseline_action": "BET 13",
+        "represented_exactly": true,
+        "solver_most_likely_actions": [
+          "BET 40"
+        ],
+        "baseline_probability": 0.001515606466497158,
+        "matches_most_likely": false,
+        "quality_pct_pot": 0.08318432035796963,
+        "live_advice_allowed": false
+      },
+      {
+        "sequence": 5,
+        "event": "observed",
+        "context_key": "25bf8e1a2393f1108d37029b3df5593236c755742ec93465bbafa9b290bddcf6",
+        "revision": "4728bed2ecd8ab627b9ec943b4ec2c17ef7e6757b7b371542940fc123d773684"
+      }
+    ],
+    "executor_events": [
+      {
+        "sequence": 1,
+        "time_monotonic": 0.854986833,
+        "event": "queued",
+        "ticket_id": "ticket-2",
+        "job_id": "job-1",
+        "context_key": "f3def66f07ad71f219a7b2f16b4a13ffb55dad41967f490f61fb67cfca01ebdc",
+        "source_key": "fb8c6d25310ad415a2fe50b66e30645e5e9264e228e64dac974212ab318aa7b2"
+      },
+      {
+        "sequence": 2,
+        "time_monotonic": 0.8551665,
+        "event": "started",
+        "job_id": "job-1",
+        "queue_wait_seconds": 0.0001879590000000153
+      },
+      {
+        "sequence": 3,
+        "time_monotonic": 1.379001625,
+        "event": "finished",
+        "job_id": "job-1",
+        "analysis_status": "ready",
+        "analysis_wall_seconds": 0.5096075000000001,
+        "last_phase": null
+      },
+      {
+        "sequence": 4,
+        "time_monotonic": 1.379131917,
+        "event": "delivered",
+        "job_id": "job-1",
+        "ticket_id": "ticket-2",
+        "status": "ready",
+        "reason_codes": [],
+        "total_seconds": 0.5241501249999999
+      },
+      {
+        "sequence": 5,
+        "time_monotonic": 1.417140542,
+        "event": "stale",
+        "ticket_id": "ticket-2",
+        "job_id": "job-1",
+        "reason_code": "STALE_DECISION"
+      }
+    ]
+  },
+  "shutdown": {
+    "pending": 0,
+    "active": 0,
+    "jobs": 0,
+    "retained_tickets": 1,
+    "contexts": 0,
+    "events": 5,
+    "closed": true
+  },
+  "controls": {
+    "same_hint": true,
+    "exact_plan": true,
+    "native_comparison": true,
+    "state_change_observed": true,
+    "clean_shutdown": true
+  }
+}

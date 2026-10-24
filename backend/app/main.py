@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 from starlette.concurrency import run_in_threadpool
 from app.services.room_repository import RoomStorageError
 from app.services.database import DatabaseFailure
+from app.services.trainer_shadow import start_local_shadow, stop_local_shadow
 
 from app.api.training import router as training_router, store as training_store, profile
 from app.api.hand import router as hand_router, training_owner
@@ -18,12 +19,14 @@ async def lifespan(app):
     store.open()
     training_store.open()
     task = asyncio.create_task(store.run_timers())
+    start_local_shadow()
     try:
         yield
     finally:
         task.cancel()
         with suppress(asyncio.CancelledError):
             await task
+        await run_in_threadpool(stop_local_shadow)
         training_store.close()
         store.close()
 

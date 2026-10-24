@@ -11,6 +11,7 @@ from app.models.poker import HandAnalysis, HandState, PlayerActionRequest, Stree
 from app.services.ai_opponent import AIOpponentService
 from app.services.decision_engine import DecisionEngine
 from app.services.poker_engine import PokerEngine
+from app.services import trainer_shadow
 
 router = APIRouter()
 
@@ -33,7 +34,10 @@ def serialized(function):
         with state_lock:
             owner = training_owner.get()
             if owner is None:
-                return function(*args, **kwargs)
+                try:
+                    return function(*args, **kwargs)
+                finally:
+                    trainer_shadow.observe(owner, current_state)
             now = monotonic()
             if owner not in profile_states:
                 for key, (_, touched) in list(profile_states.items()):
@@ -46,6 +50,7 @@ def serialized(function):
             try:
                 return function(*args, **kwargs)
             finally:
+                trainer_shadow.observe(owner, current_state)
                 profile_states[owner] = (current_state, monotonic())
                 current_state = previous
     return wrapper
@@ -101,7 +106,9 @@ def analyze_hand(player_id: str = "hero", hand_id: Optional[str] = None,
             or (street is not None and state.street != street)):
         raise HTTPException(status_code=409, detail="Training table changed. The latest state must be loaded before choosing again.")
     try:
-        return decision_engine.analyze(state, player_id=player_id)
+        analysis = decision_engine.analyze(state, player_id=player_id)
+        trainer_shadow.capture(training_owner.get(), state, analysis)
+        return analysis
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 

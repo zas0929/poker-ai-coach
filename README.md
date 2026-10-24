@@ -270,3 +270,8 @@ for them, shares in-flight requests, discards stale deliveries and cancels orpha
 work. It has no game-route integration. See
 [docs/SOLVER_SHADOW_EXECUTOR.md](docs/SOLVER_SHADOW_EXECUTOR.md) for queue/retention
 limits, lifecycle, cancellation and real-process controls.
+
+The trainer has a disabled-by-default local shadow hook. Explicit per-decision
+plans are prepared off the request path; current hints remain unchanged and
+stale observations are discarded. See [docs/TRAINER_LOCAL_SHADOW.md](docs/TRAINER_LOCAL_SHADOW.md)
+for the opt-in flags, strict plan format, limited coverage and native end-to-end control.
