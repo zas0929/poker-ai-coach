@@ -1,0 +1,91 @@
+{
+  "seed_stability": {
+    "uniform_2": {
+      "eligible_probes": 11,
+      "attempted_probes": 12,
+      "pairs": 33,
+      "same_modes": 20,
+      "mean_tv": 0.43359923681470375,
+      "max_tv": 0.9998019801980198
+    },
+    "uniform_3": {
+      "eligible_probes": 12,
+      "attempted_probes": 12,
+      "pairs": 36,
+      "same_modes": 21,
+      "mean_tv": 0.35818975195722846,
+      "max_tv": 0.9996701408241968
+    },
+    "stratified_2": {
+      "eligible_probes": 11,
+      "attempted_probes": 12,
+      "pairs": 33,
+      "same_modes": 27,
+      "mean_tv": 0.17343560878130737,
+      "max_tv": 0.9998019801980198
+    },
+    "stratified_3": {
+      "eligible_probes": 11,
+      "attempted_probes": 12,
+      "pairs": 33,
+      "same_modes": 27,
+      "mean_tv": 0.19589178070724836,
+      "max_tv": 0.9998019801980198
+    }
+  },
+  "width_stability": {
+    "uniform": {
+      "pairs": 34,
+      "same_modes": 24,
+      "mean_tv": 0.3122647962323703,
+      "max_tv": 0.9998019801980198
+    },
+    "stratified": {
+      "pairs": 34,
+      "same_modes": 30,
+      "mean_tv": 0.12285888482133732,
+      "max_tv": 0.9983011112560214
+    }
+  },
+  "matched_reference_losses": {
+    "2": {
+      "matched_candidates_per_method": 34,
+      "uniform": {
+        "comparisons": 68,
+        "mean_loss_bb": 0.28841782440778,
+        "max_loss_bb": 3.7958651316991685
+      },
+      "stratified": {
+        "comparisons": 68,
+        "mean_loss_bb": 0.36775036477496603,
+        "max_loss_bb": 3.795945648671424
+      }
+    },
+    "3": {
+      "matched_candidates_per_method": 35,
+      "uniform": {
+        "comparisons": 70,
+        "mean_loss_bb": 0.21911576706731592,
+        "max_loss_bb": 3.7957384670439174
+      },
+      "stratified": {
+        "comparisons": 70,
+        "mean_loss_bb": 0.27860559695326637,
+        "max_loss_bb": 3.795945648671424
+      }
+    }
+  },
+  "reference_agreement": {
+    "pairs": 12,
+    "same_modes": 8,
+    "mean_tv": 0.3898895055979157,
+    "max_tv": 0.9998019801980198
+  },
+  "limitations": [
+    "Paired TV compares strategies only within an identical action tree; no cross-range raw payoff comparison.",
+    "Reference loss is a first-action diagnostic with optimal own continuation against a finite reference policy, not measured real-game loss.",
+    "Four public states and three own hands per state are a diagnostic corpus, not statistical validation.",
+    "All seed pairs require all three seeds to pass quality; refusals and quality failures remain excluded, never scored as success.",
+    "Both reference selectors remain biased finite models; agreeing with either is not proof of full-range correctness."
+  ]
+}

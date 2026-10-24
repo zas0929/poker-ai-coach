@@ -281,3 +281,9 @@ policy and loopback-only launcher are available. The policy failed range-stabili
 controls and must not replace current advice. See
 [docs/SOLVER_PUBLIC_SUBSET_POLICY.md](docs/SOLVER_PUBLIC_SUBSET_POLICY.md) for the
 one-command flag, configuration, anchoring assumptions and paired sensitivity report.
+
+A multi-seed, multi-width river comparison now tests category/blocker representatives
+against uniform subsets on 12 decision/own-hand probes. More repeatable actions did
+not improve reference EV diagnostics; neither selection is validated for live advice.
+See [docs/SOLVER_RANGE_STABILITY.md](docs/SOLVER_RANGE_STABILITY.md) for the 168 solves,
+matched-population comparisons, reference disagreement and next abstraction work.
