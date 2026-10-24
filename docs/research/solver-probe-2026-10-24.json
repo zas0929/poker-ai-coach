@@ -1,0 +1,72 @@
+{
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "wall_seconds_including_resource_load": 9.722,
+  "child_peak_rss_mib": 131.3,
+  "process_model": "one process, three sequential synthetic river scenarios",
+  "results": [
+    {
+      "scenario": "known_nuts",
+      "action_nodes": 8,
+      "strategy_rows": 8,
+      "root_player": 1,
+      "root_actions": [
+        "CHECK",
+        "BET 50.000000",
+        "BET 100.000000"
+      ],
+      "ev_per_action_exported": false,
+      "strategy_payoff_ip_oop_chips": [
+        -50.000173,
+        50.000173
+      ],
+      "independent_exploitability_percent_pot": 9.31e-05,
+      "legal_joint_matchups": 1,
+      "reported_gap_percent_pot": 9.1552734e-05,
+      "last_reported_solve_seconds": 0.004,
+      "analytical_control": true
+    },
+    {
+      "scenario": "board_tie",
+      "action_nodes": 8,
+      "strategy_rows": 8,
+      "root_player": 1,
+      "root_actions": [
+        "CHECK",
+        "BET 50.000000",
+        "BET 100.000000"
+      ],
+      "ev_per_action_exported": false,
+      "strategy_payoff_ip_oop_chips": [
+        0.0,
+        -0.0
+      ],
+      "independent_exploitability_percent_pot": 0.0,
+      "legal_joint_matchups": 1,
+      "reported_gap_percent_pot": 1.7954398e-14,
+      "last_reported_solve_seconds": 0.003,
+      "analytical_control": true
+    },
+    {
+      "scenario": "weighted_48_vs_48",
+      "action_nodes": 8,
+      "strategy_rows": 384,
+      "root_player": 1,
+      "root_actions": [
+        "CHECK",
+        "BET 50.000000",
+        "BET 100.000000"
+      ],
+      "ev_per_action_exported": false,
+      "strategy_payoff_ip_oop_chips": [
+        15.14575,
+        -15.14575
+      ],
+      "independent_exploitability_percent_pot": 0.05523296,
+      "legal_joint_matchups": 2118,
+      "reported_gap_percent_pot": 0.055234432,
+      "last_reported_solve_seconds": 0.005,
+      "analytical_control": false
+    }
+  ],
+  "limitations": "Independent best responses cover only these small river trees and explicit ranges. Not a live hand adapter, full-game solver, or production service."
+}

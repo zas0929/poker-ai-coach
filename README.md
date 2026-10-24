@@ -195,3 +195,9 @@ any table with more than two dealt players, even if only two remain live.
 The displayed price proxy and recommendations are educational heuristics, not
 solver-derived action EV comparisons. Sample count and sampling-only uncertainty
 remain visible. Expand each opponent's range to inspect its assumptions.
+
+## Engine audit and solver research
+
+See [docs/ENGINE_AUDIT.md](docs/ENGINE_AUDIT.md) for the independent PokerKit checks,
+offline TexasSolver river prototype, measured results and integration limits.
+The website still uses its own heuristic coach; no solver or LLM is enabled.

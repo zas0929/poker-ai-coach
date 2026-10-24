@@ -1,0 +1,22 @@
+{
+  "seed": 20261024,
+  "pokerkit_version": "0.7.7",
+  "ordering_comparisons": 15000,
+  "ordering_mismatches": 0,
+  "ordering_seconds": 3.699,
+  "weighted_exact_river_cases": 20,
+  "river_mismatches": 0,
+  "turn": {
+    "reference": 0.272727,
+    "estimate": 0.2779,
+    "bound_95": 0.0136
+  },
+  "multiway_river": {
+    "reference": 0.111111,
+    "estimate": 0.1099,
+    "bound_95": 0.0136
+  },
+  "seven_card_scores_per_second": 177974,
+  "elapsed_seconds": 4.447,
+  "limitations": "Seeded differential checks, not exhaustive certification or strategy validation."
+}
