@@ -340,3 +340,10 @@ baseline on the known 46-case regression corpus. Both admitted the same 22/42
 completed cases; two difficult cases had lower error but remained refused. The
 new rule is not promoted. See
 [docs/SOLVER_TARGETED_REFINEMENT.md](docs/SOLVER_TARGETED_REFINEMENT.md).
+
+A bounded merge/reallocation audit found one previously refused four-seat case
+that passed after freeing and reusing 15 strategy rows, with the row cap unchanged.
+Nine of ten selected known cases completed; one timed out during the added audit.
+Similar strategies can still worsen best-response quality, so every merge is
+rechecked and the experiment is not promoted. See
+[docs/SOLVER_GROUP_REALLOCATION.md](docs/SOLVER_GROUP_REALLOCATION.md).
