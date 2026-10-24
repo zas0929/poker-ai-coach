@@ -119,3 +119,6 @@ PYTHONPATH=backend backend/.venv/bin/python -m unittest backend.tests.test_cycle
 
 Бенчмарку нужна заранее собранная native-библиотека. Автоматической компиляции,
 изменений хостинга и внешних API нет.
+
+Первый отдельный эксперимент с выборкой завершён:
+[контроли и ошибка относительно исходной игры](SOLVER_DEAL_SAMPLING.md).

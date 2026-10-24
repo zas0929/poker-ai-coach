@@ -361,3 +361,10 @@ existing size limit. The new pass involved three live seats, with no additional
 4–6-seat passes. Two separate real child-process fault controls retained the
 baseline policy after timeout/memory refusal. See
 [docs/SOLVER_CYCLE_VALIDATION.md](docs/SOLVER_CYCLE_VALIDATION.md).
+
+An offline whole-lineup sampling prototype now isolates sampling error from
+strategy grouping. All 90 empirical-game policies passed their own quality
+check, but only 17/66 complete policies passed in the original exact games;
+24 others lacked coverage. Even 512 draws failed 14/30 original-game checks.
+Fixed-sample CFR is not MCCFR, and the benchmark still builds the full small
+reference game. See [docs/SOLVER_DEAL_SAMPLING.md](docs/SOLVER_DEAL_SAMPLING.md).
