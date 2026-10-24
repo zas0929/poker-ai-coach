@@ -30,8 +30,19 @@ class RangeService:
         self.evaluator = evaluator or HandEvaluator()
 
     def infer(self, state: HandState, player_id: str = "hero", opponent_id: str | None = None) -> OpponentRange:
-        player = next((p for p in state.players if p.id == player_id), None)
-        if player is None:
+        return self._infer(state, player_id, opponent_id)
+
+    def infer_public(self, state: HandState, player_id: str) -> OpponentRange:
+        """Full public range for a solver: do not condition on any private hand.
+
+        The actual hero combination is selected from the eventual solution later.
+        Feeding it into these ranges would reveal it to the modelled opponents.
+        """
+        return self._infer(state, None, player_id)
+
+    def _infer(self, state: HandState, player_id: str | None, opponent_id: str | None) -> OpponentRange:
+        player = next((p for p in state.players if p.id == player_id), None) if player_id is not None else None
+        if player_id is not None and player is None:
             raise ValueError(f"Player {player_id} was not found.")
         opponents = [p for p in state.players if p.id != player_id and p.status != PlayerStatus.FOLDED]
         if opponent_id is None and len(opponents) > 1:
@@ -39,7 +50,7 @@ class RangeService:
         opponent = next((p for p in opponents if opponent_id is None or p.id == opponent_id), None)
         if opponent is None:
             raise ValueError("No live opponent matches this range request.")
-        known = {(c.rank, c.suit) for c in [*player.cards, *state.board]}
+        known = {(c.rank, c.suit) for c in [*(player.cards if player else []), *state.board]}
         from app.models.poker import Rank, Suit
         deck = [Card(rank=r, suit=s) for r in Rank for s in Suit if (r, s) not in known]
         evidence = []

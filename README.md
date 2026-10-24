@@ -201,3 +201,6 @@ remain visible. Expand each opponent's range to inspect its assumptions.
 See [docs/ENGINE_AUDIT.md](docs/ENGINE_AUDIT.md) for the independent PokerKit checks,
 offline TexasSolver river prototype, measured results and integration limits.
 The website still uses its own heuristic coach; no solver or LLM is enabled.
+
+See [docs/MULTIWAY_SOLVER.md](docs/MULTIWAY_SOLVER.md) for the 2–6 player public
+snapshot adapter and provider feasibility. No multiway solver is configured yet.
