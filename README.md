@@ -368,3 +368,9 @@ check, but only 17/66 complete policies passed in the original exact games;
 24 others lacked coverage. Even 512 draws failed 14/30 original-game checks.
 Fixed-sample CFR is not MCCFR, and the benchmark still builds the full small
 reference game. See [docs/SOLVER_DEAL_SAMPLING.md](docs/SOLVER_DEAL_SAMPLING.md).
+
+Fresh evaluation samples now check fixed policies separately from training on
+ten known small exact games. Across 180 evaluations, naive sample estimates
+produced false refusals; conservative finite-response confidence envelopes
+covered exact values but admitted no policy. They remain too wide for a practical
+quality gate. See [docs/SOLVER_INDEPENDENT_EVALUATION.md](docs/SOLVER_INDEPENDENT_EVALUATION.md).

@@ -113,3 +113,6 @@ PYTHONPATH=backend backend/.venv/bin/python -m unittest backend.tests.test_deal_
 
 Нужна заранее собранная native-библиотека; автоматической компиляции,
 изменения хостинга и вызовов внешних API нет.
+
+Следующий этап выполнен отдельно:
+[независимая проверка фиксированных политик и консервативные интервалы](SOLVER_INDEPENDENT_EVALUATION.md).
