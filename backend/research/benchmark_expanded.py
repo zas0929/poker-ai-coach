@@ -47,10 +47,10 @@ def read_rss_mib(pid):
     return int(text)/1024 if text else None # ps reports RSS in KiB on macOS/Linux
 
 
-def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_seconds=.2,method='cfr_plus_indexed'):
+def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_seconds=.2,method='cfr_plus_indexed',worker_module='research.benchmark_capacity'):
     if type(iterations) is not int or not 1<=iterations<=2000 or any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in (timeout_seconds,memory_mib,poll_seconds)):
         raise ValueError('Positive finite time, memory, polling and bounded integer iterations required.')
-    command=[sys.executable,'-m','research.benchmark_capacity','--worker','--method',method,'--iterations',str(iterations)]
+    command=[sys.executable,'-m',worker_module,'--worker','--method',method,'--iterations',str(iterations)]
     start=time.perf_counter();sampled_peak=0.;stopped=None;monitor_error=None
     with tempfile.TemporaryFile(mode='w+t') as output,tempfile.TemporaryFile(mode='w+t') as errors:
         process=subprocess.Popen(command,stdin=subprocess.PIPE,stdout=output,stderr=errors,text=True)

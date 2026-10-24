@@ -252,3 +252,9 @@ Wider public mid-river controls now measure isolated-process latency, RSS and
 exact best-response quality with uncertainty at every live seat. All 16 fixed
 controls passed their bounded-game gate; this does not validate full-range NLHE
 or public range calibration. See [docs/SOLVER_MIDRIVER_RANGES.md](docs/SOLVER_MIDRIVER_RANGES.md).
+
+An offline comparison now probes the current coach and a controlled same-subset
+equity variant against bounded river continuations, preserving exact recommended
+sizes. See [docs/SOLVER_COACH_COMPARISON.md](docs/SOLVER_COACH_COMPARISON.md)
+for conditional EV, scope limits and the reproducible 44-hand corpus. Live advice
+is unchanged.

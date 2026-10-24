@@ -1,0 +1,4394 @@
+{
+  "iterations": 100,
+  "scope": "Offline current full-range coach and controlled same-subset rules vs bounded native policy. First-action constraint loss with optimal own future replies vs learned opponent continuations; not exploitability of the coach or evidence of full-game superiority.",
+  "timeout_seconds": 60,
+  "memory_mib": 128,
+  "quality_gate_pct_decision_pot": 0.5,
+  "results": [
+    {
+      "name": "dry_2",
+      "seed": 20261032,
+      "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Qd7d",
+            "weight": 0.476996153375632
+          },
+          {
+            "cards": "Ac4s",
+            "weight": 0.474506360481899
+          },
+          {
+            "cards": "Kh9d",
+            "weight": 0.5292363278696072
+          },
+          {
+            "cards": "KcJd",
+            "weight": 0.5945958796865506
+          },
+          {
+            "cards": "6h2h",
+            "weight": 0.3599297891896736
+          },
+          {
+            "cards": "AdJd",
+            "weight": 0.5943830243040971
+          },
+          {
+            "cards": "8h2h",
+            "weight": 0.41294665595909835
+          },
+          {
+            "cards": "9c8d",
+            "weight": 0.5268560399153802
+          },
+          {
+            "cards": "AsKc",
+            "weight": 0.1820031440518172
+          },
+          {
+            "cards": "Qc4s",
+            "weight": 0.4515587028376954
+          },
+          {
+            "cards": "Jh5h",
+            "weight": 0.5868016901494877
+          },
+          {
+            "cards": "8s6s",
+            "weight": 0.15093842198465068
+          }
+        ],
+        "villain": [
+          {
+            "cards": "6d5c",
+            "weight": 0.925692651763839
+          },
+          {
+            "cards": "6h4s",
+            "weight": 0.6978490051962983
+          },
+          {
+            "cards": "Ts3h",
+            "weight": 0.9820881545095043
+          },
+          {
+            "cards": "5d3d",
+            "weight": 0.9343122945567464
+          },
+          {
+            "cards": "3c2s",
+            "weight": 0.6987451792740055
+          },
+          {
+            "cards": "Th8c",
+            "weight": 0.6850107978599875
+          },
+          {
+            "cards": "8s6c",
+            "weight": 0.9085641666788155
+          },
+          {
+            "cards": "8d3h",
+            "weight": 1.0
+          },
+          {
+            "cards": "6d5h",
+            "weight": 0.925692651763839
+          },
+          {
+            "cards": "Kd6d",
+            "weight": 0.9102694630253426
+          },
+          {
+            "cards": "QhTc",
+            "weight": 0.9151870488290602
+          },
+          {
+            "cards": "AdKh",
+            "weight": 0.6192772073200741
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 1.512135125,
+      "build_seconds": 0.018492167000000004,
+      "train_seconds": 0.011698624999999963,
+      "measure_seconds": 0.008423209000000043,
+      "peak_rss_mib": 31.015625,
+      "public_nodes": 12,
+      "joint_deals": 136,
+      "metadata": {
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": "55b81a0ec88b8c53a897fd651c6fbe0768715eab7785be99eec81f786d8028bd",
+        "seat_ids": [
+          "hero",
+          "villain"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 12
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 12
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 20,
+          "decision_pot": 30,
+          "street_committed": [
+            10,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 10,
+            "villain": 0
+          },
+          "pending_ids": [
+            "villain"
+          ],
+          "observed_raises": 0,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          37,
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          6.339698137017543,
+          -6.339698137017543
+        ],
+        "best_response_payoffs": [
+          6.362362802538816,
+          -6.287902336268754
+        ],
+        "unilateral_gains": [
+          0.022664665521272553,
+          0.05179580074878931
+        ],
+        "nash_conv_chips": 0.07446046627006186,
+        "max_unilateral_gain_pct_pot": 0.17265266916263103
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "6d5c",
+          "conditional_mass": 0.09564587732400008,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -10.0,
+            -20.884905913603458,
+            -2.5679189731960577,
+            -0.6098560789001475
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -10.0,
+            -20.884905913603458,
+            -2.5679189731960577,
+            -0.6098560789001475
+          ],
+          "solver_policy": [
+            0.9206093066498289,
+            0.0016451220128107502,
+            8.597811137532537e-05,
+            3.960396039603959e-05,
+            0.07761998926558908
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.06568558695390889,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0081,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 12,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "6h4s",
+          "conditional_mass": 0.05474233823905631,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -2.6418460100212213,
+            -9.356959394144535,
+            -0.3628383979739098,
+            -1.0191461117441705
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -2.6418460100212213,
+            -9.356959394144535,
+            -0.3628383979739098,
+            -1.0191461117441705
+          ],
+          "solver_policy": [
+            0.9784873518146737,
+            0.011861488875271784,
+            9.687440989706016e-05,
+            0.0008261229176004612,
+            0.008728161982557159
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.04143769844093447,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CALL",
+              "equity": 0.2935,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": -2.6418460100212213,
+              "one_decision_loss_chips": 2.6418460100212213
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.184,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 9,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Ts3h",
+          "conditional_mass": 0.10147286247610143,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -8.869534353061644,
+            -20.3132562647587,
+            -2.564905408679568,
+            -0.609128551503602
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -8.869534353061644,
+            -20.3132562647587,
+            -2.564905408679568,
+            -0.609128551503602
+          ],
+          "solver_policy": [
+            0.9190320610680041,
+            0.0020652328660098244,
+            9.030795652458545e-05,
+            3.960396039603961e-05,
+            0.07877279414906553
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.06823644092591333,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0306,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0283,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 12,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "5d3d",
+          "conditional_mass": 0.09653648966231371,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -10.0,
+            -20.884905913603454,
+            -2.567918973196061,
+            -0.6098560789001475
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -10.0,
+            -20.884905913603454,
+            -2.567918973196061,
+            -0.6098560789001475
+          ],
+          "solver_policy": [
+            0.9206093066498289,
+            0.0016451220128107541,
+            8.597811137532543e-05,
+            3.9603960396039626e-05,
+            0.07761998926558897
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.06568558695390886,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0013,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 12,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "3c2s",
+          "conditional_mass": 0.07219685234643956,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -6.158545145679375,
+            -15.526758448394162,
+            -1.1459940339524195,
+            -0.4186874233352391
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -6.158545145679375,
+            -15.526758448394162,
+            -1.1459940339524195,
+            -0.4186874233352391
+          ],
+          "solver_policy": [
+            0.8546908466504911,
+            0.00324910872166174,
+            9.229598258052695e-05,
+            3.9603960396039585e-05,
+            0.14192814468487042
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.08091175527205363,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.1878,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.096,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 12,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Th8c",
+          "conditional_mass": 0.07077776691096252,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            29.999999999999996,
+            50.50585760697452,
+            50.72503934657931,
+            52.44722779119344
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            29.999999999999996,
+            50.50585760697452,
+            50.72503934657931,
+            52.44722779119344
+          ],
+          "solver_policy": [
+            3.960396039603957e-05,
+            3.960396039603957e-05,
+            0.0041126104705834846,
+            0.005210281635483227,
+            0.9905978999731412
+          ],
+          "best_response_continuation_actions": [
+            "RAISE 120"
+          ],
+          "solver_mixture_ev_chips": 52.42730448796796,
+          "best_response_continuation_ev_chips": 52.44722779119344,
+          "coach": {
+            "current_full_ranges": {
+              "action": "RAISE 37",
+              "equity": 0.9879,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 50.50585760697452,
+              "one_decision_loss_chips": 1.9413701842189184
+            },
+            "same_subset_rules": {
+              "action": "RAISE 37",
+              "equity": 1.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 12,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 50.50585760697452,
+              "one_decision_loss_chips": 1.9413701842189184
+            }
+          }
+        },
+        {
+          "own_hand": "8s6c",
+          "conditional_mass": 0.09122300827175077,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -9.999999999999998,
+            -21.945519126441013,
+            -3.51321583081517,
+            -1.499668685014715
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -9.999999999999998,
+            -21.945519126441013,
+            -3.51321583081517,
+            -1.499668685014715
+          ],
+          "solver_policy": [
+            0.9942618423502282,
+            0.0017212419481103464,
+            8.813055218565339e-05,
+            3.9603960396039626e-05,
+            0.0038891811890796506
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.025118110699954916,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0225,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 11,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "8d3h",
+          "conditional_mass": 0.09313088471638488,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -10.0,
+            -20.80821199656735,
+            -2.2284980931017806,
+            -1.4464946083415207
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -10.0,
+            -20.80821199656735,
+            -2.2284980931017806,
+            -1.4464946083415207
+          ],
+          "solver_policy": [
+            0.9891870597866359,
+            0.001629960573359097,
+            8.5735780550896e-05,
+            3.960396039603965e-05,
+            0.009057639899058214
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.03127369865949378,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0141,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 11,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "6d5h",
+          "conditional_mass": 0.08513702754499604,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -10.000000000000002,
+            -20.785845570644543,
+            -2.1152826557018045,
+            -1.457642436078821
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -10.000000000000002,
+            -20.785845570644543,
+            -2.1152826557018045,
+            -1.457642436078821
+          ],
+          "solver_policy": [
+            0.9886369618626727,
+            0.0016303232304842345,
+            8.570470588737253e-05,
+            3.96039603960396e-05,
+            0.009607406240559647
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.03217261369350585,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0081,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 11,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Kd6d",
+          "conditional_mass": 0.09405229827244739,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -8.869534353061644,
+            -20.313256264758696,
+            -2.5649054086795715,
+            -0.6091285515036056
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -8.869534353061644,
+            -20.313256264758696,
+            -2.5649054086795715,
+            -0.6091285515036056
+          ],
+          "solver_policy": [
+            0.9190320610680038,
+            0.0020652328660098218,
+            9.03079565245854e-05,
+            3.960396039603958e-05,
+            0.07877279414906553
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.06823644092591358,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0953,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0283,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 12,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "QhTc",
+          "conditional_mass": 0.0945604008350165,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -8.869534353061644,
+            -20.3132562647587,
+            -2.5649054086795715,
+            -0.6091285515036056
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -8.869534353061644,
+            -20.3132562647587,
+            -2.5649054086795715,
+            -0.6091285515036056
+          ],
+          "solver_policy": [
+            0.9190320610680043,
+            0.002065232866009821,
+            9.030795652458537e-05,
+            3.960396039603958e-05,
+            0.07877279414906521
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.06823644092591338,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0725,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0283,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 12,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "AdKh",
+          "conditional_mass": 0.05052419340053063,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 37",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -7.705170756286444,
+            -18.344642982547246,
+            -0.9900653903539158,
+            -1.311325584501514
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -7.705170756286444,
+            -18.344642982547246,
+            -0.9900653903539158,
+            -1.311325584501514
+          ],
+          "solver_policy": [
+            0.9844202669646253,
+            0.002490973281277913,
+            9.152292258325077e-05,
+            5.9413049992177595e-05,
+            0.01293782378152144
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.03789685195811632,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.1609,
+              "equity_method": "exact_river",
+              "equity_samples": 990,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0574,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 10,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 12,
+          "exactly_represented": 12,
+          "weighted_one_decision_loss_chips": 0.282026674242622,
+          "best_action_matches": 10
+        },
+        "same_subset_rules": {
+          "probes": 12,
+          "exactly_represented": 12,
+          "weighted_one_decision_loss_chips": 0.13740584638653897,
+          "best_action_matches": 11
+        }
+      },
+      "wall_seconds": 1.9189665829999996,
+      "sampled_peak_rss_mib": 29.859375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_3",
+      "seed": 20261033,
+      "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "TdTc",
+            "weight": 0.26318422577000605
+          },
+          {
+            "cards": "JdTs",
+            "weight": 0.3112623060518137
+          },
+          {
+            "cards": "Kc8s",
+            "weight": 0.15368963785537604
+          },
+          {
+            "cards": "7d3d",
+            "weight": 0.22032560335827253
+          },
+          {
+            "cards": "KsQd",
+            "weight": 0.15637545917398277
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Ts7s",
+            "weight": 0.703904138024193
+          },
+          {
+            "cards": "7s3s",
+            "weight": 0.6057239621828617
+          },
+          {
+            "cards": "Ac5s",
+            "weight": 0.8866325605674881
+          },
+          {
+            "cards": "Td4s",
+            "weight": 0.6331980350315071
+          },
+          {
+            "cards": "KcTs",
+            "weight": 0.9832169145853511
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Jd5s",
+            "weight": 0.6029348704841837
+          },
+          {
+            "cards": "Jh9d",
+            "weight": 0.8581173875608564
+          },
+          {
+            "cards": "7d4h",
+            "weight": 0.6645995480437143
+          },
+          {
+            "cards": "Ac4c",
+            "weight": 0.44457483629435063
+          },
+          {
+            "cards": "5c2d",
+            "weight": 0.48607686267321576
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 1.395695458,
+      "build_seconds": 0.03479425000000003,
+      "train_seconds": 0.016269541,
+      "measure_seconds": 0.023845541999999886,
+      "peak_rss_mib": 34.14453125,
+      "public_nodes": 41,
+      "joint_deals": 88,
+      "metadata": {
+        "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+        "task_key": "2166d15313bf6b41caa01588e26588414302b77d09efc6908aa35c0e0a8519f6",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 30,
+          "decision_pot": 60,
+          "street_committed": [
+            20,
+            0,
+            10
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 20,
+            "villain": 0,
+            "villain_2": 10
+          },
+          "pending_ids": [
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          -29.31420156916611,
+          -10.013658591803217,
+          39.32786016096932
+        ],
+        "best_response_payoffs": [
+          -29.25011826614667,
+          -9.999999999999995,
+          39.4378815758583
+        ],
+        "unilateral_gains": [
+          0.06408330301943721,
+          0.01365859180322282,
+          0.11002141488897621
+        ],
+        "nash_conv_chips": 0.18776330971163624,
+        "max_unilateral_gain_pct_pot": 0.18336902481496034
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "Ts7s",
+          "conditional_mass": 0.18914407008718137,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -10.234857333466953,
+            -45.37440545083735,
+            -73.3475188284447
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -18.73446178023655,
+            -45.37440545083735,
+            -73.3475188284447
+          ],
+          "solver_policy": [
+            0.9994912532512308,
+            0.00021992344577944617,
+            0.00015760037907437132,
+            0.00013122292391536903
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.020896046771465244,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.207,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.2166,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 19,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "7s3s",
+          "conditional_mass": 0.21730086467788637,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -14.204855619588974,
+            -59.42075422402915,
+            -93.05157891017268
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -27.73051813106185,
+            -59.42075422402915,
+            -93.05157891017268
+          ],
+          "solver_policy": [
+            0.9997435456262942,
+            0.00015744447271583871,
+            4.95049504950495e-05,
+            4.95049504950495e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.011914152108955396,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.167,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.1285,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 23,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Ac5s",
+          "conditional_mass": 0.2167076093539449,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -18.321955389730668,
+            -68.33300251867344,
+            -105.48200925055482
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -30.839914795540615,
+            -68.33300251867344,
+            -105.48200925055482
+          ],
+          "solver_policy": [
+            0.9997676103560688,
+            0.00013337974294115923,
+            4.9504950495049495e-05,
+            4.9504950495049495e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.012718123460688551,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.017,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 14,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Td4s",
+          "conditional_mass": 0.1671040210942474,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -15.580979017772943,
+            -59.31268923382818,
+            -94.25496728236135
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -23.861844935998377,
+            -59.31268923382818,
+            -94.25496728236135
+          ],
+          "solver_policy": [
+            0.999767522673692,
+            0.00013346742531779893,
+            4.950495049504946e-05,
+            4.950495049504946e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.010787138240414985,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.132,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0673,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 18,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "KcTs",
+          "conditional_mass": 0.20974343478673957,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -20.0,
+            -65.48171136832413,
+            -102.40084293493427
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -34.4124509053558,
+            -65.48171136832413,
+            -102.40084293493427
+          ],
+          "solver_policy": [
+            0.999788018714133,
+            0.00011297138487670908,
+            4.9504950495049515e-05,
+            4.9504950495049515e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.012198639775545073,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0135,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 14,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.25,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 5,
+          "exactly_represented": 5,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 5
+        },
+        "same_subset_rules": {
+          "probes": 5,
+          "exactly_represented": 5,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 5
+        }
+      },
+      "wall_seconds": 1.9070692080000002,
+      "sampled_peak_rss_mib": 33.69140625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_4",
+      "seed": 20261034,
+      "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "KsJs",
+            "weight": 0.994310509784465
+          },
+          {
+            "cards": "Ts9c",
+            "weight": 0.8871638516180695
+          },
+          {
+            "cards": "9d2h",
+            "weight": 0.5612820110658363
+          },
+          {
+            "cards": "Qc9c",
+            "weight": 0.8904661788455025
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Qh8h",
+            "weight": 0.9932630723048972
+          },
+          {
+            "cards": "JsTh",
+            "weight": 0.8557291319125307
+          },
+          {
+            "cards": "Tc2d",
+            "weight": 0.5923591756232706
+          },
+          {
+            "cards": "As3c",
+            "weight": 0.8791725276444587
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "8c6h",
+            "weight": 0.15745731182113148
+          },
+          {
+            "cards": "Qh4h",
+            "weight": 0.47384358137637933
+          },
+          {
+            "cards": "Td7d",
+            "weight": 0.4743166370332871
+          },
+          {
+            "cards": "Qd3h",
+            "weight": 0.17782164842615372
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "9d5d",
+            "weight": 0.27863521101062094
+          },
+          {
+            "cards": "8c6s",
+            "weight": 0.1293105211975507
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 1.702895541,
+      "build_seconds": 0.10270120799999982,
+      "train_seconds": 0.04574408300000021,
+      "measure_seconds": 0.1066932920000001,
+      "peak_rss_mib": 36.91015625,
+      "public_nodes": 153,
+      "joint_deals": 82,
+      "metadata": {
+        "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+        "task_key": "5f1be437d5a2fbcea366e03ea99c69da2619d8a2a3e650de08b4bf86ad388460",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "hero",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 70,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          41.18964408990078,
+          8.858969500931458,
+          -20.034027677282975,
+          -30.01458591354926
+        ],
+        "best_response_payoffs": [
+          41.25894033635281,
+          8.927112239904055,
+          -19.99803741211543,
+          -29.995316144039094
+        ],
+        "unilateral_gains": [
+          0.06929624645202637,
+          0.06814273897259682,
+          0.03599026516754478,
+          0.019269769510167123
+        ],
+        "nash_conv_chips": 0.19269902010233508,
+        "max_unilateral_gain_pct_pot": 0.09899463778860909
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "KsJs",
+          "conditional_mass": 0.2666852254370625,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            81.72309242687494,
+            70.02376178806,
+            70.03762278208018
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            81.72247657890944,
+            70.02376178806,
+            70.03762278208018
+          ],
+          "solver_policy": [
+            4.950495049504957e-05,
+            0.9948644808135603,
+            0.0006218387932801926,
+            0.00446417544266455
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 81.65899295969267,
+          "best_response_continuation_ev_chips": 81.72309242687494,
+          "coach": {
+            "current_full_ranges": {
+              "action": "RAISE 80",
+              "equity": 0.5055,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.2222,
+              "represented_exactly": true,
+              "action_ev_chips": 70.02376178806,
+              "one_decision_loss_chips": 11.699330638814942
+            },
+            "same_subset_rules": {
+              "action": "RAISE 80",
+              "equity": 1.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 19,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.2222,
+              "represented_exactly": true,
+              "action_ev_chips": 70.02376178806,
+              "one_decision_loss_chips": 11.699330638814942
+            }
+          }
+        },
+        {
+          "own_hand": "Ts9c",
+          "conditional_mass": 0.3356882364720992,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            34.60775738882942,
+            26.346292507112754,
+            33.275438926291514
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            34.5882355155996,
+            26.346292507112754,
+            33.275438926291514
+          ],
+          "solver_policy": [
+            4.9504950495049413e-05,
+            0.9937398553336535,
+            0.004475215913047613,
+            0.0017354238028038252
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 34.54736049375735,
+          "best_response_continuation_ev_chips": 34.60775738882942,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CALL",
+              "equity": 0.2875,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.2222,
+              "represented_exactly": true,
+              "action_ev_chips": 34.60775738882942,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "RAISE 80",
+              "equity": 0.7088,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 26,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.2222,
+              "represented_exactly": true,
+              "action_ev_chips": 26.346292507112754,
+              "one_decision_loss_chips": 8.261464881716666
+            }
+          }
+        },
+        {
+          "own_hand": "9d2h",
+          "conditional_mass": 0.06068875521171559,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            101.9385040338135,
+            93.60481961346332,
+            93.53846376675902
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            101.93679429870818,
+            93.60481961346332,
+            93.53846376675902
+          ],
+          "solver_policy": [
+            4.950495049504953e-05,
+            0.9780369708845719,
+            0.0004109920723920543,
+            0.021502532092541077
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 101.74773817542278,
+          "best_response_continuation_ev_chips": 101.9385040338135,
+          "coach": {
+            "current_full_ranges": {
+              "action": "RAISE 80",
+              "equity": 0.634,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.2222,
+              "represented_exactly": true,
+              "action_ev_chips": 93.60481961346332,
+              "one_decision_loss_chips": 8.333684420350181
+            },
+            "same_subset_rules": {
+              "action": "RAISE 80",
+              "equity": 1.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 11,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.2222,
+              "represented_exactly": true,
+              "action_ev_chips": 93.60481961346332,
+              "one_decision_loss_chips": 8.333684420350181
+            }
+          }
+        },
+        {
+          "own_hand": "Qc9c",
+          "conditional_mass": 0.336937782879123,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            34.60775738882943,
+            26.346292507112754,
+            33.275438926291514
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            34.58823551559961,
+            26.346292507112754,
+            33.275438926291514
+          ],
+          "solver_policy": [
+            4.950495049504945e-05,
+            0.9937398553336535,
+            0.004475215913047614,
+            0.001735423802803824
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 34.54736049375736,
+          "best_response_continuation_ev_chips": 34.60775738882943,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CALL",
+              "equity": 0.2595,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.2222,
+              "represented_exactly": true,
+              "action_ev_chips": 34.60775738882943,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "RAISE 80",
+              "equity": 0.7088,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 26,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.2222,
+              "represented_exactly": true,
+              "action_ev_chips": 26.346292507112754,
+              "one_decision_loss_chips": 8.261464881716673
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 4,
+          "exactly_represented": 4,
+          "weighted_one_decision_loss_chips": 3.6257995626734156,
+          "best_action_matches": 2
+        },
+        "same_subset_rules": {
+          "probes": 4,
+          "exactly_represented": 4,
+          "weighted_one_decision_loss_chips": 9.182675800072415,
+          "best_action_matches": 0
+        }
+      },
+      "wall_seconds": 2.3887385419999996,
+      "sampled_peak_rss_mib": 36.5859375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_5",
+      "seed": 20261035,
+      "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "9d2s",
+            "weight": 0.5612820110658363
+          },
+          {
+            "cards": "Qh2d",
+            "weight": 0.7254255066163738
+          },
+          {
+            "cards": "As4s",
+            "weight": 0.7996547899895987
+          }
+        ],
+        "villain": [
+          {
+            "cards": "5d3c",
+            "weight": 0.5954240071874519
+          },
+          {
+            "cards": "Qs6s",
+            "weight": 0.9871535960238372
+          },
+          {
+            "cards": "KcQh",
+            "weight": 0.9931296877536384
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Qd9h",
+            "weight": 0.5265097605790604
+          },
+          {
+            "cards": "KhQh",
+            "weight": 0.1240854576201662
+          },
+          {
+            "cards": "9h4s",
+            "weight": 0.7243524168215428
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "Ks7c",
+            "weight": 0.25664762666689617
+          },
+          {
+            "cards": "KsKc",
+            "weight": 0.2632844893691561
+          }
+        ],
+        "villain_4": [
+          {
+            "cards": "9c8d",
+            "weight": 0.8774313620919275
+          },
+          {
+            "cards": "Ac9h",
+            "weight": 0.8879740844987252
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 1.151642834,
+      "build_seconds": 0.16593495800000002,
+      "train_seconds": 0.084806041,
+      "measure_seconds": 0.21475216699999988,
+      "peak_rss_mib": 38.83203125,
+      "public_nodes": 521,
+      "joint_deals": 39,
+      "metadata": {
+        "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+        "task_key": "17ac6f8b37e904b4dcfddfc0d5232ac82e4c49252fcc9d0c9351c23ef37e8aa9",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4"
+        ],
+        "actor_id": "villain_4",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 50,
+          "decision_pot": 80,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_4",
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          -4.108703766971408,
+          -10.008121559600232,
+          44.63780217403512,
+          -20.509971718834365,
+          -10.01100512862912
+        ],
+        "best_response_payoffs": [
+          -3.974407954870575,
+          -10.000000000000002,
+          44.75611369301199,
+          -20.423389791162553,
+          -9.99322441814361
+        ],
+        "unilateral_gains": [
+          0.13429581210083352,
+          0.0081215596002302,
+          0.11831151897686709,
+          0.08658192767181205,
+          0.017780710485510554
+        ],
+        "nash_conv_chips": 0.3650915288352534,
+        "max_unilateral_gain_pct_pot": 0.1678697651260419
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "9c8d",
+          "conditional_mass": 0.9371268077750128,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -18.656663966673904,
+            -76.90228374352071,
+            -116.1262203496418
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -42.75737571656079,
+            -76.90228374352071,
+            -116.1262203496418
+          ],
+          "solver_policy": [
+            0.9998279872413599,
+            7.300285765007949e-05,
+            4.95049504950495e-05,
+            4.95049504950495e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.012677277152192523,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CALL",
+              "equity": 0.194,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.2,
+              "represented_exactly": true,
+              "action_ev_chips": -18.656663966673904,
+              "one_decision_loss_chips": 18.656663966673904
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0192,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 31,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.2,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Ac9h",
+          "conditional_mass": 0.0628731922249873,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            0.10776583177366739,
+            -33.56463610373823,
+            -61.951550793110016
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            0.055972319013832816,
+            -33.56463610373823,
+            -61.951550793110016
+          ],
+          "solver_policy": [
+            0.6667574027487965,
+            0.3331435873502135,
+            4.950495049504951e-05,
+            4.950495049504951e-05
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 0.01391829504477446,
+          "best_response_continuation_ev_chips": 0.10776583177366739,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CALL",
+              "equity": 0.229,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.2,
+              "represented_exactly": true,
+              "action_ev_chips": 0.10776583177366739,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CALL",
+              "equity": 0.29,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 8,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.2,
+              "represented_exactly": true,
+              "action_ev_chips": 0.10776583177366739,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 2,
+          "exactly_represented": 2,
+          "weighted_one_decision_loss_chips": 17.48365994682022,
+          "best_action_matches": 1
+        },
+        "same_subset_rules": {
+          "probes": 2,
+          "exactly_represented": 2,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 2
+        }
+      },
+      "wall_seconds": 1.9200435000000002,
+      "sampled_peak_rss_mib": 38.625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_6",
+      "seed": 20261036,
+      "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Kc2d",
+            "weight": 0.7473571166069342
+          },
+          {
+            "cards": "8d7s",
+            "weight": 0.7620268133313399
+          },
+          {
+            "cards": "As6c",
+            "weight": 0.979212017858393
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Ks8s",
+            "weight": 0.9885267087376902
+          },
+          {
+            "cards": "9d8d",
+            "weight": 0.8039944006322983
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Qh4c",
+            "weight": 0.4814514408668681
+          },
+          {
+            "cards": "7c4c",
+            "weight": 0.662710132242492
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "Ah6s",
+            "weight": 0.15488529856935773
+          },
+          {
+            "cards": "Kc9d",
+            "weight": 0.28808470573398176
+          }
+        ],
+        "villain_4": [
+          {
+            "cards": "KhTd",
+            "weight": 0.9836420657267901
+          },
+          {
+            "cards": "Ks3d",
+            "weight": 0.9381501673129816
+          }
+        ],
+        "villain_5": [
+          {
+            "cards": "8d5s",
+            "weight": 0.7589296701569467
+          },
+          {
+            "cards": "Qd7c",
+            "weight": 0.7769773434467324
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 1.4218853340000002,
+      "build_seconds": 0.23305170800000008,
+      "train_seconds": 0.1330840419999999,
+      "measure_seconds": 0.367104667,
+      "peak_rss_mib": 43.9140625,
+      "public_nodes": 1689,
+      "joint_deals": 15,
+      "metadata": {
+        "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+        "task_key": "52bde705febef99db0439811244a37351edf95375405ac2064011db494af02c2",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4",
+          "villain_5"
+        ],
+        "actor_id": "villain_4",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 3
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 2
+          },
+          {
+            "id": "villain_5",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 60,
+          "decision_pot": 90,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            0,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_4",
+            "villain_5",
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          -10.041892141545148,
+          8.361227660501378,
+          21.01753868939124,
+          -0.28150046389043126,
+          -10.013952954593522,
+          -9.041420789863519
+        ],
+        "best_response_payoffs": [
+          -9.994874945188815,
+          8.420564095919332,
+          21.138269572260327,
+          -0.2217756902317518,
+          -9.999999999999998,
+          -9.014066755377295
+        ],
+        "unilateral_gains": [
+          0.04701719635633239,
+          0.05933643541795419,
+          0.12073088286908629,
+          0.05972477365867945,
+          0.01395295459352397,
+          0.02735403448622442
+        ],
+        "nash_conv_chips": 0.3281162773818007,
+        "max_unilateral_gain_pct_pot": 0.1341454254100959
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "KhTd",
+          "conditional_mass": 0.9198325822480438,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -19.458052127942498,
+            -79.99161253999142,
+            -119.98356099161894
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -51.101131207443245,
+            -79.99161253999142,
+            -119.98356099161894
+          ],
+          "solver_policy": [
+            0.9998207257334194,
+            8.02643655905878e-05,
+            4.950495049504951e-05,
+            4.950495049504951e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.014001360943248126,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1818,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 13,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1818,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Ks3d",
+          "conditional_mass": 0.08016741775195622,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -20.0,
+            -79.99894801980197,
+            -119.99999970812347
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -44.20366870610436,
+            -79.99894801980197,
+            -119.99999970812347
+          ],
+          "solver_policy": [
+            0.999821887904867,
+            7.91021941429408e-05,
+            4.9504950495049495e-05,
+            4.9504950495049495e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.013397545190153444,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1818,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 2,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1818,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 2,
+          "exactly_represented": 2,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 2
+        },
+        "same_subset_rules": {
+          "probes": 2,
+          "exactly_represented": 2,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 2
+        }
+      },
+      "wall_seconds": 2.6245172500000002,
+      "sampled_peak_rss_mib": 43.765625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "river_fold_4",
+      "seed": 20261040,
+      "source_information_key": "5074ef1e648c64ccc54b70b10c57e0d515453f6837691d96415abdefd3ce0545",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "AcQc",
+            "weight": 0.19782137555502674
+          },
+          {
+            "cards": "3c2d",
+            "weight": 0.35626740708144045
+          },
+          {
+            "cards": "6h2d",
+            "weight": 0.37173773894342044
+          },
+          {
+            "cards": "3s3h",
+            "weight": 0.6907211206441706
+          },
+          {
+            "cards": "9h3c",
+            "weight": 0.6300209966319905
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "As6s",
+            "weight": 0.16030707911128786
+          },
+          {
+            "cards": "Ts9h",
+            "weight": 0.5248398312160056
+          },
+          {
+            "cards": "8c4s",
+            "weight": 0.48513099422263184
+          },
+          {
+            "cards": "Tc6s",
+            "weight": 0.16689227077977253
+          },
+          {
+            "cards": "Kh3s",
+            "weight": 0.17905122406919505
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "Ks3c",
+            "weight": 0.14765468854133465
+          },
+          {
+            "cards": "5d2d",
+            "weight": 0.17711705698592337
+          },
+          {
+            "cards": "Tc5h",
+            "weight": 0.14118670556537832
+          },
+          {
+            "cards": "Js3h",
+            "weight": 0.29253894144924636
+          },
+          {
+            "cards": "7s4h",
+            "weight": 0.3946053614819732
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 1.4088447080000002,
+      "build_seconds": 0.027030084000000176,
+      "train_seconds": 0.013224957999999898,
+      "measure_seconds": 0.017673332999999847,
+      "peak_rss_mib": 35.453125,
+      "public_nodes": 24,
+      "joint_deals": 87,
+      "metadata": {
+        "source_information_key": "5074ef1e648c64ccc54b70b10c57e0d515453f6837691d96415abdefd3ce0545",
+        "task_key": "a601fd4b637e52897f5cce8fcacd29051cd7181bc5ed1794d8c291fb3bf33872",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [
+          1
+        ],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 0,
+            "selected": 0
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 90,
+          "street_committed": [
+            20,
+            0,
+            10,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 20,
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          87,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          -17.69578893415432,
+          -10.0,
+          -5.395241452412607,
+          33.09103038656692
+        ],
+        "best_response_payoffs": [
+          -17.695206320457732,
+          -10.0,
+          -5.362932638206774,
+          33.0910437720587
+        ],
+        "unilateral_gains": [
+          0.0005826136965865203,
+          0,
+          0.03230881420583298,
+          1.3385491776318759e-05
+        ],
+        "nash_conv_chips": 0.03290481339419582,
+        "max_unilateral_gain_pct_pot": 0.035898682450925534
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "As6s",
+          "conditional_mass": 0.12489285637160304,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 87",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -9.999999999999998,
+            -26.731912372601023,
+            -31.83853478839166,
+            -63.49904446122031
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -9.999999999999998,
+            -26.731912372601023,
+            -31.83853478839166,
+            -63.49904446122031
+          ],
+          "solver_policy": [
+            0.9993736350395637,
+            0.00043273970048440607,
+            3.96039603960396e-05,
+            3.96039603960396e-05,
+            0.00011441733915982273
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.01391241038103045,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.026,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 20,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Ts9h",
+          "conditional_mass": 0.2863644252207088,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 87",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            28.61682245095476,
+            -8.194201025141915,
+            -12.489698837594538,
+            -27.324462989989684
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            28.61682245095476,
+            -8.194201025141915,
+            -12.489698837594538,
+            -27.324462989989684
+          ],
+          "solver_policy": [
+            0.00014081079996638448,
+            0.9987909916661044,
+            0.0005200581458485289,
+            0.0004496015103114185,
+            9.853787776906694e-05
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 28.56965513107517,
+          "best_response_continuation_ev_chips": 28.61682245095476,
+          "coach": {
+            "current_full_ranges": {
+              "action": "RAISE 87",
+              "equity": 0.323,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": -12.489698837594538,
+              "one_decision_loss_chips": 41.1065212885493
+            },
+            "same_subset_rules": {
+              "action": "RAISE 87",
+              "equity": 0.3862,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 16,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": -12.489698837594538,
+              "one_decision_loss_chips": 41.1065212885493
+            }
+          }
+        },
+        {
+          "own_hand": "8c4s",
+          "conditional_mass": 0.37795832797126794,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 87",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            17.04480883795269,
+            -26.71151308477932,
+            -31.817251599885438,
+            -51.929935844023184
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            17.04480883795269,
+            -26.71151308477932,
+            -31.817251599885438,
+            -51.929935844023184
+          ],
+          "solver_policy": [
+            0.0005561144405175443,
+            0.9988375435343644,
+            0.0003134333958019812,
+            0.0002533046689200867,
+            3.960396039603959e-05
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 17.006506619955324,
+          "best_response_continuation_ev_chips": 17.04480883795269,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CALL",
+              "equity": 0.114,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": 17.04480883795269,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CALL",
+              "equity": 0.2704,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 20,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": 17.04480883795269,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Tc6s",
+          "conditional_mass": 0.11051350197668602,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 87",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -9.999999999999998,
+            -39.41577006855081,
+            -45.07756884410183,
+            -76.25923438578508
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -9.999999999999998,
+            -39.41577006855081,
+            -45.07756884410183,
+            -76.25923438578508
+          ],
+          "solver_policy": [
+            0.9993763599564007,
+            0.0005048281624114745,
+            3.9603960396039646e-05,
+            3.9603960396039646e-05,
+            3.9603960396039646e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.011414720170587532,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.001,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 15,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Kh3s",
+          "conditional_mass": 0.10027088845973425,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 87",
+            "RAISE 120"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -10.0,
+            -43.69560598137155,
+            -49.54430285991927,
+            -87.14513499872263
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -10.0,
+            -43.69560598137155,
+            -49.54430285991927,
+            -87.14513499872263
+          ],
+          "solver_policy": [
+            0.9992730787312881,
+            0.000608109387523638,
+            3.960396039603958e-05,
+            3.960396039603958e-05,
+            3.960396039603958e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.013225056007514136,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0065,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 16,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 5,
+          "exactly_represented": 5,
+          "weighted_one_decision_loss_chips": 11.771445341618252,
+          "best_action_matches": 4
+        },
+        "same_subset_rules": {
+          "probes": 5,
+          "exactly_represented": 5,
+          "weighted_one_decision_loss_chips": 11.771445341618252,
+          "best_action_matches": 4
+        }
+      },
+      "wall_seconds": 1.9193758750000018,
+      "sampled_peak_rss_mib": 35.109375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "prior_allin_3",
+      "seed": 20261041,
+      "source_information_key": "adb6f75520d3bd00d13d171359a7cf78b0c9a0f527ae08482ee76f02b62bc6ef",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "KcJd",
+            "weight": 0.9322925195400757
+          },
+          {
+            "cards": "8c4c",
+            "weight": 0.4566502103343387
+          },
+          {
+            "cards": "Qc8c",
+            "weight": 0.8898656746718785
+          },
+          {
+            "cards": "Ts3h",
+            "weight": 0.3454285289249528
+          },
+          {
+            "cards": "9c5d",
+            "weight": 0.36528507689689943
+          }
+        ],
+        "villain": [
+          {
+            "cards": "6s4h",
+            "weight": 0.01901414401407332
+          },
+          {
+            "cards": "Td4c",
+            "weight": 0.02866471712081454
+          },
+          {
+            "cards": "6s3s",
+            "weight": 0.006750059267622663
+          },
+          {
+            "cards": "Kd6h",
+            "weight": 0.029191653034215833
+          },
+          {
+            "cards": "Qs6c",
+            "weight": 0.022280600344215116
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Kh2d",
+            "weight": 0.26096239534836263
+          },
+          {
+            "cards": "9c2s",
+            "weight": 0.08666011687725689
+          },
+          {
+            "cards": "6c3h",
+            "weight": 0.06157218431294435
+          },
+          {
+            "cards": "4s2h",
+            "weight": 0.03358608807457522
+          },
+          {
+            "cards": "5c2d",
+            "weight": 0.037236922225512635
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 0.8859596249999999,
+      "build_seconds": 0.02338145800000002,
+      "train_seconds": 0.00999316699999997,
+      "measure_seconds": 0.008505874999999996,
+      "peak_rss_mib": 35.015625,
+      "public_nodes": 12,
+      "joint_deals": 106,
+      "metadata": {
+        "source_information_key": "adb6f75520d3bd00d13d171359a7cf78b0c9a0f527ae08482ee76f02b62bc6ef",
+        "task_key": "e1da3e6ecfaac508deb51785f8afdbebd04684298137e2685be7f662b0fc1925",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 150,
+          "decision_pot": 160,
+          "street_committed": [
+            0,
+            10,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 10
+          },
+          "pending_ids": [
+            "villain_2"
+          ],
+          "observed_raises": 0,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120,
+          123
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          9.97331701747631,
+          -30.387726345524435,
+          20.414409328048116
+        ],
+        "best_response_payoffs": [
+          9.97331701747631,
+          -30.383442477988318,
+          20.426516070374504
+        ],
+        "unilateral_gains": [
+          0,
+          0.004283867536116759,
+          0.012106742326388087
+        ],
+        "nash_conv_chips": 0.016390609862504846,
+        "max_unilateral_gain_pct_pot": 0.007566713953992554
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "Kh2d",
+          "conditional_mass": 0.5804332242233421,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120",
+            "RAISE 123"
+          ],
+          "action_ev_chips": [
+            0.0,
+            57.20666952160867,
+            49.1596515387268,
+            49.1596515387268,
+            49.1596515387268
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            57.20666952160867,
+            49.1596515387268,
+            49.1596515387268,
+            49.1596515387268
+          ],
+          "solver_policy": [
+            3.960396039603967e-05,
+            0.9989874004143744,
+            0.0003243318750765094,
+            0.0003243318750765094,
+            0.0003243318750765094
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 57.19657419764105,
+          "best_response_continuation_ev_chips": 57.20666952160867,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CALL",
+              "equity": 0.0885,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 57.20666952160867,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CALL",
+              "equity": 0.237,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 24,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 57.20666952160867,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "9c2s",
+          "conditional_mass": 0.16818211174865516,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120",
+            "RAISE 123"
+          ],
+          "action_ev_chips": [
+            0.0,
+            160.0000000000001,
+            174.8864355725441,
+            174.8864355725441,
+            174.8864355725441
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            160.0000000000001,
+            174.8864355725441,
+            174.8864355725441,
+            174.8864355725441
+          ],
+          "solver_policy": [
+            3.9603960396039585e-05,
+            0.00016561293532586321,
+            0.333264927701426,
+            0.333264927701426,
+            0.333264927701426
+          ],
+          "best_response_continuation_actions": [
+            "RAISE 80",
+            "RAISE 120",
+            "RAISE 123"
+          ],
+          "solver_mixture_ev_chips": 174.87704399078416,
+          "best_response_continuation_ev_chips": 174.8864355725441,
+          "coach": {
+            "current_full_ranges": {
+              "action": "RAISE 123",
+              "equity": 0.766,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 174.8864355725441,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "RAISE 123",
+              "equity": 1.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 19,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 174.8864355725441,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "6c3h",
+          "conditional_mass": 0.09385994418165383,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120",
+            "RAISE 123"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -6.567912394081372,
+            -0.06488701275814535,
+            -0.06488701275814535,
+            -0.06488701275814535
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -6.567912394081372,
+            -0.06488701275814535,
+            -0.06488701275814535,
+            -0.06488701275814535
+          ],
+          "solver_policy": [
+            0.5691205160632462,
+            0.0008278747071073133,
+            0.14335053640988218,
+            0.14335053640988218,
+            0.14335053640988218
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.03334217280430162,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 15,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "4s2h",
+          "conditional_mass": 0.07470226261585067,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120",
+            "RAISE 123"
+          ],
+          "action_ev_chips": [
+            0.0,
+            160.00000000000003,
+            174.9759242172705,
+            174.9759242172705,
+            174.9759242172705
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            160.00000000000003,
+            174.9759242172705,
+            174.9759242172705,
+            174.9759242172705
+          ],
+          "solver_policy": [
+            3.960396039603958e-05,
+            0.00016474278729578364,
+            0.3332652177507694,
+            0.3332652177507694,
+            0.3332652177507694
+          ],
+          "best_response_continuation_actions": [
+            "RAISE 80",
+            "RAISE 120",
+            "RAISE 123"
+          ],
+          "solver_mixture_ev_chips": 174.96652730219964,
+          "best_response_continuation_ev_chips": 174.9759242172705,
+          "coach": {
+            "current_full_ranges": {
+              "action": "RAISE 123",
+              "equity": 0.7675,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 174.9759242172705,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "RAISE 123",
+              "equity": 1.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 24,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 174.9759242172705,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "5c2d",
+          "conditional_mass": 0.0828224572304982,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120",
+            "RAISE 123"
+          ],
+          "action_ev_chips": [
+            0.0,
+            57.20666952160867,
+            49.15965153872679,
+            49.15965153872679,
+            49.15965153872679
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            57.20666952160867,
+            49.15965153872679,
+            49.15965153872679,
+            49.15965153872679
+          ],
+          "solver_policy": [
+            3.960396039603959e-05,
+            0.9989874004143746,
+            0.0003243318750765086,
+            0.0003243318750765086,
+            0.0003243318750765086
+          ],
+          "best_response_continuation_actions": [
+            "CALL"
+          ],
+          "solver_mixture_ev_chips": 57.196574197641056,
+          "best_response_continuation_ev_chips": 57.20666952160867,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CALL",
+              "equity": 0.0795,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 57.20666952160867,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CALL",
+              "equity": 0.237,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 24,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0588,
+              "represented_exactly": true,
+              "action_ev_chips": 57.20666952160867,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 5,
+          "exactly_represented": 5,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 5
+        },
+        "same_subset_rules": {
+          "probes": 5,
+          "exactly_represented": 5,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 5
+        }
+      },
+      "wall_seconds": 1.2234277079999991,
+      "sampled_peak_rss_mib": 33.83984375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "short_reopened_4",
+      "seed": 20261043,
+      "source_information_key": "05ce60bf20ea64c8b84aa3b8f46e11ece047c91a2f246fe041dd6b0e11c08f4b",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Js2s",
+            "weight": 0.6244373316347044
+          },
+          {
+            "cards": "3d3c",
+            "weight": 0.2591064895541891
+          },
+          {
+            "cards": "Kc5d",
+            "weight": 0.15081326733212727
+          },
+          {
+            "cards": "8d5c",
+            "weight": 0.11711959502302313
+          }
+        ],
+        "villain": [
+          {
+            "cards": "Js5h",
+            "weight": 0.9320446867397513
+          },
+          {
+            "cards": "9h5s",
+            "weight": 0.7788174026128207
+          },
+          {
+            "cards": "AcKs",
+            "weight": 0.25181156364728424
+          },
+          {
+            "cards": "3d2s",
+            "weight": 0.4088860393425852
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "KhJh",
+            "weight": 0.4799195711721357
+          },
+          {
+            "cards": "Td6c",
+            "weight": 0.16689227077977253
+          },
+          {
+            "cards": "8h5c",
+            "weight": 0.15795527195396866
+          },
+          {
+            "cards": "Kh8d",
+            "weight": 0.17509228052125572
+          }
+        ],
+        "villain_3": [
+          {
+            "cards": "5s3d",
+            "weight": 0.08922083372619558
+          },
+          {
+            "cards": "6s3c",
+            "weight": 0.08449452295327127
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 1.737431167,
+      "build_seconds": 0.020430125000000077,
+      "train_seconds": 0.010084916999999916,
+      "measure_seconds": 0.004176500000000027,
+      "peak_rss_mib": 39.27734375,
+      "public_nodes": 9,
+      "joint_deals": 48,
+      "metadata": {
+        "source_information_key": "05ce60bf20ea64c8b84aa3b8f46e11ece047c91a2f246fe041dd6b0e11c08f4b",
+        "task_key": "dff2ccc014ae15010e7645b450a68c567e8d9ef78c86ac3ecb3524a1e37f373c",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 4
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 2
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 300,
+          "street_committed": [
+            80,
+            80,
+            40,
+            60
+          ],
+          "last_full_raise": 40,
+          "acted_at_bet": {
+            "hero": 80,
+            "villain": 80,
+            "villain_2": 40,
+            "villain_3": 60
+          },
+          "pending_ids": [
+            "villain_2"
+          ],
+          "observed_raises": 2,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120,
+          200
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          74.37477866518306,
+          -48.27763369924361,
+          43.902855034060565,
+          -70.00000000000001
+        ],
+        "best_response_payoffs": [
+          74.37477866518306,
+          -48.200576571357125,
+          43.94151677907675,
+          -70.00000000000001
+        ],
+        "unilateral_gains": [
+          0,
+          0.07705712788648356,
+          0.03866174501618502,
+          0
+        ],
+        "nash_conv_chips": 0.11571887290266858,
+        "max_unilateral_gain_pct_pot": 0.025685709295494522
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "KhJh",
+          "conditional_mass": 0.5329514967920237,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 120",
+            "RAISE 200"
+          ],
+          "action_ev_chips": [
+            0.0,
+            145.35351465922207,
+            158.25992761605545,
+            163.92734931454163
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            145.35351465922207,
+            158.25992761605545,
+            163.92734931454163
+          ],
+          "solver_policy": [
+            4.950495049504954e-05,
+            4.950495049504954e-05,
+            0.0014447923316380693,
+            0.9984561977673718
+          ],
+          "best_response_continuation_actions": [
+            "RAISE 200"
+          ],
+          "solver_mixture_ev_chips": 163.9101263550538,
+          "best_response_continuation_ev_chips": 163.92734931454163,
+          "coach": {
+            "current_full_ranges": {
+              "action": "RAISE 200",
+              "equity": 0.427,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1176,
+              "represented_exactly": true,
+              "action_ev_chips": 163.92734931454163,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "RAISE 200",
+              "equity": 0.5452,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 15,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1176,
+              "represented_exactly": true,
+              "action_ev_chips": 163.92734931454163,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Td6c",
+          "conditional_mass": 0.18533414942396018,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 120",
+            "RAISE 200"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -39.99999999999999,
+            -15.841219688974213,
+            -0.5185896210592738
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -39.99999999999999,
+            -15.841219688974213,
+            -0.5185896210592738
+          ],
+          "solver_policy": [
+            0.8451460825317123,
+            0.0001795220330911796,
+            0.00032058747187654527,
+            0.15435380796331996
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.09230566067593039,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1176,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 15,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1176,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "8h5c",
+          "conditional_mass": 0.13360935108088234,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 120",
+            "RAISE 200"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -39.99999999999999,
+            -50.15491699585624,
+            -53.74272932071899
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -39.99999999999999,
+            -50.15491699585624,
+            -53.74272932071899
+          ],
+          "solver_policy": [
+            0.9997185289957566,
+            0.00018246110325318248,
+            4.950495049504952e-05,
+            4.950495049504952e-05
+          ],
+          "best_response_continuation_actions": [
+            "FOLD"
+          ],
+          "solver_mixture_ev_chips": -0.01244189196758152,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1176,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 9,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1176,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Kh8d",
+          "conditional_mass": 0.14810500270313393,
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 120",
+            "RAISE 200"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -40.0,
+            12.505423745297648,
+            44.40221786379745
+          ],
+          "fixed_policy_action_ev_chips": [
+            0.0,
+            -40.0,
+            12.505423745297648,
+            44.40221786379745
+          ],
+          "solver_policy": [
+            0.0009428434585399727,
+            0.000176055426245797,
+            0.0004893908258435456,
+            0.9983917102893707
+          ],
+          "best_response_continuation_actions": [
+            "RAISE 200"
+          ],
+          "solver_mixture_ev_chips": 44.329884056282395,
+          "best_response_continuation_ev_chips": 44.40221786379745,
+          "coach": {
+            "current_full_ranges": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.1176,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 44.40221786379745
+            },
+            "same_subset_rules": {
+              "action": "FOLD",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 9,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.1176,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 44.40221786379745
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 4,
+          "exactly_represented": 4,
+          "weighted_one_decision_loss_chips": 6.5761905967428635,
+          "best_action_matches": 3
+        },
+        "same_subset_rules": {
+          "probes": 4,
+          "exactly_represented": 4,
+          "weighted_one_decision_loss_chips": 6.5761905967428635,
+          "best_action_matches": 3
+        }
+      },
+      "wall_seconds": 2.146737625,
+      "sampled_peak_rss_mib": 38.6328125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "checked_to_3",
+      "seed": 20261046,
+      "source_information_key": "709cb7e6cef1763ef0aa4f03016998c248a736b5770c00709d8ab66d4d8b6d65",
+      "selected_public_weights": {
+        "hero": [
+          {
+            "cards": "Kh5c",
+            "weight": 0.9582187560610036
+          },
+          {
+            "cards": "3d2s",
+            "weight": 0.4088860393425852
+          },
+          {
+            "cards": "Kc6d",
+            "weight": 0.9656036114964244
+          },
+          {
+            "cards": "9h5h",
+            "weight": 0.8524847767258452
+          },
+          {
+            "cards": "Ks9d",
+            "weight": 0.8813955176555305
+          }
+        ],
+        "villain": [
+          {
+            "cards": "As2h",
+            "weight": 0.7027042163740508
+          },
+          {
+            "cards": "JhTc",
+            "weight": 0.8557291319125307
+          },
+          {
+            "cards": "Tc7c",
+            "weight": 0.703904138024193
+          },
+          {
+            "cards": "Qd9h",
+            "weight": 0.788712097226888
+          },
+          {
+            "cards": "KdTs",
+            "weight": 0.9832169145853511
+          }
+        ],
+        "villain_2": [
+          {
+            "cards": "Kh6h",
+            "weight": 0.9225637561510225
+          },
+          {
+            "cards": "Ts2s",
+            "weight": 0.7816962089509143
+          },
+          {
+            "cards": "Qh6s",
+            "weight": 0.9655449818649616
+          },
+          {
+            "cards": "As5s",
+            "weight": 0.7921147495457386
+          },
+          {
+            "cards": "6s2d",
+            "weight": 0.7877133994654271
+          }
+        ]
+      },
+      "status": "completed",
+      "method": "cfr_plus_native",
+      "coach_and_validation_seconds": 1.297388125,
+      "build_seconds": 0.11268616700000011,
+      "train_seconds": 0.04713216599999992,
+      "measure_seconds": 0.10746754099999989,
+      "peak_rss_mib": 34.62890625,
+      "public_nodes": 167,
+      "joint_deals": 101,
+      "metadata": {
+        "source_information_key": "709cb7e6cef1763ef0aa4f03016998c248a736b5770c00709d8ab66d4d8b6d65",
+        "task_key": "b8a523b91178e44c823d1f9f09291096a34d3776aa956367d2baaf57302d82fc",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 5
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 5
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 4096,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 30,
+          "decision_pot": 30,
+          "street_committed": [
+            0,
+            0,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0
+          },
+          "pending_ids": [
+            "villain_2",
+            "hero"
+          ],
+          "observed_raises": 0,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "effective_config": {
+        "bet_sizes": [
+          10,
+          40
+        ],
+        "raise_sizes": [
+          80,
+          120
+        ],
+        "max_raises": 1,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "metrics": {
+        "policy_payoffs": [
+          0.2571836786441639,
+          8.096983816803768,
+          -8.354167495447932
+        ],
+        "best_response_payoffs": [
+          0.2816319135421854,
+          8.11068228573929,
+          -8.343662145154777
+        ],
+        "unilateral_gains": [
+          0.024448234898021504,
+          0.013698468935523067,
+          0.010505350293154692
+        ],
+        "nash_conv_chips": 0.04865205412669926,
+        "max_unilateral_gain_pct_pot": 0.08149411632673835
+      },
+      "passes_quality_gate": true,
+      "comparisons": [
+        {
+          "own_hand": "Kh6h",
+          "conditional_mass": 0.19231656862846958,
+          "actions": [
+            "CHECK",
+            "BET 10",
+            "BET 40"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -9.999358720114786,
+            -39.99878427425186
+          ],
+          "fixed_policy_action_ev_chips": [
+            -0.0033950785329327528,
+            -57.57000390649886,
+            -71.18016019573813
+          ],
+          "solver_policy": [
+            0.9998679867986798,
+            6.600660066006606e-05,
+            6.600660066006606e-05
+          ],
+          "best_response_continuation_actions": [
+            "CHECK"
+          ],
+          "solver_mixture_ev_chips": -0.011892991004561215,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CHECK",
+              "equity": 0.0655,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CHECK",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 19,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Ts2s",
+          "conditional_mass": 0.14400083758441967,
+          "actions": [
+            "CHECK",
+            "BET 10",
+            "BET 40"
+          ],
+          "action_ev_chips": [
+            4.572049039812734e-05,
+            -9.998878730475177,
+            -39.99713006083811
+          ],
+          "fixed_policy_action_ev_chips": [
+            -0.0016129603196974832,
+            -58.274222821280674,
+            -71.67419388894776
+          ],
+          "solver_policy": [
+            0.99986798679868,
+            6.600660066006602e-05,
+            6.600660066006602e-05
+          ],
+          "best_response_continuation_actions": [
+            "CHECK"
+          ],
+          "solver_mixture_ev_chips": -0.010190200635841976,
+          "best_response_continuation_ev_chips": 4.572049039812734e-05,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CHECK",
+              "equity": 0.2445,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 4.572049039812734e-05,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CHECK",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 15,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 4.572049039812734e-05,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "Qh6s",
+          "conditional_mass": 0.26683928604768486,
+          "actions": [
+            "CHECK",
+            "BET 10",
+            "BET 40"
+          ],
+          "action_ev_chips": [
+            0.0,
+            -9.999069225790258,
+            -39.998493596583906
+          ],
+          "fixed_policy_action_ev_chips": [
+            -0.00306889544172135,
+            -57.47358380433032,
+            -71.27557456353884
+          ],
+          "solver_policy": [
+            0.9998679867986797,
+            6.600660066006593e-05,
+            6.600660066006593e-05
+          ],
+          "best_response_continuation_actions": [
+            "CHECK"
+          ],
+          "solver_mixture_ev_chips": -0.011566784588717096,
+          "best_response_continuation_ev_chips": 0.0,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CHECK",
+              "equity": 0.018,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CHECK",
+              "equity": 0.0,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 24,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 0.0,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "As5s",
+          "conditional_mass": 0.17914979260400493,
+          "actions": [
+            "CHECK",
+            "BET 10",
+            "BET 40"
+          ],
+          "action_ev_chips": [
+            4.40220391423623,
+            -9.170302681797253,
+            -33.91682597828228
+          ],
+          "fixed_policy_action_ev_chips": [
+            4.399871726908308,
+            -40.604292139389585,
+            -54.741301532148384
+          ],
+          "solver_policy": [
+            0.9998679867986798,
+            6.600660066006596e-05,
+            6.600660066006596e-05
+          ],
+          "best_response_continuation_actions": [
+            "CHECK"
+          ],
+          "solver_mixture_ev_chips": 4.392997447230067,
+          "best_response_continuation_ev_chips": 4.40220391423623,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CHECK",
+              "equity": 0.107,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 4.40220391423623,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CHECK",
+              "equity": 0.1469,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 19,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 4.40220391423623,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        },
+        {
+          "own_hand": "6s2d",
+          "conditional_mass": 0.2176935151354205,
+          "actions": [
+            "CHECK",
+            "BET 10",
+            "BET 40"
+          ],
+          "action_ev_chips": [
+            3.9857749197563,
+            -9.99871133555049,
+            -34.79590896859929
+          ],
+          "fixed_policy_action_ev_chips": [
+            3.9832774656612155,
+            -39.523313106674564,
+            -54.44066326937146
+          ],
+          "solver_policy": [
+            0.9998679867986797,
+            6.600660066006599e-05,
+            6.600660066006599e-05
+          ],
+          "best_response_continuation_actions": [
+            "CHECK"
+          ],
+          "solver_mixture_ev_chips": 3.9765493777861414,
+          "best_response_continuation_ev_chips": 3.9857749197563,
+          "coach": {
+            "current_full_ranges": {
+              "action": "CHECK",
+              "equity": 0.22,
+              "equity_method": "monte_carlo_multiway",
+              "equity_samples": 1000,
+              "equity_sampling_error": 0.0429,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 3.9857749197563,
+              "one_decision_loss_chips": 0.0
+            },
+            "same_subset_rules": {
+              "action": "CHECK",
+              "equity": 0.133,
+              "equity_method": "research_exact_subset_river",
+              "equity_samples": 24,
+              "equity_sampling_error": 0.0,
+              "required_equity": 0.0,
+              "represented_exactly": true,
+              "action_ev_chips": 3.9857749197563,
+              "one_decision_loss_chips": 0.0
+            }
+          }
+        }
+      ],
+      "comparison_summary": {
+        "current_full_ranges": {
+          "probes": 5,
+          "exactly_represented": 5,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 5
+        },
+        "same_subset_rules": {
+          "probes": 5,
+          "exactly_represented": 5,
+          "weighted_one_decision_loss_chips": 0.0,
+          "best_action_matches": 5
+        }
+      },
+      "wall_seconds": 1.8969911249999996,
+      "sampled_peak_rss_mib": 34.31640625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "completed": 9,
+    "quality_passed": 9
+  }
+}
