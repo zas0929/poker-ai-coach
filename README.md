@@ -221,3 +221,8 @@ Unequal stacks, existing side pots, short all-ins and integer payouts are now
 supported in the offline river prototype. See
 [docs/SOLVER_RIVER_SIDEPOTS.md](docs/SOLVER_RIVER_SIDEPOTS.md) for the independent
 engine replay, scope limits and measurements.
+
+The offline prototype preserves folded seats/dead contributions and can build
+a bounded tree from a public start-of-river snapshot. Full ranges are never
+automatically truncated. See [docs/SOLVER_PUBLIC_RIVER_INPUT.md](docs/SOLVER_PUBLIC_RIVER_INPUT.md)
+for explicit subset inputs, reproducible engine checks and remaining limits.

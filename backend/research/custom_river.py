@@ -24,10 +24,16 @@ class Node:
 class RiverGame:
     def __init__(self, board, ranges, pot=100, bet=50, stack=100, *,
                  bet_sizes=None, raise_sizes=(), max_raises=0, min_bet=1, max_nodes=20000,
-                 stacks=None, initial_contributions=None, dealer=None):
+                 stacks=None, initial_contributions=None, dealer=None, folded=()):
         n=len(ranges)
         if not 2<=n<=6 or len(board)!=5 or len(set(board))!=5 or not all(re.fullmatch(r'[2-9TJQKA][cdhs]', c) for c in board):
             raise ValueError('Two to six players and five distinct river cards required.')
+        self.folded=tuple(folded)
+        if any(type(p) is not int or not 0<=p<n for p in self.folded) or len(set(self.folded))!=len(self.folded) or n-len(self.folded)<2:
+            raise ValueError('Distinct folded seat indices and at least two live seats required.')
+        self.live=tuple(p for p in range(n) if p not in self.folded)
+        if any(ranges[p] for p in self.folded):
+            raise ValueError('Folded seats must have empty ranges; hidden folded cards are not modelled.')
         board_cards=cards(''.join(board))
         if len(board_cards)!=5:raise ValueError('Invalid board.')
         if type(pot) is not int or not 0<pot<=10000:
@@ -39,7 +45,7 @@ class RiverGame:
         self.stacks=tuple(stacks)
         if len(self.stacks)!=n or any(type(v) is not int or not 0<=v<=10000 for v in self.stacks):
             raise ValueError('One integer remaining stack (0–10000) per seat required.')
-        ceiling=max(self.stacks)
+        ceiling=max(self.stacks[p] for p in self.live)
         if type(min_bet) is not int or not 1<=min_bet<=10000:
             raise ValueError('Positive integer minimum bet up to 10000 required.')
         self.dealer=n-1 if dealer is None else dealer
@@ -51,7 +57,7 @@ class RiverGame:
             if len(self.initial_contributions)!=n or any(type(v) is not int or v<0 for v in self.initial_contributions) or sum(self.initial_contributions)!=pot:
                 raise ValueError('Nonnegative integer prior contributions must sum to pot.')
             highest=max(self.initial_contributions)
-            if any(chips>0 and prior!=highest for chips,prior in zip(self.stacks,self.initial_contributions)):
+            if any(chips>0 and prior!=highest for p,(chips,prior) in enumerate(zip(self.stacks,self.initial_contributions)) if p in self.live):
                 raise ValueError('Funded players must have matched prior streets; lower contributors must be all-in.')
         if type(max_raises) is not int or not 0<=max_raises<=3:
             raise ValueError('0–3 raises per betting line required.')
@@ -64,10 +70,10 @@ class RiverGame:
             return tuple(sorted(values))
         self.bet_sizes=sizes((bet,) if bet_sizes is None else bet_sizes)
         self.raise_sizes=sizes(raise_sizes)
-        if not self.bet_sizes or any(v<min_bet and v not in self.stacks for v in self.bet_sizes):
+        if not self.bet_sizes or any(v<min_bet and v not in tuple(self.stacks[p] for p in self.live) for v in self.bet_sizes):
             raise ValueError('Opening sizes must meet minimum bet (except short all-in).')
         self.max_raises=max_raises;self.stack=stack;self.min_bet=min_bet
-        if math.prod(len(r) for r in ranges)>64 or any(not r for r in ranges):
+        if math.prod(max(1,len(r)) for r in ranges)>64 or any(not ranges[p] for p in self.live):
             raise ValueError('At most 64 raw joint combinations; ranges are never silently truncated.')
         self.board=tuple(board);self.n=n;self.pot=pot;self.bet=bet;self.ranges=ranges;self.nodes=[]
         evaluator=HandEvaluator();scores={}
@@ -82,10 +88,10 @@ class RiverGame:
                 if not math.isfinite(weight) or weight<=0:raise ValueError('Positive finite weights required.')
                 seen.add(key);scores[text]=evaluator.score([*pair,*board_cards])
         self.deals=[]
-        for lineup in itertools.product(*ranges):
-            texts=tuple(c for c,_ in lineup);keys=[t[i:i+2] for t in texts for i in (0,2)]
+        for lineup in itertools.product(*(r if p in self.live else [(None,1)] for p,r in enumerate(ranges))):
+            texts=tuple(c for c,_ in lineup);keys=[t[i:i+2] for t in texts if t is not None for i in (0,2)]
             if len(keys)!=len(set(keys)):continue
-            self.deals.append((texts,math.prod(w for _,w in lineup),tuple(scores[t] for t in texts)))
+            self.deals.append((texts,math.prod(w for _,w in lineup),tuple(scores[t] if t is not None else None for t in texts)))
         total=sum(w for _,w,_ in self.deals)
         if not math.isfinite(total) or total<=0:raise ValueError('No positive compatible joint deal.')
         self.deals=[(t,w/total,s) for t,w,s in self.deals]
@@ -129,7 +135,7 @@ class RiverGame:
                     total,max(increment,total-current),raises+int(current>0))
             return save(Node(actor,history,tuple(actions),tuple(children),invested,alive))
         order=tuple((self.dealer+offset)%n for offset in range(1,n+1))
-        self.root=build((),order,tuple(range(n)),(0,)*n,0,min_bet,0,(None,)*n)
+        self.root=build((),order,self.live,(0,)*n,0,min_bet,0,(None,)*n)
         if len(self.nodes)*len(self.deals)>1000000:
             raise ValueError('Tree/deal product exceeds one million; reduce explicit ranges/tree.')
         self.utilities={}

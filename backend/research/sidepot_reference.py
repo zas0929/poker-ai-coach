@@ -13,8 +13,8 @@ def compare_every_path(game):
         state=HandState(hand_id='sidepot-control',street=Street.RIVER,pot=game.pot,
                         small_blind=1,big_blind=game.min_bet,board=cards(''.join(game.board)),
                         players=[Player(id=str(i),name=str(i),stack=game.stacks[i],position='',
-                                        status=PlayerStatus.ACTIVE if game.stacks[i] else PlayerStatus.ALL_IN,
-                                        cards=cards(texts[i])) for i in range(game.n)],
+                                        status=PlayerStatus.FOLDED if i in game.folded else (PlayerStatus.ACTIVE if game.stacks[i] else PlayerStatus.ALL_IN),
+                                        cards=cards(texts[i]) if texts[i] else []) for i in range(game.n)],
                         current_player_id=str(game.root.actor) if game.root.actor!=-1 else None,
                         dealer_player_id=str(game.dealer),last_full_raise=game.min_bet,
                         contributions={str(i):v for i,v in enumerate(game.initial_contributions)})
