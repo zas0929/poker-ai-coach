@@ -47,9 +47,11 @@ def read_rss_mib(pid):
     return int(text)/1024 if text else None # ps reports RSS in KiB on macOS/Linux
 
 
-def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_seconds=.2,method='cfr_plus_indexed',worker_module='research.benchmark_capacity'):
+def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_seconds=.2,method='cfr_plus_indexed',worker_module='research.benchmark_capacity',cancel_event=None):
     if type(iterations) is not int or not 1<=iterations<=2000 or any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in (timeout_seconds,memory_mib,poll_seconds)):
         raise ValueError('Positive finite time, memory, polling and bounded integer iterations required.')
+    if cancel_event is not None and cancel_event.is_set():
+        return {'status':'cancelled','wall_seconds':0.,'sampled_peak_rss_mib':0.,'reason':'Cancelled before process launch.'}
     command=[sys.executable,'-m',worker_module,'--worker','--method',method,'--iterations',str(iterations)]
     start=time.perf_counter();sampled_peak=0.;stopped=None;monitor_error=None
     with tempfile.TemporaryFile(mode='w+t') as output,tempfile.TemporaryFile(mode='w+t') as errors:
@@ -57,6 +59,7 @@ def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_secon
         try:
             process.stdin.write(json.dumps(case));process.stdin.close()
             while process.poll() is None:
+                if cancel_event is not None and cancel_event.is_set():stopped='cancelled';break
                 if time.perf_counter()-start>=timeout_seconds:stopped='timed_out';break
                 try:rss=read_rss_mib(process.pid)
                 except (OSError,ValueError,subprocess.TimeoutExpired) as error:
@@ -70,13 +73,14 @@ def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_secon
         finally:
             if process.poll() is None:process.kill()
             process.wait()
+        if cancel_event is not None and cancel_event.is_set():stopped='cancelled'
         output.seek(0);events=decode_lines(output.read(),allow_partial=stopped is not None)
         base={'wall_seconds':time.perf_counter()-start,'sampled_peak_rss_mib':sampled_peak,
               'memory_limit_mib':memory_mib,'rss_poll_seconds':poll_seconds}
         progress=[e for e in events if 'phase' in e]
         if stopped:
             return {**base,'status':stopped,'last_phase':progress[-1]['phase'] if progress else 'startup',
-                    'reason':monitor_error or 'External process budget exceeded; no final policy quality claimed.'}
+                    'reason':monitor_error or ('Research task cancelled; no policy admitted.' if stopped=='cancelled' else 'External process budget exceeded; no final policy quality claimed.')}
         if process.returncode:
             errors.seek(0)
             return {**base,'status':'error','reason':errors.read()[-2000:]}

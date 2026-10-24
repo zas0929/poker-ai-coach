@@ -55,6 +55,15 @@ class ExpandedRangeTests(unittest.TestCase):
 class ExternalBudgetTests(unittest.TestCase):
     def case(self):return next(scenarios())
 
+    def test_cancel_before_launch_never_starts_a_process(self):
+        from threading import Event
+        cancelled=Event();cancelled.set()
+        with patch('research.benchmark_expanded.subprocess.Popen') as start:
+            result=run_guarded(self.case(),cancel_event=cancelled)
+            self.assertEqual(result['status'],'cancelled')
+            self.assertNotIn('metrics',result)
+            start.assert_not_called()
+
     def test_timeout_does_not_export_metrics(self):
         result=run_guarded(self.case(),iterations=100,timeout_seconds=.001,poll_seconds=.01)
         self.assertEqual(result['status'],'timed_out',result)

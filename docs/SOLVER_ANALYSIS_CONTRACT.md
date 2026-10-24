@@ -101,6 +101,7 @@ Native-библиотека должна быть явно собрана зар
 | `quality_rejected` | Измеренный лучший ответ не прошёл порог | `QUALITY_GATE_FAILED` |
 | `budget_exceeded` | Превышено время или память | `TIME_BUDGET_EXCEEDED`, `MEMORY_BUDGET_EXCEEDED` |
 | `unavailable` | Нет пригодной native-библиотеки | `NATIVE_KERNEL_UNAVAILABLE` |
+| `cancelled` | Передан сигнал отмены | `ANALYSIS_CANCELLED` |
 | `error` | Сломан монитор, процесс, идентичность или доказательства результата | `RESOURCE_MONITOR_FAILED`, `WORKER_FAILED`, `RESULT_IDENTITY_MISMATCH`, `INVALID_TREE_EVIDENCE`, `INVALID_QUALITY_EVIDENCE`, `INVALID_CANDIDATE` |
 
 Завершённый процесс не получает допуск только по числу итераций или флагу
@@ -168,3 +169,10 @@ PYTHONPATH=backend backend/.venv/bin/python -m unittest discover -s backend/test
 устаревших результатов и журнал решений допуска. Начинать следует с офлайн-
 публичных снимков. Подключение к API комнаты, расширение диапазонов и разрешение
 заменять подсказки требуют отдельных проверок; здесь они не включены.
+
+
+Теневой исполнитель реализован отдельно:
+[ограниченная очередь, дедупликация и отмена](SOLVER_SHADOW_EXECUTOR.md).
+Контракт принимает необязательный `cancel_event`; монитор проверяет его до
+запуска и во время работы. В `timing.last_phase` при остановке сохраняется
+известный этап; незавершённый расчёт не выдаёт кандидата.

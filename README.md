@@ -264,3 +264,9 @@ quality, tree limits, timing and refusal reasons. Candidates are emitted only
 for admitted research results; live advice remains disabled. See
 [docs/SOLVER_ANALYSIS_CONTRACT.md](docs/SOLVER_ANALYSIS_CONTRACT.md) for budgets,
 stale-result checks and the real-process controls.
+
+A bounded offline shadow executor now schedules isolated analyses without waiting
+for them, shares in-flight requests, discards stale deliveries and cancels orphaned
+work. It has no game-route integration. See
+[docs/SOLVER_SHADOW_EXECUTOR.md](docs/SOLVER_SHADOW_EXECUTOR.md) for queue/retention
+limits, lifecycle, cancellation and real-process controls.

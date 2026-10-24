@@ -1,0 +1,692 @@
+{
+  "executor_version": 1,
+  "executor_source_sha256": "eb77b68ca317034fd4bd1403c0e941d9fbe61dc30504c173a920badfca687810",
+  "scope": "Offline single-worker shadow executor; real native calculations with cooperative cancellation.",
+  "summary": {
+    "controls": 3,
+    "passed": 3
+  },
+  "results": [
+    {
+      "control": "shared_job_one_stale_one_ready",
+      "stale": {
+        "ticket_id": "ticket-2",
+        "job_id": "job-1",
+        "state": "stale",
+        "result": {
+          "contract_version": 1,
+          "scope": "offline_bounded_river",
+          "provenance": {
+            "engine_version": "bounded_river_cfr_plus_v1",
+            "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+            "range_version": "public_action_heuristic_v1",
+            "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+            "method": "cfr_plus_native",
+            "utility_storage": "compact"
+          },
+          "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+          "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+          "task_key": null,
+          "limits": {
+            "iterations": 100,
+            "wall_seconds": 10.0,
+            "memory_mib": 128.0,
+            "quality_gate_pct_pot": 0.5
+          },
+          "timing": null,
+          "quality": null,
+          "model": null,
+          "status": "stale",
+          "reasons": [
+            {
+              "code": "STALE_DECISION",
+              "stage": "shadow",
+              "message": "Shadow executor did not admit this task."
+            }
+          ],
+          "candidate": null,
+          "admission": {
+            "offline_analysis_allowed": false,
+            "live_advice_allowed": false
+          },
+          "fallback": {
+            "source": "current_coach",
+            "retain_current_advice": true,
+            "reason": "Research-only contract; live advice is never replaced."
+          }
+        }
+      },
+      "ready": {
+        "ticket_id": "ticket-3",
+        "job_id": "job-1",
+        "state": "completed",
+        "result": {
+          "contract_version": 1,
+          "scope": "offline_bounded_river",
+          "provenance": {
+            "engine_version": "bounded_river_cfr_plus_v1",
+            "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+            "range_version": "public_action_heuristic_v1",
+            "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+            "method": "cfr_plus_native",
+            "utility_storage": "compact"
+          },
+          "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+          "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+          "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+          "limits": {
+            "iterations": 100,
+            "wall_seconds": 10.0,
+            "memory_mib": 128.0,
+            "quality_gate_pct_pot": 0.5
+          },
+          "timing": {
+            "wall_seconds": 0.507346959,
+            "sampled_peak_rss_mib": 29.52734375,
+            "rss_poll_seconds": 0.2,
+            "peak_rss_mib": 29.58984375,
+            "build_seconds": 0.015000042000000019,
+            "train_seconds": 0.009045708000000013,
+            "measure_seconds": 0.0003337079999999881,
+            "last_phase": null
+          },
+          "quality": {
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "value": 0.17720144995479062,
+            "gate": 0.5,
+            "passed": true,
+            "evidence": {
+              "policy_payoffs": [
+                3.310541567235001,
+                -3.3105415672349996
+              ],
+              "best_response_payoffs": [
+                3.3113914787604366,
+                -3.2573811322485624
+              ],
+              "unilateral_gains": [
+                0.0008499115254356759,
+                0.05316043498643719
+              ],
+              "nash_conv_chips": 0.054010346511872864,
+              "max_unilateral_gain_pct_pot": 0.17720144995479062
+            },
+            "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+          },
+          "model": {
+            "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+            "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+            "seat_ids": [
+              "hero",
+              "villain"
+            ],
+            "actor_id": "villain",
+            "folded_seats": [],
+            "range_selection": "explicit_subset",
+            "range_counts": [
+              {
+                "id": "hero",
+                "public": 1081,
+                "selected": 3
+              },
+              {
+                "id": "villain",
+                "public": 1081,
+                "selected": 3
+              }
+            ],
+            "utility_storage": "compact",
+            "max_joint_combos": 4096,
+            "folded_card_bunching_modelled": false,
+            "river_state": {
+              "prior_pot": 20,
+              "decision_pot": 30,
+              "street_committed": [
+                10,
+                0
+              ],
+              "last_full_raise": 10,
+              "acted_at_bet": {
+                "hero": 10,
+                "villain": 0
+              },
+              "pending_ids": [
+                "villain"
+              ],
+              "observed_raises": 0,
+              "future_raise_cap": 1
+            },
+            "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+            "tree": {
+              "bet_sizes": [
+                10,
+                40
+              ],
+              "raise_sizes": [
+                80,
+                120
+              ],
+              "future_raise_cap": 1,
+              "min_bet": 10,
+              "max_nodes": 20000,
+              "public_nodes": 9,
+              "joint_deals": 7,
+              "max_joint_combos": 4096
+            }
+          },
+          "status": "ready",
+          "reasons": [],
+          "candidate": {
+            "actor_id": "villain",
+            "own_hand": "8d7c",
+            "actions": [
+              "FOLD",
+              "CALL",
+              "RAISE 80",
+              "RAISE 120"
+            ],
+            "probabilities": [
+              4.9504950495049515e-05,
+              0.33331683168316834,
+              0.33331683168316834,
+              0.33331683168316834
+            ],
+            "compatible_deals": 2,
+            "conditional_mass": 0.14290961457236567
+          },
+          "admission": {
+            "offline_analysis_allowed": true,
+            "live_advice_allowed": false
+          },
+          "fallback": {
+            "source": "current_coach",
+            "retain_current_advice": true,
+            "reason": "Research-only contract; live advice is never replaced."
+          }
+        }
+      }
+    },
+    {
+      "control": "cancel_active_and_waiting_backpressure",
+      "cancel_to_reaped_seconds": 0.23720695800000002,
+      "cancelled_process_evidence": {
+        "sequence": 13,
+        "time_monotonic": 2.081288084,
+        "event": "finished",
+        "job_id": "job-4",
+        "analysis_status": "cancelled",
+        "analysis_wall_seconds": 0.751944833,
+        "last_phase": "build"
+      },
+      "active": {
+        "ticket_id": "ticket-5",
+        "job_id": "job-4",
+        "state": "cancelled",
+        "result": {
+          "contract_version": 1,
+          "scope": "offline_bounded_river",
+          "provenance": {
+            "engine_version": "bounded_river_cfr_plus_v1",
+            "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+            "range_version": "public_action_heuristic_v1",
+            "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+            "method": "cfr_plus_native",
+            "utility_storage": "compact"
+          },
+          "request_key": "e61db5b2326c8ae6dafccabfeb2487c8be000ce302d74020357f635dec0d90e9",
+          "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+          "task_key": null,
+          "limits": {
+            "iterations": 100,
+            "wall_seconds": 20,
+            "memory_mib": 128.0,
+            "quality_gate_pct_pot": 0.5
+          },
+          "timing": null,
+          "quality": null,
+          "model": null,
+          "status": "cancelled",
+          "reasons": [
+            {
+              "code": "SHADOW_CANCELLED",
+              "stage": "shadow",
+              "message": "Shadow executor did not admit this task."
+            }
+          ],
+          "candidate": null,
+          "admission": {
+            "offline_analysis_allowed": false,
+            "live_advice_allowed": false
+          },
+          "fallback": {
+            "source": "current_coach",
+            "retain_current_advice": true,
+            "reason": "Research-only contract; live advice is never replaced."
+          }
+        }
+      },
+      "waiting": {
+        "ticket_id": "ticket-7",
+        "job_id": "job-6",
+        "state": "cancelled",
+        "result": {
+          "contract_version": 1,
+          "scope": "offline_bounded_river",
+          "provenance": {
+            "engine_version": "bounded_river_cfr_plus_v1",
+            "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+            "range_version": "public_action_heuristic_v1",
+            "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+            "method": "cfr_plus_native",
+            "utility_storage": "compact"
+          },
+          "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+          "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+          "task_key": null,
+          "limits": {
+            "iterations": 101,
+            "wall_seconds": 10.0,
+            "memory_mib": 128.0,
+            "quality_gate_pct_pot": 0.5
+          },
+          "timing": null,
+          "quality": null,
+          "model": null,
+          "status": "cancelled",
+          "reasons": [
+            {
+              "code": "SHADOW_CANCELLED",
+              "stage": "shadow",
+              "message": "Shadow executor did not admit this task."
+            }
+          ],
+          "candidate": null,
+          "admission": {
+            "offline_analysis_allowed": false,
+            "live_advice_allowed": false
+          },
+          "fallback": {
+            "source": "current_coach",
+            "retain_current_advice": true,
+            "reason": "Research-only contract; live advice is never replaced."
+          }
+        }
+      },
+      "overflow": {
+        "status": "queue_full",
+        "ticket_id": null,
+        "job_id": null
+      },
+      "after_cancel": {
+        "pending": 0,
+        "active": 0,
+        "jobs": 0,
+        "retained_tickets": 4,
+        "contexts": 3,
+        "events": 13,
+        "closed": false
+      }
+    },
+    {
+      "control": "worker_recovers_after_cancel",
+      "result": {
+        "ticket_id": "ticket-9",
+        "job_id": "job-8",
+        "state": "completed",
+        "result": {
+          "contract_version": 1,
+          "scope": "offline_bounded_river",
+          "provenance": {
+            "engine_version": "bounded_river_cfr_plus_v1",
+            "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+            "range_version": "public_action_heuristic_v1",
+            "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+            "method": "cfr_plus_native",
+            "utility_storage": "compact"
+          },
+          "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+          "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+          "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+          "limits": {
+            "iterations": 100,
+            "wall_seconds": 10.0,
+            "memory_mib": 128.0,
+            "quality_gate_pct_pot": 0.5
+          },
+          "timing": {
+            "wall_seconds": 0.4924415,
+            "sampled_peak_rss_mib": 28.36328125,
+            "rss_poll_seconds": 0.2,
+            "peak_rss_mib": 29.13671875,
+            "build_seconds": 0.013858916999999998,
+            "train_seconds": 0.009245833000000009,
+            "measure_seconds": 0.0003496249999999923,
+            "last_phase": null
+          },
+          "quality": {
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "value": 0.17720144995479062,
+            "gate": 0.5,
+            "passed": true,
+            "evidence": {
+              "policy_payoffs": [
+                3.310541567235001,
+                -3.3105415672349996
+              ],
+              "best_response_payoffs": [
+                3.3113914787604366,
+                -3.2573811322485624
+              ],
+              "unilateral_gains": [
+                0.0008499115254356759,
+                0.05316043498643719
+              ],
+              "nash_conv_chips": 0.054010346511872864,
+              "max_unilateral_gain_pct_pot": 0.17720144995479062
+            },
+            "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+          },
+          "model": {
+            "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+            "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+            "seat_ids": [
+              "hero",
+              "villain"
+            ],
+            "actor_id": "villain",
+            "folded_seats": [],
+            "range_selection": "explicit_subset",
+            "range_counts": [
+              {
+                "id": "hero",
+                "public": 1081,
+                "selected": 3
+              },
+              {
+                "id": "villain",
+                "public": 1081,
+                "selected": 3
+              }
+            ],
+            "utility_storage": "compact",
+            "max_joint_combos": 4096,
+            "folded_card_bunching_modelled": false,
+            "river_state": {
+              "prior_pot": 20,
+              "decision_pot": 30,
+              "street_committed": [
+                10,
+                0
+              ],
+              "last_full_raise": 10,
+              "acted_at_bet": {
+                "hero": 10,
+                "villain": 0
+              },
+              "pending_ids": [
+                "villain"
+              ],
+              "observed_raises": 0,
+              "future_raise_cap": 1
+            },
+            "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+            "tree": {
+              "bet_sizes": [
+                10,
+                40
+              ],
+              "raise_sizes": [
+                80,
+                120
+              ],
+              "future_raise_cap": 1,
+              "min_bet": 10,
+              "max_nodes": 20000,
+              "public_nodes": 9,
+              "joint_deals": 7,
+              "max_joint_combos": 4096
+            }
+          },
+          "status": "ready",
+          "reasons": [],
+          "candidate": {
+            "actor_id": "villain",
+            "own_hand": "8d7c",
+            "actions": [
+              "FOLD",
+              "CALL",
+              "RAISE 80",
+              "RAISE 120"
+            ],
+            "probabilities": [
+              4.9504950495049515e-05,
+              0.33331683168316834,
+              0.33331683168316834,
+              0.33331683168316834
+            ],
+            "compatible_deals": 2,
+            "conditional_mass": 0.14290961457236567
+          },
+          "admission": {
+            "offline_analysis_allowed": true,
+            "live_advice_allowed": false
+          },
+          "fallback": {
+            "source": "current_coach",
+            "retain_current_advice": true,
+            "reason": "Research-only contract; live advice is never replaced."
+          }
+        }
+      },
+      "after_advance": {
+        "ticket_id": "ticket-9",
+        "job_id": "job-8",
+        "state": "stale",
+        "result": {
+          "contract_version": 1,
+          "scope": "offline_bounded_river",
+          "provenance": {
+            "engine_version": "bounded_river_cfr_plus_v1",
+            "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+            "range_version": "public_action_heuristic_v1",
+            "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+            "method": "cfr_plus_native",
+            "utility_storage": "compact"
+          },
+          "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+          "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+          "task_key": null,
+          "limits": {
+            "iterations": 100,
+            "wall_seconds": 10.0,
+            "memory_mib": 128.0,
+            "quality_gate_pct_pot": 0.5
+          },
+          "timing": null,
+          "quality": null,
+          "model": null,
+          "status": "stale",
+          "reasons": [
+            {
+              "code": "STALE_DECISION",
+              "stage": "shadow",
+              "message": "Shadow executor did not admit this task."
+            }
+          ],
+          "candidate": null,
+          "admission": {
+            "offline_analysis_allowed": false,
+            "live_advice_allowed": false
+          },
+          "fallback": {
+            "source": "current_coach",
+            "retain_current_advice": true,
+            "reason": "Research-only contract; live advice is never replaced."
+          }
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "sequence": 1,
+      "time_monotonic": 0.712799084,
+      "event": "queued",
+      "ticket_id": "ticket-2",
+      "job_id": "job-1",
+      "context_key": "a7937b64b8caa58f03721bb6bacf5c78cb235febe0e70b1b84cd99541461a08e",
+      "source_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce"
+    },
+    {
+      "sequence": 2,
+      "time_monotonic": 0.72231725,
+      "event": "started",
+      "job_id": "job-1",
+      "queue_wait_seconds": 0.009528958000000087
+    },
+    {
+      "sequence": 3,
+      "time_monotonic": 0.7308295,
+      "event": "joined",
+      "ticket_id": "ticket-3",
+      "job_id": "job-1",
+      "context_key": "16367aacb67a4a017c8da8ab95682ccb390863780f7114dda0a0e0c55644c7c4",
+      "source_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce"
+    },
+    {
+      "sequence": 4,
+      "time_monotonic": 0.730970417,
+      "event": "stale",
+      "ticket_id": "ticket-2",
+      "job_id": "job-1",
+      "reason_code": "STALE_DECISION"
+    },
+    {
+      "sequence": 5,
+      "time_monotonic": 1.24813625,
+      "event": "finished",
+      "job_id": "job-1",
+      "analysis_status": "ready",
+      "analysis_wall_seconds": 0.507346959,
+      "last_phase": null
+    },
+    {
+      "sequence": 6,
+      "time_monotonic": 1.248302709,
+      "event": "delivered",
+      "job_id": "job-1",
+      "ticket_id": "ticket-3",
+      "status": "ready",
+      "reason_codes": [],
+      "total_seconds": 0.5174785839999999
+    },
+    {
+      "sequence": 7,
+      "time_monotonic": 1.299306917,
+      "event": "queued",
+      "ticket_id": "ticket-5",
+      "job_id": "job-4",
+      "context_key": "d35c416a85b807e9b5384915d6ebb4a9f7352713efd89857b45a242f473728a9",
+      "source_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f"
+    },
+    {
+      "sequence": 8,
+      "time_monotonic": 1.299360584,
+      "event": "started",
+      "job_id": "job-4",
+      "queue_wait_seconds": 6.404199999998639e-05
+    },
+    {
+      "sequence": 9,
+      "time_monotonic": 1.84541475,
+      "event": "queued",
+      "ticket_id": "ticket-7",
+      "job_id": "job-6",
+      "context_key": "80cfa3e7f28dde4df64436b652230aff28d7779116d1369c21ef2bbf37261d71",
+      "source_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce"
+    },
+    {
+      "sequence": 10,
+      "time_monotonic": 1.858086084,
+      "event": "rejected",
+      "reason_code": "QUEUE_FULL"
+    },
+    {
+      "sequence": 11,
+      "time_monotonic": 1.858211292,
+      "event": "cancelled",
+      "ticket_id": "ticket-7",
+      "job_id": "job-6",
+      "reason_code": "SHADOW_CANCELLED"
+    },
+    {
+      "sequence": 12,
+      "time_monotonic": 1.858345167,
+      "event": "cancelled",
+      "ticket_id": "ticket-5",
+      "job_id": "job-4",
+      "reason_code": "SHADOW_CANCELLED"
+    },
+    {
+      "sequence": 13,
+      "time_monotonic": 2.081288084,
+      "event": "finished",
+      "job_id": "job-4",
+      "analysis_status": "cancelled",
+      "analysis_wall_seconds": 0.751944833,
+      "last_phase": "build"
+    },
+    {
+      "sequence": 14,
+      "time_monotonic": 2.1073905,
+      "event": "queued",
+      "ticket_id": "ticket-9",
+      "job_id": "job-8",
+      "context_key": "8c585378513f5f7a2e1456ee54042605fdb890392becefadd2ab180fd02fb341",
+      "source_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce"
+    },
+    {
+      "sequence": 15,
+      "time_monotonic": 2.107445167,
+      "event": "started",
+      "job_id": "job-8",
+      "queue_wait_seconds": 6.549999999982958e-05
+    },
+    {
+      "sequence": 16,
+      "time_monotonic": 2.613734709,
+      "event": "finished",
+      "job_id": "job-8",
+      "analysis_status": "ready",
+      "analysis_wall_seconds": 0.4924415,
+      "last_phase": null
+    },
+    {
+      "sequence": 17,
+      "time_monotonic": 2.61396225,
+      "event": "delivered",
+      "job_id": "job-8",
+      "ticket_id": "ticket-9",
+      "status": "ready",
+      "reason_codes": [],
+      "total_seconds": 0.50657825
+    },
+    {
+      "sequence": 18,
+      "time_monotonic": 2.622390042,
+      "event": "stale",
+      "ticket_id": "ticket-9",
+      "job_id": "job-8",
+      "reason_code": "STALE_DECISION"
+    }
+  ],
+  "closed_stats": {
+    "pending": 0,
+    "active": 0,
+    "jobs": 0,
+    "retained_tickets": 5,
+    "contexts": 3,
+    "events": 18,
+    "closed": true
+  }
+}

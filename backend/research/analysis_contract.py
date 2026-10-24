@@ -88,7 +88,7 @@ def finish(result,status,code,message,stage,candidate=None):
     return result
 
 
-def analyze(request,limits=None,*,expected_source_key=None):
+def analyze(request,limits=None,*,expected_source_key=None,cancel_event=None):
     """Only ready yields an offline candidate; all other paths retain coach advice.
     expected_source_key lets a future caller reject a result for an obsolete decision.
     """
@@ -106,16 +106,20 @@ def analyze(request,limits=None,*,expected_source_key=None):
         return finish(result,'stale','STALE_DECISION','Requested decision no longer matches the caller.','preflight')
     if snapshot['schema_version']!=1 or snapshot['street']!='river' or snapshot['range_model']!=RANGE_VERSION or not 2<=len(snapshot['players'])<=6:
         return finish(result,'unsupported','UNSUPPORTED_MODEL','Only schema-v1 river, 2–6 original seats and the public heuristic v1 range model are supported.','preflight')
+    if cancel_event is not None and cancel_event.is_set():
+        return finish(result,'cancelled','ANALYSIS_CANCELLED','Cancelled before process launch.','preflight')
+    runner_options={'cancel_event':cancel_event} if cancel_event is not None else {}
     try:
         raw=run_guarded(request,limits.iterations,limits.wall_seconds,limits.memory_mib,
-                        method='cfr_plus_native',worker_module='research.analysis_contract')
+                        method='cfr_plus_native',worker_module='research.analysis_contract',**runner_options)
     except (OSError,ValueError,TypeError):
         return finish(result,'error','RUNNER_FAILED','Isolated runner could not produce a verifiable result.','worker')
     if type(raw) is not dict:
         return finish(result,'error','WORKER_FAILED','Worker returned an invalid result envelope.','worker')
     result['timing']={key:(raw.get(key) if finite_number(raw.get(key)) else None) for key in ('wall_seconds','sampled_peak_rss_mib','rss_poll_seconds','peak_rss_mib','build_seconds','train_seconds','measure_seconds')}
+    result['timing']['last_phase']=raw.get('last_phase') if raw.get('last_phase') in ('startup','build','train','measure','completed') else None
     status=raw.get('status')
-    failures={'timed_out':('budget_exceeded','TIME_BUDGET_EXCEEDED'),
+    failures={'cancelled':('cancelled','ANALYSIS_CANCELLED'),'timed_out':('budget_exceeded','TIME_BUDGET_EXCEEDED'),
               'memory_exceeded':('budget_exceeded','MEMORY_BUDGET_EXCEEDED'),
               'monitor_error':('error','RESOURCE_MONITOR_FAILED'),
               'rejected':('unsupported','UNSUPPORTED_STATE_OR_TREE'),
@@ -151,6 +155,8 @@ def analyze(request,limits=None,*,expected_source_key=None):
     candidate=raw.get('candidate')
     if not valid_candidate(candidate,request):
         return finish(result,'error','INVALID_CANDIDATE','Complete finite normalized strategy for the requested own hand and actor required.','admission')
+    if cancel_event is not None and cancel_event.is_set():
+        return finish(result,'cancelled','ANALYSIS_CANCELLED','Cancelled before result admission.','admission')
     return finish(result,'ready',None,None,'admission',candidate)
 
 

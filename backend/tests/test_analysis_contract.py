@@ -73,7 +73,7 @@ class AnalysisContractTests(unittest.TestCase):
     def test_failed_workers_never_expose_even_an_attached_candidate(self):
         statuses={'timed_out':'budget_exceeded','memory_exceeded':'budget_exceeded',
                   'monitor_error':'error','rejected':'unsupported','invalid_probe':'unsupported',
-                  'provider_unavailable':'unavailable','error':'error','unknown':'error'}
+                  'provider_unavailable':'unavailable','error':'error','unknown':'error','cancelled':'cancelled'}
         for source,target in statuses.items():
             raw=self.completed();raw['status']=source
             self.assert_closed(self.run_raw(raw),target)
@@ -122,6 +122,13 @@ class AnalysisContractTests(unittest.TestCase):
         bad=copy.deepcopy(self.request);bad['selected_hands'][1]=['AhAd']
         with patch('research.analysis_contract.run_guarded') as runner:
             self.assert_closed(analyze(bad),'invalid_input')
+            runner.assert_not_called()
+
+    def test_cancel_before_dispatch_never_launches_a_worker(self):
+        from threading import Event
+        cancelled=Event();cancelled.set()
+        with patch('research.analysis_contract.run_guarded') as runner:
+            self.assert_closed(analyze(self.request,cancel_event=cancelled),'cancelled')
             runner.assert_not_called()
 
     def test_tree_limits_and_exact_root_action_labels_must_match(self):
