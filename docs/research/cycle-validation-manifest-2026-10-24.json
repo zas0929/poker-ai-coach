@@ -1,0 +1,3136 @@
+{
+  "version": 1,
+  "sources": {
+    "reallocation_cycle.py": "dc356b181b50c9e6557ba7fe903a590301a0157b1b99957adb1d855fbff9ae07",
+    "group_reallocation.py": "57e30564fe2077391722c0a6a9809d201e22a8bf8faa04771027db6f68cc5017",
+    "adaptive_strategy_indexed.py": "97df8d71c930222bc83e190d241e3a008360fe48585d17032c922631b0f8137b",
+    "indexed_split.py": "9a20e49ed21f54d3605f68ac7684bcba2faef538e94b7908f396b863adfaad63",
+    "targeted_strategy.py": "198b8aab7c06c511b930b9c94f9dc203d181d5a15030c2eb1b39ae45b02015ae",
+    "fused_best_response.py": "5a3854789869537f6eec6d4566e166ae09c07836fe06e8dbce99414d016cf875",
+    "strategy_abstraction.py": "22d42276c7e8778687fe8167a40a0858cbeb6d50a60696a49226d2a370858351",
+    "custom_river.py": "7e3fc1317c6dae884363d01672d1865b3dd82ff9efc145de9951fc985dc87029",
+    "native_cfr.py": "9019a33a0393b7aed64cb43d3f937707608a681d83f6bfeacaf9b5fa0918017d",
+    "native/cfr.cpp": "3b5b81d286d407269d3fbddee9eb1630a3a376a714c3cd11a5ac164bc3737481",
+    "benchmark_expanded.py": "785896135ed050a21c02ad63166df380a48029cdd17951b402f8add0ed90d377",
+    "validate_reallocation_cycle.py": "b3b88fbdfc69f04f4716400f9e591f93739708f35a1bc004d30b1ad4fb372b53"
+  },
+  "cases": [
+    {
+      "name": "cycle_sizing_2_503",
+      "raw_combinations": 25,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "4h4s",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ],
+            [
+              "2s9h",
+              0.2
+            ],
+            [
+              "2d2s",
+              2.0
+            ]
+          ],
+          [
+            [
+              "9dAs",
+              0.2
+            ],
+            [
+              "3hKd",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ],
+            [
+              "AhTd",
+              1.0
+            ],
+            [
+              "9dKd",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 96,
+        "stacks": [
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 503,
+      "dealt_players": 2,
+      "live_players": 2
+    },
+    {
+      "name": "cycle_sizing_2_907",
+      "raw_combinations": 25,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "4sTd",
+              0.5
+            ],
+            [
+              "5hTd",
+              0.2
+            ],
+            [
+              "4sAh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "2s6d",
+              2.0
+            ],
+            [
+              "3dTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ],
+            [
+              "6cJs",
+              0.5
+            ],
+            [
+              "7cAc",
+              2.0
+            ]
+          ]
+        ],
+        "pot": 96,
+        "stacks": [
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 907,
+      "dealt_players": 2,
+      "live_players": 2
+    },
+    {
+      "name": "cycle_sizing_3_503",
+      "raw_combinations": 64,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "4h4s",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ],
+            [
+              "2s9h",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2d2s",
+              2.0
+            ],
+            [
+              "9dAs",
+              0.2
+            ],
+            [
+              "3hKd",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ]
+          ],
+          [
+            [
+              "AhTd",
+              1.0
+            ],
+            [
+              "9dKd",
+              1.0
+            ],
+            [
+              "AhTh",
+              0.5
+            ],
+            [
+              "6h7s",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 144,
+        "stacks": [
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 503,
+      "dealt_players": 3,
+      "live_players": 3
+    },
+    {
+      "name": "cycle_sizing_3_907",
+      "raw_combinations": 64,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "4sTd",
+              0.5
+            ],
+            [
+              "5hTd",
+              0.2
+            ]
+          ],
+          [
+            [
+              "4sAh",
+              0.5
+            ],
+            [
+              "2s6d",
+              2.0
+            ],
+            [
+              "3dTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6cJs",
+              0.5
+            ],
+            [
+              "7cAc",
+              2.0
+            ],
+            [
+              "4sKc",
+              0.2
+            ],
+            [
+              "5s6h",
+              2.0
+            ]
+          ]
+        ],
+        "pot": 144,
+        "stacks": [
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 907,
+      "dealt_players": 3,
+      "live_players": 3
+    },
+    {
+      "name": "cycle_sizing_4_503",
+      "raw_combinations": 81,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "4h4s",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2s9h",
+              0.2
+            ],
+            [
+              "2d2s",
+              2.0
+            ],
+            [
+              "9dAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3hKd",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ],
+            [
+              "AhTd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "9dKd",
+              1.0
+            ],
+            [
+              "AhTh",
+              0.5
+            ],
+            [
+              "6h7s",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 192,
+        "stacks": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 503,
+      "dealt_players": 4,
+      "live_players": 4
+    },
+    {
+      "name": "cycle_sizing_4_907",
+      "raw_combinations": 81,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "4sTd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5hTd",
+              0.2
+            ],
+            [
+              "4sAh",
+              0.5
+            ],
+            [
+              "2s6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3dTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ],
+            [
+              "6cJs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "7cAc",
+              2.0
+            ],
+            [
+              "4sKc",
+              0.2
+            ],
+            [
+              "5s6h",
+              2.0
+            ]
+          ]
+        ],
+        "pot": 192,
+        "stacks": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 907,
+      "dealt_players": 4,
+      "live_players": 4
+    },
+    {
+      "name": "cycle_sizing_5_503",
+      "raw_combinations": 243,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "4h4s",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2s9h",
+              0.2
+            ],
+            [
+              "2d2s",
+              2.0
+            ],
+            [
+              "9dAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3hKd",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ],
+            [
+              "AhTd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "9dKd",
+              1.0
+            ],
+            [
+              "AhTh",
+              0.5
+            ],
+            [
+              "6h7s",
+              0.2
+            ]
+          ],
+          [
+            [
+              "6c9h",
+              2.0
+            ],
+            [
+              "3d4h",
+              0.2
+            ],
+            [
+              "5h6c",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 240,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 503,
+      "dealt_players": 5,
+      "live_players": 5
+    },
+    {
+      "name": "cycle_sizing_5_907",
+      "raw_combinations": 243,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "4sTd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5hTd",
+              0.2
+            ],
+            [
+              "4sAh",
+              0.5
+            ],
+            [
+              "2s6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3dTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ],
+            [
+              "6cJs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "7cAc",
+              2.0
+            ],
+            [
+              "4sKc",
+              0.2
+            ],
+            [
+              "5s6h",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6c6d",
+              0.5
+            ],
+            [
+              "6sAs",
+              0.5
+            ],
+            [
+              "6h7h",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 240,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 907,
+      "dealt_players": 5,
+      "live_players": 5
+    },
+    {
+      "name": "cycle_sizing_6_503",
+      "raw_combinations": 729,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "4h4s",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2s9h",
+              0.2
+            ],
+            [
+              "2d2s",
+              2.0
+            ],
+            [
+              "9dAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3hKd",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ],
+            [
+              "AhTd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "9dKd",
+              1.0
+            ],
+            [
+              "AhTh",
+              0.5
+            ],
+            [
+              "6h7s",
+              0.2
+            ]
+          ],
+          [
+            [
+              "6c9h",
+              2.0
+            ],
+            [
+              "3d4h",
+              0.2
+            ],
+            [
+              "5h6c",
+              1.0
+            ]
+          ],
+          [
+            [
+              "7cTd",
+              0.5
+            ],
+            [
+              "8dJh",
+              0.2
+            ],
+            [
+              "2cTd",
+              0.5
+            ]
+          ]
+        ],
+        "pot": 288,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 503,
+      "dealt_players": 6,
+      "live_players": 6
+    },
+    {
+      "name": "cycle_sizing_6_907",
+      "raw_combinations": 729,
+      "input": {
+        "board": [
+          "2h",
+          "5c",
+          "8s",
+          "Jd",
+          "Kh"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "4sTd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5hTd",
+              0.2
+            ],
+            [
+              "4sAh",
+              0.5
+            ],
+            [
+              "2s6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3dTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ],
+            [
+              "6cJs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "7cAc",
+              2.0
+            ],
+            [
+              "4sKc",
+              0.2
+            ],
+            [
+              "5s6h",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6c6d",
+              0.5
+            ],
+            [
+              "6sAs",
+              0.5
+            ],
+            [
+              "6h7h",
+              1.0
+            ]
+          ],
+          [
+            [
+              "AcQh",
+              0.2
+            ],
+            [
+              "5h6c",
+              1.0
+            ],
+            [
+              "5s6h",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 288,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          12,
+          28
+        ],
+        "raise_sizes": [],
+        "max_raises": 0,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sizing",
+      "seed": 907,
+      "dealt_players": 6,
+      "live_players": 6
+    },
+    {
+      "name": "cycle_short_raise_2_503",
+      "raw_combinations": 25,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "4d4s",
+              1.0
+            ],
+            [
+              "5dAs",
+              2.0
+            ],
+            [
+              "4c7c",
+              0.2
+            ],
+            [
+              "2h9d",
+              0.2
+            ],
+            [
+              "2d2h",
+              2.0
+            ]
+          ],
+          [
+            [
+              "9cAs",
+              0.2
+            ],
+            [
+              "3dKd",
+              1.0
+            ],
+            [
+              "9sQd",
+              2.0
+            ],
+            [
+              "AhTc",
+              1.0
+            ],
+            [
+              "9cKd",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 96,
+        "stacks": [
+          9,
+          17
+        ],
+        "initial_contributions": [
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 503,
+      "dealt_players": 2,
+      "live_players": 2
+    },
+    {
+      "name": "cycle_short_raise_2_907",
+      "raw_combinations": 25,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "8sAd",
+              0.2
+            ],
+            [
+              "4d6s",
+              1.0
+            ],
+            [
+              "4sTc",
+              0.5
+            ],
+            [
+              "5dTc",
+              0.2
+            ],
+            [
+              "4sAh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "2h6c",
+              2.0
+            ],
+            [
+              "3cTh",
+              0.5
+            ],
+            [
+              "QhTs",
+              2.0
+            ],
+            [
+              "5sJd",
+              0.5
+            ],
+            [
+              "6sKs",
+              2.0
+            ]
+          ]
+        ],
+        "pot": 96,
+        "stacks": [
+          9,
+          17
+        ],
+        "initial_contributions": [
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 907,
+      "dealt_players": 2,
+      "live_players": 2
+    },
+    {
+      "name": "cycle_short_raise_3_503",
+      "raw_combinations": 64,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "4d4s",
+              1.0
+            ],
+            [
+              "5dAs",
+              2.0
+            ],
+            [
+              "4c7c",
+              0.2
+            ],
+            [
+              "2h9d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2d2h",
+              2.0
+            ],
+            [
+              "9cAs",
+              0.2
+            ],
+            [
+              "3dKd",
+              1.0
+            ],
+            [
+              "9sQd",
+              2.0
+            ]
+          ],
+          [
+            [
+              "AhTc",
+              1.0
+            ],
+            [
+              "9cKd",
+              1.0
+            ],
+            [
+              "AhTd",
+              0.5
+            ],
+            [
+              "6d7s",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 144,
+        "stacks": [
+          9,
+          17,
+          25
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 503,
+      "dealt_players": 3,
+      "live_players": 3
+    },
+    {
+      "name": "cycle_short_raise_3_907",
+      "raw_combinations": 64,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "8sAd",
+              0.2
+            ],
+            [
+              "4d6s",
+              1.0
+            ],
+            [
+              "4sTc",
+              0.5
+            ],
+            [
+              "5dTc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "4sAh",
+              0.5
+            ],
+            [
+              "2h6c",
+              2.0
+            ],
+            [
+              "3cTh",
+              0.5
+            ],
+            [
+              "QhTs",
+              2.0
+            ]
+          ],
+          [
+            [
+              "5sJd",
+              0.5
+            ],
+            [
+              "6sKs",
+              2.0
+            ],
+            [
+              "4sKc",
+              0.2
+            ],
+            [
+              "5h6d",
+              2.0
+            ]
+          ]
+        ],
+        "pot": 144,
+        "stacks": [
+          9,
+          17,
+          25
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 907,
+      "dealt_players": 3,
+      "live_players": 3
+    },
+    {
+      "name": "cycle_short_raise_4_503",
+      "raw_combinations": 81,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "4d4s",
+              1.0
+            ],
+            [
+              "5dAs",
+              2.0
+            ],
+            [
+              "4c7c",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2h9d",
+              0.2
+            ],
+            [
+              "2d2h",
+              2.0
+            ],
+            [
+              "9cAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3dKd",
+              1.0
+            ],
+            [
+              "9sQd",
+              2.0
+            ],
+            [
+              "AhTc",
+              1.0
+            ]
+          ],
+          [
+            [
+              "9cKd",
+              1.0
+            ],
+            [
+              "AhTd",
+              0.5
+            ],
+            [
+              "6d7s",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 192,
+        "stacks": [
+          9,
+          17,
+          25,
+          39
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 503,
+      "dealt_players": 4,
+      "live_players": 4
+    },
+    {
+      "name": "cycle_short_raise_4_907",
+      "raw_combinations": 81,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "8sAd",
+              0.2
+            ],
+            [
+              "4d6s",
+              1.0
+            ],
+            [
+              "4sTc",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5dTc",
+              0.2
+            ],
+            [
+              "4sAh",
+              0.5
+            ],
+            [
+              "2h6c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3cTh",
+              0.5
+            ],
+            [
+              "QhTs",
+              2.0
+            ],
+            [
+              "5sJd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "6sKs",
+              2.0
+            ],
+            [
+              "4sKc",
+              0.2
+            ],
+            [
+              "5h6d",
+              2.0
+            ]
+          ]
+        ],
+        "pot": 192,
+        "stacks": [
+          9,
+          17,
+          25,
+          39
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 907,
+      "dealt_players": 4,
+      "live_players": 4
+    },
+    {
+      "name": "cycle_short_raise_5_503",
+      "raw_combinations": 243,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "4d4s",
+              1.0
+            ],
+            [
+              "5dAs",
+              2.0
+            ],
+            [
+              "4c7c",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2h9d",
+              0.2
+            ],
+            [
+              "2d2h",
+              2.0
+            ],
+            [
+              "9cAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3dKd",
+              1.0
+            ],
+            [
+              "9sQd",
+              2.0
+            ],
+            [
+              "AhTc",
+              1.0
+            ]
+          ],
+          [
+            [
+              "9cKd",
+              1.0
+            ],
+            [
+              "AhTd",
+              0.5
+            ],
+            [
+              "6d7s",
+              0.2
+            ]
+          ],
+          [
+            [
+              "5s9d",
+              2.0
+            ],
+            [
+              "3c4d",
+              0.2
+            ],
+            [
+              "5d5s",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 240,
+        "stacks": [
+          9,
+          17,
+          25,
+          39,
+          57
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 503,
+      "dealt_players": 5,
+      "live_players": 5
+    },
+    {
+      "name": "cycle_short_raise_5_907",
+      "raw_combinations": 243,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "8sAd",
+              0.2
+            ],
+            [
+              "4d6s",
+              1.0
+            ],
+            [
+              "4sTc",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5dTc",
+              0.2
+            ],
+            [
+              "4sAh",
+              0.5
+            ],
+            [
+              "2h6c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3cTh",
+              0.5
+            ],
+            [
+              "QhTs",
+              2.0
+            ],
+            [
+              "5sJd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "6sKs",
+              2.0
+            ],
+            [
+              "4sKc",
+              0.2
+            ],
+            [
+              "5h6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "5s6c",
+              0.5
+            ],
+            [
+              "6hAs",
+              0.5
+            ],
+            [
+              "6d7d",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 240,
+        "stacks": [
+          9,
+          17,
+          25,
+          39,
+          57
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 907,
+      "dealt_players": 5,
+      "live_players": 5
+    },
+    {
+      "name": "cycle_short_raise_6_503",
+      "raw_combinations": 729,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "4d4s",
+              1.0
+            ],
+            [
+              "5dAs",
+              2.0
+            ],
+            [
+              "4c7c",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2h9d",
+              0.2
+            ],
+            [
+              "2d2h",
+              2.0
+            ],
+            [
+              "9cAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3dKd",
+              1.0
+            ],
+            [
+              "9sQd",
+              2.0
+            ],
+            [
+              "AhTc",
+              1.0
+            ]
+          ],
+          [
+            [
+              "9cKd",
+              1.0
+            ],
+            [
+              "AhTd",
+              0.5
+            ],
+            [
+              "6d7s",
+              0.2
+            ]
+          ],
+          [
+            [
+              "5s9d",
+              2.0
+            ],
+            [
+              "3c4d",
+              0.2
+            ],
+            [
+              "5d5s",
+              1.0
+            ]
+          ],
+          [
+            [
+              "6sTc",
+              0.5
+            ],
+            [
+              "8dJc",
+              0.2
+            ],
+            [
+              "2cTc",
+              0.5
+            ]
+          ]
+        ],
+        "pot": 288,
+        "stacks": [
+          9,
+          17,
+          25,
+          39,
+          57,
+          79
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 503,
+      "dealt_players": 6,
+      "live_players": 6
+    },
+    {
+      "name": "cycle_short_raise_6_907",
+      "raw_combinations": 729,
+      "input": {
+        "board": [
+          "4h",
+          "7h",
+          "Jh",
+          "Qs",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "8sAd",
+              0.2
+            ],
+            [
+              "4d6s",
+              1.0
+            ],
+            [
+              "4sTc",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5dTc",
+              0.2
+            ],
+            [
+              "4sAh",
+              0.5
+            ],
+            [
+              "2h6c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3cTh",
+              0.5
+            ],
+            [
+              "QhTs",
+              2.0
+            ],
+            [
+              "5sJd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "6sKs",
+              2.0
+            ],
+            [
+              "4sKc",
+              0.2
+            ],
+            [
+              "5h6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "5s6c",
+              0.5
+            ],
+            [
+              "6hAs",
+              0.5
+            ],
+            [
+              "6d7d",
+              1.0
+            ]
+          ],
+          [
+            [
+              "KsQd",
+              0.2
+            ],
+            [
+              "5d5s",
+              1.0
+            ],
+            [
+              "5h6d",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 288,
+        "stacks": [
+          9,
+          17,
+          25,
+          39,
+          57,
+          79
+        ],
+        "initial_contributions": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "bet_sizes": [
+          8
+        ],
+        "raise_sizes": [
+          16
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raise",
+      "seed": 907,
+      "dealt_players": 6,
+      "live_players": 6
+    },
+    {
+      "name": "cycle_sidepot_or_tie_2_503",
+      "raw_combinations": 25,
+      "input": {
+        "board": [
+          "Td",
+          "Jd",
+          "Qd",
+          "Kd",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "4d4h",
+              1.0
+            ],
+            [
+              "5cAs",
+              2.0
+            ],
+            [
+              "4c6s",
+              0.2
+            ],
+            [
+              "2h8s",
+              0.2
+            ],
+            [
+              "2d2h",
+              2.0
+            ]
+          ],
+          [
+            [
+              "8hAs",
+              0.2
+            ],
+            [
+              "3dKc",
+              1.0
+            ],
+            [
+              "9dQc",
+              2.0
+            ],
+            [
+              "9hAh",
+              1.0
+            ],
+            [
+              "8hKc",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 10,
+        "stacks": [
+          9,
+          17
+        ],
+        "initial_contributions": [
+          5,
+          5
+        ],
+        "bet_sizes": [
+          3
+        ],
+        "raise_sizes": [
+          6
+        ],
+        "max_raises": 1,
+        "min_bet": 1,
+        "max_joint_combos": 4096
+      },
+      "family": "sidepot_or_tie",
+      "seed": 503,
+      "dealt_players": 2,
+      "live_players": 2
+    },
+    {
+      "name": "cycle_sidepot_or_tie_2_907",
+      "raw_combinations": 25,
+      "input": {
+        "board": [
+          "Td",
+          "Jd",
+          "Qd",
+          "Kd",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "8dAc",
+              0.2
+            ],
+            [
+              "4d6h",
+              1.0
+            ],
+            [
+              "4h9h",
+              0.5
+            ],
+            [
+              "5c9h",
+              0.2
+            ],
+            [
+              "4hAh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "2h5s",
+              2.0
+            ],
+            [
+              "3cTc",
+              0.5
+            ],
+            [
+              "QhTh",
+              2.0
+            ],
+            [
+              "5hJc",
+              0.5
+            ],
+            [
+              "6hKs",
+              2.0
+            ]
+          ]
+        ],
+        "pot": 10,
+        "stacks": [
+          9,
+          17
+        ],
+        "initial_contributions": [
+          5,
+          5
+        ],
+        "bet_sizes": [
+          3
+        ],
+        "raise_sizes": [
+          6
+        ],
+        "max_raises": 1,
+        "min_bet": 1,
+        "max_joint_combos": 4096
+      },
+      "family": "sidepot_or_tie",
+      "seed": 907,
+      "dealt_players": 2,
+      "live_players": 2
+    },
+    {
+      "name": "cycle_sidepot_or_tie_3_503",
+      "raw_combinations": 64,
+      "input": {
+        "board": [
+          "4c",
+          "4s",
+          "8d",
+          "Jh",
+          "Kc"
+        ],
+        "ranges": [
+          [
+            [
+              "4h5c",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ],
+            [
+              "2h9h",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2d2h",
+              2.0
+            ],
+            [
+              "9dAs",
+              0.2
+            ],
+            [
+              "3dKh",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ]
+          ],
+          [
+            [
+              "AhTd",
+              1.0
+            ],
+            [
+              "9dKh",
+              1.0
+            ],
+            [
+              "AhTh",
+              0.5
+            ],
+            [
+              "6h7s",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 84,
+        "stacks": [
+          0,
+          18,
+          29
+        ],
+        "initial_contributions": [
+          12,
+          36,
+          36
+        ],
+        "bet_sizes": [
+          12
+        ],
+        "raise_sizes": [
+          24
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sidepot_or_tie",
+      "seed": 503,
+      "dealt_players": 3,
+      "live_players": 3
+    },
+    {
+      "name": "cycle_sidepot_or_tie_3_907",
+      "raw_combinations": 64,
+      "input": {
+        "board": [
+          "4c",
+          "4s",
+          "8d",
+          "Jh",
+          "Kc"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "5cTd",
+              0.5
+            ],
+            [
+              "5hTd",
+              0.2
+            ]
+          ],
+          [
+            [
+              "5cAh",
+              0.5
+            ],
+            [
+              "2h6d",
+              2.0
+            ],
+            [
+              "3cTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6cJs",
+              0.5
+            ],
+            [
+              "7cAc",
+              2.0
+            ],
+            [
+              "5cKd",
+              0.2
+            ],
+            [
+              "5s6h",
+              2.0
+            ]
+          ]
+        ],
+        "pot": 84,
+        "stacks": [
+          0,
+          18,
+          29
+        ],
+        "initial_contributions": [
+          12,
+          36,
+          36
+        ],
+        "bet_sizes": [
+          12
+        ],
+        "raise_sizes": [
+          24
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096
+      },
+      "family": "sidepot_or_tie",
+      "seed": 907,
+      "dealt_players": 3,
+      "live_players": 3
+    },
+    {
+      "name": "cycle_sidepot_or_tie_4_503",
+      "raw_combinations": 81,
+      "input": {
+        "board": [
+          "4c",
+          "4s",
+          "8d",
+          "Jh",
+          "Kc"
+        ],
+        "ranges": [
+          [
+            [
+              "4h5c",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2h9h",
+              0.2
+            ],
+            [
+              "2d2h",
+              2.0
+            ],
+            [
+              "9dAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3dKh",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ],
+            [
+              "AhTd",
+              1.0
+            ]
+          ],
+          []
+        ],
+        "pot": 120,
+        "stacks": [
+          0,
+          18,
+          29,
+          47
+        ],
+        "initial_contributions": [
+          12,
+          36,
+          36,
+          36
+        ],
+        "bet_sizes": [
+          12
+        ],
+        "raise_sizes": [
+          24
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096,
+        "folded": [
+          3
+        ]
+      },
+      "family": "sidepot_or_tie",
+      "seed": 503,
+      "dealt_players": 4,
+      "live_players": 3
+    },
+    {
+      "name": "cycle_sidepot_or_tie_4_907",
+      "raw_combinations": 81,
+      "input": {
+        "board": [
+          "4c",
+          "4s",
+          "8d",
+          "Jh",
+          "Kc"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "5cTd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5hTd",
+              0.2
+            ],
+            [
+              "5cAh",
+              0.5
+            ],
+            [
+              "2h6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3cTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ],
+            [
+              "6cJs",
+              0.5
+            ]
+          ],
+          []
+        ],
+        "pot": 120,
+        "stacks": [
+          0,
+          18,
+          29,
+          47
+        ],
+        "initial_contributions": [
+          12,
+          36,
+          36,
+          36
+        ],
+        "bet_sizes": [
+          12
+        ],
+        "raise_sizes": [
+          24
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096,
+        "folded": [
+          3
+        ]
+      },
+      "family": "sidepot_or_tie",
+      "seed": 907,
+      "dealt_players": 4,
+      "live_players": 3
+    },
+    {
+      "name": "cycle_sidepot_or_tie_5_503",
+      "raw_combinations": 243,
+      "input": {
+        "board": [
+          "4c",
+          "4s",
+          "8d",
+          "Jh",
+          "Kc"
+        ],
+        "ranges": [
+          [
+            [
+              "4h5c",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2h9h",
+              0.2
+            ],
+            [
+              "2d2h",
+              2.0
+            ],
+            [
+              "9dAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3dKh",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ],
+            [
+              "AhTd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "9dKh",
+              1.0
+            ],
+            [
+              "AhTh",
+              0.5
+            ],
+            [
+              "6h7s",
+              0.2
+            ]
+          ],
+          []
+        ],
+        "pot": 156,
+        "stacks": [
+          0,
+          18,
+          29,
+          47,
+          61
+        ],
+        "initial_contributions": [
+          12,
+          36,
+          36,
+          36,
+          36
+        ],
+        "bet_sizes": [
+          12
+        ],
+        "raise_sizes": [
+          24
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096,
+        "folded": [
+          4
+        ]
+      },
+      "family": "sidepot_or_tie",
+      "seed": 503,
+      "dealt_players": 5,
+      "live_players": 4
+    },
+    {
+      "name": "cycle_sidepot_or_tie_5_907",
+      "raw_combinations": 243,
+      "input": {
+        "board": [
+          "4c",
+          "4s",
+          "8d",
+          "Jh",
+          "Kc"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "5cTd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5hTd",
+              0.2
+            ],
+            [
+              "5cAh",
+              0.5
+            ],
+            [
+              "2h6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3cTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ],
+            [
+              "6cJs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "7cAc",
+              2.0
+            ],
+            [
+              "5cKd",
+              0.2
+            ],
+            [
+              "5s6h",
+              2.0
+            ]
+          ],
+          []
+        ],
+        "pot": 156,
+        "stacks": [
+          0,
+          18,
+          29,
+          47,
+          61
+        ],
+        "initial_contributions": [
+          12,
+          36,
+          36,
+          36,
+          36
+        ],
+        "bet_sizes": [
+          12
+        ],
+        "raise_sizes": [
+          24
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096,
+        "folded": [
+          4
+        ]
+      },
+      "family": "sidepot_or_tie",
+      "seed": 907,
+      "dealt_players": 5,
+      "live_players": 4
+    },
+    {
+      "name": "cycle_sidepot_or_tie_6_503",
+      "raw_combinations": 729,
+      "input": {
+        "board": [
+          "4c",
+          "4s",
+          "8d",
+          "Jh",
+          "Kc"
+        ],
+        "ranges": [
+          [
+            [
+              "4h5c",
+              1.0
+            ],
+            [
+              "5hAs",
+              2.0
+            ],
+            [
+              "4d7d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2h9h",
+              0.2
+            ],
+            [
+              "2d2h",
+              2.0
+            ],
+            [
+              "9dAs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3dKh",
+              1.0
+            ],
+            [
+              "QhTc",
+              2.0
+            ],
+            [
+              "AhTd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "9dKh",
+              1.0
+            ],
+            [
+              "AhTh",
+              0.5
+            ],
+            [
+              "6h7s",
+              0.2
+            ]
+          ],
+          [
+            [
+              "6c9h",
+              2.0
+            ],
+            [
+              "3c4h",
+              0.2
+            ],
+            [
+              "5h6c",
+              1.0
+            ]
+          ],
+          []
+        ],
+        "pot": 192,
+        "stacks": [
+          0,
+          18,
+          29,
+          47,
+          61,
+          83
+        ],
+        "initial_contributions": [
+          12,
+          36,
+          36,
+          36,
+          36,
+          36
+        ],
+        "bet_sizes": [
+          12
+        ],
+        "raise_sizes": [
+          24
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096,
+        "folded": [
+          5
+        ]
+      },
+      "family": "sidepot_or_tie",
+      "seed": 503,
+      "dealt_players": 6,
+      "live_players": 5
+    },
+    {
+      "name": "cycle_sidepot_or_tie_6_907",
+      "raw_combinations": 729,
+      "input": {
+        "board": [
+          "4c",
+          "4s",
+          "8d",
+          "Jh",
+          "Kc"
+        ],
+        "ranges": [
+          [
+            [
+              "9cAd",
+              0.2
+            ],
+            [
+              "4h7c",
+              1.0
+            ],
+            [
+              "5cTd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5hTd",
+              0.2
+            ],
+            [
+              "5cAh",
+              0.5
+            ],
+            [
+              "2h6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3cTs",
+              0.5
+            ],
+            [
+              "JcQs",
+              2.0
+            ],
+            [
+              "6cJs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "7cAc",
+              2.0
+            ],
+            [
+              "5cKd",
+              0.2
+            ],
+            [
+              "5s6h",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6c6d",
+              0.5
+            ],
+            [
+              "6sAs",
+              0.5
+            ],
+            [
+              "6h7h",
+              1.0
+            ]
+          ],
+          []
+        ],
+        "pot": 192,
+        "stacks": [
+          0,
+          18,
+          29,
+          47,
+          61,
+          83
+        ],
+        "initial_contributions": [
+          12,
+          36,
+          36,
+          36,
+          36,
+          36
+        ],
+        "bet_sizes": [
+          12
+        ],
+        "raise_sizes": [
+          24
+        ],
+        "max_raises": 1,
+        "min_bet": 4,
+        "max_joint_combos": 4096,
+        "folded": [
+          5
+        ]
+      },
+      "family": "sidepot_or_tie",
+      "seed": 907,
+      "dealt_players": 6,
+      "live_players": 5
+    }
+  ],
+  "fault_case": {
+    "name": "sizing_4_101",
+    "raw_combinations": 81,
+    "input": {
+      "board": [
+        "3c",
+        "6d",
+        "8h",
+        "Ts",
+        "Qc"
+      ],
+      "ranges": [
+        [
+          [
+            "5dQh",
+            1.0
+          ],
+          [
+            "2sTc",
+            0.5
+          ],
+          [
+            "5sQs",
+            1.0
+          ]
+        ],
+        [
+          [
+            "AdTh",
+            0.5
+          ],
+          [
+            "7s9s",
+            0.2
+          ],
+          [
+            "5d6h",
+            0.5
+          ]
+        ],
+        [
+          [
+            "3h9s",
+            1.0
+          ],
+          [
+            "5dTd",
+            1.0
+          ],
+          [
+            "6cKd",
+            2.0
+          ]
+        ],
+        [
+          [
+            "5h9h",
+            0.2
+          ],
+          [
+            "9hTc",
+            1.0
+          ],
+          [
+            "4c5h",
+            1.0
+          ]
+        ]
+      ],
+      "pot": 240,
+      "stacks": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "initial_contributions": [
+        60,
+        60,
+        60,
+        60
+      ],
+      "bet_sizes": [
+        15,
+        35
+      ],
+      "raise_sizes": [],
+      "max_raises": 0,
+      "min_bet": 10,
+      "max_joint_combos": 4096
+    },
+    "family": "sizing",
+    "seed": 101,
+    "dealt_players": 4,
+    "live_players": 4,
+    "row_budget": "compact"
+  },
+  "faults": [
+    "trial_timeout",
+    "trial_memory"
+  ],
+  "limits": {
+    "total_seconds": 45,
+    "memory_mib": 128,
+    "max_cycles": 2,
+    "max_candidates": 2
+  },
+  "scope": "30 prespecified new synthetic cases, seeds 503/907. Two separate known-case process-fault controls excluded from quality summary. No retuning.",
+  "manifest_sha256": "60e934975bbdff274b6ccbd73e046d0df9c3c53b76a485dec2007b8f33478d1e"
+}

@@ -354,3 +354,10 @@ budget. On the known corpus it increased admissions from 22 to 25 of 42 availabl
 baselines, with no lost passes; one timed-out extra trial preserved its baseline.
 This is regression evidence, not independent validation or live integration. See
 [docs/SOLVER_REALLOCATION_CYCLE.md](docs/SOLVER_REALLOCATION_CYCLE.md).
+
+Frozen-cycle validation on 30 prespecified new synthetic inputs admitted 22 of
+29 available baselines versus 21 before reallocation; one model exceeded the
+existing size limit. The new pass involved three live seats, with no additional
+4–6-seat passes. Two separate real child-process fault controls retained the
+baseline policy after timeout/memory refusal. See
+[docs/SOLVER_CYCLE_VALIDATION.md](docs/SOLVER_CYCLE_VALIDATION.md).
