@@ -1,0 +1,2345 @@
+{
+  "iterations": 100,
+  "method": "cfr_plus_indexed",
+  "timeout_seconds": 45,
+  "memory_mib": 128,
+  "python": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "quality_gate_pct_pot": 0.5,
+  "scope": "Fixed synthetic weighted ranges, explicit raw budget 4096; unchanged node/deal budget one million. 0.2s RSS sampling can overshoot; no OS hard memory limit.",
+  "results": [
+    {
+      "name": "dry_2",
+      "raw_combinations": 144,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "KcQc",
+              0.2
+            ],
+            [
+              "AcQh",
+              0.5
+            ],
+            [
+              "2sTs",
+              0.5
+            ],
+            [
+              "2d6h",
+              2.0
+            ],
+            [
+              "6cQs",
+              0.5
+            ],
+            [
+              "KsQh",
+              0.2
+            ],
+            [
+              "2dQh",
+              0.5
+            ],
+            [
+              "9dTd",
+              1.0
+            ],
+            [
+              "AcKs",
+              0.5
+            ],
+            [
+              "5sTd",
+              0.2
+            ],
+            [
+              "5sKc",
+              0.2
+            ],
+            [
+              "3hAc",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3cTs",
+              1.0
+            ],
+            [
+              "4s9c",
+              0.5
+            ],
+            [
+              "6dTs",
+              0.5
+            ],
+            [
+              "6d7c",
+              2.0
+            ],
+            [
+              "9dKd",
+              1.0
+            ],
+            [
+              "8hAd",
+              0.5
+            ],
+            [
+              "6c8c",
+              0.2
+            ],
+            [
+              "8cTs",
+              2.0
+            ],
+            [
+              "3d4c",
+              2.0
+            ],
+            [
+              "7dJd",
+              0.5
+            ],
+            [
+              "3cKd",
+              0.2
+            ],
+            [
+              "5d7d",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 120,
+        "stacks": [
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.013847667000000008,
+      "train_seconds": 0.336594917,
+      "measure_seconds": 0.0039018749999999436,
+      "peak_rss_mib": 25.22265625,
+      "public_nodes": 15,
+      "joint_deals": 139,
+      "information_sets": 72,
+      "metrics": {
+        "policy_payoffs": [
+          -44.580808022076695,
+          44.58080802207669
+        ],
+        "best_response_payoffs": [
+          -44.509169309608666,
+          44.66513199261019
+        ],
+        "unilateral_gains": [
+          0.07163871246802955,
+          0.08432397053350371
+        ],
+        "nash_conv_chips": 0.15596268300153326,
+        "max_unilateral_gain_pct_pot": 0.07026997544458642
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.6290281660000001,
+      "sampled_peak_rss_mib": 25.203125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_3",
+      "raw_combinations": 125,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "JsTc",
+              0.5
+            ],
+            [
+              "8dKd",
+              2.0
+            ],
+            [
+              "5d7c",
+              2.0
+            ],
+            [
+              "9hAd",
+              0.2
+            ],
+            [
+              "6sAd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "4s9h",
+              0.5
+            ],
+            [
+              "4hJd",
+              1.0
+            ],
+            [
+              "8hQh",
+              0.2
+            ],
+            [
+              "3h6d",
+              1.0
+            ],
+            [
+              "6sKd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "9cTc",
+              0.5
+            ],
+            [
+              "5hJh",
+              0.2
+            ],
+            [
+              "3s5d",
+              1.0
+            ],
+            [
+              "3s5s",
+              2.0
+            ],
+            [
+              "7c9d",
+              0.5
+            ]
+          ]
+        ],
+        "pot": 180,
+        "stacks": [
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.042493208000000005,
+      "train_seconds": 1.685139208,
+      "measure_seconds": 0.02158812500000007,
+      "peak_rss_mib": 26.83203125,
+      "public_nodes": 76,
+      "joint_deals": 95,
+      "information_sets": 165,
+      "metrics": {
+        "policy_payoffs": [
+          -10.381706424158125,
+          45.70660934228178,
+          -35.324902918123634
+        ],
+        "best_response_payoffs": [
+          -10.203051507187597,
+          45.78429666905791,
+          -35.2382317125353
+        ],
+        "unilateral_gains": [
+          0.17865491697052782,
+          0.07768732677612888,
+          0.08667120558833119
+        ],
+        "nash_conv_chips": 0.3430134493349879,
+        "max_unilateral_gain_pct_pot": 0.09925273165029323
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 2.084325583,
+      "sampled_peak_rss_mib": 26.8046875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_4",
+      "raw_combinations": 128,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "6cJs",
+              1.0
+            ],
+            [
+              "2s9d",
+              1.0
+            ],
+            [
+              "6sKd",
+              0.2
+            ],
+            [
+              "7c8c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "4sKs",
+              0.5
+            ],
+            [
+              "3h5c",
+              0.2
+            ],
+            [
+              "4s7c",
+              1.0
+            ],
+            [
+              "JsTc",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3h7s",
+              0.2
+            ],
+            [
+              "8cTh",
+              2.0
+            ],
+            [
+              "5dTs",
+              0.5
+            ],
+            [
+              "7dAc",
+              2.0
+            ]
+          ],
+          [
+            [
+              "QcQs",
+              0.5
+            ],
+            [
+              "5dKd",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 240,
+        "stacks": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.160945292,
+      "train_seconds": 7.449485417,
+      "measure_seconds": 0.10970762499999953,
+      "peak_rss_mib": 30.87109375,
+      "public_nodes": 341,
+      "joint_deals": 73,
+      "information_sets": 546,
+      "metrics": {
+        "policy_payoffs": [
+          -5.062267041748228,
+          -32.21590487176893,
+          28.615171978042174,
+          8.662999935474986
+        ],
+        "best_response_payoffs": [
+          -4.4371148464785914,
+          -31.79225628984074,
+          28.82557098695675,
+          9.011262007321504
+        ],
+        "unilateral_gains": [
+          0.6251521952696368,
+          0.42364858192818744,
+          0.21039900891457464,
+          0.34826207184651814
+        ],
+        "nash_conv_chips": 1.607461857958917,
+        "max_unilateral_gain_pct_pot": 0.2604800813623487
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 8.137843167,
+      "sampled_peak_rss_mib": 30.87109375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_5",
+      "raw_combinations": 108,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "6d7d",
+              2.0
+            ],
+            [
+              "3dJd",
+              0.2
+            ],
+            [
+              "5s6d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6cKd",
+              0.5
+            ],
+            [
+              "3sQd",
+              0.2
+            ],
+            [
+              "6c6s",
+              0.2
+            ]
+          ],
+          [
+            [
+              "6cQd",
+              2.0
+            ],
+            [
+              "5d8s",
+              1.0
+            ],
+            [
+              "6dKc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2s9h",
+              0.5
+            ],
+            [
+              "9dKd",
+              2.0
+            ]
+          ],
+          [
+            [
+              "8cJs",
+              2.0
+            ],
+            [
+              "8h8s",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 300,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.253667667,
+      "train_seconds": 13.721123875,
+      "measure_seconds": 0.22985491600000074,
+      "peak_rss_mib": 34.75390625,
+      "public_nodes": 1386,
+      "joint_deals": 25,
+      "information_sets": 1572,
+      "metrics": {
+        "policy_payoffs": [
+          -59.8243409027025,
+          -60.134315086861996,
+          -60.118828334783615,
+          60.891598970115425,
+          119.18588535423274
+        ],
+        "best_response_payoffs": [
+          -59.712417138405385,
+          -59.99625669589588,
+          -60.00000000000001,
+          61.15252380271661,
+          119.95464560242789
+        ],
+        "unilateral_gains": [
+          0.11192376429711715,
+          0.1380583909661155,
+          0.11882833478360766,
+          0.2609248326011837,
+          0.7687602481951501
+        ],
+        "nash_conv_chips": 1.398495570843174,
+        "max_unilateral_gain_pct_pot": 0.25625341606505003
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 14.690957875000002,
+      "sampled_peak_rss_mib": 34.75390625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "dry_6",
+      "raw_combinations": 96,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "5sAc",
+              0.2
+            ],
+            [
+              "4cQd",
+              0.5
+            ],
+            [
+              "KhTd",
+              0.2
+            ]
+          ],
+          [
+            [
+              "9cKd",
+              1.0
+            ],
+            [
+              "2dAh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "6hAc",
+              2.0
+            ],
+            [
+              "QhQs",
+              2.0
+            ]
+          ],
+          [
+            [
+              "7dTd",
+              2.0
+            ],
+            [
+              "7dJh",
+              2.0
+            ]
+          ],
+          [
+            [
+              "9dTh",
+              0.5
+            ],
+            [
+              "KsQh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "2sTc",
+              2.0
+            ],
+            [
+              "4sQd",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 360,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "wall_seconds": 45.167655416,
+      "sampled_peak_rss_mib": 72.3359375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2,
+      "status": "timed_out",
+      "last_phase": "train",
+      "reason": "External process budget exceeded; no final policy quality claimed."
+    },
+    {
+      "name": "flush_2",
+      "raw_combinations": 144,
+      "input": {
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "4cTc",
+              0.2
+            ],
+            [
+              "2cQs",
+              2.0
+            ],
+            [
+              "8d8h",
+              0.2
+            ],
+            [
+              "6c8c",
+              0.2
+            ],
+            [
+              "KcTh",
+              0.5
+            ],
+            [
+              "6sTd",
+              1.0
+            ],
+            [
+              "AhQd",
+              0.2
+            ],
+            [
+              "4cJc",
+              0.5
+            ],
+            [
+              "9cKc",
+              2.0
+            ],
+            [
+              "9cQh",
+              1.0
+            ],
+            [
+              "3h4s",
+              1.0
+            ],
+            [
+              "6cQh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "2d9d",
+              0.5
+            ],
+            [
+              "5c8h",
+              2.0
+            ],
+            [
+              "6h7d",
+              0.5
+            ],
+            [
+              "6cAc",
+              1.0
+            ],
+            [
+              "8dTd",
+              0.5
+            ],
+            [
+              "3c5d",
+              0.5
+            ],
+            [
+              "3d3h",
+              0.2
+            ],
+            [
+              "3sQd",
+              1.0
+            ],
+            [
+              "2c4c",
+              2.0
+            ],
+            [
+              "2c7c",
+              2.0
+            ],
+            [
+              "JhQd",
+              1.0
+            ],
+            [
+              "4s7h",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 120,
+        "stacks": [
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.011295540999999965,
+      "train_seconds": 0.310738458,
+      "measure_seconds": 0.0038227079999999525,
+      "peak_rss_mib": 25.765625,
+      "public_nodes": 15,
+      "joint_deals": 131,
+      "information_sets": 72,
+      "metrics": {
+        "policy_payoffs": [
+          27.55290691170708,
+          -27.552906911707076
+        ],
+        "best_response_payoffs": [
+          27.614557594981367,
+          -27.503509154408988
+        ],
+        "unilateral_gains": [
+          0.06165068327428713,
+          0.04939775729808815
+        ],
+        "nash_conv_chips": 0.11104844057237528,
+        "max_unilateral_gain_pct_pot": 0.05137556939523928
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 0.7059900840000068,
+      "sampled_peak_rss_mib": 25.74609375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_3",
+      "raw_combinations": 125,
+      "input": {
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "2d9d",
+              1.0
+            ],
+            [
+              "2h4s",
+              2.0
+            ],
+            [
+              "7dAs",
+              0.5
+            ],
+            [
+              "5dQs",
+              0.2
+            ],
+            [
+              "3hTd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3c6d",
+              2.0
+            ],
+            [
+              "JcTs",
+              0.2
+            ],
+            [
+              "9dKc",
+              0.2
+            ],
+            [
+              "JsQh",
+              0.2
+            ],
+            [
+              "6dQd",
+              2.0
+            ]
+          ],
+          [
+            [
+              "2c6d",
+              2.0
+            ],
+            [
+              "8sAh",
+              0.2
+            ],
+            [
+              "2dJs",
+              2.0
+            ],
+            [
+              "2cTs",
+              2.0
+            ],
+            [
+              "JhKc",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 180,
+        "stacks": [
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.04120137500000001,
+      "train_seconds": 1.631680208,
+      "measure_seconds": 0.020977041999999946,
+      "peak_rss_mib": 26.56640625,
+      "public_nodes": 76,
+      "joint_deals": 93,
+      "information_sets": 165,
+      "metrics": {
+        "policy_payoffs": [
+          5.157265616853977,
+          -50.44211409169021,
+          45.28484847483621
+        ],
+        "best_response_payoffs": [
+          5.327862554885511,
+          -50.356177906417834,
+          45.59305000059742
+        ],
+        "unilateral_gains": [
+          0.17059693803153397,
+          0.08593618527237368,
+          0.30820152576121274
+        ],
+        "nash_conv_chips": 0.5647346490651204,
+        "max_unilateral_gain_pct_pot": 0.1712230698673404
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 2.098822499999997,
+      "sampled_peak_rss_mib": 26.53125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_4",
+      "raw_combinations": 128,
+      "input": {
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "4dQc",
+              0.2
+            ],
+            [
+              "7s8c",
+              1.0
+            ],
+            [
+              "3hAs",
+              0.5
+            ],
+            [
+              "2c7d",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3sKc",
+              0.5
+            ],
+            [
+              "7sQs",
+              2.0
+            ],
+            [
+              "3d6h",
+              0.2
+            ],
+            [
+              "3d5d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "5d7h",
+              0.5
+            ],
+            [
+              "3d5h",
+              0.5
+            ],
+            [
+              "3h8c",
+              1.0
+            ],
+            [
+              "AhQc",
+              1.0
+            ]
+          ],
+          [
+            [
+              "6sJs",
+              0.5
+            ],
+            [
+              "3dQh",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 240,
+        "stacks": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.13030933299999997,
+      "train_seconds": 5.41634175,
+      "measure_seconds": 0.08264316699999963,
+      "peak_rss_mib": 29.22265625,
+      "public_nodes": 341,
+      "joint_deals": 53,
+      "information_sets": 546,
+      "metrics": {
+        "policy_payoffs": [
+          -58.97876263731134,
+          99.2151304588229,
+          -50.710835763917544,
+          10.474467942405969
+        ],
+        "best_response_payoffs": [
+          -58.845280806375364,
+          99.46602868414945,
+          -50.6221939777532,
+          10.558291609766151
+        ],
+        "unilateral_gains": [
+          0.13348183093597754,
+          0.2508982253265515,
+          0.08864178616434515,
+          0.08382366736018199
+        ],
+        "nash_conv_chips": 0.5568455097870562,
+        "max_unilateral_gain_pct_pot": 0.10454092721939647
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 6.035932791999997,
+      "sampled_peak_rss_mib": 29.22265625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_5",
+      "raw_combinations": 108,
+      "input": {
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "9dJs",
+              2.0
+            ],
+            [
+              "5hJh",
+              0.5
+            ],
+            [
+              "5dJh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "TcTd",
+              1.0
+            ],
+            [
+              "3sAc",
+              2.0
+            ],
+            [
+              "8sJh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "2h8c",
+              0.2
+            ],
+            [
+              "AcTd",
+              2.0
+            ],
+            [
+              "4c5d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "4d9d",
+              0.5
+            ],
+            [
+              "5c7h",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3h8c",
+              0.5
+            ],
+            [
+              "3hKs",
+              0.5
+            ]
+          ]
+        ],
+        "pot": 300,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.291493875,
+      "train_seconds": 14.524758167,
+      "measure_seconds": 0.24845220799999979,
+      "peak_rss_mib": 35.87890625,
+      "public_nodes": 1386,
+      "joint_deals": 27,
+      "information_sets": 1703,
+      "metrics": {
+        "policy_payoffs": [
+          -57.18338500955908,
+          70.89396153663422,
+          72.17295917608485,
+          -60.024701886462516,
+          -25.858833816697434
+        ],
+        "best_response_payoffs": [
+          -56.880304086259265,
+          71.16027294677501,
+          72.34734558463816,
+          -59.999842692035145,
+          -25.671618165357852
+        ],
+        "unilateral_gains": [
+          0.3030809232998166,
+          0.2663114101407871,
+          0.17438640855331755,
+          0.02485919442737128,
+          0.1872156513395815
+        ],
+        "nash_conv_chips": 0.955853587760874,
+        "max_unilateral_gain_pct_pot": 0.1010269744332722
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 15.588940417000003,
+      "sampled_peak_rss_mib": 35.87890625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_6",
+      "raw_combinations": 96,
+      "input": {
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "2h7s",
+              0.5
+            ],
+            [
+              "7hAc",
+              2.0
+            ],
+            [
+              "2d3d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "7hQd",
+              1.0
+            ],
+            [
+              "4c7s",
+              1.0
+            ]
+          ],
+          [
+            [
+              "4h4s",
+              0.2
+            ],
+            [
+              "6hAh",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6hKs",
+              1.0
+            ],
+            [
+              "4hQc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "8dQh",
+              1.0
+            ],
+            [
+              "8h9c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "AsJs",
+              1.0
+            ],
+            [
+              "QhTd",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 360,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "wall_seconds": 45.028523542,
+      "sampled_peak_rss_mib": 64.015625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2,
+      "status": "timed_out",
+      "last_phase": "train",
+      "reason": "External process budget exceeded; no final policy quality claimed."
+    },
+    {
+      "name": "wide_2_4096",
+      "raw_combinations": 4096,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "3c4s",
+              0.5
+            ],
+            [
+              "5hQs",
+              0.5
+            ],
+            [
+              "3s9d",
+              0.5
+            ],
+            [
+              "2hTs",
+              2.0
+            ],
+            [
+              "9dQc",
+              0.2
+            ],
+            [
+              "3hAs",
+              2.0
+            ],
+            [
+              "6cTs",
+              0.5
+            ],
+            [
+              "6h8s",
+              0.5
+            ],
+            [
+              "5hTs",
+              1.0
+            ],
+            [
+              "4h9d",
+              1.0
+            ],
+            [
+              "7s8h",
+              0.2
+            ],
+            [
+              "2d4c",
+              0.5
+            ],
+            [
+              "6s7d",
+              0.5
+            ],
+            [
+              "3h6s",
+              1.0
+            ],
+            [
+              "4sJh",
+              2.0
+            ],
+            [
+              "7sQh",
+              1.0
+            ],
+            [
+              "AhQh",
+              0.2
+            ],
+            [
+              "8sQd",
+              2.0
+            ],
+            [
+              "7sKd",
+              1.0
+            ],
+            [
+              "9hKd",
+              1.0
+            ],
+            [
+              "4sQs",
+              0.2
+            ],
+            [
+              "6d8s",
+              1.0
+            ],
+            [
+              "5h7d",
+              0.2
+            ],
+            [
+              "JhKd",
+              0.2
+            ],
+            [
+              "2h6c",
+              2.0
+            ],
+            [
+              "4hJs",
+              0.5
+            ],
+            [
+              "6d7d",
+              0.5
+            ],
+            [
+              "6sQd",
+              0.5
+            ],
+            [
+              "AcTd",
+              0.2
+            ],
+            [
+              "JsQs",
+              1.0
+            ],
+            [
+              "8cJs",
+              2.0
+            ],
+            [
+              "9cAh",
+              2.0
+            ],
+            [
+              "8cAd",
+              0.2
+            ],
+            [
+              "8d9c",
+              1.0
+            ],
+            [
+              "JdTs",
+              0.2
+            ],
+            [
+              "3d4c",
+              0.5
+            ],
+            [
+              "JhTd",
+              1.0
+            ],
+            [
+              "2sTh",
+              0.5
+            ],
+            [
+              "3c7c",
+              1.0
+            ],
+            [
+              "4h6c",
+              0.2
+            ],
+            [
+              "6dJd",
+              0.5
+            ],
+            [
+              "5sQd",
+              2.0
+            ],
+            [
+              "7cKd",
+              0.5
+            ],
+            [
+              "JsKh",
+              2.0
+            ],
+            [
+              "8dAh",
+              0.5
+            ],
+            [
+              "2sQh",
+              1.0
+            ],
+            [
+              "4hKs",
+              1.0
+            ],
+            [
+              "AcJh",
+              2.0
+            ],
+            [
+              "5c6c",
+              0.2
+            ],
+            [
+              "5s7s",
+              1.0
+            ],
+            [
+              "3h5d",
+              2.0
+            ],
+            [
+              "JhTh",
+              0.2
+            ],
+            [
+              "4sKd",
+              0.2
+            ],
+            [
+              "KcKh",
+              1.0
+            ],
+            [
+              "3s9c",
+              0.2
+            ],
+            [
+              "4h7s",
+              1.0
+            ],
+            [
+              "5c6d",
+              0.5
+            ],
+            [
+              "KhTd",
+              0.5
+            ],
+            [
+              "3c8h",
+              1.0
+            ],
+            [
+              "7cQc",
+              0.5
+            ],
+            [
+              "5dTs",
+              0.5
+            ],
+            [
+              "8sKc",
+              0.5
+            ],
+            [
+              "4s5c",
+              2.0
+            ],
+            [
+              "5c5d",
+              0.2
+            ]
+          ],
+          [
+            [
+              "8sAs",
+              2.0
+            ],
+            [
+              "3s7d",
+              0.2
+            ],
+            [
+              "4cAd",
+              1.0
+            ],
+            [
+              "3s5d",
+              1.0
+            ],
+            [
+              "3h3s",
+              1.0
+            ],
+            [
+              "9dAs",
+              0.5
+            ],
+            [
+              "5cJd",
+              0.5
+            ],
+            [
+              "7c7s",
+              0.2
+            ],
+            [
+              "TcTh",
+              2.0
+            ],
+            [
+              "5cTd",
+              2.0
+            ],
+            [
+              "3hJd",
+              0.2
+            ],
+            [
+              "3h4h",
+              0.2
+            ],
+            [
+              "6cTs",
+              2.0
+            ],
+            [
+              "2s5d",
+              0.5
+            ],
+            [
+              "5d9h",
+              2.0
+            ],
+            [
+              "8dQc",
+              1.0
+            ],
+            [
+              "2s6c",
+              0.5
+            ],
+            [
+              "8dJh",
+              0.5
+            ],
+            [
+              "2hQd",
+              1.0
+            ],
+            [
+              "2s9c",
+              0.5
+            ],
+            [
+              "JdTh",
+              1.0
+            ],
+            [
+              "7d9h",
+              2.0
+            ],
+            [
+              "9dAc",
+              0.5
+            ],
+            [
+              "QcTs",
+              2.0
+            ],
+            [
+              "AsQs",
+              0.2
+            ],
+            [
+              "2h5h",
+              2.0
+            ],
+            [
+              "2s5c",
+              0.5
+            ],
+            [
+              "2h6c",
+              2.0
+            ],
+            [
+              "9cQd",
+              0.5
+            ],
+            [
+              "4s8d",
+              1.0
+            ],
+            [
+              "4cKs",
+              1.0
+            ],
+            [
+              "2hTd",
+              2.0
+            ],
+            [
+              "2h3h",
+              0.2
+            ],
+            [
+              "2h7d",
+              0.2
+            ],
+            [
+              "7s8s",
+              0.2
+            ],
+            [
+              "2h6h",
+              1.0
+            ],
+            [
+              "8sQc",
+              0.5
+            ],
+            [
+              "8hTc",
+              2.0
+            ],
+            [
+              "5hJs",
+              2.0
+            ],
+            [
+              "AhJs",
+              2.0
+            ],
+            [
+              "7cTs",
+              0.5
+            ],
+            [
+              "AhQd",
+              0.2
+            ],
+            [
+              "QhTd",
+              1.0
+            ],
+            [
+              "6d7c",
+              0.5
+            ],
+            [
+              "8dJd",
+              1.0
+            ],
+            [
+              "8h9c",
+              0.5
+            ],
+            [
+              "5h5s",
+              0.2
+            ],
+            [
+              "9cJh",
+              1.0
+            ],
+            [
+              "4c6c",
+              0.5
+            ],
+            [
+              "3cTd",
+              0.2
+            ],
+            [
+              "2dAh",
+              2.0
+            ],
+            [
+              "AcAd",
+              2.0
+            ],
+            [
+              "5hAd",
+              0.2
+            ],
+            [
+              "4h8d",
+              0.2
+            ],
+            [
+              "5sJh",
+              0.2
+            ],
+            [
+              "6cAc",
+              1.0
+            ],
+            [
+              "AdJd",
+              2.0
+            ],
+            [
+              "2sQd",
+              2.0
+            ],
+            [
+              "3h4c",
+              0.2
+            ],
+            [
+              "JhTc",
+              1.0
+            ],
+            [
+              "QcQd",
+              2.0
+            ],
+            [
+              "QsTd",
+              0.5
+            ],
+            [
+              "5cAs",
+              0.2
+            ],
+            [
+              "5c7c",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 120,
+        "stacks": [
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.3164165,
+      "train_seconds": 9.078902167,
+      "measure_seconds": 0.09337858399999988,
+      "peak_rss_mib": 36.8203125,
+      "public_nodes": 15,
+      "joint_deals": 3751,
+      "information_sets": 384,
+      "metrics": {
+        "policy_payoffs": [
+          -7.7306248270467925,
+          7.730624827046802
+        ],
+        "best_response_payoffs": [
+          -7.653405963927429,
+          7.816414602381513
+        ],
+        "unilateral_gains": [
+          0.07721886311936377,
+          0.08578977533471033
+        ],
+        "nash_conv_chips": 0.1630086384540741,
+        "max_unilateral_gain_pct_pot": 0.07149147944559195
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 9.947634084000015,
+      "sampled_peak_rss_mib": 36.8203125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "wide_3_4096",
+      "raw_combinations": 4096,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "KcQc",
+              0.2
+            ],
+            [
+              "AcQh",
+              0.5
+            ],
+            [
+              "2sTs",
+              0.5
+            ],
+            [
+              "2d6h",
+              2.0
+            ],
+            [
+              "6cQs",
+              0.5
+            ],
+            [
+              "KsQh",
+              0.2
+            ],
+            [
+              "2dQh",
+              0.5
+            ],
+            [
+              "9dTd",
+              1.0
+            ],
+            [
+              "AcKs",
+              0.5
+            ],
+            [
+              "5sTd",
+              0.2
+            ],
+            [
+              "5sKc",
+              0.2
+            ],
+            [
+              "3hAc",
+              0.5
+            ],
+            [
+              "3cTs",
+              1.0
+            ],
+            [
+              "4s9c",
+              0.5
+            ],
+            [
+              "6dTs",
+              0.5
+            ],
+            [
+              "6d7c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "9dKd",
+              1.0
+            ],
+            [
+              "8hAd",
+              0.5
+            ],
+            [
+              "6c8c",
+              0.2
+            ],
+            [
+              "8cTs",
+              2.0
+            ],
+            [
+              "3d4c",
+              2.0
+            ],
+            [
+              "7dJd",
+              0.5
+            ],
+            [
+              "3cKd",
+              0.2
+            ],
+            [
+              "5d7d",
+              1.0
+            ],
+            [
+              "4h7d",
+              0.2
+            ],
+            [
+              "4c6h",
+              2.0
+            ],
+            [
+              "9dAs",
+              1.0
+            ],
+            [
+              "AsQd",
+              2.0
+            ],
+            [
+              "6sJs",
+              0.5
+            ],
+            [
+              "8dKc",
+              0.5
+            ],
+            [
+              "2d8d",
+              0.5
+            ],
+            [
+              "9cTc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "7dQh",
+              0.2
+            ],
+            [
+              "3cKs",
+              0.2
+            ],
+            [
+              "3dJs",
+              0.5
+            ],
+            [
+              "AcQs",
+              2.0
+            ],
+            [
+              "5s8d",
+              1.0
+            ],
+            [
+              "6s9c",
+              2.0
+            ],
+            [
+              "6hQh",
+              0.5
+            ],
+            [
+              "8sQc",
+              0.5
+            ],
+            [
+              "3s5s",
+              0.5
+            ],
+            [
+              "4c7s",
+              0.2
+            ],
+            [
+              "8sKh",
+              0.2
+            ],
+            [
+              "4s7d",
+              0.5
+            ],
+            [
+              "3h6s",
+              2.0
+            ],
+            [
+              "5sAh",
+              0.2
+            ],
+            [
+              "JhQc",
+              0.2
+            ],
+            [
+              "3s4c",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 180,
+        "stacks": [
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "wall_seconds": 45.132889417,
+      "sampled_peak_rss_mib": 74.65625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2,
+      "status": "timed_out",
+      "last_phase": "train",
+      "reason": "External process budget exceeded; no final policy quality claimed."
+    },
+    {
+      "name": "six_729",
+      "raw_combinations": 729,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "JsTc",
+              0.5
+            ],
+            [
+              "8dKd",
+              2.0
+            ],
+            [
+              "5d7c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "9hAd",
+              0.2
+            ],
+            [
+              "6sAd",
+              1.0
+            ],
+            [
+              "4s9h",
+              0.5
+            ]
+          ],
+          [
+            [
+              "4hJd",
+              1.0
+            ],
+            [
+              "8hQh",
+              0.2
+            ],
+            [
+              "3h6d",
+              1.0
+            ]
+          ],
+          [
+            [
+              "6sKd",
+              0.5
+            ],
+            [
+              "9cTc",
+              0.5
+            ],
+            [
+              "5hJh",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3s5d",
+              1.0
+            ],
+            [
+              "3s5s",
+              2.0
+            ],
+            [
+              "7c9d",
+              0.5
+            ]
+          ],
+          [
+            [
+              "4hJs",
+              2.0
+            ],
+            [
+              "QsTc",
+              2.0
+            ],
+            [
+              "9c9h",
+              0.2
+            ]
+          ]
+        ],
+        "pot": 360,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "wall_seconds": 3.7723684580000167,
+      "sampled_peak_rss_mib": 134.15234375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2,
+      "status": "memory_exceeded",
+      "last_phase": "build",
+      "reason": "External process budget exceeded; no final policy quality claimed."
+    }
+  ],
+  "summary": {
+    "total": 13,
+    "completed": 9,
+    "quality_passed": 9,
+    "statuses": {
+      "completed": 9,
+      "memory_exceeded": 1,
+      "timed_out": 3
+    }
+  }
+}

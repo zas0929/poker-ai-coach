@@ -1,0 +1,135 @@
+{
+  "iterations": 75,
+  "method": "cfr_plus_indexed",
+  "timeout_seconds": 45,
+  "memory_mib": 128,
+  "python": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "selected_cases": [
+    "flush_6"
+  ],
+  "quality_gate_pct_pot": 0.5,
+  "scope": "Fixed synthetic weighted ranges, explicit raw budget 4096; unchanged node/deal budget one million. 0.2s RSS sampling can overshoot; no OS hard memory limit.",
+  "results": [
+    {
+      "name": "flush_6",
+      "raw_combinations": 96,
+      "input": {
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "2h7s",
+              0.5
+            ],
+            [
+              "7hAc",
+              2.0
+            ],
+            [
+              "2d3d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "7hQd",
+              1.0
+            ],
+            [
+              "4c7s",
+              1.0
+            ]
+          ],
+          [
+            [
+              "4h4s",
+              0.2
+            ],
+            [
+              "6hAh",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6hKs",
+              1.0
+            ],
+            [
+              "4hQc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "8dQh",
+              1.0
+            ],
+            [
+              "8h9c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "AsJs",
+              1.0
+            ],
+            [
+              "QhTd",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 360,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "wall_seconds": 45.037892375,
+      "sampled_peak_rss_mib": 64.19921875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2,
+      "status": "timed_out",
+      "last_phase": "train",
+      "reason": "External process budget exceeded; no final policy quality claimed."
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "completed": 0,
+    "quality_passed": 0,
+    "statuses": {
+      "timed_out": 1
+    }
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "iterations": 50,
+  "method": "cfr_plus_indexed",
+  "timeout_seconds": 45,
+  "memory_mib": 128,
+  "python": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "selected_cases": [
+    "wide_3_4096"
+  ],
+  "quality_gate_pct_pot": 0.5,
+  "scope": "Fixed synthetic weighted ranges, explicit raw budget 4096; unchanged node/deal budget one million. 0.2s RSS sampling can overshoot; no OS hard memory limit.",
+  "results": [
+    {
+      "name": "wide_3_4096",
+      "raw_combinations": 4096,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "KcQc",
+              0.2
+            ],
+            [
+              "AcQh",
+              0.5
+            ],
+            [
+              "2sTs",
+              0.5
+            ],
+            [
+              "2d6h",
+              2.0
+            ],
+            [
+              "6cQs",
+              0.5
+            ],
+            [
+              "KsQh",
+              0.2
+            ],
+            [
+              "2dQh",
+              0.5
+            ],
+            [
+              "9dTd",
+              1.0
+            ],
+            [
+              "AcKs",
+              0.5
+            ],
+            [
+              "5sTd",
+              0.2
+            ],
+            [
+              "5sKc",
+              0.2
+            ],
+            [
+              "3hAc",
+              0.5
+            ],
+            [
+              "3cTs",
+              1.0
+            ],
+            [
+              "4s9c",
+              0.5
+            ],
+            [
+              "6dTs",
+              0.5
+            ],
+            [
+              "6d7c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "9dKd",
+              1.0
+            ],
+            [
+              "8hAd",
+              0.5
+            ],
+            [
+              "6c8c",
+              0.2
+            ],
+            [
+              "8cTs",
+              2.0
+            ],
+            [
+              "3d4c",
+              2.0
+            ],
+            [
+              "7dJd",
+              0.5
+            ],
+            [
+              "3cKd",
+              0.2
+            ],
+            [
+              "5d7d",
+              1.0
+            ],
+            [
+              "4h7d",
+              0.2
+            ],
+            [
+              "4c6h",
+              2.0
+            ],
+            [
+              "9dAs",
+              1.0
+            ],
+            [
+              "AsQd",
+              2.0
+            ],
+            [
+              "6sJs",
+              0.5
+            ],
+            [
+              "8dKc",
+              0.5
+            ],
+            [
+              "2d8d",
+              0.5
+            ],
+            [
+              "9cTc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "7dQh",
+              0.2
+            ],
+            [
+              "3cKs",
+              0.2
+            ],
+            [
+              "3dJs",
+              0.5
+            ],
+            [
+              "AcQs",
+              2.0
+            ],
+            [
+              "5s8d",
+              1.0
+            ],
+            [
+              "6s9c",
+              2.0
+            ],
+            [
+              "6hQh",
+              0.5
+            ],
+            [
+              "8sQc",
+              0.5
+            ],
+            [
+              "3s5s",
+              0.5
+            ],
+            [
+              "4c7s",
+              0.2
+            ],
+            [
+              "8sKh",
+              0.2
+            ],
+            [
+              "4s7d",
+              0.5
+            ],
+            [
+              "3h6s",
+              2.0
+            ],
+            [
+              "5sAh",
+              0.2
+            ],
+            [
+              "JhQc",
+              0.2
+            ],
+            [
+              "3s4c",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 180,
+        "stacks": [
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 1.501374375,
+      "train_seconds": 28.147756375,
+      "measure_seconds": 0.8104007079999995,
+      "peak_rss_mib": 74.56640625,
+      "public_nodes": 76,
+      "joint_deals": 3229,
+      "information_sets": 528,
+      "metrics": {
+        "policy_payoffs": [
+          -21.950128405590274,
+          38.177613714652544,
+          -16.227485309062246
+        ],
+        "best_response_payoffs": [
+          -21.21605669315706,
+          39.16856619002102,
+          -15.585335355703993
+        ],
+        "unilateral_gains": [
+          0.734071712433213,
+          0.9909524753684735,
+          0.6421499533582526
+        ],
+        "nash_conv_chips": 2.367174141159939,
+        "max_unilateral_gain_pct_pot": 0.5505291529824853
+      },
+      "passes_quality_gate": false,
+      "wall_seconds": 30.811640583,
+      "sampled_peak_rss_mib": 74.56640625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "completed": 1,
+    "quality_passed": 0,
+    "statuses": {
+      "completed": 1
+    }
+  }
+}

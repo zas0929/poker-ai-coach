@@ -234,3 +234,7 @@ latency and peak RSS, with explicit timeout/error reporting. See
 An opt-in indexed CFR+ traversal preserves the reference policies while reducing
 training time on the fixed suite. See [docs/SOLVER_INDEXED.md](docs/SOLVER_INDEXED.md)
 for paired timings, equivalence checks and the unchanged research limits.
+
+Expanded range budgets are opt-in (default remains 64 raw combinations), with
+a separate time/RSS-monitored research runner. Successes, timeouts and quality
+failures are documented in [docs/SOLVER_EXPANDED_RANGES.md](docs/SOLVER_EXPANDED_RANGES.md).

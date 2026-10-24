@@ -24,7 +24,7 @@ class Node:
 class RiverGame:
     def __init__(self, board, ranges, pot=100, bet=50, stack=100, *,
                  bet_sizes=None, raise_sizes=(), max_raises=0, min_bet=1, max_nodes=20000,
-                 stacks=None, initial_contributions=None, dealer=None, folded=()):
+                 stacks=None, initial_contributions=None, dealer=None, folded=(), max_joint_combos=64):
         n=len(ranges)
         if not 2<=n<=6 or len(board)!=5 or len(set(board))!=5 or not all(re.fullmatch(r'[2-9TJQKA][cdhs]', c) for c in board):
             raise ValueError('Two to six players and five distinct river cards required.')
@@ -73,8 +73,11 @@ class RiverGame:
         if not self.bet_sizes or any(v<min_bet and v not in tuple(self.stacks[p] for p in self.live) for v in self.bet_sizes):
             raise ValueError('Opening sizes must meet minimum bet (except short all-in).')
         self.max_raises=max_raises;self.stack=stack;self.min_bet=min_bet
-        if math.prod(max(1,len(r)) for r in ranges)>64 or any(not ranges[p] for p in self.live):
-            raise ValueError('At most 64 raw joint combinations; ranges are never silently truncated.')
+        if type(max_joint_combos) is not int or not 1<=max_joint_combos<=4096:
+            raise ValueError('Explicit joint-combo budget must be an integer from 1 to 4096.')
+        self.max_joint_combos=max_joint_combos
+        if math.prod(max(1,len(r)) for r in ranges)>max_joint_combos or any(not ranges[p] for p in self.live):
+            raise ValueError(f'At most {max_joint_combos} raw joint combinations; ranges are never silently truncated.')
         self.board=tuple(board);self.n=n;self.pot=pot;self.bet=bet;self.ranges=ranges;self.nodes=[]
         evaluator=HandEvaluator();scores={}
         for r in ranges:
@@ -302,6 +305,7 @@ if __name__=='__main__':
     parser.add_argument('--pot',type=int,default=100)
     parser.add_argument('--initial-contributions',type=int,nargs='+')
     parser.add_argument('--min-bet',type=int,default=1)
+    parser.add_argument('--max-joint-combos',type=int,default=64)
     args=parser.parse_args()
     if (args.stacks is not None or args.initial_contributions is not None) and len(args.players)!=1:
         parser.error('Use one explicit --players N with --stacks/--initial-contributions.')
@@ -310,11 +314,11 @@ if __name__=='__main__':
         started=time.perf_counter()
         game=RiverGame(['2c','4d','7h','9s','Jc'],demo_ranges(n),stack=args.stack,pot=args.pot,
                        stacks=args.stacks,initial_contributions=args.initial_contributions,bet_sizes=args.bet_sizes,raise_sizes=args.raise_sizes,
-                       max_raises=args.max_raises,min_bet=args.min_bet)
+                       max_raises=args.max_raises,min_bet=args.min_bet,max_joint_combos=args.max_joint_combos)
         uniform={k:[1/m]*m for k,m in game.action_counts.items()}
         before=game.measure(uniform);policy=game.train(args.iterations,method=args.method);after=game.measure(policy)
         results.append({'players':n,'stacks':game.stacks,'initial_contributions':game.initial_contributions,'integer_payouts':game.integer_payouts,'root_actor':game.root.actor,'joint_deals':len(game.deals),'public_nodes':len(game.nodes),'information_sets':len(game.keys),'iterations':args.iterations,'seconds':round(time.perf_counter()-started,3),'before':before,'after':after,'root_policy':[{'hand':combo,'actions':game.root.actions,'probabilities':policy[(game.root.actor,combo,())]} for combo,_ in game.ranges[game.root.actor]] if game.root.actor!=-1 else []})
     print(json.dumps({'method':args.method,'bet_sizes':args.bet_sizes,'raise_sizes':args.raise_sizes,
-                      'max_raises':args.max_raises,'stack':args.stack,'min_bet':args.min_bet,
+                      'max_raises':args.max_raises,'max_joint_combos':args.max_joint_combos,'stack':args.stack,'min_bet':args.min_bet,
                       'scope':'Restricted synthetic river game with explicit sizes and raise cap. Unequal stacks and layered pots; no future streets. Not production GTO.',
                       'platform':platform.platform(),'results':results},indent=2))

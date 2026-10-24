@@ -1,0 +1,318 @@
+{
+  "iterations": 50,
+  "method": "cfr_plus_indexed",
+  "timeout_seconds": 45,
+  "memory_mib": 128,
+  "python": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "selected_cases": [
+    "dry_6",
+    "flush_6"
+  ],
+  "quality_gate_pct_pot": 0.5,
+  "scope": "Fixed synthetic weighted ranges, explicit raw budget 4096; unchanged node/deal budget one million. 0.2s RSS sampling can overshoot; no OS hard memory limit.",
+  "results": [
+    {
+      "name": "dry_6",
+      "raw_combinations": 96,
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s",
+          "Jc"
+        ],
+        "ranges": [
+          [
+            [
+              "5sAc",
+              0.2
+            ],
+            [
+              "4cQd",
+              0.5
+            ],
+            [
+              "KhTd",
+              0.2
+            ]
+          ],
+          [
+            [
+              "9cKd",
+              1.0
+            ],
+            [
+              "2dAh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "6hAc",
+              2.0
+            ],
+            [
+              "QhQs",
+              2.0
+            ]
+          ],
+          [
+            [
+              "7dTd",
+              2.0
+            ],
+            [
+              "7dJh",
+              2.0
+            ]
+          ],
+          [
+            [
+              "9dTh",
+              0.5
+            ],
+            [
+              "KsQh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "2sTc",
+              2.0
+            ],
+            [
+              "4sQd",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 360,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 1.35710325,
+      "train_seconds": 41.666634791999996,
+      "measure_seconds": 1.3758522080000049,
+      "peak_rss_mib": 72.56640625,
+      "public_nodes": 5263,
+      "joint_deals": 32,
+      "information_sets": 5499,
+      "metrics": {
+        "policy_payoffs": [
+          -60.532698969486475,
+          -22.869251807644787,
+          4.642813938765826,
+          198.35105681233117,
+          -59.45096531520235,
+          -60.14095465876337
+        ],
+        "best_response_payoffs": [
+          -59.890893016323496,
+          -21.441385314197976,
+          5.606556199924,
+          199.07495631372873,
+          -59.311747789134486,
+          -59.99998733084861
+        ],
+        "unilateral_gains": [
+          0.6418059531629794,
+          1.4278664934468104,
+          0.9637422611581741,
+          0.7238995013975682,
+          0.13921752606786697,
+          0.1409673279147583
+        ],
+        "nash_conv_chips": 4.037499063148157,
+        "max_unilateral_gain_pct_pot": 0.39662958151300287
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 44.787268334000004,
+      "sampled_peak_rss_mib": 72.5390625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "flush_6",
+      "raw_combinations": 96,
+      "input": {
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "2h7s",
+              0.5
+            ],
+            [
+              "7hAc",
+              2.0
+            ],
+            [
+              "2d3d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "7hQd",
+              1.0
+            ],
+            [
+              "4c7s",
+              1.0
+            ]
+          ],
+          [
+            [
+              "4h4s",
+              0.2
+            ],
+            [
+              "6hAh",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6hKs",
+              1.0
+            ],
+            [
+              "4hQc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "8dQh",
+              1.0
+            ],
+            [
+              "8h9c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "AsJs",
+              1.0
+            ],
+            [
+              "QhTd",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 360,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096
+      },
+      "method": "cfr_plus_indexed",
+      "status": "completed",
+      "build_seconds": 0.99475375,
+      "train_seconds": 31.821180042,
+      "measure_seconds": 1.105072333999999,
+      "peak_rss_mib": 64.32421875,
+      "public_nodes": 5263,
+      "joint_deals": 24,
+      "information_sets": 5499,
+      "metrics": {
+        "policy_payoffs": [
+          -23.380854465407886,
+          -60.06694240883512,
+          -8.955026293235072,
+          -35.11497174303854,
+          -57.91805726332822,
+          185.43585217384486
+        ],
+        "best_response_payoffs": [
+          -19.757851561619606,
+          -59.999956634826134,
+          -7.590546627327093,
+          -32.40791493444714,
+          -55.69483563308627,
+          188.60090437771208
+        ],
+        "unilateral_gains": [
+          3.6230029037882794,
+          0.06698577400898387,
+          1.3644796659079788,
+          2.707056808591396,
+          2.2232216302419516,
+          3.1650522038672193
+        ],
+        "nash_conv_chips": 13.14979898640581,
+        "max_unilateral_gain_pct_pot": 1.0063896954967444
+      },
+      "passes_quality_gate": false,
+      "wall_seconds": 34.444380875,
+      "sampled_peak_rss_mib": 64.32421875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "completed": 2,
+    "quality_passed": 1,
+    "statuses": {
+      "completed": 2
+    }
+  }
+}

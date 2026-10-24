@@ -23,16 +23,16 @@ def combo_key(text):
     return key
 
 
-def build_river_from_snapshot(snapshot,selected_hands=None,*,bet_sizes=(50,),raise_sizes=(),max_raises=0,max_nodes=20000):
+def build_river_from_snapshot(snapshot,selected_hands=None,*,bet_sizes=(50,),raise_sizes=(),max_raises=0,max_nodes=20000,max_joint_combos=64):
     try:
-        return _build(snapshot,selected_hands,bet_sizes,raise_sizes,max_raises,max_nodes)
+        return _build(snapshot,selected_hands,bet_sizes,raise_sizes,max_raises,max_nodes,max_joint_combos)
     except UnsupportedSolverState:
         raise
     except (KeyError,TypeError,IndexError,ValueError) as error:
         raise UnsupportedSolverState('Unsupported research input: '+str(error)) from error
 
 
-def _build(snapshot,selected_hands,bet_sizes,raise_sizes,max_raises,max_nodes):
+def _build(snapshot,selected_hands,bet_sizes,raise_sizes,max_raises,max_nodes,max_joint_combos):
     payload={k:v for k,v in snapshot.items() if k!='information_key'}
     if snapshot['information_key']!=digest(payload):
         raise UnsupportedSolverState('Public snapshot information key does not match contents.')
@@ -95,14 +95,14 @@ def _build(snapshot,selected_hands,bet_sizes,raise_sizes,max_raises,max_nodes):
     spec={'board':snapshot['board'],'ranges':ranges,'pot':snapshot['pot'],
           'stacks':[p['stack'] for p in players],'initial_contributions':[p['total_committed'] for p in players],
           'dealer':dealer,'folded':folded,'bet_sizes':tuple(bet_sizes),'raise_sizes':tuple(raise_sizes),
-          'max_raises':max_raises,'min_bet':snapshot['big_blind'],'max_nodes':max_nodes}
+          'max_raises':max_raises,'max_joint_combos':max_joint_combos,'min_bet':snapshot['big_blind'],'max_nodes':max_nodes}
     game=RiverGame(**spec)
     if game.root.actor==-1 or ids[game.root.actor]!=snapshot['actor_id']:
         raise UnsupportedSolverState('Actor is not the first pending river decision; no reconstruction is guessed.')
     metadata={'source_information_key':snapshot['information_key'],'task_key':digest(spec),
               'seat_ids':ids,'actor_id':snapshot['actor_id'],'folded_seats':folded,
               'range_selection':'full_public' if selected_hands is None else 'explicit_subset',
-              'range_counts':counts,'folded_card_bunching_modelled':False,
+              'range_counts':counts,'max_joint_combos':game.max_joint_combos,'folded_card_bunching_modelled':False,
               'scope':'Offline start-of-river abstraction only; selected subsets are not full-range/GTO advice.'}
     return game,metadata
 
@@ -115,12 +115,13 @@ if __name__=='__main__':
     parser.add_argument('--raise-sizes',type=int,nargs='*',default=[])
     parser.add_argument('--max-raises',type=int,default=0)
     parser.add_argument('--iterations',type=int,default=200)
+    parser.add_argument('--max-joint-combos',type=int,default=64)
     parser.add_argument('--method',choices=['cfr_plus','cfr_plus_indexed'],default='cfr_plus')
     args=parser.parse_args();raw=json.loads(args.snapshot_json.read_text())
     snapshot=raw.get('snapshot',raw)
     selected=json.loads(args.selected_hands.read_text()) if args.selected_hands else None
     game,metadata=build_river_from_snapshot(snapshot,selected,bet_sizes=args.bet_sizes,
-                                          raise_sizes=args.raise_sizes,max_raises=args.max_raises)
+                                          raise_sizes=args.raise_sizes,max_raises=args.max_raises,max_joint_combos=args.max_joint_combos)
     policy=game.train(args.iterations,method=args.method)
     root=game.root
     print(json.dumps({'metadata':metadata,'method':args.method,'iterations':args.iterations,
