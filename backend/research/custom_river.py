@@ -190,8 +190,11 @@ class RiverGame:
     def key(self,node,deal):return (node.actor,self.deals[deal][0][node.actor],node.history)
 
     def train(self, iterations=200, method='cfr'):
-        if method not in ('cfr', 'cfr_plus'):
-            raise ValueError('Choose cfr or cfr_plus.')
+        if method not in ('cfr', 'cfr_plus', 'cfr_plus_indexed'):
+            raise ValueError('Choose cfr, cfr_plus or cfr_plus_indexed.')
+        if method == 'cfr_plus_indexed':
+            from research.indexed_cfr import train_indexed
+            return train_indexed(self,iterations)
         if method == 'cfr_plus':
             return self._train_plus(iterations)
         return self._train_classic(iterations)
@@ -289,7 +292,7 @@ if __name__=='__main__':
     import argparse,json,platform
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--iterations',type=int,default=100)
-    parser.add_argument('--method',choices=['cfr','cfr_plus'],default='cfr_plus')
+    parser.add_argument('--method',choices=['cfr','cfr_plus','cfr_plus_indexed'],default='cfr_plus')
     parser.add_argument('--players',type=int,nargs='+',default=list(range(2,7)))
     parser.add_argument('--bet-sizes',type=int,nargs='+',default=[50])
     parser.add_argument('--raise-sizes',type=int,nargs='*',default=[])

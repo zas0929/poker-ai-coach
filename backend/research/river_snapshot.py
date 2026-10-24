@@ -115,14 +115,15 @@ if __name__=='__main__':
     parser.add_argument('--raise-sizes',type=int,nargs='*',default=[])
     parser.add_argument('--max-raises',type=int,default=0)
     parser.add_argument('--iterations',type=int,default=200)
+    parser.add_argument('--method',choices=['cfr_plus','cfr_plus_indexed'],default='cfr_plus')
     args=parser.parse_args();raw=json.loads(args.snapshot_json.read_text())
     snapshot=raw.get('snapshot',raw)
     selected=json.loads(args.selected_hands.read_text()) if args.selected_hands else None
     game,metadata=build_river_from_snapshot(snapshot,selected,bet_sizes=args.bet_sizes,
                                           raise_sizes=args.raise_sizes,max_raises=args.max_raises)
-    policy=game.train(args.iterations,method='cfr_plus')
+    policy=game.train(args.iterations,method=args.method)
     root=game.root
-    print(json.dumps({'metadata':metadata,'method':'cfr_plus','iterations':args.iterations,
+    print(json.dumps({'metadata':metadata,'method':args.method,'iterations':args.iterations,
                       'public_nodes':len(game.nodes),'joint_deals':len(game.deals),'metrics':game.measure(policy),
                       'root_policy':[{'hand':hand,'actions':root.actions,'probabilities':policy[(root.actor,hand,())]}
                                      for hand,_ in game.ranges[root.actor]]},indent=2))

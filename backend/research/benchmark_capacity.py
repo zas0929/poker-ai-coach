@@ -47,16 +47,17 @@ def peak_rss_mib():
     return raw/(1024*1024 if sys.platform=='darwin' else 1024)
 
 
-def worker(case,iterations):
+def worker(case,iterations,method='cfr_plus',include_policy=False):
     def progress(phase):print(json.dumps({'phase':phase,'observed_peak_rss_mib':peak_rss_mib()}),flush=True)
     progress('build');start=time.perf_counter()
     try:game=RiverGame(**case['input'])
     except ValueError as error:
         return {'status':'rejected','reason':str(error),'build_seconds':time.perf_counter()-start,'peak_rss_mib':peak_rss_mib()}
     build=time.perf_counter()-start
-    progress('train');start=time.perf_counter();policy=game.train(iterations,method='cfr_plus');train=time.perf_counter()-start
+    progress('train');start=time.perf_counter();policy=game.train(iterations,method=method);train=time.perf_counter()-start
     progress('measure');start=time.perf_counter();metrics=game.measure(policy);measure=time.perf_counter()-start
-    return {'status':'completed','build_seconds':build,'train_seconds':train,'measure_seconds':measure,
+    exported={'policy':[[key,policy[key]] for key in sorted(policy)]} if include_policy else {}
+    return {**exported,'method':method,'status':'completed','build_seconds':build,'train_seconds':train,'measure_seconds':measure,
             'peak_rss_mib':peak_rss_mib(),'public_nodes':len(game.nodes),'joint_deals':len(game.deals),
             'information_sets':len(game.keys),'metrics':metrics,
             'passes_quality_gate':metrics['max_unilateral_gain_pct_pot']<=GATE_PCT}
@@ -72,8 +73,9 @@ def decode_lines(output,allow_partial=False):
     return events
 
 
-def run_case(case,iterations,timeout_seconds):
-    command=[sys.executable,'-m','research.benchmark_capacity','--worker','--iterations',str(iterations)]
+def run_case(case,iterations,timeout_seconds,method='cfr_plus',include_policy=False):
+    command=[sys.executable,'-m','research.benchmark_capacity','--worker','--iterations',str(iterations),'--method',method]
+    if include_policy:command.append('--include-policy')
     start=time.perf_counter()
     try:
         completed=subprocess.run(command,input=json.dumps(case),text=True,capture_output=True,timeout=timeout_seconds)
@@ -94,15 +96,15 @@ def suite_passes(rows):
                if r.get('expected_rejection') else (r['status']=='completed' and r['passes_quality_gate']) for r in rows)
 
 
-def benchmark(iterations=100,timeout_seconds=45):
+def benchmark(iterations=100,timeout_seconds=45,method='cfr_plus'):
     rows=[]
     for case in scenarios():
         print('Starting '+case['name'],file=sys.stderr,flush=True)
-        result=run_case(case,iterations,timeout_seconds)
+        result=run_case(case,iterations,timeout_seconds,method=method)
         rows.append({**case,**result})
         print(case['name']+': '+result['status'],file=sys.stderr,flush=True)
     completed=[r for r in rows if r['status']=='completed']
-    return {'iterations':iterations,'timeout_seconds_per_case':timeout_seconds,'gate_pct_pot':GATE_PCT,
+    return {'method':method,'iterations':iterations,'timeout_seconds_per_case':timeout_seconds,'gate_pct_pot':GATE_PCT,
             'python':sys.version,'platform':platform.platform(),
             'scope':'Fixed public synthetic weighted ranges, one bet size/one capped raise. All seats uncertain. RSS includes interpreter/imports. Timeouts yield no quality claim.',
             'results':rows,'passes_suite':suite_passes(rows),'summary':{'completed':len(completed),'quality_passed':sum(r['passes_quality_gate'] for r in completed),
@@ -115,9 +117,11 @@ if __name__=='__main__':
     parser.add_argument('--iterations',type=int,default=100)
     parser.add_argument('--timeout-seconds',type=float,default=45)
     parser.add_argument('--worker',action='store_true')
+    parser.add_argument('--method',choices=['cfr_plus','cfr_plus_indexed'],default='cfr_plus')
+    parser.add_argument('--include-policy',action='store_true',help='Export policy for numerical equivalence checks')
     parser.add_argument('--check',action='store_true',help='Fail on incomplete/failed quality controls or wrong expected rejection')
     args=parser.parse_args()
     if not 1<=args.iterations<=2000 or not math.isfinite(args.timeout_seconds) or args.timeout_seconds<=0:parser.error('Positive bounded iterations/timeout required.')
-    report=worker(json.load(sys.stdin),args.iterations) if args.worker else benchmark(args.iterations,args.timeout_seconds)
+    report=worker(json.load(sys.stdin),args.iterations,args.method,args.include_policy) if args.worker else benchmark(args.iterations,args.timeout_seconds,args.method)
     print(json.dumps(report,indent=None if args.worker else 2),flush=True)
     if args.check and not args.worker and not report['passes_suite']:sys.exit(1)

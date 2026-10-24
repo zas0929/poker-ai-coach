@@ -230,3 +230,7 @@ for explicit subset inputs, reproducible engine checks and remaining limits.
 The wider all-seats-uncertain research suite measures quality, isolated-process
 latency and peak RSS, with explicit timeout/error reporting. See
 [docs/SOLVER_CAPACITY.md](docs/SOLVER_CAPACITY.md) for results and profiling.
+
+An opt-in indexed CFR+ traversal preserves the reference policies while reducing
+training time on the fixed suite. See [docs/SOLVER_INDEXED.md](docs/SOLVER_INDEXED.md)
+for paired timings, equivalence checks and the unchanged research limits.
