@@ -1,0 +1,1028 @@
+{
+  "scope": "Real-process offline admission controls, never live advice.",
+  "summary": {
+    "total": 12,
+    "expected_statuses_matched": 12
+  },
+  "results": [
+    {
+      "name": "ready_two_seats",
+      "expected_status": "ready",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": {
+          "wall_seconds": 0.500116125,
+          "sampled_peak_rss_mib": 29.03515625,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": 29.6640625,
+          "build_seconds": 0.01376566600000001,
+          "train_seconds": 0.008241291000000012,
+          "measure_seconds": 0.0003350420000000076
+        },
+        "quality": {
+          "metric": "max_unilateral_gain_pct_decision_pot",
+          "value": 0.17720144995479062,
+          "gate": 0.5,
+          "passed": true,
+          "evidence": {
+            "policy_payoffs": [
+              3.310541567235001,
+              -3.3105415672349996
+            ],
+            "best_response_payoffs": [
+              3.3113914787604366,
+              -3.2573811322485624
+            ],
+            "unilateral_gains": [
+              0.0008499115254356759,
+              0.05316043498643719
+            ],
+            "nash_conv_chips": 0.054010346511872864,
+            "max_unilateral_gain_pct_pot": 0.17720144995479062
+          },
+          "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+        },
+        "model": {
+          "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+          "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+          "seat_ids": [
+            "hero",
+            "villain"
+          ],
+          "actor_id": "villain",
+          "folded_seats": [],
+          "range_selection": "explicit_subset",
+          "range_counts": [
+            {
+              "id": "hero",
+              "public": 1081,
+              "selected": 3
+            },
+            {
+              "id": "villain",
+              "public": 1081,
+              "selected": 3
+            }
+          ],
+          "utility_storage": "compact",
+          "max_joint_combos": 4096,
+          "folded_card_bunching_modelled": false,
+          "river_state": {
+            "prior_pot": 20,
+            "decision_pot": 30,
+            "street_committed": [
+              10,
+              0
+            ],
+            "last_full_raise": 10,
+            "acted_at_bet": {
+              "hero": 10,
+              "villain": 0
+            },
+            "pending_ids": [
+              "villain"
+            ],
+            "observed_raises": 0,
+            "future_raise_cap": 1
+          },
+          "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+          "tree": {
+            "bet_sizes": [
+              10,
+              40
+            ],
+            "raise_sizes": [
+              80,
+              120
+            ],
+            "future_raise_cap": 1,
+            "min_bet": 10,
+            "max_nodes": 20000,
+            "public_nodes": 9,
+            "joint_deals": 7,
+            "max_joint_combos": 4096
+          }
+        },
+        "status": "ready",
+        "reasons": [],
+        "candidate": {
+          "actor_id": "villain",
+          "own_hand": "8d7c",
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "probabilities": [
+            4.9504950495049515e-05,
+            0.33331683168316834,
+            0.33331683168316834,
+            0.33331683168316834
+          ],
+          "compatible_deals": 2,
+          "conditional_mass": 0.14290961457236567
+        },
+        "admission": {
+          "offline_analysis_allowed": true,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "changed_during_calculation",
+      "expected_status": "stale",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": {
+          "wall_seconds": 0.500116125,
+          "sampled_peak_rss_mib": 29.03515625,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": 29.6640625,
+          "build_seconds": 0.01376566600000001,
+          "train_seconds": 0.008241291000000012,
+          "measure_seconds": 0.0003350420000000076
+        },
+        "quality": {
+          "metric": "max_unilateral_gain_pct_decision_pot",
+          "value": 0.17720144995479062,
+          "gate": 0.5,
+          "passed": true,
+          "evidence": {
+            "policy_payoffs": [
+              3.310541567235001,
+              -3.3105415672349996
+            ],
+            "best_response_payoffs": [
+              3.3113914787604366,
+              -3.2573811322485624
+            ],
+            "unilateral_gains": [
+              0.0008499115254356759,
+              0.05316043498643719
+            ],
+            "nash_conv_chips": 0.054010346511872864,
+            "max_unilateral_gain_pct_pot": 0.17720144995479062
+          },
+          "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+        },
+        "model": {
+          "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+          "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+          "seat_ids": [
+            "hero",
+            "villain"
+          ],
+          "actor_id": "villain",
+          "folded_seats": [],
+          "range_selection": "explicit_subset",
+          "range_counts": [
+            {
+              "id": "hero",
+              "public": 1081,
+              "selected": 3
+            },
+            {
+              "id": "villain",
+              "public": 1081,
+              "selected": 3
+            }
+          ],
+          "utility_storage": "compact",
+          "max_joint_combos": 4096,
+          "folded_card_bunching_modelled": false,
+          "river_state": {
+            "prior_pot": 20,
+            "decision_pot": 30,
+            "street_committed": [
+              10,
+              0
+            ],
+            "last_full_raise": 10,
+            "acted_at_bet": {
+              "hero": 10,
+              "villain": 0
+            },
+            "pending_ids": [
+              "villain"
+            ],
+            "observed_raises": 0,
+            "future_raise_cap": 1
+          },
+          "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+          "tree": {
+            "bet_sizes": [
+              10,
+              40
+            ],
+            "raise_sizes": [
+              80,
+              120
+            ],
+            "future_raise_cap": 1,
+            "min_bet": 10,
+            "max_nodes": 20000,
+            "public_nodes": 9,
+            "joint_deals": 7,
+            "max_joint_combos": 4096
+          }
+        },
+        "status": "stale",
+        "reasons": [
+          {
+            "code": "STALE_DECISION",
+            "stage": "delivery",
+            "message": "Decision changed after calculation; discard the candidate."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "quality_rejected",
+      "expected_status": "quality_rejected",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+        "limits": {
+          "iterations": 1,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 1e-12
+        },
+        "timing": {
+          "wall_seconds": 0.506246917,
+          "sampled_peak_rss_mib": 29.125,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": 29.8046875,
+          "build_seconds": 0.013804291999999996,
+          "train_seconds": 0.009795916000000016,
+          "measure_seconds": 0.0004738750000000125
+        },
+        "quality": {
+          "metric": "max_unilateral_gain_pct_decision_pot",
+          "value": 94.49786048864347,
+          "gate": 1e-12,
+          "passed": false,
+          "evidence": {
+            "policy_payoffs": [
+              3.020827952854793,
+              -3.0208279528547926
+            ],
+            "best_response_payoffs": [
+              31.370186099447835,
+              6.491528384497464
+            ],
+            "unilateral_gains": [
+              28.34935814659304,
+              9.512356337352257
+            ],
+            "nash_conv_chips": 37.8617144839453,
+            "max_unilateral_gain_pct_pot": 94.49786048864347
+          },
+          "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+        },
+        "model": {
+          "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+          "task_key": "c7c43fc75bd11e2f1a9e379579cb20d2fef0537119f9d43af943b844c005b93b",
+          "seat_ids": [
+            "hero",
+            "villain"
+          ],
+          "actor_id": "villain",
+          "folded_seats": [],
+          "range_selection": "explicit_subset",
+          "range_counts": [
+            {
+              "id": "hero",
+              "public": 1081,
+              "selected": 3
+            },
+            {
+              "id": "villain",
+              "public": 1081,
+              "selected": 3
+            }
+          ],
+          "utility_storage": "compact",
+          "max_joint_combos": 4096,
+          "folded_card_bunching_modelled": false,
+          "river_state": {
+            "prior_pot": 20,
+            "decision_pot": 30,
+            "street_committed": [
+              10,
+              0
+            ],
+            "last_full_raise": 10,
+            "acted_at_bet": {
+              "hero": 10,
+              "villain": 0
+            },
+            "pending_ids": [
+              "villain"
+            ],
+            "observed_raises": 0,
+            "future_raise_cap": 1
+          },
+          "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+          "tree": {
+            "bet_sizes": [
+              10,
+              40
+            ],
+            "raise_sizes": [
+              80,
+              120
+            ],
+            "future_raise_cap": 1,
+            "min_bet": 10,
+            "max_nodes": 20000,
+            "public_nodes": 9,
+            "joint_deals": 7,
+            "max_joint_combos": 4096
+          }
+        },
+        "status": "quality_rejected",
+        "reasons": [
+          {
+            "code": "QUALITY_GATE_FAILED",
+            "stage": "admission",
+            "message": "Bounded strategy did not pass the requested quality gate."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "time_budget",
+      "expected_status": "budget_exceeded",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": null,
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 0.001,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": {
+          "wall_seconds": 0.25043737499999996,
+          "sampled_peak_rss_mib": 0.0,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": null,
+          "build_seconds": null,
+          "train_seconds": null,
+          "measure_seconds": null
+        },
+        "quality": null,
+        "model": null,
+        "status": "budget_exceeded",
+        "reasons": [
+          {
+            "code": "TIME_BUDGET_EXCEEDED",
+            "stage": "startup",
+            "message": "External process budget exceeded; no final policy quality claimed."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "memory_budget",
+      "expected_status": "budget_exceeded",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": null,
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 1,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": {
+          "wall_seconds": 0.29734754099999994,
+          "sampled_peak_rss_mib": 28.9296875,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": null,
+          "build_seconds": null,
+          "train_seconds": null,
+          "measure_seconds": null
+        },
+        "quality": null,
+        "model": null,
+        "status": "budget_exceeded",
+        "reasons": [
+          {
+            "code": "MEMORY_BUDGET_EXCEEDED",
+            "stage": "train",
+            "message": "External process budget exceeded; no final policy quality claimed."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "stale_decision",
+      "expected_status": "stale",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": null,
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": null,
+        "quality": null,
+        "model": null,
+        "status": "stale",
+        "reasons": [
+          {
+            "code": "STALE_DECISION",
+            "stage": "preflight",
+            "message": "Requested decision no longer matches the caller."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "accidental_hidden_data",
+      "expected_status": "invalid_input",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": null,
+        "source_information_key": null,
+        "task_key": null,
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": null,
+        "quality": null,
+        "model": null,
+        "status": "invalid_input",
+        "reasons": [
+          {
+            "code": "INVALID_PUBLIC_REQUEST",
+            "stage": "preflight",
+            "message": "Only public player fields are accepted; no holdings or names."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "unsupported_street",
+      "expected_status": "unsupported",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "b19604a7ad4c03914e4e67d63cfbe1f4fd61f931d92b83942e3216ad7ad21a91",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": null,
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": null,
+        "quality": null,
+        "model": null,
+        "status": "unsupported",
+        "reasons": [
+          {
+            "code": "UNSUPPORTED_MODEL",
+            "stage": "preflight",
+            "message": "Only schema-v1 river, 2\u20136 original seats and the public heuristic v1 range model are supported."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "hand_outside_selected_subset",
+      "expected_status": "unsupported",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "70c3bbf86f447ce04a510da4de93d49fbbd9353558c6e32bba28cd4c97a03bc2",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": null,
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": {
+          "wall_seconds": 0.46745887499999994,
+          "sampled_peak_rss_mib": 0.0,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": null,
+          "build_seconds": null,
+          "train_seconds": null,
+          "measure_seconds": null
+        },
+        "quality": null,
+        "model": null,
+        "status": "unsupported",
+        "reasons": [
+          {
+            "code": "UNSUPPORTED_OWN_HAND",
+            "stage": "worker",
+            "message": "Own hand must be an exact supported public-subset combo at the current actor."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "corrupt_public_snapshot",
+      "expected_status": "unsupported",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "0c364d7eb0360dfaaf3b56916fd3ce396a12295f51f7f724d78508e7e90be95e",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": null,
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": {
+          "wall_seconds": 0.4870219999999996,
+          "sampled_peak_rss_mib": 0.0,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": null,
+          "build_seconds": null,
+          "train_seconds": null,
+          "measure_seconds": null
+        },
+        "quality": null,
+        "model": null,
+        "status": "unsupported",
+        "reasons": [
+          {
+            "code": "UNSUPPORTED_STATE_OR_TREE",
+            "stage": "worker",
+            "message": "Public snapshot information key does not match contents."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "missing_native_library",
+      "expected_status": "unavailable",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "b64ffd08e5ba7476c8e59d4a0222b5becd5df7228836db2e46eb4e7687513089",
+        "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+        "task_key": null,
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 10.0,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": {
+          "wall_seconds": 0.5059805829999999,
+          "sampled_peak_rss_mib": 27.99609375,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": null,
+          "build_seconds": null,
+          "train_seconds": null,
+          "measure_seconds": null
+        },
+        "quality": null,
+        "model": null,
+        "status": "unavailable",
+        "reasons": [
+          {
+            "code": "NATIVE_KERNEL_UNAVAILABLE",
+            "stage": "worker",
+            "message": "Explicit native build is absent, stale or unavailable; run research/build_native.py."
+          }
+        ],
+        "candidate": null,
+        "admission": {
+          "offline_analysis_allowed": false,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    },
+    {
+      "name": "ready_six_seats",
+      "expected_status": "ready",
+      "result": {
+        "contract_version": 1,
+        "scope": "offline_bounded_river",
+        "provenance": {
+          "engine_version": "bounded_river_cfr_plus_v1",
+          "engine_source_sha256": "38f25303df21c8c88d51edddbae8bbb10d1083c2cfaf00d945f878eeef3653cb",
+          "range_version": "public_action_heuristic_v1",
+          "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+          "method": "cfr_plus_native",
+          "utility_storage": "compact"
+        },
+        "request_key": "e61db5b2326c8ae6dafccabfeb2487c8be000ce302d74020357f635dec0d90e9",
+        "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+        "task_key": "3e87ac15e544c4cd7977bf721fab7cd6a45b28308d12e7cf9adb8fe14baf1536",
+        "limits": {
+          "iterations": 100,
+          "wall_seconds": 20,
+          "memory_mib": 128.0,
+          "quality_gate_pct_pot": 0.5
+        },
+        "timing": {
+          "wall_seconds": 6.147587541,
+          "sampled_peak_rss_mib": 42.72265625,
+          "rss_poll_seconds": 0.2,
+          "peak_rss_mib": 43.55078125,
+          "build_seconds": 1.916835875,
+          "train_seconds": 1.260502791,
+          "measure_seconds": 2.505508959
+        },
+        "quality": {
+          "metric": "max_unilateral_gain_pct_decision_pot",
+          "value": 0.1754369055199984,
+          "gate": 0.5,
+          "passed": true,
+          "evidence": {
+            "policy_payoffs": [
+              -7.546873310920152,
+              -10.013986179189214,
+              -15.888927720102965,
+              -29.28824977942908,
+              47.29103635739766,
+              15.447000632243753
+            ],
+            "best_response_payoffs": [
+              -7.471552206099853,
+              -10.000000000000007,
+              -15.767086946929496,
+              -29.242109828564278,
+              47.44892957236566,
+              15.53317916475937
+            ],
+            "unilateral_gains": [
+              0.07532110482029886,
+              0.013986179189206638,
+              0.12184077317346897,
+              0.04613995086480216,
+              0.15789321496799857,
+              0.08617853251561591
+            ],
+            "nash_conv_chips": 0.5013597555313911,
+            "max_unilateral_gain_pct_pot": 0.1754369055199984
+          },
+          "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+        },
+        "model": {
+          "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+          "task_key": "3e87ac15e544c4cd7977bf721fab7cd6a45b28308d12e7cf9adb8fe14baf1536",
+          "seat_ids": [
+            "hero",
+            "villain",
+            "villain_2",
+            "villain_3",
+            "villain_4",
+            "villain_5"
+          ],
+          "actor_id": "villain_4",
+          "folded_seats": [],
+          "range_selection": "explicit_subset",
+          "range_counts": [
+            {
+              "id": "hero",
+              "public": 1081,
+              "selected": 3
+            },
+            {
+              "id": "villain",
+              "public": 1081,
+              "selected": 3
+            },
+            {
+              "id": "villain_2",
+              "public": 1081,
+              "selected": 3
+            },
+            {
+              "id": "villain_3",
+              "public": 1081,
+              "selected": 3
+            },
+            {
+              "id": "villain_4",
+              "public": 1081,
+              "selected": 3
+            },
+            {
+              "id": "villain_5",
+              "public": 1081,
+              "selected": 3
+            }
+          ],
+          "utility_storage": "compact",
+          "max_joint_combos": 4096,
+          "folded_card_bunching_modelled": false,
+          "river_state": {
+            "prior_pot": 60,
+            "decision_pot": 90,
+            "street_committed": [
+              0,
+              0,
+              10,
+              20,
+              0,
+              0
+            ],
+            "last_full_raise": 10,
+            "acted_at_bet": {
+              "villain": 0,
+              "villain_2": 10,
+              "villain_3": 20
+            },
+            "pending_ids": [
+              "villain_4",
+              "villain_5",
+              "hero",
+              "villain",
+              "villain_2"
+            ],
+            "observed_raises": 1,
+            "future_raise_cap": 1
+          },
+          "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+          "tree": {
+            "bet_sizes": [
+              10,
+              40
+            ],
+            "raise_sizes": [
+              80,
+              120
+            ],
+            "future_raise_cap": 1,
+            "min_bet": 10,
+            "max_nodes": 20000,
+            "public_nodes": 1689,
+            "joint_deals": 146,
+            "max_joint_combos": 4096
+          }
+        },
+        "status": "ready",
+        "reasons": [],
+        "candidate": {
+          "actor_id": "villain_4",
+          "own_hand": "Jh7s",
+          "actions": [
+            "FOLD",
+            "CALL",
+            "RAISE 80",
+            "RAISE 120"
+          ],
+          "probabilities": [
+            4.9504950495049434e-05,
+            0.4000541504240142,
+            0.24227614960261484,
+            0.35762019502287584
+          ],
+          "compatible_deals": 56,
+          "conditional_mass": 0.36027088177460453
+        },
+        "admission": {
+          "offline_analysis_allowed": true,
+          "live_advice_allowed": false
+        },
+        "fallback": {
+          "source": "current_coach",
+          "retain_current_advice": true,
+          "reason": "Research-only contract; live advice is never replaced."
+        }
+      }
+    }
+  ]
+}

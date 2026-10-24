@@ -258,3 +258,9 @@ equity variant against bounded river continuations, preserving exact recommended
 sizes. See [docs/SOLVER_COACH_COMPARISON.md](docs/SOLVER_COACH_COMPARISON.md)
 for conditional EV, scope limits and the reproducible 44-hand corpus. Live advice
 is unchanged.
+
+A versioned offline admission contract now records model/version identity,
+quality, tree limits, timing and refusal reasons. Candidates are emitted only
+for admitted research results; live advice remains disabled. See
+[docs/SOLVER_ANALYSIS_CONTRACT.md](docs/SOLVER_ANALYSIS_CONTRACT.md) for budgets,
+stale-result checks and the real-process controls.
