@@ -319,3 +319,10 @@ short raises, side pots, folds and board ties. Of 46 planned cases, 40 completed
 Two corrected malformed inputs passed in a separate supplement. See
 [docs/SOLVER_ADAPTIVE_VALIDATION.md](docs/SOLVER_ADAPTIVE_VALIDATION.md) for manifests,
 per-player results and why live advice remains unchanged.
+
+A separate fast adaptive path now fuses policy valuation, unrestricted best
+response and refinement action values. Four completed paired adaptive controls
+had bit-for-bit matching policies/traces and descriptive speedups of 1.7–2.9×;
+two heavy six-seat cases still timed out for both paths. Frozen reference modules
+and live advice remain unchanged. See
+[docs/SOLVER_FUSED_RESPONSE.md](docs/SOLVER_FUSED_RESPONSE.md).
