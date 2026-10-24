@@ -312,3 +312,10 @@ existing development corpus, 23/30 controls passed with at most 75% of the origi
 strategy rows; seven were explicitly refused. Live advice remains disabled. See
 [docs/SOLVER_ADAPTIVE_STRATEGY.md](docs/SOLVER_ADAPTIVE_STRATEGY.md) for budgets,
 nonmonotonic refinement, full traces and independent-validation requirements.
+
+A frozen synthetic holdout tested adaptive refinement on new seeds, sizing,
+short raises, side pots, folds and board ties. Of 46 planned cases, 40 completed:
+22 passed and 18 were refused; input/model limits and two timeouts remain visible.
+Two corrected malformed inputs passed in a separate supplement. See
+[docs/SOLVER_ADAPTIVE_VALIDATION.md](docs/SOLVER_ADAPTIVE_VALIDATION.md) for manifests,
+per-player results and why live advice remains unchanged.

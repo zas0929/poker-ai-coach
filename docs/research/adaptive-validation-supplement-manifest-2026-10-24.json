@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "parent_manifest_sha256": "b5f8bb7b08182918db72559e0b9dbe9ed1e86dfc38f7d114c81a5ef70856a4b8",
+  "frozen_source_sha256": {
+    "adaptive_strategy.py": "4e86db66bf9de0020acc3415ab4df515fac8f07673bbaecbeb9141612724ffdf",
+    "strategy_abstraction.py": "22d42276c7e8778687fe8167a40a0858cbeb6d50a60696a49226d2a370858351",
+    "benchmark_adaptive_strategy.py": "89a815d4d4ee9d92aba0bcbdeda38b2c612e947ed7071f5ec41f8bf072bfabd7",
+    "benchmark_strategy_abstraction.py": "afd6d477a768956c6d5634883740f5904dfc748108478af3970c902fb4ffd5c9",
+    "custom_river.py": "7e3fc1317c6dae884363d01672d1865b3dd82ff9efc145de9951fc985dc87029",
+    "river_replay.py": "c611a0768ef5fe9abe77da50b1a3c7468033e453fb68bf1bbaec70801f2303ad",
+    "native_cfr.py": "9019a33a0393b7aed64cb43d3f937707608a681d83f6bfeacaf9b5fa0918017d",
+    "native/cfr.cpp": "3b5b81d286d407269d3fbddee9eb1630a3a376a714c3cd11a5ac164bc3737481",
+    "compare_coach.py": "4aea7cce891324312f4ecc1341a8cf0784a4612197f34d7df6832ca769bc7c66",
+    "sidepot_reference.py": "4644b87159153d1516eb83ab6feb130cbe84d08c3723c23f18fda8da6f2abc4d",
+    "validate_adaptive_strategy.py": "68791cd1fcdbfebafe41ce734773be1414c18419490644457c047d81cb962bb9"
+  },
+  "supplement_source_sha256": "5e16083cbeacd19ac53cfce4d0e6cdf29cfee910bb1cf3f50385e4105d13d3c9",
+  "cases": [
+    {
+      "name": "short_raises_2_101_legal_raise",
+      "raw_combinations": 36,
+      "input": {
+        "board": [
+          "3h",
+          "6h",
+          "Th",
+          "Ks",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "5dQc",
+              1.0
+            ],
+            [
+              "2s9s",
+              0.5
+            ],
+            [
+              "5sQd",
+              1.0
+            ],
+            [
+              "AdTd",
+              0.5
+            ],
+            [
+              "7s9h",
+              0.2
+            ],
+            [
+              "5d6d",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3d9h",
+              1.0
+            ],
+            [
+              "5dTc",
+              1.0
+            ],
+            [
+              "6cQs",
+              2.0
+            ],
+            [
+              "5h9d",
+              0.2
+            ],
+            [
+              "9d9s",
+              1.0
+            ],
+            [
+              "4c5h",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 120,
+        "stacks": [
+          8,
+          12
+        ],
+        "initial_contributions": [
+          60,
+          60
+        ],
+        "bet_sizes": [
+          10
+        ],
+        "raise_sizes": [
+          12
+        ],
+        "max_raises": 1,
+        "min_bet": 5,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raises",
+      "seed": 101,
+      "dealt_players": 2,
+      "live_players": 2,
+      "row_budget": "compact",
+      "parent_case_name": "short_raises_2_101"
+    },
+    {
+      "name": "short_raises_2_211_legal_raise",
+      "raw_combinations": 36,
+      "input": {
+        "board": [
+          "3h",
+          "6h",
+          "Th",
+          "Ks",
+          "Ac"
+        ],
+        "ranges": [
+          [
+            [
+              "8cJs",
+              0.5
+            ],
+            [
+              "2d7h",
+              1.0
+            ],
+            [
+              "JsQc",
+              0.5
+            ],
+            [
+              "9cAh",
+              2.0
+            ],
+            [
+              "KdQd",
+              0.5
+            ],
+            [
+              "4s8d",
+              0.5
+            ]
+          ],
+          [
+            [
+              "8cAh",
+              0.5
+            ],
+            [
+              "4d9h",
+              0.5
+            ],
+            [
+              "4sAh",
+              2.0
+            ],
+            [
+              "JcQs",
+              0.2
+            ],
+            [
+              "8hKd",
+              1.0
+            ],
+            [
+              "3c5h",
+              0.5
+            ]
+          ]
+        ],
+        "pot": 120,
+        "stacks": [
+          8,
+          12
+        ],
+        "initial_contributions": [
+          60,
+          60
+        ],
+        "bet_sizes": [
+          10
+        ],
+        "raise_sizes": [
+          12
+        ],
+        "max_raises": 1,
+        "min_bet": 5,
+        "max_joint_combos": 4096
+      },
+      "family": "short_raises",
+      "seed": 211,
+      "dealt_players": 2,
+      "live_players": 2,
+      "row_budget": "compact",
+      "parent_case_name": "short_raises_2_211"
+    }
+  ],
+  "iterations_per_round": 100,
+  "limits": {
+    "wall_seconds": 45,
+    "memory_mib": 128
+  },
+  "scope": "Two corrected legal raise inputs, declared separately; original two input errors stay in base results. No algorithm or threshold changes.",
+  "manifest_sha256": "64a4fd59be711ce4c150989a785863ae5920e816241788e9e07ce2d55e05f218"
+}
