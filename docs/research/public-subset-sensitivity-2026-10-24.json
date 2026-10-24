@@ -1,0 +1,3649 @@
+{
+  "policy_source_sha256": "bc70888fe94281c4300195107cabc5b2028c7d7e8c57b1974125d50a5d20529c",
+  "scope": "10 paired deterministic public river probes, known acting-hand anchor, nested uniform subsets preserving original public weights. Wider is a sensitivity control, not full-range truth.",
+  "diagnostic_tv_threshold": 0.15,
+  "results": [
+    {
+      "name": "dry_2",
+      "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+      "own_probe": "Ac2d",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 9,
+            "selected_key": "591678a288e36072fd59cdc4b7c25a7937ce4708fc4399090ce358b3f19d8920",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "2830d8865e6297e49bb7f53b6e25ede5a690a43a6c5a4232fdcdcafaa6f60f44",
+            "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+            "task_key": "793f6fe974424b19258166f87e0a85ecdec749225b62c6e0608d887789365c79",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.514632167,
+              "sampled_peak_rss_mib": 28.34765625,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 29.19140625,
+              "build_seconds": 0.013493000000000005,
+              "train_seconds": 0.008906459000000005,
+              "measure_seconds": 0.0003448749999999945,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.03784761544480375,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -7.560175099960885,
+                  7.560175099960884
+                ],
+                "best_response_payoffs": [
+                  -7.557847986280331,
+                  7.571529384594325
+                ],
+                "unilateral_gains": [
+                  0.0023271136805540493,
+                  0.011354284633441125
+                ],
+                "nash_conv_chips": 0.013681398313995174,
+                "max_unilateral_gain_pct_pot": 0.03784761544480375
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+              "task_key": "793f6fe974424b19258166f87e0a85ecdec749225b62c6e0608d887789365c79",
+              "seat_ids": [
+                "hero",
+                "villain"
+              ],
+              "actor_id": "villain",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 20,
+                "decision_pot": 30,
+                "street_committed": [
+                  10,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "hero": 10,
+                  "villain": 0
+                },
+                "pending_ids": [
+                  "villain"
+                ],
+                "observed_raises": 0,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 6,
+                "joint_deals": 9,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain",
+              "own_hand": "Ac2d",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.6631938016576401,
+                0.0001791607732201792,
+                0.33662703756913975
+              ],
+              "compatible_deals": 3,
+              "conditional_mass": 0.3571309829758046
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 16,
+            "raw_combinations": 256,
+            "selected_key": "26b28f3cfc3b7248c40c5b4cada76fa6dda8447155762260313c72d43960d77c",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "47e3a5d77270c46f8dc387f46133db4c97722674ac6c7cf868bda6129caee777",
+            "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+            "task_key": "f8140f7eb829267509967b9787e1a05d2367e6a26d100d11c1521a6ddcbc278c",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.5025125830000001,
+              "sampled_peak_rss_mib": 28.515625,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 29.69921875,
+              "build_seconds": 0.023556959000000016,
+              "train_seconds": 0.011186124999999991,
+              "measure_seconds": 0.004244999999999999,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.019916172459627884,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  5.788295282811284,
+                  -5.788295282811284
+                ],
+                "best_response_payoffs": [
+                  5.794270134549173,
+                  -5.785270464054598
+                ],
+                "unilateral_gains": [
+                  0.005974851737888365,
+                  0.003024818756686365
+                ],
+                "nash_conv_chips": 0.00899967049457473,
+                "max_unilateral_gain_pct_pot": 0.019916172459627884
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "b7a42f824dc3ab703df5fb9468bf1dd26b0950ac7ded8f9c2f5e3d2e5a1548ce",
+              "task_key": "f8140f7eb829267509967b9787e1a05d2367e6a26d100d11c1521a6ddcbc278c",
+              "seat_ids": [
+                "hero",
+                "villain"
+              ],
+              "actor_id": "villain",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 16
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 16
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 20,
+                "decision_pot": 30,
+                "street_committed": [
+                  10,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "hero": 10,
+                  "villain": 0
+                },
+                "pending_ids": [
+                  "villain"
+                ],
+                "observed_raises": 0,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 6,
+                "joint_deals": 241,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain",
+              "own_hand": "Ac2d",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9995374538208871,
+                0.00028271875902406116,
+                0.00017982742008888701
+              ],
+              "compatible_deals": 16,
+              "conditional_mass": 0.05814844568026478
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 0.3364472101490509,
+        "small_modes": [
+          "FOLD"
+        ],
+        "wider_modes": [
+          "FOLD"
+        ],
+        "same_modes": true,
+        "within_diagnostic_tv_015": false
+      }
+    },
+    {
+      "name": "dry_3",
+      "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+      "own_probe": "KhJh",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 27,
+            "selected_key": "1a360ee2a195f958e9c69c47bf66e3f42f6096f0b31ef33c9a282c3f9800e567",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "d454f16b723498eb670f6a848cdc67cce4300f3180ec369b1169c9141abd741a",
+            "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+            "task_key": "593f2cfb8a3f58cc1936beedf1c4c40f7a1b5c793ef1aee517d63366617647d3",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.501340667,
+              "sampled_peak_rss_mib": 31.22265625,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 32.875,
+              "build_seconds": 0.02524125000000002,
+              "train_seconds": 0.009538208999999992,
+              "measure_seconds": 0.002602790999999993,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.10888738655378204,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -24.86693188931075,
+                  9.776249768394925,
+                  15.090682120915819
+                ],
+                "best_response_payoffs": [
+                  -24.80159945737848,
+                  9.789332978266602,
+                  15.122837427921937
+                ],
+                "unilateral_gains": [
+                  0.06533243193226923,
+                  0.013083209871677326,
+                  0.032155307006117795
+                ],
+                "nash_conv_chips": 0.11057094881006435,
+                "max_unilateral_gain_pct_pot": 0.10888738655378204
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+              "task_key": "593f2cfb8a3f58cc1936beedf1c4c40f7a1b5c793ef1aee517d63366617647d3",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2"
+              ],
+              "actor_id": "villain",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 30,
+                "decision_pot": 60,
+                "street_committed": [
+                  20,
+                  0,
+                  10
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "hero": 20,
+                  "villain": 0,
+                  "villain_2": 10
+                },
+                "pending_ids": [
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 24,
+                "joint_deals": 19,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain",
+              "own_hand": "KhJh",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                6.6006600660066e-05,
+                0.00013217655223460542,
+                0.9998018168471055
+              ],
+              "compatible_deals": 5,
+              "conditional_mass": 0.2833106378492204
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 8,
+            "raw_combinations": 512,
+            "selected_key": "517d941719196b0e28829a7beae77d030fdfa3bcc29d51d8afd1c23aa016d0f3",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "cd93fd4722e198ad74eefdfc75732789ab5c109b18b1999732ea6644c411479c",
+            "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+            "task_key": "ab816dcd6c2af1724dcde8331b65cec2bce59f09462c09414f257e21a24fabf9",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.49279083299999993,
+              "sampled_peak_rss_mib": 30.546875,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 32.08203125,
+              "build_seconds": 0.080638292,
+              "train_seconds": 0.029749458000000006,
+              "measure_seconds": 0.044090291000000004,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.026304951134209865,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -17.634539153031426,
+                  3.065221058987696,
+                  14.569318094043728
+                ],
+                "best_response_payoffs": [
+                  -17.621154937025146,
+                  3.0731320597748346,
+                  14.585101064724254
+                ],
+                "unilateral_gains": [
+                  0.013384216006279814,
+                  0.0079110007871388,
+                  0.01578297068052592
+                ],
+                "nash_conv_chips": 0.037078187473944535,
+                "max_unilateral_gain_pct_pot": 0.026304951134209865
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+              "task_key": "ab816dcd6c2af1724dcde8331b65cec2bce59f09462c09414f257e21a24fabf9",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2"
+              ],
+              "actor_id": "villain",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 8
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 8
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 8
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 30,
+                "decision_pot": 60,
+                "street_committed": [
+                  20,
+                  0,
+                  10
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "hero": 20,
+                  "villain": 0,
+                  "villain_2": 10
+                },
+                "pending_ids": [
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 24,
+                "joint_deals": 403,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain",
+              "own_hand": "KhJh",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                6.600660066006604e-05,
+                0.0003364490292149197,
+                0.999597544370125
+              ],
+              "compatible_deals": 53,
+              "conditional_mass": 0.17614927246726664
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 0.00020427247698035964,
+        "small_modes": [
+          "RAISE 40"
+        ],
+        "wider_modes": [
+          "RAISE 40"
+        ],
+        "same_modes": true,
+        "within_diagnostic_tv_015": true
+      }
+    },
+    {
+      "name": "dry_4",
+      "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+      "own_probe": "As9c",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 81,
+            "selected_key": "8d46fd0e16a3ed4184f7a34113daf0d17669a070dffd29b1a42a3a477172a210",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "a095a30f671f56f64320a6389c710b6cd2983eb1738c769d677156a9141d6bf6",
+            "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+            "task_key": "ec9dc6625699c87c2934b909bedf9ddad79fba3a8a43571d3b9f37d59210ab41",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.5104799580000003,
+              "sampled_peak_rss_mib": 31.87109375,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 33.46484375,
+              "build_seconds": 0.057744375000000014,
+              "train_seconds": 0.023855165999999983,
+              "measure_seconds": 0.03464370900000002,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.07157109154574318,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  20.417836272887637,
+                  -10.011317505410029,
+                  8.321425788211426,
+                  -18.727944555689035
+                ],
+                "best_response_payoffs": [
+                  20.441069105898315,
+                  -10.000000000000002,
+                  8.371525552293447,
+                  -18.713379207578274
+                ],
+                "unilateral_gains": [
+                  0.023232833010677467,
+                  0.01131750541002674,
+                  0.050099764082020215,
+                  0.014565348110760823
+                ],
+                "nash_conv_chips": 0.09921545061348525,
+                "max_unilateral_gain_pct_pot": 0.07157109154574318
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+              "task_key": "ec9dc6625699c87c2934b909bedf9ddad79fba3a8a43571d3b9f37d59210ab41",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3"
+              ],
+              "actor_id": "hero",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 40,
+                "decision_pot": 70,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 84,
+                "joint_deals": 63,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "hero",
+              "own_hand": "As9c",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.7899249746793782,
+                0.0013607096107172958,
+                0.20871431570990456
+              ],
+              "compatible_deals": 24,
+              "conditional_mass": 0.45945370256476703
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 6,
+            "raw_combinations": 1296,
+            "selected_key": "2f76564f4d636f474eadb94ec19bfc23a89749c45f76b185e006910b0775369f",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "a5d0d0ce2a83258d2aa2b81985409c7fc4bb8990206d1bd1da116c2cb80e1510",
+            "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+            "task_key": "c454389dfc5e84f0f7f0048bd0a0f85b11c890d23e9c756dc953632402f22e79",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 1.4266643330000002,
+              "sampled_peak_rss_mib": 33.24609375,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 34.78515625,
+              "build_seconds": 0.48884916599999995,
+              "train_seconds": 0.19801466700000003,
+              "measure_seconds": 0.424118083,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.0811513576210413,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  5.965702889717756,
+                  -9.421056264941022,
+                  6.944855308270622,
+                  -3.489501933047364
+                ],
+                "best_response_payoffs": [
+                  6.022504417303769,
+                  -9.411671962134402,
+                  6.986300964411718,
+                  -3.432695982712635
+                ],
+                "unilateral_gains": [
+                  0.0568015275860132,
+                  0.009384302806619615,
+                  0.04144565614109652,
+                  0.056805950334728905
+                ],
+                "nash_conv_chips": 0.16443743686845824,
+                "max_unilateral_gain_pct_pot": 0.0811513576210413
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "e582b615a9f33f2dcabee3989393ab60112050dd98e78fac7734b49556519ed1",
+              "task_key": "c454389dfc5e84f0f7f0048bd0a0f85b11c890d23e9c756dc953632402f22e79",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3"
+              ],
+              "actor_id": "hero",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 6
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 6
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 6
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 6
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 40,
+                "decision_pot": 70,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 84,
+                "joint_deals": 824,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "hero",
+              "own_hand": "As9c",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.3306376246749126,
+                0.6043875130843899,
+                0.06497486224069764
+              ],
+              "compatible_deals": 160,
+              "conditional_mass": 0.21782430992440494
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 0.6030268034736725,
+        "small_modes": [
+          "FOLD"
+        ],
+        "wider_modes": [
+          "CALL"
+        ],
+        "same_modes": false,
+        "within_diagnostic_tv_015": false
+      }
+    },
+    {
+      "name": "dry_5",
+      "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+      "own_probe": "Kc5h",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 243,
+            "selected_key": "ec2ca7ecc14b3483e62f562acd2f7214500125c04ea4e2741f48c0280da655e0",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "d602420e94871a88d9ceddf0fb57cdd8e6263dce5752fc460b3d4aaabda416b6",
+            "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+            "task_key": "a5f2a22a8112b1c6af6fa1acc1bb699b29c2c5f4e8af358103bb02ea0ea00966",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.9692458329999996,
+              "sampled_peak_rss_mib": 33.9375,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 34.6953125,
+              "build_seconds": 0.219333417,
+              "train_seconds": 0.10546137499999997,
+              "measure_seconds": 0.23049279200000006,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.05447170123985435,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -10.003163269662485,
+                  5.525105526021656,
+                  16.295713367611175,
+                  -1.8130931360515392,
+                  -10.004562487918815
+                ],
+                "best_response_payoffs": [
+                  -10.0,
+                  5.56868288701354,
+                  16.326506955735866,
+                  -1.803707163229201,
+                  -10.0
+                ],
+                "unilateral_gains": [
+                  0.0031632696624850354,
+                  0.043577360991883474,
+                  0.03079358812469124,
+                  0.009385972822338218,
+                  0.0045624879188146394
+                ],
+                "nash_conv_chips": 0.0914826795202126,
+                "max_unilateral_gain_pct_pot": 0.05447170123985435
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+              "task_key": "a5f2a22a8112b1c6af6fa1acc1bb699b29c2c5f4e8af358103bb02ea0ea00966",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3",
+                "villain_4"
+              ],
+              "actor_id": "villain_4",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_4",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 50,
+                "decision_pot": 80,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "villain_4",
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 276,
+                "joint_deals": 94,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain_4",
+              "own_hand": "Kc5h",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986798,
+                6.600660066006591e-05,
+                6.600660066006591e-05
+              ],
+              "compatible_deals": 26,
+              "conditional_mass": 0.2965030905870708
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 4,
+            "raw_combinations": 1024,
+            "selected_key": "50b534eeceb2d27df6612b040366c87ca220eb9a0c2c2e79cd07a85773bc9c29",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "2681319e412495917c1dd97f5cb5af9e5a090094250d09c38eabceae0edce8fd",
+            "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+            "task_key": "8fe3651d1fb2d17877cd406fd13ab46a4ee121fa6ca6a3b22e3c0138ee620a00",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 2.8340022080000002,
+              "sampled_peak_rss_mib": 37.33984375,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 40.23828125,
+              "build_seconds": 0.9078918749999999,
+              "train_seconds": 0.45535499999999995,
+              "measure_seconds": 0.98698975,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.0779737141441239,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -10.004998963293762,
+                  4.026584802687036,
+                  15.931647593377116,
+                  0.05133332962586312,
+                  -10.004566762396253
+                ],
+                "best_response_payoffs": [
+                  -9.999999999999996,
+                  4.053951051745252,
+                  15.994026564692415,
+                  0.05851879076262101,
+                  -9.999999999999996
+                ],
+                "unilateral_gains": [
+                  0.004998963293765257,
+                  0.027366249058216496,
+                  0.062378971315299125,
+                  0.007185461136757887,
+                  0.004566762396256863
+                ],
+                "nash_conv_chips": 0.10649640720029563,
+                "max_unilateral_gain_pct_pot": 0.0779737141441239
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "156088c54020ef36003c9609ad5109f98f42124fb38201a8b62f03e1d8cc3ac1",
+              "task_key": "8fe3651d1fb2d17877cd406fd13ab46a4ee121fa6ca6a3b22e3c0138ee620a00",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3",
+                "villain_4"
+              ],
+              "actor_id": "villain_4",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_4",
+                  "public": 1081,
+                  "selected": 4
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 50,
+                "decision_pot": 80,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "villain_4",
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 276,
+                "joint_deals": 440,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain_4",
+              "own_hand": "Kc5h",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986798,
+                6.600660066006577e-05,
+                6.600660066006577e-05
+              ],
+              "compatible_deals": 93,
+              "conditional_mass": 0.2139578413666333
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 1.3552527156068805e-19,
+        "small_modes": [
+          "FOLD"
+        ],
+        "wider_modes": [
+          "FOLD"
+        ],
+        "same_modes": true,
+        "within_diagnostic_tv_015": true
+      }
+    },
+    {
+      "name": "dry_6",
+      "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+      "own_probe": "6c4h",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 729,
+            "selected_key": "5d34eb85430da875eb6e97e8e0456cf557bb64b8799293d8339ce3bc303fb3f0",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "185559b0e096264f3312503e8fb9bb41a76361d392de0e054cf2688881101791",
+            "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+            "task_key": "193c8da42c36b1043a7b2b529a412c44502cc5c9e6ac3aaffec1c574b24be5b1",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 4.238332166999999,
+              "sampled_peak_rss_mib": 40.12890625,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 42.61328125,
+              "build_seconds": 1.29574875,
+              "train_seconds": 0.827802666,
+              "measure_seconds": 1.6524697499999998,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.1704182432124362,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -0.5057202348288155,
+                  -6.640593447184087,
+                  42.32763284658901,
+                  -21.36163774523994,
+                  -10.004428198684211,
+                  -3.8152532206519427
+                ],
+                "best_response_payoffs": [
+                  -0.4282284071571911,
+                  -6.571853973723282,
+                  42.381188106478014,
+                  -21.297739168839435,
+                  -9.999999999999996,
+                  -3.66187680176075
+                ],
+                "unilateral_gains": [
+                  0.07749182767162432,
+                  0.06873947346080467,
+                  0.053555259889002116,
+                  0.06389857640050423,
+                  0.004428198684214735,
+                  0.15337641889119258
+                ],
+                "nash_conv_chips": 0.42148975499734265,
+                "max_unilateral_gain_pct_pot": 0.1704182432124362
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+              "task_key": "193c8da42c36b1043a7b2b529a412c44502cc5c9e6ac3aaffec1c574b24be5b1",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3",
+                "villain_4",
+                "villain_5"
+              ],
+              "actor_id": "villain_4",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_4",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_5",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 60,
+                "decision_pot": 90,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20,
+                  0,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "villain_4",
+                  "villain_5",
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 876,
+                "joint_deals": 183,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain_4",
+              "own_hand": "6c4h",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986798,
+                6.600660066006608e-05,
+                6.600660066006608e-05
+              ],
+              "compatible_deals": 63,
+              "conditional_mass": 0.3659345743067242
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 4,
+            "raw_combinations": 4096,
+            "selected_key": "d34cbd5d11770ced835c731b46717c799db76a6509573e02ac132dfb1af540f7",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "8883101b10654679d54bc93dd8b2056ab5da51dc05451138e3f0879ae58b0e7f",
+            "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+            "task_key": "2caea7b3989170c87e80eb9444ab9b6bc9bf830af45fca0b6544809acd322311",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 19.669519375,
+              "sampled_peak_rss_mib": 57.31640625,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 57.3359375,
+              "build_seconds": 6.647900917,
+              "train_seconds": 4.198535292,
+              "measure_seconds": 8.458859916,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.07210144863777086,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -6.333846006152009,
+                  23.12139050367816,
+                  26.470912744471068,
+                  -23.59745707631903,
+                  -10.004762600508585,
+                  -9.656237565169594
+                ],
+                "best_response_payoffs": [
+                  -6.306303594605742,
+                  23.186281807452154,
+                  26.511073687582456,
+                  -23.56849132701766,
+                  -10.000000000000004,
+                  -9.610913032125849
+                ],
+                "unilateral_gains": [
+                  0.0275424115462668,
+                  0.06489130377399377,
+                  0.04016094311138829,
+                  0.028965749301370636,
+                  0.004762600508581016,
+                  0.04532453304374506
+                ],
+                "nash_conv_chips": 0.21164754128534558,
+                "max_unilateral_gain_pct_pot": 0.07210144863777086
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "8d64a7f3de67a814cc853b2a950729449ab298d9d3fdbfa9d53589e335b1976f",
+              "task_key": "2caea7b3989170c87e80eb9444ab9b6bc9bf830af45fca0b6544809acd322311",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3",
+                "villain_4",
+                "villain_5"
+              ],
+              "actor_id": "villain_4",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_4",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_5",
+                  "public": 1081,
+                  "selected": 4
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 60,
+                "decision_pot": 90,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20,
+                  0,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "villain_4",
+                  "villain_5",
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 876,
+                "joint_deals": 970,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain_4",
+              "own_hand": "6c4h",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986798,
+                6.600660066006583e-05,
+                6.600660066006583e-05
+              ],
+              "compatible_deals": 152,
+              "conditional_mass": 0.20622767015460142
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 2.574980159653073e-19,
+        "small_modes": [
+          "FOLD"
+        ],
+        "wider_modes": [
+          "FOLD"
+        ],
+        "same_modes": true,
+        "within_diagnostic_tv_015": true
+      }
+    },
+    {
+      "name": "flush_2",
+      "source_information_key": "ff451a0b878a4563d5539eb8af7558d4831f2d23045a9a3d8c9fa662ece74013",
+      "own_probe": "5c3d",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 9,
+            "selected_key": "a1e134dc9433fd0385ffe6e7adea099307a1409ded44db8bd0629384be352694",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "3080fcd4516ad9a9f382d71f4aeb38838d878ad4ca72299ddd2bfa263d1af8af",
+            "source_information_key": "ff451a0b878a4563d5539eb8af7558d4831f2d23045a9a3d8c9fa662ece74013",
+            "task_key": "ba9a8c9203c7a95512d15e6992212934d6cc839c5bd50205ed9d918b6f0880b3",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.5014790829999995,
+              "sampled_peak_rss_mib": 28.7109375,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 29.45703125,
+              "build_seconds": 0.013616583999999987,
+              "train_seconds": 0.01214858399999999,
+              "measure_seconds": 0.0002592919999999943,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.011853360781331665,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  8.284858287432684,
+                  -8.284858287432684
+                ],
+                "best_response_payoffs": [
+                  8.284958941067911,
+                  -8.281302279198284
+                ],
+                "unilateral_gains": [
+                  0.00010065363522748783,
+                  0.003556008234399499
+                ],
+                "nash_conv_chips": 0.003656661869626987,
+                "max_unilateral_gain_pct_pot": 0.011853360781331665
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "ff451a0b878a4563d5539eb8af7558d4831f2d23045a9a3d8c9fa662ece74013",
+              "task_key": "ba9a8c9203c7a95512d15e6992212934d6cc839c5bd50205ed9d918b6f0880b3",
+              "seat_ids": [
+                "hero",
+                "villain"
+              ],
+              "actor_id": "villain",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 20,
+                "decision_pot": 30,
+                "street_committed": [
+                  10,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "hero": 10,
+                  "villain": 0
+                },
+                "pending_ids": [
+                  "villain"
+                ],
+                "observed_raises": 0,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 6,
+                "joint_deals": 8,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain",
+              "own_hand": "5c3d",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9997548326261197,
+                0.00017916077322017906,
+                6.600660066006596e-05
+              ],
+              "compatible_deals": 3,
+              "conditional_mass": 0.39693987789387575
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 16,
+            "raw_combinations": 256,
+            "selected_key": "7a7ac04498cc947fb54b5452b6771b5731c7158b238f0137a54be637e5a21018",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "5dfd426c7a59b2241f28e38ab5f0869f4b6c6ea80cabe0093e8476e55b78ef6f",
+            "source_information_key": "ff451a0b878a4563d5539eb8af7558d4831f2d23045a9a3d8c9fa662ece74013",
+            "task_key": "897c884690f2fa13129d37cbe211187535457878c3c2892876476d17ec4f91e6",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.505419916000001,
+              "sampled_peak_rss_mib": 28.8046875,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 29.734375,
+              "build_seconds": 0.023018167000000006,
+              "train_seconds": 0.010945750000000004,
+              "measure_seconds": 0.004299583999999995,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.03510424005999694,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  3.710551517231326,
+                  -3.710551517231328
+                ],
+                "best_response_payoffs": [
+                  3.7149794869544883,
+                  -3.700020245213329
+                ],
+                "unilateral_gains": [
+                  0.004427969723162395,
+                  0.010531272017999083
+                ],
+                "nash_conv_chips": 0.014959241741161478,
+                "max_unilateral_gain_pct_pot": 0.03510424005999694
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "ff451a0b878a4563d5539eb8af7558d4831f2d23045a9a3d8c9fa662ece74013",
+              "task_key": "897c884690f2fa13129d37cbe211187535457878c3c2892876476d17ec4f91e6",
+              "seat_ids": [
+                "hero",
+                "villain"
+              ],
+              "actor_id": "villain",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 16
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 16
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 20,
+                "decision_pot": 30,
+                "street_committed": [
+                  10,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "hero": 10,
+                  "villain": 0
+                },
+                "pending_ids": [
+                  "villain"
+                ],
+                "observed_raises": 0,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 6,
+                "joint_deals": 240,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain",
+              "own_hand": "5c3d",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.0015533594029056672,
+                0.9626973265073668,
+                0.03574931408972751
+              ],
+              "compatible_deals": 16,
+              "conditional_mass": 0.06807674872068431
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 0.9982014732232141,
+        "small_modes": [
+          "FOLD"
+        ],
+        "wider_modes": [
+          "CALL"
+        ],
+        "same_modes": false,
+        "within_diagnostic_tv_015": false
+      }
+    },
+    {
+      "name": "flush_3",
+      "source_information_key": "11b48dfe3e90aac9c2ca3f9ed56d4ac6897192a028cadb90a8b2ff19d333fa06",
+      "own_probe": "Jc6c",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 27,
+            "selected_key": "2a7bc935d206290d7359bbafdb8cc7cad87ab17ace8c7a254d27507a0590b7f0",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "0f8c38b10d75857461ce4c6645d4d10d48ac4565410623a897ad4e45504e7eb3",
+            "source_information_key": "11b48dfe3e90aac9c2ca3f9ed56d4ac6897192a028cadb90a8b2ff19d333fa06",
+            "task_key": "5c154ed5849d0bda7d62bddb63b4261f8bd5ad057527d2258ed64e8d82105048",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.5126170420000022,
+              "sampled_peak_rss_mib": 30.53125,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 31.65625,
+              "build_seconds": 0.020955957999999997,
+              "train_seconds": 0.010601833000000005,
+              "measure_seconds": 0.0029118330000000026,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.017417682347904417,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -29.994497300449524,
+                  -10.001652750207729,
+                  39.996150050657256
+                ],
+                "best_response_payoffs": [
+                  -29.993507109762028,
+                  -10.0,
+                  40.006600660066
+                ],
+                "unilateral_gains": [
+                  0.00099019068749584,
+                  0.0016527502077288148,
+                  0.01045060940874265
+                ],
+                "nash_conv_chips": 0.013093550303967305,
+                "max_unilateral_gain_pct_pot": 0.017417682347904417
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "11b48dfe3e90aac9c2ca3f9ed56d4ac6897192a028cadb90a8b2ff19d333fa06",
+              "task_key": "5c154ed5849d0bda7d62bddb63b4261f8bd5ad057527d2258ed64e8d82105048",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2"
+              ],
+              "actor_id": "villain",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 30,
+                "decision_pot": 60,
+                "street_committed": [
+                  20,
+                  0,
+                  10
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "hero": 20,
+                  "villain": 0,
+                  "villain_2": 10
+                },
+                "pending_ids": [
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 24,
+                "joint_deals": 21,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain",
+              "own_hand": "Jc6c",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986798,
+                6.600660066006602e-05,
+                6.600660066006602e-05
+              ],
+              "compatible_deals": 5,
+              "conditional_mass": 0.2305891712594301
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 8,
+            "raw_combinations": 512,
+            "selected_key": "897d34be70a5f6457187bcf4e786f730524669436533b1b47af6ea0c56b5864c",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "168827ecd8a72f1b4c33b7b986e7a68c6b9f8dacb3843fcc7d0e62a0a3084feb",
+            "source_information_key": "11b48dfe3e90aac9c2ca3f9ed56d4ac6897192a028cadb90a8b2ff19d333fa06",
+            "task_key": "9f006a8329eb1c7ce28468f29cb11de8d99aba5f5fd0c0eb20e5618c65cc58e5",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.5073872079999973,
+              "sampled_peak_rss_mib": 31.01171875,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 32.484375,
+              "build_seconds": 0.07944725000000002,
+              "train_seconds": 0.028240458999999996,
+              "measure_seconds": 0.04240666599999998,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.017989577232890852,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -9.382670405747536,
+                  -3.2421810433957146,
+                  12.624851449143248
+                ],
+                "best_response_payoffs": [
+                  -9.371876659407802,
+                  -3.2380312275868626,
+                  12.631802290782764
+                ],
+                "unilateral_gains": [
+                  0.010793746339734511,
+                  0.0041498158088519865,
+                  0.006950841639515204
+                ],
+                "nash_conv_chips": 0.021894403788101702,
+                "max_unilateral_gain_pct_pot": 0.017989577232890852
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "11b48dfe3e90aac9c2ca3f9ed56d4ac6897192a028cadb90a8b2ff19d333fa06",
+              "task_key": "9f006a8329eb1c7ce28468f29cb11de8d99aba5f5fd0c0eb20e5618c65cc58e5",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2"
+              ],
+              "actor_id": "villain",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 8
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 8
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 8
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 30,
+                "decision_pot": 60,
+                "street_committed": [
+                  20,
+                  0,
+                  10
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "hero": 20,
+                  "villain": 0,
+                  "villain_2": 10
+                },
+                "pending_ids": [
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 24,
+                "joint_deals": 386,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain",
+              "own_hand": "Jc6c",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986798,
+                6.600660066006592e-05,
+                6.600660066006592e-05
+              ],
+              "compatible_deals": 43,
+              "conditional_mass": 0.12398305235077198
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 9.486769009248164e-20,
+        "small_modes": [
+          "FOLD"
+        ],
+        "wider_modes": [
+          "FOLD"
+        ],
+        "same_modes": true,
+        "within_diagnostic_tv_015": true
+      }
+    },
+    {
+      "name": "flush_4",
+      "source_information_key": "87030f65ce9a730f6fba47a47b72b31abeb51fc7420837d331623fcb34a1daae",
+      "own_probe": "8d8c",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 81,
+            "selected_key": "4208a5f47b55a5cc44f1e874a162b0c2a4f83ce5a8b1a5bd67972f13639fa82f",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "755d752103e9cb9426ab846766933040160b5c986ae7e6cbd846a09fafcec17c",
+            "source_information_key": "87030f65ce9a730f6fba47a47b72b31abeb51fc7420837d331623fcb34a1daae",
+            "task_key": "ba2a9eba1bace5d6578086614c471f30d03876062a76f036e0a8fd4995a27586",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.5105860829999997,
+              "sampled_peak_rss_mib": 30.25390625,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 31.99609375,
+              "build_seconds": 0.04438524999999999,
+              "train_seconds": 0.018307290999999948,
+              "measure_seconds": 0.023654249999999988,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.07123601987298857,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -9.09559635554663,
+                  12.702783351543477,
+                  -19.64734688100038,
+                  16.040159885003536
+                ],
+                "best_response_payoffs": [
+                  -9.045731141635539,
+                  12.733939667986284,
+                  -19.636073384383522,
+                  16.06374198304113
+                ],
+                "unilateral_gains": [
+                  0.049865213911092,
+                  0.031156316442807253,
+                  0.011273496616858836,
+                  0.02358209803759337
+                ],
+                "nash_conv_chips": 0.11587712500835146,
+                "max_unilateral_gain_pct_pot": 0.07123601987298857
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "87030f65ce9a730f6fba47a47b72b31abeb51fc7420837d331623fcb34a1daae",
+              "task_key": "ba2a9eba1bace5d6578086614c471f30d03876062a76f036e0a8fd4995a27586",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3"
+              ],
+              "actor_id": "hero",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 40,
+                "decision_pot": 70,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 84,
+                "joint_deals": 42,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "hero",
+              "own_hand": "8d8c",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9556623050878872,
+                0.043461699641372586,
+                0.0008759952707402524
+              ],
+              "compatible_deals": 6,
+              "conditional_mass": 0.16539947076006353
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 6,
+            "raw_combinations": 1296,
+            "selected_key": "0ccb435a5cc8da8d8f06aaaf1d62fffd6903e53f02efa60e413d3a7ef1b778cb",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "65b313248026c0fddea5cdf8bfc145cb1ae242eafb7fe5819eed4a7396690acc",
+            "source_information_key": "87030f65ce9a730f6fba47a47b72b31abeb51fc7420837d331623fcb34a1daae",
+            "task_key": "c0374c0298c15cf319acef5660f1fcf4c41aeda71c9795db3e5e58ec9bedd070",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 1.6518805830000005,
+              "sampled_peak_rss_mib": 34.21875,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 36.02734375,
+              "build_seconds": 0.5125873750000001,
+              "train_seconds": 0.21761883300000007,
+              "measure_seconds": 0.4722682920000001,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.15976995995300922,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  22.709116326905466,
+                  -1.067281983789721,
+                  -19.783859208427305,
+                  -1.8579751346884419
+                ],
+                "best_response_payoffs": [
+                  22.820955298872573,
+                  -1.0359604796305937,
+                  -19.77839121001704,
+                  -1.7795041378426877
+                ],
+                "unilateral_gains": [
+                  0.11183897196710646,
+                  0.03132150415912727,
+                  0.00546799841026413,
+                  0.0784709968457542
+                ],
+                "nash_conv_chips": 0.22709947138225206,
+                "max_unilateral_gain_pct_pot": 0.15976995995300922
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "87030f65ce9a730f6fba47a47b72b31abeb51fc7420837d331623fcb34a1daae",
+              "task_key": "c0374c0298c15cf319acef5660f1fcf4c41aeda71c9795db3e5e58ec9bedd070",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3"
+              ],
+              "actor_id": "hero",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 6
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 6
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 6
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 6
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 40,
+                "decision_pot": 70,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 84,
+                "joint_deals": 874,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "hero",
+              "own_hand": "8d8c",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.00013456408870847535,
+                0.9937431131402628,
+                0.006122322771028861
+              ],
+              "compatible_deals": 112,
+              "conditional_mass": 0.15058739087341944
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 0.9555277409991787,
+        "small_modes": [
+          "FOLD"
+        ],
+        "wider_modes": [
+          "CALL"
+        ],
+        "same_modes": false,
+        "within_diagnostic_tv_015": false
+      }
+    },
+    {
+      "name": "flush_5",
+      "source_information_key": "19bbe762c0da5ee9739d0c9227041f351ff754fa967181c38d4c2f8a2a956833",
+      "own_probe": "Td3c",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 243,
+            "selected_key": "5971c4039464f7f671ac32161437618532124c187dcc08360d017e5e48a87853",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "adb600fc82e86e2e16bd90200dd04298b7ed703f2e8c149e035b89c9ae2e27be",
+            "source_information_key": "19bbe762c0da5ee9739d0c9227041f351ff754fa967181c38d4c2f8a2a956833",
+            "task_key": "b7cd08447e3c1ca44b25f8a2b8e26ee4d5fd6df132010336d28e84b3c386d4d8",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.9786064170000017,
+              "sampled_peak_rss_mib": 35.30859375,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 35.89453125,
+              "build_seconds": 0.202521375,
+              "train_seconds": 0.096234125,
+              "measure_seconds": 0.206002833,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.04486191184253974,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -10.034500231121758,
+                  -10.00809021310901,
+                  60.0393895469876,
+                  -29.992359717430517,
+                  -10.00443938532633
+                ],
+                "best_response_payoffs": [
+                  -9.998610701647726,
+                  -9.999999990242125,
+                  60.047174969954405,
+                  -29.991372043511355,
+                  -9.999999999999998
+                ],
+                "unilateral_gains": [
+                  0.03588952947403179,
+                  0.0080902228668851,
+                  0.007785422966804845,
+                  0.000987673919162546,
+                  0.004439385326332257
+                ],
+                "nash_conv_chips": 0.05719223455321654,
+                "max_unilateral_gain_pct_pot": 0.04486191184253974
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "19bbe762c0da5ee9739d0c9227041f351ff754fa967181c38d4c2f8a2a956833",
+              "task_key": "b7cd08447e3c1ca44b25f8a2b8e26ee4d5fd6df132010336d28e84b3c386d4d8",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3",
+                "villain_4"
+              ],
+              "actor_id": "villain_4",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_4",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 50,
+                "decision_pot": 80,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "villain_4",
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 276,
+                "joint_deals": 86,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain_4",
+              "own_hand": "Td3c",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986798,
+                6.600660066006604e-05,
+                6.600660066006604e-05
+              ],
+              "compatible_deals": 17,
+              "conditional_mass": 0.2381535951436885
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 4,
+            "raw_combinations": 1024,
+            "selected_key": "790b2c576db045a486d48cbd29d1237629fbe149810dbd976b6ed1364b3c1ee9",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "ce669868664f1219b0a7ad8c1c9bc43e2540180bf77bec9d664b39501d989392",
+            "source_information_key": "19bbe762c0da5ee9739d0c9227041f351ff754fa967181c38d4c2f8a2a956833",
+            "task_key": "7839d3006416f2a8b2ef19352c11ad6d1d685d729b672a586dd23294dca4a6cd",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 2.8338994580000048,
+              "sampled_peak_rss_mib": 39.28515625,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 39.27734375,
+              "build_seconds": 0.901344416,
+              "train_seconds": 0.46078220800000014,
+              "measure_seconds": 0.9735332079999999,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.03534299027114329,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -10.027633854702263,
+                  -10.015242933182343,
+                  60.0410246213672,
+                  -29.99361727879566,
+                  -10.004530554686934
+                ],
+                "best_response_payoffs": [
+                  -9.999359462485348,
+                  -9.999939473742591,
+                  60.04798332915887,
+                  -29.992924832225597,
+                  -10.000000000000004
+                ],
+                "unilateral_gains": [
+                  0.028274392216914634,
+                  0.015303459439751421,
+                  0.006958707791667962,
+                  0.0006924465700635096,
+                  0.004530554686930088
+                ],
+                "nash_conv_chips": 0.055759560705327615,
+                "max_unilateral_gain_pct_pot": 0.03534299027114329
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "19bbe762c0da5ee9739d0c9227041f351ff754fa967181c38d4c2f8a2a956833",
+              "task_key": "7839d3006416f2a8b2ef19352c11ad6d1d685d729b672a586dd23294dca4a6cd",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3",
+                "villain_4"
+              ],
+              "actor_id": "villain_4",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 4
+                },
+                {
+                  "id": "villain_4",
+                  "public": 1081,
+                  "selected": 4
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 50,
+                "decision_pot": 80,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "villain_4",
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 276,
+                "joint_deals": 442,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain_4",
+              "own_hand": "Td3c",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986799,
+                6.600660066006606e-05,
+                6.600660066006606e-05
+              ],
+              "compatible_deals": 92,
+              "conditional_mass": 0.22464149933460362
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": {
+        "root_total_variation": 5.55247037584139e-17,
+        "small_modes": [
+          "FOLD"
+        ],
+        "wider_modes": [
+          "FOLD"
+        ],
+        "same_modes": true,
+        "within_diagnostic_tv_015": true
+      }
+    },
+    {
+      "name": "flush_6",
+      "source_information_key": "c6870bd3ac550b024e822b5a3b475859fd9c9b5cf9a854bc6ae5d4474ed6f9cd",
+      "own_probe": "Ts7h",
+      "arms": {
+        "small": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 3,
+            "raw_combinations": 729,
+            "selected_key": "82de5c6016a02262538a968c65b2981fa53b9a53968e175ae8ba7b2291042161",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "dedd6b92199cb4cfbbaf349db719c7e4863ecee39a4870d6d68c8365b1d46e2a",
+            "source_information_key": "c6870bd3ac550b024e822b5a3b475859fd9c9b5cf9a854bc6ae5d4474ed6f9cd",
+            "task_key": "0c90fcd6fdf13045ea1621dd70a44c6816a259c10c8b2cc0b7a312d90804a686",
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 6.817202957999996,
+              "sampled_peak_rss_mib": 42.515625,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": 43.66796875,
+              "build_seconds": 2.171870625,
+              "train_seconds": 1.371420708,
+              "measure_seconds": 2.8550960000000005,
+              "last_phase": null
+            },
+            "quality": {
+              "metric": "max_unilateral_gain_pct_decision_pot",
+              "value": 0.0965410584494602,
+              "gate": 0.5,
+              "passed": true,
+              "evidence": {
+                "policy_payoffs": [
+                  -10.013454804571147,
+                  24.121540019592565,
+                  10.592837109882252,
+                  -29.43237976317706,
+                  -10.004598845602423,
+                  14.736056283875808
+                ],
+                "best_response_payoffs": [
+                  -9.999867636277509,
+                  24.170805465512604,
+                  10.679724062486766,
+                  -29.422805572862075,
+                  -10.000000000000002,
+                  14.761995630462156
+                ],
+                "unilateral_gains": [
+                  0.01358716829363793,
+                  0.049265445920038786,
+                  0.08688695260451418,
+                  0.009574190314985742,
+                  0.00459884560242152,
+                  0.025939346586348222
+                ],
+                "nash_conv_chips": 0.18985194932194638,
+                "max_unilateral_gain_pct_pot": 0.0965410584494602
+              },
+              "interpretation": "Exact best response in this bounded game; not full-range GTO or calibrated range accuracy."
+            },
+            "model": {
+              "source_information_key": "c6870bd3ac550b024e822b5a3b475859fd9c9b5cf9a854bc6ae5d4474ed6f9cd",
+              "task_key": "0c90fcd6fdf13045ea1621dd70a44c6816a259c10c8b2cc0b7a312d90804a686",
+              "seat_ids": [
+                "hero",
+                "villain",
+                "villain_2",
+                "villain_3",
+                "villain_4",
+                "villain_5"
+              ],
+              "actor_id": "villain_4",
+              "folded_seats": [],
+              "range_selection": "explicit_subset",
+              "range_counts": [
+                {
+                  "id": "hero",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_2",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_3",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_4",
+                  "public": 1081,
+                  "selected": 3
+                },
+                {
+                  "id": "villain_5",
+                  "public": 1081,
+                  "selected": 3
+                }
+              ],
+              "utility_storage": "compact",
+              "max_joint_combos": 4096,
+              "folded_card_bunching_modelled": false,
+              "river_state": {
+                "prior_pot": 60,
+                "decision_pot": 90,
+                "street_committed": [
+                  0,
+                  0,
+                  10,
+                  20,
+                  0,
+                  0
+                ],
+                "last_full_raise": 10,
+                "acted_at_bet": {
+                  "villain": 0,
+                  "villain_2": 10,
+                  "villain_3": 20
+                },
+                "pending_ids": [
+                  "villain_4",
+                  "villain_5",
+                  "hero",
+                  "villain",
+                  "villain_2"
+                ],
+                "observed_raises": 1,
+                "future_raise_cap": 1
+              },
+              "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice.",
+              "tree": {
+                "bet_sizes": [
+                  10
+                ],
+                "raise_sizes": [
+                  40
+                ],
+                "future_raise_cap": 1,
+                "min_bet": 10,
+                "max_nodes": 20000,
+                "public_nodes": 876,
+                "joint_deals": 312,
+                "max_joint_combos": 4096
+              }
+            },
+            "status": "ready",
+            "reasons": [],
+            "candidate": {
+              "actor_id": "villain_4",
+              "own_hand": "Ts7h",
+              "actions": [
+                "FOLD",
+                "CALL",
+                "RAISE 40"
+              ],
+              "probabilities": [
+                0.9998679867986797,
+                6.600660066006602e-05,
+                6.600660066006602e-05
+              ],
+              "compatible_deals": 54,
+              "conditional_mass": 0.15403335923337155
+            },
+            "admission": {
+              "offline_analysis_allowed": true,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        },
+        "wider": {
+          "selection": {
+            "name": "anchored_public_subset_v1",
+            "seed": 20261024,
+            "width": 4,
+            "raw_combinations": 4096,
+            "selected_key": "290a489a40834c902497e9f28c0766261762317d6cbc588dcddaed993de15e99",
+            "actor_anchor": true,
+            "opponents_seeded_without_own_hand": true,
+            "range_stability_verified": false,
+            "limitations": [
+              "Selected subsets retain public weights; finite renormalized selection is not an unbiased full-range estimate.",
+              "Acting hand anchors its own range; this changes the bounded game and may change opponents responses.",
+              "No private opponent holdings or folded-card bunching are used."
+            ]
+          },
+          "result": {
+            "contract_version": 1,
+            "scope": "offline_bounded_river",
+            "provenance": {
+              "engine_version": "bounded_river_cfr_plus_v1",
+              "engine_source_sha256": "3b7a23f91759f3f15eb2ec438118282b7cbb7a7990b3d1d094f238bf64715d0e",
+              "range_version": "public_action_heuristic_v1",
+              "range_source_sha256": "fbb4407f5f0bae13f5d2074dc58c5d7f71117b29278f2dc2c4f1f80a8b166c51",
+              "method": "cfr_plus_native",
+              "utility_storage": "compact"
+            },
+            "request_key": "46dd4f393303b7ea5cb10e8af61df4d18d28d1cfe09bc208705fb6e1944d4056",
+            "source_information_key": "c6870bd3ac550b024e822b5a3b475859fd9c9b5cf9a854bc6ae5d4474ed6f9cd",
+            "task_key": null,
+            "limits": {
+              "iterations": 100,
+              "wall_seconds": 45,
+              "memory_mib": 128.0,
+              "quality_gate_pct_pot": 0.5
+            },
+            "timing": {
+              "wall_seconds": 0.5050333750000036,
+              "sampled_peak_rss_mib": 32.9609375,
+              "rss_poll_seconds": 0.2,
+              "peak_rss_mib": null,
+              "build_seconds": null,
+              "train_seconds": null,
+              "measure_seconds": null,
+              "last_phase": null
+            },
+            "quality": null,
+            "model": null,
+            "status": "unsupported",
+            "reasons": [
+              {
+                "code": "UNSUPPORTED_STATE_OR_TREE",
+                "stage": "worker",
+                "message": "Unsupported research input: Tree/deal product exceeds one million; reduce explicit ranges/tree."
+              }
+            ],
+            "candidate": null,
+            "admission": {
+              "offline_analysis_allowed": false,
+              "live_advice_allowed": false
+            },
+            "fallback": {
+              "source": "current_coach",
+              "retain_current_advice": true,
+              "reason": "Research-only contract; live advice is never replaced."
+            }
+          }
+        }
+      },
+      "comparison": null
+    }
+  ],
+  "summary": {
+    "cases": 10,
+    "comparable": 9,
+    "same_modes": 6,
+    "within_tv_015": 5,
+    "statuses": {
+      "ready": 19,
+      "unsupported": 1
+    }
+  }
+}

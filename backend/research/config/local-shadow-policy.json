@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "mode": "diagnostics_only",
+  "range_policy": {
+    "name": "anchored_public_subset_v1",
+    "width": 3,
+    "seed": 20261024,
+    "max_joint_combos": 4096
+  },
+  "tree_policy": {
+    "bet_sizes_bb": [2, 4],
+    "raise_sizes_bb": [8, 12],
+    "max_raises": 1,
+    "include_coach_size": true
+  },
+  "limits": {
+    "iterations": 100,
+    "wall_seconds": 10,
+    "memory_mib": 128,
+    "quality_gate_pct_pot": 0.5
+  }
+}

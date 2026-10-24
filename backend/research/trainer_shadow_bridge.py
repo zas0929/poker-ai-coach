@@ -1,5 +1,5 @@
 """Opt-in LOCAL trainer bridge. Snapshot preparation runs off the hint/action path.
-Exact public decision plans only: no implicit sampling/truncation or opponent cards.
+Exact plans or an explicitly configured subset policy; no private opponent cards.
 """
 from collections import OrderedDict,deque
 import copy
@@ -12,6 +12,7 @@ from app.services.solver_snapshot import prepare_solver_snapshot,card_text
 from research.analysis_contract import ResearchLimits,TREE_FIELDS
 from research.river_snapshot import digest,combo_key
 from research.shadow_executor import ShadowExecutor
+from research.public_subset_policy import validate_policy,validate_tree_policy,select_public_subset,tree_from_policy
 
 
 def read_plan(value):
@@ -31,6 +32,17 @@ def read_plan(value):
     return copy.deepcopy(decisions),ResearchLimits(**limits)
 
 
+def plan_configuration(plan):
+    policy=None;tree=None
+    if type(plan) is dict and type(plan.get('version')) is int and plan['version']==2:
+        if set(plan)-{'version','mode','range_policy','tree_policy','limits'}:raise ValueError('Unknown policy plan field.')
+        if plan.get('mode')!='diagnostics_only':raise ValueError('Policy ranges are unverified; diagnostics_only mode required.')
+        policy=validate_policy(plan['range_policy']);tree=validate_tree_policy(plan['tree_policy'])
+        decisions={};limits=ResearchLimits(**plan.get('limits',{}))
+    else:decisions,limits=read_plan(plan)
+    return decisions,limits,policy,tree
+
+
 def public_state(state):
     # Exclude holdings at serialization, rather than copying and clearing opponents later.
     value=state.model_dump(mode='json',exclude={'players':{'__all__':{'cards'}},'notes':True,'result':True})
@@ -44,7 +56,7 @@ def public_state(state):
 
 class TrainerShadowBridge:
     def __init__(self,plan,*,executor=None,prepare=prepare_solver_snapshot,max_contexts=32,max_pending=8,max_events=256):
-        self.plans,self.limits=read_plan(plan)
+        self.plans,self.limits,self.policy,self.tree_policy=plan_configuration(plan)
         for v in (max_contexts,max_pending,max_events):
             if type(v) is not int or not 1<=v<=4096:raise ValueError('Positive bounded capacities required.')
         self.executor=executor if executor is not None else ShadowExecutor()
@@ -95,12 +107,20 @@ class TrainerShadowBridge:
     def _prepare_one(self,context,revision,value,baseline):
         state=HandState.model_validate(value)
         snapshot=self._prepare(state)
-        plan=self.plans.get(snapshot['information_key'])
-        if plan is None:return 'NO_EXPLICIT_PLAN'
         own=''.join(card_text(c) for c in next(p for p in state.players if p.id=='hero').cards)
-        if combo_key(own) not in [combo_key(h) for h in plan['selected_hands'].get('hero',[])]:return 'OWN_HAND_NOT_SELECTED'
-        public=next(p['range'] for p in snapshot['players'] if p['id']=='hero')
-        own=next(row['cards'] for row in public if combo_key(row['cards'])==combo_key(own))
+        evidence=None
+        if self.policy is not None:
+            try:
+                selected,own,evidence=select_public_subset(snapshot,own,self.policy)
+                config=tree_from_policy(snapshot,baseline,self.tree_policy,self.policy['max_joint_combos'])
+            except ValueError:return 'UNSUPPORTED_SUBSET_POLICY'
+            plan={'selected_hands':selected,'input':config}
+        else:
+            plan=self.plans.get(snapshot['information_key'])
+            if plan is None:return 'NO_EXPLICIT_PLAN'
+            if combo_key(own) not in [combo_key(h) for h in plan['selected_hands'].get('hero',[])]:return 'OWN_HAND_NOT_SELECTED'
+            public=next(p['range'] for p in snapshot['players'] if p['id']=='hero')
+            own=next(row['cards'] for row in public if combo_key(row['cards'])==combo_key(own))
         request={'snapshot':snapshot,'selected_hands':plan['selected_hands'],'input':plan['input'],'own_hand':own}
         with self._cv:
             current=self._contexts.get(context)
@@ -108,7 +128,9 @@ class TrainerShadowBridge:
             receipt=self.executor.submit(context,request,self.limits)
             if receipt['ticket_id'] is None:return 'SOLVER_'+receipt['status'].upper()
             current['ticket']=receipt['ticket_id'];current['baseline']=baseline
-            self._log('submitted',context_key=context,revision=revision,source_key=snapshot['information_key'],job_id=receipt['job_id'])
+            self._log('submitted',context_key=context,revision=revision,source_key=snapshot['information_key'],job_id=receipt['job_id'],
+                      selection_policy=evidence['name'] if evidence else 'explicit_decision_plan',
+                      selected_key=evidence['selected_key'] if evidence else None)
         return None
 
     def _collect(self):
@@ -134,7 +156,8 @@ class TrainerShadowBridge:
                     baseline_action=label,represented_exactly=represented,solver_most_likely_actions=modes,
                     baseline_probability=probabilities[candidate['actions'].index(label)] if represented else None,
                     matches_most_likely=label in modes if represented else None,
-                    quality_pct_pot=result['quality']['value'],live_advice_allowed=False)
+                    quality_pct_pot=result['quality']['value'],live_advice_allowed=False,
+                    diagnostics_only=True,range_stability_verified=False)
 
     def _loop(self):
         while True:

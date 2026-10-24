@@ -1,4 +1,5 @@
 """Local trainer hook -> public preparation -> real native queue -> diagnostics."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -37,12 +38,13 @@ def wait_for(predicate):
     raise AssertionError('Local trainer shadow control did not complete')
 
 
-def benchmark():
+def benchmark(plan_override=None):
     state=controlled_hand();snapshot=prepare_solver_snapshot(state);baseline=DecisionEngine().analyze(state)
     picks={'hero':['AhAd','3h3d'],'villain':['KhKd','5h5d']}
     selected={p['id']:[next(row['cards'] for row in p['range'] if combo_key(row['cards'])==combo_key(t)) for t in picks[p['id']]] for p in snapshot['players']}
     plan={'version':1,'decisions':{snapshot['information_key']:{'selected_hands':selected,
           'input':{'bet_sizes':[baseline.recommended_amount,40],'raise_sizes':[80],'max_raises':1,'utility_storage':'compact'}}}}
+    if plan_override is not None:plan=plan_override
     previous=hand.current_state;token=hand.training_owner.set(None)
     assert trainer_shadow._bridge is None
     try:
@@ -65,7 +67,7 @@ def benchmark():
                 trainer_shadow.stop_local_shadow()
                 assert executor.stats()['jobs']==0 and executor.stats()['closed']
         return {'scope':'Local opt-in trainer integration, exact controlled plan; existing hint unchanged. No HTTP deployment.',
-            'bridge_source_sha256':sha256(Path(bridge_module.__file__).read_bytes()).hexdigest(),
+            'plan_version':plan['version'],'bridge_source_sha256':sha256(Path(bridge_module.__file__).read_bytes()).hexdigest(),
             'source_information_key':snapshot['information_key'],'selected_public_hands':selected,
             'baseline_action':comparison['baseline_action'],'hint_route_seconds':hint_seconds,
             'comparison':comparison,'before_action':before,'after_action':after,
@@ -74,4 +76,8 @@ def benchmark():
         trainer_shadow.stop_local_shadow();hand.current_state=previous;hand.training_owner.reset(token)
 
 
-if __name__=='__main__':print(json.dumps(benchmark(),indent=2,allow_nan=False))
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--policy-plan',type=Path)
+    args=parser.parse_args()
+    override=json.loads(args.policy_plan.read_text()) if args.policy_plan else None
+    print(json.dumps(benchmark(override),indent=2,allow_nan=False))

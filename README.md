@@ -275,3 +275,9 @@ The trainer has a disabled-by-default local shadow hook. Explicit per-decision
 plans are prepared off the request path; current hints remain unchanged and
 stale observations are discarded. See [docs/TRAINER_LOCAL_SHADOW.md](docs/TRAINER_LOCAL_SHADOW.md)
 for the opt-in flags, strict plan format, limited coverage and native end-to-end control.
+
+For local diagnostic runs on unlisted river decisions, an explicit seeded subset
+policy and loopback-only launcher are available. The policy failed range-stability
+controls and must not replace current advice. See
+[docs/SOLVER_PUBLIC_SUBSET_POLICY.md](docs/SOLVER_PUBLIC_SUBSET_POLICY.md) for the
+one-command flag, configuration, anchoring assumptions and paired sensitivity report.

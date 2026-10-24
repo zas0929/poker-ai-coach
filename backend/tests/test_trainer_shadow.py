@@ -112,6 +112,22 @@ class TrainerShadowTests(unittest.TestCase):
         self.assertNotIn('own_hand',json.dumps(bridge.events()))
         self.assertEqual(len(fake.requests),1)
 
+    def test_explicit_policy_plan_handles_unlisted_snapshot_and_retains_exact_size(self):
+        path=Path(__file__).parents[1]/'research/config/local-shadow-policy.json'
+        fake=FakeExecutor();bridge=TrainerShadowBridge(json.loads(path.read_text()),executor=fake)
+        try:
+            bridge.observe('alice',self.state);bridge.offer('alice',self.state,self.baseline)
+            until(lambda:len(fake.requests)==1)
+            req=fake.requests[0]
+            self.assertEqual(req['snapshot'],self.snapshot)
+            self.assertEqual(len(req['selected_hands']['hero']),3)
+            self.assertIn(req['own_hand'],req['selected_hands']['hero'])
+            self.assertIn(self.baseline.recommended_amount,req['input']['bet_sizes'])
+            submitted=next(e for e in bridge.events() if e['event']=='submitted')
+            self.assertEqual(submitted['selection_policy'],'anchored_public_subset_v1')
+            self.assertIsNotNone(submitted['selected_key'])
+        finally:bridge.close()
+
     def test_no_plan_and_missing_own_hand_are_explained_without_solving(self):
         for plan,code in [({'version':1,'decisions':{}},'NO_EXPLICIT_PLAN'),
                           (copy.deepcopy(self.plan),'OWN_HAND_NOT_SELECTED')]:
