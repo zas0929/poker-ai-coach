@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { LatestAnalysis } from '@/services/latestAnalysis';
 import { PokerApi, type TrainingBlinds } from '@/services/pokerApi';
+import { playTrainerTurns } from '@/services/trainerPlayback';
 import { TrainingApi } from '@/services/trainingApi';
 import type { ActionReview, ActionType, HandAnalysis, HandState } from '@/types/poker';
 
@@ -22,6 +23,8 @@ export function usePokerHand() {
     );
   }
   const busy = useRef(false);
+  const mounted = useRef(true);
+  const playback = useRef<AbortController | null>(null);
   const tableSize = useRef<number | null>(null);
 
   const run = useCallback(async <T,>(task: () => Promise<T>) => {
@@ -43,12 +46,20 @@ export function usePokerHand() {
   }, []);
 
   const applyState = useCallback(async (nextHand: HandState) => {
+    if (!mounted.current) return;
+    playback.current?.abort();
+    const controller = new AbortController();
+    playback.current = controller;
     let settledHand = nextHand;
     setAnalysis(null);
     setHand(settledHand);
     if (!settledHand.result && settledHand.current_player_id !== 'hero') {
-      settledHand = await PokerApi.autoPlay();
-      setHand(settledHand);
+      settledHand = await playTrainerTurns(settledHand, {
+        aiAction: PokerApi.aiAction,
+        advance: PokerApi.advance,
+        onState: setHand,
+        signal: controller.signal,
+      });
     }
     // Keep the prior action buttons until the entire bot/street transition finishes.
     setActionHand(settledHand);
@@ -75,6 +86,7 @@ export function usePokerHand() {
       setDecisionLog((current) => [result.review, ...current].slice(0, 25));
       await applyState(result.state);
     } catch (cause) {
+      if (!mounted.current || playback.current?.signal.aborted) return;
       // A lost response must not leave the UI offering a stale action again.
       try { await applyState(await PokerApi.getState()); } catch { /* Keep the original error. */ }
       throw cause;
@@ -86,8 +98,9 @@ export function usePokerHand() {
   }), [applyState, run]);
 
   useEffect(() => {
+    mounted.current = true;
     void startHand();
-    return () => hints.current?.cancel();
+    return () => { mounted.current = false; hints.current?.cancel(); playback.current?.abort(); };
   }, [startHand]);
 
   return {

@@ -21,11 +21,13 @@ interface PokerTableProps {
   emptyStack?: number;
   turnTimer?: TurnTimer | null;
   silent?: boolean;
+  thinkingPlayerId?: string | null;
 }
 
 function Seat({
   player,
   active,
+  thinking = false,
   timer,
   cardsHidden = false,
   dealer = false,
@@ -36,6 +38,7 @@ function Seat({
 }: {
   player?: Player;
   active: boolean;
+  thinking?: boolean;
   timer?: TurnTimer | null;
   cardsHidden?: boolean;
   dealer?: boolean;
@@ -62,7 +65,7 @@ function Seat({
           <p title={t(displayPosition)}>{shortPosition}</p>
           {player ? (
             <span className={`action-badge action-${lastAction?.action ?? status}`}>
-              {t(formatAction(lastAction, status))}
+              {t(thinking ? 'thinking' : formatAction(lastAction, status))}
             </span>
           ) : (
             <span className="action-badge action-waiting">{t("Waiting")}</span>
@@ -119,7 +122,7 @@ export default function PokerTable(props: PokerTableProps) {
   return <TableScene key={key} {...props} />;
 }
 
-function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer, silent = false }: PokerTableProps) {
+function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer, thinkingPlayerId, silent = false }: PokerTableProps) {
   const { t } = useI18n();
   const { play } = useTableSound();
   const previousBoard = useRef(hand && isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand?.board.length ?? 0);
@@ -201,6 +204,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
             startingStack={emptyStack}
             timer={seat.player?.id === turnTimer?.playerId && hand?.current_player_id === seat.player?.id && !hand?.result ? turnTimer : null}
             dealer={Boolean(seat.player && seat.player.id === hand?.dealer_player_id)}
+            thinking={Boolean(seat.player && thinkingPlayerId === seat.player.id)}
             active={Boolean(seat.player && hand?.current_player_id === seat.player.id)}
             cardsHidden={Boolean(seat.player?.id !== viewerId && (!revealVillainCards || seat.player?.status === 'folded'))}
             lastAction={seat.player ? lastActionFor(hand, seat.player.id) : undefined}

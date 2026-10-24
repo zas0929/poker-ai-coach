@@ -63,7 +63,7 @@ export default function HomePage() {
 
       <section className="game-layout">
         <div className="table-column">
-          <PokerTable hand={hand} seatCount={hand?.players.length ?? 2} />
+          <PokerTable hand={hand} seatCount={hand?.players.length ?? 2} thinkingPlayerId={isLoading && !hand?.result && hand?.current_player_id !== 'hero' ? hand?.current_player_id : null} />
           <ActionPanel
             analysis={analysis}
             hand={actionHand}

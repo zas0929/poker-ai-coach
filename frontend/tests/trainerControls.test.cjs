@@ -9,7 +9,9 @@ function fixture() {
  const next={...initial,street:'flop',betting:{legal_actions:['fold','check','bet'],call_amount:0}};
  const bot=new Promise((resolve,reject)=>{resolveBot=resolve;rejectBot=reject;});
  const react={useState(initial){const i=index++;if(!(i in slots))slots[i]=initial;return[slots[i],value=>{slots[i]=typeof value==='function'?value(slots[i]):value;}];},useRef(initial){const i=index++;return slots[i]??(slots[i]={current:initial});},useCallback:fn=>fn,useEffect(){}};
- const scope={exports:{},require:name=>name==='react'?react:name.includes('latestAnalysis')?{LatestAnalysis:class{cancel(){}request(){return Promise.resolve();}}}:name.includes('pokerApi')?{PokerApi:{startHand:async()=>initial,autoPlay:()=>bot,getState:async()=>intermediate}}:{TrainingApi:{action:async()=>({state:intermediate,review:{}})}}};
+ const playbackScope={exports:{},setTimeout,clearTimeout};
+ vm.runInNewContext(ts.transpileModule(fs.readFileSync(path.join(__dirname,'../services/trainerPlayback.ts'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,playbackScope);
+ const scope={exports:{},AbortController,require:name=>name==='react'?react:name.includes('latestAnalysis')?{LatestAnalysis:class{cancel(){}request(){return Promise.resolve();}}}:name.includes('trainerPlayback')?{playTrainerTurns:(state,options)=>playbackScope.exports.playTrainerTurns(state,{...options,wait:async()=>{}})}:name.includes('pokerApi')?{PokerApi:{startHand:async()=>initial,aiAction:()=>bot,advance:()=>bot,getState:async()=>intermediate}}:{TrainingApi:{action:async()=>({state:intermediate,review:{}})}}};
  const code=ts.transpileModule(fs.readFileSync(path.join(__dirname,'../hooks/usePokerHand.ts'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
  vm.runInNewContext(code,scope);
  return {initial,intermediate,next,read(){index=0;return scope.exports.usePokerHand();},resolveBot,rejectBot};

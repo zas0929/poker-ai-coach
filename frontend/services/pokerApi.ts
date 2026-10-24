@@ -66,9 +66,9 @@ export const PokerApi = {
     });
   },
 
-  aiAction(playerId = 'villain') {
-    return request<HandState>(`/api/hand/ai-action?player_id=${playerId}`, {
-      method: 'POST',
+  aiAction(playerId = 'villain', signal?: AbortSignal) {
+    return request<HandState>(`/api/hand/ai-action?player_id=${encodeURIComponent(playerId)}`, {
+      method: 'POST', signal,
     });
   },
 
@@ -76,7 +76,7 @@ export const PokerApi = {
     return request<HandState>('/api/hand/auto-play', { method: 'POST' });
   },
 
-  advance() {
-    return request<HandState>('/api/hand/advance', { method: 'POST' });
+  advance(signal?: AbortSignal) {
+    return request<HandState>('/api/hand/advance', { method: 'POST', signal });
   },
 };
