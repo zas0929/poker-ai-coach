@@ -1,0 +1,6202 @@
+{
+  "iterations": 100,
+  "limits": {
+    "wall_seconds": 45,
+    "memory_mib": 128,
+    "quality_gate_pct_pot": 0.5
+  },
+  "scope": "Small explicit synthetic river ranges, 2\u20136 seats. Full and quotient share the public tree; all original legal deals and terminal payouts checked. Live trainer unchanged.",
+  "source_sha256": {
+    "benchmark_range_quotient.py": "0cce209f4b79897e76b744f2413f3d8ca8c62255ea999b858af7c9781fbe7527",
+    "exact_range_quotient.py": "cc816e504f606f767d9a51b22d0e4053b08e5b9d7d37b65c364811dc2b4d1ab5",
+    "custom_river.py": "7e3fc1317c6dae884363d01672d1865b3dd82ff9efc145de9951fc985dc87029"
+  },
+  "all_verified": true,
+  "all_quality_passed": true,
+  "results": [
+    {
+      "case": {
+        "name": "dry_2",
+        "raw_combinations": 64,
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "4c6c",
+                0.5
+              ],
+              [
+                "9cTs",
+                0.2
+              ],
+              [
+                "2d9c",
+                1.0
+              ],
+              [
+                "5h8c",
+                1.0
+              ],
+              [
+                "8cTs",
+                1.0
+              ],
+              [
+                "3c5s",
+                1.0
+              ],
+              [
+                "KcTs",
+                0.5
+              ],
+              [
+                "4hTs",
+                2.0
+              ]
+            ],
+            [
+              [
+                "7d9d",
+                0.5
+              ],
+              [
+                "9cJh",
+                2.0
+              ],
+              [
+                "7c7s",
+                0.2
+              ],
+              [
+                "8c8h",
+                0.5
+              ],
+              [
+                "7s9h",
+                1.0
+              ],
+              [
+                "AhQh",
+                2.0
+              ],
+              [
+                "8hTd",
+                1.0
+              ],
+              [
+                "3c5h",
+                0.5
+              ]
+            ]
+          ],
+          "pot": 120,
+          "stacks": [
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "2d9c",
+              1.2
+            ],
+            [
+              "3c5s",
+              1.0
+            ],
+            [
+              "4c6c",
+              2.5
+            ],
+            [
+              "5h8c",
+              1.0
+            ],
+            [
+              "8cTs",
+              1.0
+            ],
+            [
+              "KcTs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3c5h",
+              0.5
+            ],
+            [
+              "7c7s",
+              1.7
+            ],
+            [
+              "8c8h",
+              0.5
+            ],
+            [
+              "8hTd",
+              1.0
+            ],
+            [
+              "9cJh",
+              2.0
+            ],
+            [
+              "AhQh",
+              2.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "2d9c": "2d9c",
+            "9cTs": "2d9c",
+            "3c5s": "3c5s",
+            "4c6c": "4c6c",
+            "4hTs": "4c6c",
+            "5h8c": "5h8c",
+            "8cTs": "8cTs",
+            "KcTs": "KcTs"
+          },
+          {
+            "3c5h": "3c5h",
+            "7c7s": "7c7s",
+            "7d9d": "7c7s",
+            "7s9h": "7c7s",
+            "8c8h": "8c8h",
+            "8hTd": "8hTd",
+            "9cJh": "9cJh",
+            "AhQh": "AhQh"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "2d9c",
+              "members": [
+                "2d9c",
+                "9cTs"
+              ],
+              "weight": 1.2
+            },
+            {
+              "representative": "3c5s",
+              "members": [
+                "3c5s"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "4c6c",
+              "members": [
+                "4c6c",
+                "4hTs"
+              ],
+              "weight": 2.5
+            },
+            {
+              "representative": "5h8c",
+              "members": [
+                "5h8c"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "8cTs",
+              "members": [
+                "8cTs"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "KcTs",
+              "members": [
+                "KcTs"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "3c5h",
+              "members": [
+                "3c5h"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "7c7s",
+              "members": [
+                "7c7s",
+                "7d9d",
+                "7s9h"
+              ],
+              "weight": 1.7
+            },
+            {
+              "representative": "8c8h",
+              "members": [
+                "8c8h"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "8hTd",
+              "members": [
+                "8hTd"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "9cJh",
+              "members": [
+                "9cJh"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "AhQh",
+              "members": [
+                "AhQh"
+              ],
+              "weight": 2.0
+            }
+          ]
+        ],
+        "pair_checks": 128,
+        "original_widths": [
+          8,
+          8
+        ],
+        "compressed_widths": [
+          6,
+          6
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 580,
+        "raw_lineups_checked": 64,
+        "blocked_lineups_checked": 6,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 2.7755575615628914e-17,
+        "verified": true
+      },
+      "full_deals": 58,
+      "compressed_deals": 31,
+      "public_nodes": 9,
+      "full_metrics": {
+        "policy_payoffs": [
+          -25.687633749639605,
+          25.687633749639605
+        ],
+        "best_response_payoffs": [
+          -25.643894196285988,
+          25.701882347881792
+        ],
+        "unilateral_gains": [
+          0.043739553353617566,
+          0.014248598242186716
+        ],
+        "nash_conv_chips": 0.05798815159580428,
+        "max_unilateral_gain_pct_pot": 0.036449627794681305
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          -25.687633749639602,
+          25.687633749639605
+        ],
+        "best_response_payoffs": [
+          -25.643894196285984,
+          25.701882347881792
+        ],
+        "unilateral_gains": [
+          0.043739553353617566,
+          0.014248598242186716
+        ],
+        "nash_conv_chips": 0.05798815159580428,
+        "max_unilateral_gain_pct_pot": 0.036449627794681305
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          -25.68763374963961,
+          25.687633749639605
+        ],
+        "best_response_payoffs": [
+          -25.643894196285988,
+          25.7018823478818
+        ],
+        "unilateral_gains": [
+          0.04373955335362112,
+          0.014248598242193822
+        ],
+        "nash_conv_chips": 0.05798815159581494,
+        "max_unilateral_gain_pct_pot": 0.03644962779468426
+      },
+      "max_lifted_metric_error_chips": 7.105427357601002e-15,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.00854654199999999,
+        "compression": 0.0004843750000000091,
+        "compressed_build": 0.001952416999999984,
+        "full_train": 0.01443224999999998,
+        "compressed_train": 0.002535124999999999
+      },
+      "peak_rss_mib": 27.30859375,
+      "wall_seconds": 0.488646333,
+      "sampled_peak_rss_mib": 26.38671875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_2",
+        "raw_combinations": 64,
+        "input": {
+          "board": [
+            "2s",
+            "5s",
+            "9s",
+            "Kh",
+            "Ad"
+          ],
+          "ranges": [
+            [
+              [
+                "9hTd",
+                0.2
+              ],
+              [
+                "KdQh",
+                0.2
+              ],
+              [
+                "7c7h",
+                0.5
+              ],
+              [
+                "7cQs",
+                0.2
+              ],
+              [
+                "8c9c",
+                0.5
+              ],
+              [
+                "4dJd",
+                2.0
+              ],
+              [
+                "8sAc",
+                1.0
+              ],
+              [
+                "5h8d",
+                2.0
+              ]
+            ],
+            [
+              [
+                "3dJs",
+                0.5
+              ],
+              [
+                "3sAh",
+                1.0
+              ],
+              [
+                "8sQd",
+                1.0
+              ],
+              [
+                "8dJc",
+                1.0
+              ],
+              [
+                "2h9c",
+                1.0
+              ],
+              [
+                "2d5c",
+                2.0
+              ],
+              [
+                "5c7s",
+                0.5
+              ],
+              [
+                "4d5h",
+                1.0
+              ]
+            ]
+          ],
+          "pot": 120,
+          "stacks": [
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "4dJd",
+              2.0
+            ],
+            [
+              "5h8d",
+              2.0
+            ],
+            [
+              "7c7h",
+              0.9
+            ],
+            [
+              "7cQs",
+              0.2
+            ],
+            [
+              "8c9c",
+              0.5
+            ],
+            [
+              "8sAc",
+              1.0
+            ]
+          ],
+          [
+            [
+              "2d5c",
+              2.0
+            ],
+            [
+              "2h9c",
+              1.0
+            ],
+            [
+              "3dJs",
+              0.5
+            ],
+            [
+              "3sAh",
+              1.0
+            ],
+            [
+              "4d5h",
+              1.0
+            ],
+            [
+              "5c7s",
+              0.5
+            ],
+            [
+              "8dJc",
+              1.0
+            ],
+            [
+              "8sQd",
+              1.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "4dJd": "4dJd",
+            "5h8d": "5h8d",
+            "7c7h": "7c7h",
+            "9hTd": "7c7h",
+            "KdQh": "7c7h",
+            "7cQs": "7cQs",
+            "8c9c": "8c9c",
+            "8sAc": "8sAc"
+          },
+          {
+            "2d5c": "2d5c",
+            "2h9c": "2h9c",
+            "3dJs": "3dJs",
+            "3sAh": "3sAh",
+            "4d5h": "4d5h",
+            "5c7s": "5c7s",
+            "8dJc": "8dJc",
+            "8sQd": "8sQd"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "4dJd",
+              "members": [
+                "4dJd"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "5h8d",
+              "members": [
+                "5h8d"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "7c7h",
+              "members": [
+                "7c7h",
+                "9hTd",
+                "KdQh"
+              ],
+              "weight": 0.9
+            },
+            {
+              "representative": "7cQs",
+              "members": [
+                "7cQs"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "8c9c",
+              "members": [
+                "8c9c"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "8sAc",
+              "members": [
+                "8sAc"
+              ],
+              "weight": 1.0
+            }
+          ],
+          [
+            {
+              "representative": "2d5c",
+              "members": [
+                "2d5c"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "2h9c",
+              "members": [
+                "2h9c"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "3dJs",
+              "members": [
+                "3dJs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "3sAh",
+              "members": [
+                "3sAh"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "4d5h",
+              "members": [
+                "4d5h"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "5c7s",
+              "members": [
+                "5c7s"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "8dJc",
+              "members": [
+                "8dJc"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "8sQd",
+              "members": [
+                "8sQd"
+              ],
+              "weight": 1.0
+            }
+          ]
+        ],
+        "pair_checks": 128,
+        "original_widths": [
+          8,
+          8
+        ],
+        "compressed_widths": [
+          6,
+          8
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 590,
+        "raw_lineups_checked": 64,
+        "blocked_lineups_checked": 5,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 2.7755575615628914e-17,
+        "verified": true
+      },
+      "full_deals": 59,
+      "compressed_deals": 43,
+      "public_nodes": 9,
+      "full_metrics": {
+        "policy_payoffs": [
+          -34.354571127946016,
+          34.35457112794601
+        ],
+        "best_response_payoffs": [
+          -34.31891301889957,
+          34.397625493482984
+        ],
+        "unilateral_gains": [
+          0.03565810904644451,
+          0.043054365536974615
+        ],
+        "nash_conv_chips": 0.07871247458341912,
+        "max_unilateral_gain_pct_pot": 0.03587863794747884
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          -34.354571127945995,
+          34.35457112794599
+        ],
+        "best_response_payoffs": [
+          -34.318913018899565,
+          34.397625493482984
+        ],
+        "unilateral_gains": [
+          0.0356581090464303,
+          0.04305436553699593
+        ],
+        "nash_conv_chips": 0.07871247458342623,
+        "max_unilateral_gain_pct_pot": 0.03587863794749661
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          -34.35457112794601,
+          34.35457112794601
+        ],
+        "best_response_payoffs": [
+          -34.31891301889957,
+          34.39762549348299
+        ],
+        "unilateral_gains": [
+          0.0356581090464374,
+          0.04305436553698172
+        ],
+        "nash_conv_chips": 0.07871247458341912,
+        "max_unilateral_gain_pct_pot": 0.03587863794748477
+      },
+      "max_lifted_metric_error_chips": 2.1316282072803006e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.007853541999999991,
+        "compression": 0.0003962499999999869,
+        "compressed_build": 0.002349040999999996,
+        "full_train": 0.01356333300000001,
+        "compressed_train": 0.0020871249999999952
+      },
+      "peak_rss_mib": 27.28125,
+      "wall_seconds": 0.4739718330000001,
+      "sampled_peak_rss_mib": 26.25390625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "equivalent_2",
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "AhAd",
+                1.0
+              ],
+              [
+                "AcAs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "KhKd",
+                1.0
+              ],
+              [
+                "KcKs",
+                3.0
+              ]
+            ]
+          ],
+          "pot": 120,
+          "stacks": [
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "AcAs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "KcKs",
+              4.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "AcAs": "AcAs",
+            "AhAd": "AcAs"
+          },
+          {
+            "KcKs": "KcKs",
+            "KhKd": "KcKs"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "AcAs",
+              "members": [
+                "AcAs",
+                "AhAd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "KcKs",
+              "members": [
+                "KcKs",
+                "KhKd"
+              ],
+              "weight": 4.0
+            }
+          ]
+        ],
+        "pair_checks": 8,
+        "original_widths": [
+          2,
+          2
+        ],
+        "compressed_widths": [
+          1,
+          1
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 40,
+        "raw_lineups_checked": 4,
+        "blocked_lineups_checked": 0,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 0.0,
+        "verified": true
+      },
+      "full_deals": 4,
+      "compressed_deals": 1,
+      "public_nodes": 9,
+      "full_metrics": {
+        "policy_payoffs": [
+          60.007916870895016,
+          -60.00791687089501
+        ],
+        "best_response_payoffs": [
+          60.01188118811882,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.003964317223804414,
+          0.007916870895009254
+        ],
+        "nash_conv_chips": 0.011881188118813668,
+        "max_unilateral_gain_pct_pot": 0.006597392412507711
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          60.007916870895016,
+          -60.00791687089501
+        ],
+        "best_response_payoffs": [
+          60.011881188118814,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.003964317223797309,
+          0.007916870895009254
+        ],
+        "nash_conv_chips": 0.011881188118806563,
+        "max_unilateral_gain_pct_pot": 0.006597392412507711
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          60.007916870895016,
+          -60.00791687089501
+        ],
+        "best_response_payoffs": [
+          60.01188118811882,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.003964317223804414,
+          0.007916870895009254
+        ],
+        "nash_conv_chips": 0.011881188118813668,
+        "max_unilateral_gain_pct_pot": 0.006597392412507711
+      },
+      "max_lifted_metric_error_chips": 7.105427357601002e-15,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.005314125000000003,
+        "compression": 0.00016366600000000675,
+        "compressed_build": 0.0002397500000000108,
+        "full_train": 0.00926574999999999,
+        "compressed_train": 0.0010196249999999962
+      },
+      "peak_rss_mib": 27.44140625,
+      "wall_seconds": 0.47621033300000004,
+      "sampled_peak_rss_mib": 26.50390625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_3",
+        "raw_combinations": 125,
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "3c4s",
+                0.5
+              ],
+              [
+                "5hQs",
+                0.5
+              ],
+              [
+                "3s9d",
+                0.5
+              ],
+              [
+                "2hTs",
+                2.0
+              ],
+              [
+                "9dQc",
+                0.2
+              ]
+            ],
+            [
+              [
+                "3hAs",
+                2.0
+              ],
+              [
+                "6cTs",
+                0.5
+              ],
+              [
+                "6h8s",
+                0.5
+              ],
+              [
+                "5hTs",
+                1.0
+              ],
+              [
+                "4h9d",
+                1.0
+              ]
+            ],
+            [
+              [
+                "7s8h",
+                0.2
+              ],
+              [
+                "2d4c",
+                0.5
+              ],
+              [
+                "6s7d",
+                0.5
+              ],
+              [
+                "3h6s",
+                1.0
+              ],
+              [
+                "4sJh",
+                2.0
+              ]
+            ]
+          ],
+          "pot": 180,
+          "stacks": [
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "2hTs",
+              2.0
+            ],
+            [
+              "3c4s",
+              0.5
+            ],
+            [
+              "3s9d",
+              0.7
+            ],
+            [
+              "5hQs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3hAs",
+              2.0
+            ],
+            [
+              "4h9d",
+              1.0
+            ],
+            [
+              "5hTs",
+              1.0
+            ],
+            [
+              "6cTs",
+              0.5
+            ],
+            [
+              "6h8s",
+              0.5
+            ]
+          ],
+          [
+            [
+              "2d4c",
+              0.5
+            ],
+            [
+              "3h6s",
+              1.0
+            ],
+            [
+              "4sJh",
+              2.0
+            ],
+            [
+              "6s7d",
+              0.7
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "2hTs": "2hTs",
+            "3c4s": "3c4s",
+            "3s9d": "3s9d",
+            "9dQc": "3s9d",
+            "5hQs": "5hQs"
+          },
+          {
+            "3hAs": "3hAs",
+            "4h9d": "4h9d",
+            "5hTs": "5hTs",
+            "6cTs": "6cTs",
+            "6h8s": "6h8s"
+          },
+          {
+            "2d4c": "2d4c",
+            "3h6s": "3h6s",
+            "4sJh": "4sJh",
+            "6s7d": "6s7d",
+            "7s8h": "6s7d"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "2hTs",
+              "members": [
+                "2hTs"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "3c4s",
+              "members": [
+                "3c4s"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "3s9d",
+              "members": [
+                "3s9d",
+                "9dQc"
+              ],
+              "weight": 0.7
+            },
+            {
+              "representative": "5hQs",
+              "members": [
+                "5hQs"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "3hAs",
+              "members": [
+                "3hAs"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "4h9d",
+              "members": [
+                "4h9d"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "5hTs",
+              "members": [
+                "5hTs"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "6cTs",
+              "members": [
+                "6cTs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "6h8s",
+              "members": [
+                "6h8s"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "2d4c",
+              "members": [
+                "2d4c"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "3h6s",
+              "members": [
+                "3h6s"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "4sJh",
+              "members": [
+                "4sJh"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "6s7d",
+              "members": [
+                "6s7d",
+                "7s8h"
+              ],
+              "weight": 0.7
+            }
+          ]
+        ],
+        "pair_checks": 150,
+        "original_widths": [
+          5,
+          5,
+          5
+        ],
+        "compressed_widths": [
+          4,
+          5,
+          4
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 3510,
+        "raw_lineups_checked": 125,
+        "blocked_lineups_checked": 35,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 5.551115123125783e-17,
+        "verified": true
+      },
+      "full_deals": 90,
+      "compressed_deals": 55,
+      "public_nodes": 25,
+      "full_metrics": {
+        "policy_payoffs": [
+          -47.122976334600494,
+          -35.69089067134141,
+          82.81386700594189
+        ],
+        "best_response_payoffs": [
+          -47.05661984467186,
+          -35.58173302608849,
+          82.8625990566942
+        ],
+        "unilateral_gains": [
+          0.06635648992863707,
+          0.10915764525291394,
+          0.04873205075230658
+        ],
+        "nash_conv_chips": 0.2242461859338576,
+        "max_unilateral_gain_pct_pot": 0.06064313625161886
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          -47.122976334600516,
+          -35.69089067134142,
+          82.81386700594192
+        ],
+        "best_response_payoffs": [
+          -47.05661984467187,
+          -35.5817330260885,
+          82.86259905669422
+        ],
+        "unilateral_gains": [
+          0.06635648992864418,
+          0.10915764525292104,
+          0.04873205075230658
+        ],
+        "nash_conv_chips": 0.2242461859338718,
+        "max_unilateral_gain_pct_pot": 0.0606431362516228
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          -47.122976334600494,
+          -35.69089067134141,
+          82.81386700594189
+        ],
+        "best_response_payoffs": [
+          -47.056619844671864,
+          -35.58173302608849,
+          82.8625990566942
+        ],
+        "unilateral_gains": [
+          0.06635648992862997,
+          0.10915764525291394,
+          0.04873205075230658
+        ],
+        "nash_conv_chips": 0.22424618593385048,
+        "max_unilateral_gain_pct_pot": 0.06064313625161886
+      },
+      "max_lifted_metric_error_chips": 2.842170943040401e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.01805912499999998,
+        "compression": 0.00041520800000000024,
+        "compressed_build": 0.00829191600000001,
+        "full_train": 0.015125458000000008,
+        "compressed_train": 0.004641708999999994
+      },
+      "peak_rss_mib": 27.375,
+      "wall_seconds": 0.4708731669999999,
+      "sampled_peak_rss_mib": 25.4609375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_3",
+        "raw_combinations": 125,
+        "input": {
+          "board": [
+            "2s",
+            "5s",
+            "9s",
+            "Kh",
+            "Ad"
+          ],
+          "ranges": [
+            [
+              [
+                "2hQc",
+                1.0
+              ],
+              [
+                "7dJd",
+                0.5
+              ],
+              [
+                "4s7c",
+                2.0
+              ],
+              [
+                "6d6s",
+                0.2
+              ],
+              [
+                "4sTc",
+                0.2
+              ]
+            ],
+            [
+              [
+                "4s5h",
+                0.2
+              ],
+              [
+                "KcQc",
+                2.0
+              ],
+              [
+                "4hAh",
+                0.2
+              ],
+              [
+                "3c9h",
+                1.0
+              ],
+              [
+                "AcTd",
+                0.2
+              ]
+            ],
+            [
+              [
+                "2hJc",
+                2.0
+              ],
+              [
+                "6dTs",
+                0.5
+              ],
+              [
+                "6h8h",
+                0.5
+              ],
+              [
+                "6sAh",
+                2.0
+              ],
+              [
+                "4dTs",
+                2.0
+              ]
+            ]
+          ],
+          "pot": 180,
+          "stacks": [
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "2hQc",
+              1.0
+            ],
+            [
+              "4s7c",
+              2.0
+            ],
+            [
+              "4sTc",
+              0.2
+            ],
+            [
+              "6d6s",
+              0.2
+            ],
+            [
+              "7dJd",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3c9h",
+              1.0
+            ],
+            [
+              "4hAh",
+              0.2
+            ],
+            [
+              "4s5h",
+              0.2
+            ],
+            [
+              "AcTd",
+              0.2
+            ],
+            [
+              "KcQc",
+              2.0
+            ]
+          ],
+          [
+            [
+              "2hJc",
+              2.0
+            ],
+            [
+              "4dTs",
+              2.0
+            ],
+            [
+              "6dTs",
+              0.5
+            ],
+            [
+              "6h8h",
+              0.5
+            ],
+            [
+              "6sAh",
+              2.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "2hQc": "2hQc",
+            "4s7c": "4s7c",
+            "4sTc": "4sTc",
+            "6d6s": "6d6s",
+            "7dJd": "7dJd"
+          },
+          {
+            "3c9h": "3c9h",
+            "4hAh": "4hAh",
+            "4s5h": "4s5h",
+            "AcTd": "AcTd",
+            "KcQc": "KcQc"
+          },
+          {
+            "2hJc": "2hJc",
+            "4dTs": "4dTs",
+            "6dTs": "6dTs",
+            "6h8h": "6h8h",
+            "6sAh": "6sAh"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "2hQc",
+              "members": [
+                "2hQc"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "4s7c",
+              "members": [
+                "4s7c"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "4sTc",
+              "members": [
+                "4sTc"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "6d6s",
+              "members": [
+                "6d6s"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "7dJd",
+              "members": [
+                "7dJd"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "3c9h",
+              "members": [
+                "3c9h"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "4hAh",
+              "members": [
+                "4hAh"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "4s5h",
+              "members": [
+                "4s5h"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "AcTd",
+              "members": [
+                "AcTd"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "KcQc",
+              "members": [
+                "KcQc"
+              ],
+              "weight": 2.0
+            }
+          ],
+          [
+            {
+              "representative": "2hJc",
+              "members": [
+                "2hJc"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "4dTs",
+              "members": [
+                "4dTs"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "6dTs",
+              "members": [
+                "6dTs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "6h8h",
+              "members": [
+                "6h8h"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "6sAh",
+              "members": [
+                "6sAh"
+              ],
+              "weight": 2.0
+            }
+          ]
+        ],
+        "pair_checks": 150,
+        "original_widths": [
+          5,
+          5,
+          5
+        ],
+        "compressed_widths": [
+          5,
+          5,
+          5
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 3588,
+        "raw_lineups_checked": 125,
+        "blocked_lineups_checked": 33,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 5.551115123125783e-17,
+        "verified": true
+      },
+      "full_deals": 92,
+      "compressed_deals": 92,
+      "public_nodes": 25,
+      "full_metrics": {
+        "policy_payoffs": [
+          -59.7307331518466,
+          67.1249324731067,
+          -7.394199321260089
+        ],
+        "best_response_payoffs": [
+          -59.69097780548036,
+          67.21466433443557,
+          -7.36639504710088
+        ],
+        "unilateral_gains": [
+          0.039755346366241895,
+          0.08973186132887179,
+          0.02780427415920883
+        ],
+        "nash_conv_chips": 0.1572914818543225,
+        "max_unilateral_gain_pct_pot": 0.04985103407159543
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          -59.73073315184658,
+          67.12493247310664,
+          -7.394199321260096
+        ],
+        "best_response_payoffs": [
+          -59.69097780548034,
+          67.21466433443553,
+          -7.366395047100887
+        ],
+        "unilateral_gains": [
+          0.039755346366241895,
+          0.089731861328886,
+          0.02780427415920883
+        ],
+        "nash_conv_chips": 0.15729148185433672,
+        "max_unilateral_gain_pct_pot": 0.04985103407160334
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          -59.7307331518466,
+          67.12493247310667,
+          -7.394199321260096
+        ],
+        "best_response_payoffs": [
+          -59.69097780548036,
+          67.21466433443555,
+          -7.366395047100891
+        ],
+        "unilateral_gains": [
+          0.039755346366241895,
+          0.089731861328886,
+          0.027804274159205278
+        ],
+        "nash_conv_chips": 0.15729148185433317,
+        "max_unilateral_gain_pct_pot": 0.04985103407160334
+      },
+      "max_lifted_metric_error_chips": 2.842170943040401e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.017923207999999996,
+        "compression": 0.00048233400000000093,
+        "compressed_build": 0.013198207999999989,
+        "full_train": 0.014012625,
+        "compressed_train": 0.006252874999999991
+      },
+      "peak_rss_mib": 27.17578125,
+      "wall_seconds": 0.4725437920000002,
+      "sampled_peak_rss_mib": 25.58984375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "equivalent_3",
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "AhAd",
+                1.0
+              ],
+              [
+                "AcAs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "KhKd",
+                1.0
+              ],
+              [
+                "KcKs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "QhQd",
+                1.0
+              ],
+              [
+                "QcQs",
+                3.0
+              ]
+            ]
+          ],
+          "pot": 180,
+          "stacks": [
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "AcAs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "KcKs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "QcQs",
+              4.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "AcAs": "AcAs",
+            "AhAd": "AcAs"
+          },
+          {
+            "KcKs": "KcKs",
+            "KhKd": "KcKs"
+          },
+          {
+            "QcQs": "QcQs",
+            "QhQd": "QcQs"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "AcAs",
+              "members": [
+                "AcAs",
+                "AhAd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "KcKs",
+              "members": [
+                "KcKs",
+                "KhKd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "QcQs",
+              "members": [
+                "QcQs",
+                "QhQd"
+              ],
+              "weight": 4.0
+            }
+          ]
+        ],
+        "pair_checks": 24,
+        "original_widths": [
+          2,
+          2,
+          2
+        ],
+        "compressed_widths": [
+          1,
+          1,
+          1
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 312,
+        "raw_lineups_checked": 8,
+        "blocked_lineups_checked": 0,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 0.0,
+        "verified": true
+      },
+      "full_deals": 8,
+      "compressed_deals": 1,
+      "public_nodes": 25,
+      "full_metrics": {
+        "policy_payoffs": [
+          120.02007291557709,
+          -60.00802807150628,
+          -60.0120448440708
+        ],
+        "best_response_payoffs": [
+          120.02970120576413,
+          -59.99999676502303,
+          -59.99999999999999
+        ],
+        "unilateral_gains": [
+          0.009628290187038147,
+          0.008031306483253786,
+          0.012044844070807414
+        ],
+        "nash_conv_chips": 0.029704440741099347,
+        "max_unilateral_gain_pct_pot": 0.0066915800393374525
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          120.02007291557709,
+          -60.00802807150629,
+          -60.0120448440708
+        ],
+        "best_response_payoffs": [
+          120.02970120576413,
+          -59.999996765023035,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.009628290187038147,
+          0.008031306483253786,
+          0.012044844070800309
+        ],
+        "nash_conv_chips": 0.029704440741092242,
+        "max_unilateral_gain_pct_pot": 0.006691580039333504
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          120.02007291557709,
+          -60.008028071506295,
+          -60.01204484407081
+        ],
+        "best_response_payoffs": [
+          120.02970120576413,
+          -59.999996765023035,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.009628290187038147,
+          0.008031306483260892,
+          0.012044844070807414
+        ],
+        "nash_conv_chips": 0.029704440741106453,
+        "max_unilateral_gain_pct_pot": 0.0066915800393374525
+      },
+      "max_lifted_metric_error_chips": 7.105427357601002e-15,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.006090207999999986,
+        "compression": 0.0002849580000000018,
+        "compressed_build": 0.0004992500000000066,
+        "full_train": 0.010914000000000007,
+        "compressed_train": 0.001599666999999999
+      },
+      "peak_rss_mib": 26.90625,
+      "wall_seconds": 0.48481225000000006,
+      "sampled_peak_rss_mib": 25.98828125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_4",
+        "raw_combinations": 256,
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "KcQc",
+                0.2
+              ],
+              [
+                "AcQh",
+                0.5
+              ],
+              [
+                "2sTs",
+                0.5
+              ],
+              [
+                "2d6h",
+                2.0
+              ]
+            ],
+            [
+              [
+                "6cQs",
+                0.5
+              ],
+              [
+                "KsQh",
+                0.2
+              ],
+              [
+                "2dQh",
+                0.5
+              ],
+              [
+                "9dTd",
+                1.0
+              ]
+            ],
+            [
+              [
+                "AcKs",
+                0.5
+              ],
+              [
+                "5sTd",
+                0.2
+              ],
+              [
+                "5sKc",
+                0.2
+              ],
+              [
+                "3hAc",
+                0.5
+              ]
+            ],
+            [
+              [
+                "3cTs",
+                1.0
+              ],
+              [
+                "4s9c",
+                0.5
+              ],
+              [
+                "6dTs",
+                0.5
+              ],
+              [
+                "6d7c",
+                2.0
+              ]
+            ]
+          ],
+          "pot": 240,
+          "stacks": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "2d6h",
+              2.0
+            ],
+            [
+              "2sTs",
+              0.5
+            ],
+            [
+              "AcQh",
+              0.5
+            ],
+            [
+              "KcQc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2dQh",
+              0.5
+            ],
+            [
+              "6cQs",
+              0.5
+            ],
+            [
+              "9dTd",
+              1.0
+            ],
+            [
+              "KsQh",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3hAc",
+              0.5
+            ],
+            [
+              "5sKc",
+              0.2
+            ],
+            [
+              "5sTd",
+              0.2
+            ],
+            [
+              "AcKs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3cTs",
+              1.0
+            ],
+            [
+              "4s9c",
+              0.5
+            ],
+            [
+              "6d7c",
+              2.0
+            ],
+            [
+              "6dTs",
+              0.5
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "2d6h": "2d6h",
+            "2sTs": "2sTs",
+            "AcQh": "AcQh",
+            "KcQc": "KcQc"
+          },
+          {
+            "2dQh": "2dQh",
+            "6cQs": "6cQs",
+            "9dTd": "9dTd",
+            "KsQh": "KsQh"
+          },
+          {
+            "3hAc": "3hAc",
+            "5sKc": "5sKc",
+            "5sTd": "5sTd",
+            "AcKs": "AcKs"
+          },
+          {
+            "3cTs": "3cTs",
+            "4s9c": "4s9c",
+            "6d7c": "6d7c",
+            "6dTs": "6dTs"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "2d6h",
+              "members": [
+                "2d6h"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "2sTs",
+              "members": [
+                "2sTs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "AcQh",
+              "members": [
+                "AcQh"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "KcQc",
+              "members": [
+                "KcQc"
+              ],
+              "weight": 0.2
+            }
+          ],
+          [
+            {
+              "representative": "2dQh",
+              "members": [
+                "2dQh"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "6cQs",
+              "members": [
+                "6cQs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "9dTd",
+              "members": [
+                "9dTd"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "KsQh",
+              "members": [
+                "KsQh"
+              ],
+              "weight": 0.2
+            }
+          ],
+          [
+            {
+              "representative": "3hAc",
+              "members": [
+                "3hAc"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "5sKc",
+              "members": [
+                "5sKc"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "5sTd",
+              "members": [
+                "5sTd"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "AcKs",
+              "members": [
+                "AcKs"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "3cTs",
+              "members": [
+                "3cTs"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "4s9c",
+              "members": [
+                "4s9c"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "6d7c",
+              "members": [
+                "6d7c"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "6dTs",
+              "members": [
+                "6dTs"
+              ],
+              "weight": 0.5
+            }
+          ]
+        ],
+        "pair_checks": 192,
+        "original_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "compressed_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 15840,
+        "raw_lineups_checked": 256,
+        "blocked_lineups_checked": 136,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 4.163336342344337e-17,
+        "verified": true
+      },
+      "full_deals": 120,
+      "compressed_deals": 120,
+      "public_nodes": 65,
+      "full_metrics": {
+        "policy_payoffs": [
+          -42.59538614099689,
+          66.30416278544965,
+          -58.918725586123564,
+          35.20994894167082
+        ],
+        "best_response_payoffs": [
+          -42.47309399893204,
+          66.39162819775254,
+          -58.88706363456369,
+          35.564109968059114
+        ],
+        "unilateral_gains": [
+          0.12229214206484329,
+          0.0874654123028904,
+          0.031661951559875945,
+          0.3541610263882973
+        ],
+        "nash_conv_chips": 0.5955805323159069,
+        "max_unilateral_gain_pct_pot": 0.1475670943284572
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          -42.595386140996666,
+          66.30416278544962,
+          -58.91872558612347,
+          35.209948941670504
+        ],
+        "best_response_payoffs": [
+          -42.47309399893163,
+          66.39162819775228,
+          -58.88706363456363,
+          35.56410996805854
+        ],
+        "unilateral_gains": [
+          0.12229214206503514,
+          0.08746541230266303,
+          0.03166195155984042,
+          0.3541610263880344
+        ],
+        "nash_conv_chips": 0.595580532315573,
+        "max_unilateral_gain_pct_pot": 0.14756709432834766
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          -42.59538614099667,
+          66.30416278544965,
+          -58.91872558612351,
+          35.20994894167052
+        ],
+        "best_response_payoffs": [
+          -42.47309399893166,
+          66.39162819775231,
+          -58.88706363456366,
+          35.56410996805855
+        ],
+        "unilateral_gains": [
+          0.12229214206501382,
+          0.08746541230266303,
+          0.03166195155984752,
+          0.3541610263880344
+        ],
+        "nash_conv_chips": 0.5955805323155587,
+        "max_unilateral_gain_pct_pot": 0.14756709432834766
+      },
+      "max_lifted_metric_error_chips": 3.552713678800501e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.05244716599999999,
+        "compression": 0.0005642080000000105,
+        "compressed_build": 0.04691162500000001,
+        "full_train": 0.03327929099999999,
+        "compressed_train": 0.023725041999999974
+      },
+      "peak_rss_mib": 27.3359375,
+      "wall_seconds": 0.7182006670000001,
+      "sampled_peak_rss_mib": 27.1015625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_4",
+        "raw_combinations": 256,
+        "input": {
+          "board": [
+            "2s",
+            "5s",
+            "9s",
+            "Kh",
+            "Ad"
+          ],
+          "ranges": [
+            [
+              [
+                "4cTc",
+                0.2
+              ],
+              [
+                "2cQs",
+                2.0
+              ],
+              [
+                "8d8h",
+                0.2
+              ],
+              [
+                "6c8c",
+                0.2
+              ]
+            ],
+            [
+              [
+                "KcTh",
+                0.5
+              ],
+              [
+                "6sTd",
+                1.0
+              ],
+              [
+                "AhQd",
+                0.2
+              ],
+              [
+                "4cJc",
+                0.5
+              ]
+            ],
+            [
+              [
+                "9cKc",
+                2.0
+              ],
+              [
+                "9cQh",
+                1.0
+              ],
+              [
+                "3h4s",
+                1.0
+              ],
+              [
+                "6cQh",
+                0.5
+              ]
+            ],
+            [
+              [
+                "2d9d",
+                0.5
+              ],
+              [
+                "5c8h",
+                2.0
+              ],
+              [
+                "6h7d",
+                0.5
+              ],
+              [
+                "6cAc",
+                1.0
+              ]
+            ]
+          ],
+          "pot": 240,
+          "stacks": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "2cQs",
+              2.0
+            ],
+            [
+              "4cTc",
+              0.2
+            ],
+            [
+              "6c8c",
+              0.2
+            ],
+            [
+              "8d8h",
+              0.2
+            ]
+          ],
+          [
+            [
+              "4cJc",
+              0.5
+            ],
+            [
+              "6sTd",
+              1.0
+            ],
+            [
+              "AhQd",
+              0.2
+            ],
+            [
+              "KcTh",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3h4s",
+              1.0
+            ],
+            [
+              "6cQh",
+              0.5
+            ],
+            [
+              "9cKc",
+              2.0
+            ],
+            [
+              "9cQh",
+              1.0
+            ]
+          ],
+          [
+            [
+              "2d9d",
+              0.5
+            ],
+            [
+              "5c8h",
+              2.0
+            ],
+            [
+              "6cAc",
+              1.0
+            ],
+            [
+              "6h7d",
+              0.5
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "2cQs": "2cQs",
+            "4cTc": "4cTc",
+            "6c8c": "6c8c",
+            "8d8h": "8d8h"
+          },
+          {
+            "4cJc": "4cJc",
+            "6sTd": "6sTd",
+            "AhQd": "AhQd",
+            "KcTh": "KcTh"
+          },
+          {
+            "3h4s": "3h4s",
+            "6cQh": "6cQh",
+            "9cKc": "9cKc",
+            "9cQh": "9cQh"
+          },
+          {
+            "2d9d": "2d9d",
+            "5c8h": "5c8h",
+            "6cAc": "6cAc",
+            "6h7d": "6h7d"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "2cQs",
+              "members": [
+                "2cQs"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "4cTc",
+              "members": [
+                "4cTc"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "6c8c",
+              "members": [
+                "6c8c"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "8d8h",
+              "members": [
+                "8d8h"
+              ],
+              "weight": 0.2
+            }
+          ],
+          [
+            {
+              "representative": "4cJc",
+              "members": [
+                "4cJc"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "6sTd",
+              "members": [
+                "6sTd"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "AhQd",
+              "members": [
+                "AhQd"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "KcTh",
+              "members": [
+                "KcTh"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "3h4s",
+              "members": [
+                "3h4s"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "6cQh",
+              "members": [
+                "6cQh"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "9cKc",
+              "members": [
+                "9cKc"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "9cQh",
+              "members": [
+                "9cQh"
+              ],
+              "weight": 1.0
+            }
+          ],
+          [
+            {
+              "representative": "2d9d",
+              "members": [
+                "2d9d"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "5c8h",
+              "members": [
+                "5c8h"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "6cAc",
+              "members": [
+                "6cAc"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "6h7d",
+              "members": [
+                "6h7d"
+              ],
+              "weight": 0.5
+            }
+          ]
+        ],
+        "pair_checks": 192,
+        "original_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "compressed_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 22572,
+        "raw_lineups_checked": 256,
+        "blocked_lineups_checked": 85,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 0.0,
+        "verified": true
+      },
+      "full_deals": 171,
+      "compressed_deals": 171,
+      "public_nodes": 65,
+      "full_metrics": {
+        "policy_payoffs": [
+          -60.0347774343522,
+          -44.17543405587178,
+          143.82976946742482,
+          -39.619557977200856
+        ],
+        "best_response_payoffs": [
+          -59.99935270012519,
+          -44.133914251798586,
+          143.89050316573872,
+          -39.584533517666635
+        ],
+        "unilateral_gains": [
+          0.03542473422700709,
+          0.04151980407319655,
+          0.06073369831389641,
+          0.0350244595342204
+        ],
+        "nash_conv_chips": 0.17270269614832046,
+        "max_unilateral_gain_pct_pot": 0.025305707630790174
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          -60.0347774343522,
+          -44.175434055871776,
+          143.82976946742488,
+          -39.61955797720086
+        ],
+        "best_response_payoffs": [
+          -59.9993527001252,
+          -44.13391425179858,
+          143.89050316573878,
+          -39.58453351766664
+        ],
+        "unilateral_gains": [
+          0.03542473422699999,
+          0.04151980407319655,
+          0.06073369831389641,
+          0.0350244595342204
+        ],
+        "nash_conv_chips": 0.17270269614831335,
+        "max_unilateral_gain_pct_pot": 0.025305707630790174
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          -60.03477743435219,
+          -44.17543405587178,
+          143.82976946742482,
+          -39.61955797720086
+        ],
+        "best_response_payoffs": [
+          -59.99935270012519,
+          -44.13391425179858,
+          143.89050316573872,
+          -39.58453351766664
+        ],
+        "unilateral_gains": [
+          0.03542473422699999,
+          0.04151980407320366,
+          0.06073369831389641,
+          0.0350244595342204
+        ],
+        "nash_conv_chips": 0.17270269614832046,
+        "max_unilateral_gain_pct_pot": 0.025305707630790174
+      },
+      "max_lifted_metric_error_chips": 5.684341886080802e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.07381099999999999,
+        "compression": 0.000564207999999955,
+        "compressed_build": 0.06759820900000002,
+        "full_train": 0.04119179099999998,
+        "compressed_train": 0.03306025000000001
+      },
+      "peak_rss_mib": 27.96484375,
+      "wall_seconds": 0.9450497079999995,
+      "sampled_peak_rss_mib": 27.8828125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "equivalent_4",
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "AhAd",
+                1.0
+              ],
+              [
+                "AcAs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "KhKd",
+                1.0
+              ],
+              [
+                "KcKs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "QhQd",
+                1.0
+              ],
+              [
+                "QcQs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "ThTd",
+                1.0
+              ],
+              [
+                "TcTs",
+                3.0
+              ]
+            ]
+          ],
+          "pot": 240,
+          "stacks": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "AcAs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "KcKs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "QcQs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "TcTs",
+              4.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "AcAs": "AcAs",
+            "AhAd": "AcAs"
+          },
+          {
+            "KcKs": "KcKs",
+            "KhKd": "KcKs"
+          },
+          {
+            "QcQs": "QcQs",
+            "QhQd": "QcQs"
+          },
+          {
+            "TcTs": "TcTs",
+            "ThTd": "TcTs"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "AcAs",
+              "members": [
+                "AcAs",
+                "AhAd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "KcKs",
+              "members": [
+                "KcKs",
+                "KhKd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "QcQs",
+              "members": [
+                "QcQs",
+                "QhQd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "TcTs",
+              "members": [
+                "TcTs",
+                "ThTd"
+              ],
+              "weight": 4.0
+            }
+          ]
+        ],
+        "pair_checks": 48,
+        "original_widths": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "compressed_widths": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 2112,
+        "raw_lineups_checked": 16,
+        "blocked_lineups_checked": 0,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 0.0,
+        "verified": true
+      },
+      "full_deals": 16,
+      "compressed_deals": 1,
+      "public_nodes": 65,
+      "full_metrics": {
+        "policy_payoffs": [
+          180.036279087225,
+          -60.00805853171687,
+          -60.0120949931099,
+          -60.01612556239827
+        ],
+        "best_response_payoffs": [
+          180.0534591701454,
+          -59.99999117864585,
+          -59.99999794198977,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.017180082920390305,
+          0.008067353071020023,
+          0.012097051120129265,
+          0.016125562398272564
+        ],
+        "nash_conv_chips": 0.053470049509812156,
+        "max_unilateral_gain_pct_pot": 0.007158367883495961
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          180.036279087225,
+          -60.008058531716856,
+          -60.0120949931099,
+          -60.01612556239827
+        ],
+        "best_response_payoffs": [
+          180.05345917014543,
+          -59.99999117864584,
+          -59.99999794198976,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.017180082920418727,
+          0.008067353071012917,
+          0.01209705112013637,
+          0.016125562398272564
+        ],
+        "nash_conv_chips": 0.05347004950984058,
+        "max_unilateral_gain_pct_pot": 0.007158367883507803
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          180.03627908722498,
+          -60.00805853171687,
+          -60.0120949931099,
+          -60.01612556239827
+        ],
+        "best_response_payoffs": [
+          180.0534591701454,
+          -59.99999117864585,
+          -59.99999794198976,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.017180082920418727,
+          0.008067353071020023,
+          0.01209705112013637,
+          0.016125562398272564
+        ],
+        "nash_conv_chips": 0.053470049509847684,
+        "max_unilateral_gain_pct_pot": 0.007158367883507803
+      },
+      "max_lifted_metric_error_chips": 2.842170943040401e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.011791917000000013,
+        "compression": 0.00024508300000000705,
+        "compressed_build": 0.000905083000000001,
+        "full_train": 0.01377004100000001,
+        "compressed_train": 0.0026367079999999876
+      },
+      "peak_rss_mib": 27.15625,
+      "wall_seconds": 0.48184499999999986,
+      "sampled_peak_rss_mib": 25.296875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_5",
+        "raw_combinations": 243,
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "JsTc",
+                0.5
+              ],
+              [
+                "8dKd",
+                2.0
+              ],
+              [
+                "5d7c",
+                2.0
+              ]
+            ],
+            [
+              [
+                "9hAd",
+                0.2
+              ],
+              [
+                "6sAd",
+                1.0
+              ],
+              [
+                "4s9h",
+                0.5
+              ]
+            ],
+            [
+              [
+                "4hJd",
+                1.0
+              ],
+              [
+                "8hQh",
+                0.2
+              ],
+              [
+                "3h6d",
+                1.0
+              ]
+            ],
+            [
+              [
+                "6sKd",
+                0.5
+              ],
+              [
+                "9cTc",
+                0.5
+              ],
+              [
+                "5hJh",
+                0.2
+              ]
+            ],
+            [
+              [
+                "3s5d",
+                1.0
+              ],
+              [
+                "3s5s",
+                2.0
+              ],
+              [
+                "7c9d",
+                0.5
+              ]
+            ]
+          ],
+          "pot": 300,
+          "stacks": [
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "5d7c",
+              2.0
+            ],
+            [
+              "8dKd",
+              2.0
+            ],
+            [
+              "JsTc",
+              0.5
+            ]
+          ],
+          [
+            [
+              "4s9h",
+              0.5
+            ],
+            [
+              "6sAd",
+              1.0
+            ],
+            [
+              "9hAd",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3h6d",
+              1.2
+            ],
+            [
+              "4hJd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "5hJh",
+              0.2
+            ],
+            [
+              "6sKd",
+              0.5
+            ],
+            [
+              "9cTc",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3s5d",
+              1.0
+            ],
+            [
+              "3s5s",
+              2.0
+            ],
+            [
+              "7c9d",
+              0.5
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "5d7c": "5d7c",
+            "8dKd": "8dKd",
+            "JsTc": "JsTc"
+          },
+          {
+            "4s9h": "4s9h",
+            "6sAd": "6sAd",
+            "9hAd": "9hAd"
+          },
+          {
+            "3h6d": "3h6d",
+            "8hQh": "3h6d",
+            "4hJd": "4hJd"
+          },
+          {
+            "5hJh": "5hJh",
+            "6sKd": "6sKd",
+            "9cTc": "9cTc"
+          },
+          {
+            "3s5d": "3s5d",
+            "3s5s": "3s5s",
+            "7c9d": "7c9d"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "5d7c",
+              "members": [
+                "5d7c"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "8dKd",
+              "members": [
+                "8dKd"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "JsTc",
+              "members": [
+                "JsTc"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "4s9h",
+              "members": [
+                "4s9h"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "6sAd",
+              "members": [
+                "6sAd"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "9hAd",
+              "members": [
+                "9hAd"
+              ],
+              "weight": 0.2
+            }
+          ],
+          [
+            {
+              "representative": "3h6d",
+              "members": [
+                "3h6d",
+                "8hQh"
+              ],
+              "weight": 1.2
+            },
+            {
+              "representative": "4hJd",
+              "members": [
+                "4hJd"
+              ],
+              "weight": 1.0
+            }
+          ],
+          [
+            {
+              "representative": "5hJh",
+              "members": [
+                "5hJh"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "6sKd",
+              "members": [
+                "6sKd"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "9cTc",
+              "members": [
+                "9cTc"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "3s5d",
+              "members": [
+                "3s5d"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "3s5s",
+              "members": [
+                "3s5s"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "7c9d",
+              "members": [
+                "7c9d"
+              ],
+              "weight": 0.5
+            }
+          ]
+        ],
+        "pair_checks": 180,
+        "original_widths": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "compressed_widths": [
+          3,
+          3,
+          2,
+          3,
+          3
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 49815,
+        "raw_lineups_checked": 243,
+        "blocked_lineups_checked": 120,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 2.7755575615628914e-17,
+        "verified": true
+      },
+      "full_deals": 123,
+      "compressed_deals": 82,
+      "public_nodes": 161,
+      "full_metrics": {
+        "policy_payoffs": [
+          -55.83766759568309,
+          2.77413209777308,
+          94.06161584374136,
+          3.3334338638043244,
+          -44.33151420963569
+        ],
+        "best_response_payoffs": [
+          -55.67656060764381,
+          3.2508795320847277,
+          94.88041659459213,
+          3.8479446105664943,
+          -44.28250411918461
+        ],
+        "unilateral_gains": [
+          0.16110698803927903,
+          0.47674743431164757,
+          0.8188007508507695,
+          0.5145107467621699,
+          0.049010090451083954
+        ],
+        "nash_conv_chips": 2.02017601041495,
+        "max_unilateral_gain_pct_pot": 0.27293358361692316
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          -55.83766759568306,
+          2.7741320977730544,
+          94.06161584374135,
+          3.333433863804334,
+          -44.33151420963567
+        ],
+        "best_response_payoffs": [
+          -55.67656060764377,
+          3.250879532084693,
+          94.8804165945921,
+          3.84794461056652,
+          -44.282504119184594
+        ],
+        "unilateral_gains": [
+          0.16110698803928614,
+          0.4767474343116387,
+          0.8188007508507553,
+          0.5145107467621859,
+          0.04901009045107685
+        ],
+        "nash_conv_chips": 2.020176010414943,
+        "max_unilateral_gain_pct_pot": 0.27293358361691844
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          -55.83766759568309,
+          2.7741320977730695,
+          94.06161584374136,
+          3.3334338638043395,
+          -44.331514209635685
+        ],
+        "best_response_payoffs": [
+          -55.67656060764379,
+          3.2508795320847135,
+          94.88041659459212,
+          3.8479446105665254,
+          -44.282504119184594
+        ],
+        "unilateral_gains": [
+          0.16110698803929324,
+          0.476747434311644,
+          0.8188007508507553,
+          0.5145107467621859,
+          0.04901009045109106
+        ],
+        "nash_conv_chips": 2.0201760104149695,
+        "max_unilateral_gain_pct_pot": 0.27293358361691844
+      },
+      "max_lifted_metric_error_chips": 2.842170943040401e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.138478125,
+        "compression": 0.000486083000000026,
+        "compressed_build": 0.09119416699999999,
+        "full_train": 0.08163074999999997,
+        "compressed_train": 0.04999091599999994
+      },
+      "peak_rss_mib": 28.09765625,
+      "wall_seconds": 1.179955875,
+      "sampled_peak_rss_mib": 27.91796875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_5",
+        "raw_combinations": 243,
+        "input": {
+          "board": [
+            "2s",
+            "5s",
+            "9s",
+            "Kh",
+            "Ad"
+          ],
+          "ranges": [
+            [
+              [
+                "2d9d",
+                1.0
+              ],
+              [
+                "2h4s",
+                2.0
+              ],
+              [
+                "7dAs",
+                0.5
+              ]
+            ],
+            [
+              [
+                "5dQs",
+                0.2
+              ],
+              [
+                "3hTd",
+                0.5
+              ],
+              [
+                "3c6d",
+                2.0
+              ]
+            ],
+            [
+              [
+                "JcTs",
+                0.2
+              ],
+              [
+                "9dKc",
+                0.2
+              ],
+              [
+                "JsQh",
+                0.2
+              ]
+            ],
+            [
+              [
+                "6dQd",
+                2.0
+              ],
+              [
+                "2c6d",
+                2.0
+              ],
+              [
+                "8sAh",
+                0.2
+              ]
+            ],
+            [
+              [
+                "2dJs",
+                2.0
+              ],
+              [
+                "2cTs",
+                2.0
+              ],
+              [
+                "JhKc",
+                1.0
+              ]
+            ]
+          ],
+          "pot": 300,
+          "stacks": [
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "2d9d",
+              1.0
+            ],
+            [
+              "2h4s",
+              2.0
+            ],
+            [
+              "7dAs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3c6d",
+              2.0
+            ],
+            [
+              "3hTd",
+              0.5
+            ],
+            [
+              "5dQs",
+              0.2
+            ]
+          ],
+          [
+            [
+              "9dKc",
+              0.2
+            ],
+            [
+              "JcTs",
+              0.2
+            ],
+            [
+              "JsQh",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2c6d",
+              2.0
+            ],
+            [
+              "6dQd",
+              2.0
+            ],
+            [
+              "8sAh",
+              0.2
+            ]
+          ],
+          [
+            [
+              "2cTs",
+              2.0
+            ],
+            [
+              "2dJs",
+              2.0
+            ],
+            [
+              "JhKc",
+              1.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "2d9d": "2d9d",
+            "2h4s": "2h4s",
+            "7dAs": "7dAs"
+          },
+          {
+            "3c6d": "3c6d",
+            "3hTd": "3hTd",
+            "5dQs": "5dQs"
+          },
+          {
+            "9dKc": "9dKc",
+            "JcTs": "JcTs",
+            "JsQh": "JsQh"
+          },
+          {
+            "2c6d": "2c6d",
+            "6dQd": "6dQd",
+            "8sAh": "8sAh"
+          },
+          {
+            "2cTs": "2cTs",
+            "2dJs": "2dJs",
+            "JhKc": "JhKc"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "2d9d",
+              "members": [
+                "2d9d"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "2h4s",
+              "members": [
+                "2h4s"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "7dAs",
+              "members": [
+                "7dAs"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "3c6d",
+              "members": [
+                "3c6d"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "3hTd",
+              "members": [
+                "3hTd"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "5dQs",
+              "members": [
+                "5dQs"
+              ],
+              "weight": 0.2
+            }
+          ],
+          [
+            {
+              "representative": "9dKc",
+              "members": [
+                "9dKc"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "JcTs",
+              "members": [
+                "JcTs"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "JsQh",
+              "members": [
+                "JsQh"
+              ],
+              "weight": 0.2
+            }
+          ],
+          [
+            {
+              "representative": "2c6d",
+              "members": [
+                "2c6d"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "6dQd",
+              "members": [
+                "6dQd"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "8sAh",
+              "members": [
+                "8sAh"
+              ],
+              "weight": 0.2
+            }
+          ],
+          [
+            {
+              "representative": "2cTs",
+              "members": [
+                "2cTs"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "2dJs",
+              "members": [
+                "2dJs"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "JhKc",
+              "members": [
+                "JhKc"
+              ],
+              "weight": 1.0
+            }
+          ]
+        ],
+        "pair_checks": 180,
+        "original_widths": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "compressed_widths": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 38475,
+        "raw_lineups_checked": 243,
+        "blocked_lineups_checked": 148,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 0.0,
+        "verified": true
+      },
+      "full_deals": 95,
+      "compressed_deals": 95,
+      "public_nodes": 161,
+      "full_metrics": {
+        "policy_payoffs": [
+          8.782817237348883,
+          -45.51863840949989,
+          51.28550142020012,
+          -28.731270852319508,
+          14.18159060427039
+        ],
+        "best_response_payoffs": [
+          8.950671658113588,
+          -45.36111196499504,
+          51.38855341539907,
+          -28.591808111475153,
+          14.395401550108058
+        ],
+        "unilateral_gains": [
+          0.16785442076470503,
+          0.1575264445048532,
+          0.10305199519895325,
+          0.13946274084435473,
+          0.21381094583766824
+        ],
+        "nash_conv_chips": 0.7817065471505344,
+        "max_unilateral_gain_pct_pot": 0.07127031527922276
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          8.782817244976757,
+          -45.51863841570627,
+          51.28550141995355,
+          -28.731270852505162,
+          14.18159060328114
+        ],
+        "best_response_payoffs": [
+          8.950671673384601,
+          -45.36111197005396,
+          51.38855341525844,
+          -28.591808111942576,
+          14.395401550017388
+        ],
+        "unilateral_gains": [
+          0.16785442840784448,
+          0.15752644565230867,
+          0.10305199530489517,
+          0.13946274056258545,
+          0.21381094673624723
+        ],
+        "nash_conv_chips": 0.781706556663881,
+        "max_unilateral_gain_pct_pot": 0.07127031557874908
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          8.782817244976773,
+          -45.51863841570628,
+          51.28550141995355,
+          -28.73127085250516,
+          14.181590603281133
+        ],
+        "best_response_payoffs": [
+          8.950671673384605,
+          -45.36111197005396,
+          51.38855341525844,
+          -28.591808111942576,
+          14.395401550017379
+        ],
+        "unilateral_gains": [
+          0.16785442840783205,
+          0.15752644565231577,
+          0.10305199530489517,
+          0.1394627405625819,
+          0.21381094673624546
+        ],
+        "nash_conv_chips": 0.7817065566638703,
+        "max_unilateral_gain_pct_pot": 0.0712703155787485
+      },
+      "max_lifted_metric_error_chips": 1.5987211554602254e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.10670120900000002,
+        "compression": 0.0007429580000000158,
+        "compressed_build": 0.102329208,
+        "full_train": 0.06639558299999998,
+        "compressed_train": 0.05835479099999996
+      },
+      "peak_rss_mib": 28.0,
+      "wall_seconds": 1.189381666,
+      "sampled_peak_rss_mib": 27.8359375,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "equivalent_5",
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "AhAd",
+                1.0
+              ],
+              [
+                "AcAs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "KhKd",
+                1.0
+              ],
+              [
+                "KcKs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "QhQd",
+                1.0
+              ],
+              [
+                "QcQs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "ThTd",
+                1.0
+              ],
+              [
+                "TcTs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "8h8d",
+                1.0
+              ],
+              [
+                "8c8s",
+                3.0
+              ]
+            ]
+          ],
+          "pot": 300,
+          "stacks": [
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "AcAs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "KcKs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "QcQs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "TcTs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "8c8s",
+              4.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "AcAs": "AcAs",
+            "AhAd": "AcAs"
+          },
+          {
+            "KcKs": "KcKs",
+            "KhKd": "KcKs"
+          },
+          {
+            "QcQs": "QcQs",
+            "QhQd": "QcQs"
+          },
+          {
+            "TcTs": "TcTs",
+            "ThTd": "TcTs"
+          },
+          {
+            "8c8s": "8c8s",
+            "8h8d": "8c8s"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "AcAs",
+              "members": [
+                "AcAs",
+                "AhAd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "KcKs",
+              "members": [
+                "KcKs",
+                "KhKd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "QcQs",
+              "members": [
+                "QcQs",
+                "QhQd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "TcTs",
+              "members": [
+                "TcTs",
+                "ThTd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "8c8s",
+              "members": [
+                "8c8s",
+                "8h8d"
+              ],
+              "weight": 4.0
+            }
+          ]
+        ],
+        "pair_checks": 80,
+        "original_widths": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "compressed_widths": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 12960,
+        "raw_lineups_checked": 32,
+        "blocked_lineups_checked": 0,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 0.0,
+        "verified": true
+      },
+      "full_deals": 32,
+      "compressed_deals": 1,
+      "public_nodes": 161,
+      "full_metrics": {
+        "policy_payoffs": [
+          240.05645854194006,
+          -60.008058362801194,
+          -60.01210039472488,
+          -60.016134805751115,
+          -60.02016497866292
+        ],
+        "best_response_payoffs": [
+          240.0831541980797,
+          -59.99998324191619,
+          -59.99999470875963,
+          -59.999998750864926,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.02669565613965119,
+          0.008075120885003173,
+          0.012105685965252633,
+          0.0161360548861893,
+          0.020164978662918998
+        ],
+        "nash_conv_chips": 0.0831774965390153,
+        "max_unilateral_gain_pct_pot": 0.008898552046550398
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          240.0564585419401,
+          -60.00805836280118,
+          -60.01210039472488,
+          -60.01613480575111,
+          -60.02016497866291
+        ],
+        "best_response_payoffs": [
+          240.0831541980797,
+          -59.99998324191618,
+          -59.99999470875963,
+          -59.999998750864926,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.02669565613962277,
+          0.008075120884996068,
+          0.012105685965252633,
+          0.016136054886182194,
+          0.020164978662911892
+        ],
+        "nash_conv_chips": 0.08317749653896556,
+        "max_unilateral_gain_pct_pot": 0.008898552046540923
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          240.05645854194006,
+          -60.00805836280119,
+          -60.012100394724875,
+          -60.01613480575111,
+          -60.02016497866292
+        ],
+        "best_response_payoffs": [
+          240.0831541980797,
+          -59.99998324191618,
+          -59.99999470875963,
+          -59.999998750864926,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.02669565613965119,
+          0.008075120885003173,
+          0.012105685965245527,
+          0.016136054886182194,
+          0.020164978662918998
+        ],
+        "nash_conv_chips": 0.08317749653900108,
+        "max_unilateral_gain_pct_pot": 0.008898552046550398
+      },
+      "max_lifted_metric_error_chips": 2.842170943040401e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.039483083,
+        "compression": 0.00035220799999999275,
+        "compressed_build": 0.0028468749999999987,
+        "full_train": 0.029132875000000003,
+        "compressed_train": 0.0028368750000000165
+      },
+      "peak_rss_mib": 27.640625,
+      "wall_seconds": 0.4804379590000005,
+      "sampled_peak_rss_mib": 26.1328125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "dry_6",
+        "raw_combinations": 729,
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "6cJs",
+                1.0
+              ],
+              [
+                "2s9d",
+                1.0
+              ],
+              [
+                "6sKd",
+                0.2
+              ]
+            ],
+            [
+              [
+                "7c8c",
+                2.0
+              ],
+              [
+                "4sKs",
+                0.5
+              ],
+              [
+                "3h5c",
+                0.2
+              ]
+            ],
+            [
+              [
+                "4s7c",
+                1.0
+              ],
+              [
+                "JsTc",
+                2.0
+              ],
+              [
+                "3h7s",
+                0.2
+              ]
+            ],
+            [
+              [
+                "8cTh",
+                2.0
+              ],
+              [
+                "5dTs",
+                0.5
+              ],
+              [
+                "7dAc",
+                2.0
+              ]
+            ],
+            [
+              [
+                "QcQs",
+                0.5
+              ],
+              [
+                "5dKd",
+                0.2
+              ],
+              [
+                "3dTd",
+                0.5
+              ]
+            ],
+            [
+              [
+                "6hAs",
+                2.0
+              ],
+              [
+                "5hQd",
+                0.5
+              ],
+              [
+                "AhQd",
+                0.2
+              ]
+            ]
+          ],
+          "pot": 360,
+          "stacks": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "2s9d",
+              1.0
+            ],
+            [
+              "6cJs",
+              1.0
+            ],
+            [
+              "6sKd",
+              0.2
+            ]
+          ],
+          [
+            [
+              "3h5c",
+              0.2
+            ],
+            [
+              "4sKs",
+              0.5
+            ],
+            [
+              "7c8c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3h7s",
+              0.2
+            ],
+            [
+              "4s7c",
+              1.0
+            ],
+            [
+              "JsTc",
+              2.0
+            ]
+          ],
+          [
+            [
+              "5dTs",
+              0.5
+            ],
+            [
+              "7dAc",
+              2.0
+            ],
+            [
+              "8cTh",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3dTd",
+              0.5
+            ],
+            [
+              "5dKd",
+              0.2
+            ],
+            [
+              "QcQs",
+              0.5
+            ]
+          ],
+          [
+            [
+              "5hQd",
+              0.5
+            ],
+            [
+              "6hAs",
+              2.2
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "2s9d": "2s9d",
+            "6cJs": "6cJs",
+            "6sKd": "6sKd"
+          },
+          {
+            "3h5c": "3h5c",
+            "4sKs": "4sKs",
+            "7c8c": "7c8c"
+          },
+          {
+            "3h7s": "3h7s",
+            "4s7c": "4s7c",
+            "JsTc": "JsTc"
+          },
+          {
+            "5dTs": "5dTs",
+            "7dAc": "7dAc",
+            "8cTh": "8cTh"
+          },
+          {
+            "3dTd": "3dTd",
+            "5dKd": "5dKd",
+            "QcQs": "QcQs"
+          },
+          {
+            "5hQd": "5hQd",
+            "6hAs": "6hAs",
+            "AhQd": "6hAs"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "2s9d",
+              "members": [
+                "2s9d"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "6cJs",
+              "members": [
+                "6cJs"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "6sKd",
+              "members": [
+                "6sKd"
+              ],
+              "weight": 0.2
+            }
+          ],
+          [
+            {
+              "representative": "3h5c",
+              "members": [
+                "3h5c"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "4sKs",
+              "members": [
+                "4sKs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "7c8c",
+              "members": [
+                "7c8c"
+              ],
+              "weight": 2.0
+            }
+          ],
+          [
+            {
+              "representative": "3h7s",
+              "members": [
+                "3h7s"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "4s7c",
+              "members": [
+                "4s7c"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "JsTc",
+              "members": [
+                "JsTc"
+              ],
+              "weight": 2.0
+            }
+          ],
+          [
+            {
+              "representative": "5dTs",
+              "members": [
+                "5dTs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "7dAc",
+              "members": [
+                "7dAc"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "8cTh",
+              "members": [
+                "8cTh"
+              ],
+              "weight": 2.0
+            }
+          ],
+          [
+            {
+              "representative": "3dTd",
+              "members": [
+                "3dTd"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "5dKd",
+              "members": [
+                "5dKd"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "QcQs",
+              "members": [
+                "QcQs"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "5hQd",
+              "members": [
+                "5hQd"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "6hAs",
+              "members": [
+                "6hAs",
+                "AhQd"
+              ],
+              "weight": 2.2
+            }
+          ]
+        ],
+        "pair_checks": 270,
+        "original_widths": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "compressed_widths": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          2
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 330030,
+        "raw_lineups_checked": 729,
+        "blocked_lineups_checked": 444,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 2.498001805406602e-16,
+        "verified": true
+      },
+      "full_deals": 285,
+      "compressed_deals": 190,
+      "public_nodes": 385,
+      "full_metrics": {
+        "policy_payoffs": [
+          191.51448077033479,
+          -59.930905252570795,
+          -48.090202221467436,
+          19.649856095815736,
+          -43.154665935453785,
+          -59.988563456658476
+        ],
+        "best_response_payoffs": [
+          191.60776089480464,
+          -59.91520382761529,
+          -48.023174413345096,
+          19.72302697570072,
+          -43.104978790892545,
+          -59.98000777197787
+        ],
+        "unilateral_gains": [
+          0.09328012446985667,
+          0.01570142495550897,
+          0.0670278081223401,
+          0.07317087988498372,
+          0.049687144561239904,
+          0.008555684680608522
+        ],
+        "nash_conv_chips": 0.3074230666745379,
+        "max_unilateral_gain_pct_pot": 0.025911145686071297
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          191.48523784123316,
+          -59.92985004418898,
+          -48.08824877732297,
+          19.66182321275859,
+          -43.14109232740934,
+          -59.98786990507046
+        ],
+        "best_response_payoffs": [
+          191.58258586144356,
+          -59.91286404653629,
+          -48.01170733383931,
+          19.753690098663142,
+          -43.08289616450739,
+          -59.97918140666302
+        ],
+        "unilateral_gains": [
+          0.09734802021040423,
+          0.016985997652689377,
+          0.07654144348365577,
+          0.09186688590455105,
+          0.05819616290195029,
+          0.008688498407444456
+        ],
+        "nash_conv_chips": 0.3496270085606952,
+        "max_unilateral_gain_pct_pot": 0.027041116725112287
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          191.48523784123273,
+          -59.92985004418885,
+          -48.088248777322846,
+          19.661823212758534,
+          -43.14109232740927,
+          -59.9878699050703
+        ],
+        "best_response_payoffs": [
+          191.58258586144314,
+          -59.91286404653616,
+          -48.0117073338392,
+          19.7536900986631,
+          -43.08289616450731,
+          -59.97918140666285
+        ],
+        "unilateral_gains": [
+          0.09734802021040423,
+          0.016985997652696483,
+          0.07654144348364866,
+          0.09186688590456527,
+          0.05819616290195739,
+          0.008688498407444456
+        ],
+        "nash_conv_chips": 0.3496270085607165,
+        "max_unilateral_gain_pct_pot": 0.027041116725112287
+      },
+      "max_lifted_metric_error_chips": 4.263256414560601e-13,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.791625542,
+        "compression": 0.0006559159999999231,
+        "compressed_build": 0.526506125,
+        "full_train": 0.5268414579999998,
+        "compressed_train": 0.3413007920000002
+      },
+      "peak_rss_mib": 33.3046875,
+      "wall_seconds": 5.618912584,
+      "sampled_peak_rss_mib": 33.3046875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "flush_6",
+        "raw_combinations": 729,
+        "input": {
+          "board": [
+            "2s",
+            "5s",
+            "9s",
+            "Kh",
+            "Ad"
+          ],
+          "ranges": [
+            [
+              [
+                "4dQc",
+                0.2
+              ],
+              [
+                "7s8c",
+                1.0
+              ],
+              [
+                "3hAs",
+                0.5
+              ]
+            ],
+            [
+              [
+                "2c7d",
+                0.5
+              ],
+              [
+                "3sKc",
+                0.5
+              ],
+              [
+                "7sQs",
+                2.0
+              ]
+            ],
+            [
+              [
+                "3d6h",
+                0.2
+              ],
+              [
+                "3d5d",
+                2.0
+              ],
+              [
+                "5d7h",
+                0.5
+              ]
+            ],
+            [
+              [
+                "3d5h",
+                0.5
+              ],
+              [
+                "3h8c",
+                1.0
+              ],
+              [
+                "AhQc",
+                1.0
+              ]
+            ],
+            [
+              [
+                "6sJs",
+                0.5
+              ],
+              [
+                "3dQh",
+                1.0
+              ],
+              [
+                "9hJd",
+                1.0
+              ]
+            ],
+            [
+              [
+                "4d7c",
+                0.2
+              ],
+              [
+                "8dAs",
+                0.2
+              ],
+              [
+                "JhTc",
+                0.5
+              ]
+            ]
+          ],
+          "pot": 360,
+          "stacks": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "3hAs",
+              0.5
+            ],
+            [
+              "4dQc",
+              0.2
+            ],
+            [
+              "7s8c",
+              1.0
+            ]
+          ],
+          [
+            [
+              "2c7d",
+              0.5
+            ],
+            [
+              "3sKc",
+              0.5
+            ],
+            [
+              "7sQs",
+              2.0
+            ]
+          ],
+          [
+            [
+              "3d5d",
+              2.0
+            ],
+            [
+              "3d6h",
+              0.2
+            ],
+            [
+              "5d7h",
+              0.5
+            ]
+          ],
+          [
+            [
+              "3d5h",
+              0.5
+            ],
+            [
+              "3h8c",
+              1.0
+            ],
+            [
+              "AhQc",
+              1.0
+            ]
+          ],
+          [
+            [
+              "3dQh",
+              1.0
+            ],
+            [
+              "6sJs",
+              0.5
+            ],
+            [
+              "9hJd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "4d7c",
+              0.2
+            ],
+            [
+              "8dAs",
+              0.2
+            ],
+            [
+              "JhTc",
+              0.5
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "3hAs": "3hAs",
+            "4dQc": "4dQc",
+            "7s8c": "7s8c"
+          },
+          {
+            "2c7d": "2c7d",
+            "3sKc": "3sKc",
+            "7sQs": "7sQs"
+          },
+          {
+            "3d5d": "3d5d",
+            "3d6h": "3d6h",
+            "5d7h": "5d7h"
+          },
+          {
+            "3d5h": "3d5h",
+            "3h8c": "3h8c",
+            "AhQc": "AhQc"
+          },
+          {
+            "3dQh": "3dQh",
+            "6sJs": "6sJs",
+            "9hJd": "9hJd"
+          },
+          {
+            "4d7c": "4d7c",
+            "8dAs": "8dAs",
+            "JhTc": "JhTc"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "3hAs",
+              "members": [
+                "3hAs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "4dQc",
+              "members": [
+                "4dQc"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "7s8c",
+              "members": [
+                "7s8c"
+              ],
+              "weight": 1.0
+            }
+          ],
+          [
+            {
+              "representative": "2c7d",
+              "members": [
+                "2c7d"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "3sKc",
+              "members": [
+                "3sKc"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "7sQs",
+              "members": [
+                "7sQs"
+              ],
+              "weight": 2.0
+            }
+          ],
+          [
+            {
+              "representative": "3d5d",
+              "members": [
+                "3d5d"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "3d6h",
+              "members": [
+                "3d6h"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "5d7h",
+              "members": [
+                "5d7h"
+              ],
+              "weight": 0.5
+            }
+          ],
+          [
+            {
+              "representative": "3d5h",
+              "members": [
+                "3d5h"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "3h8c",
+              "members": [
+                "3h8c"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "AhQc",
+              "members": [
+                "AhQc"
+              ],
+              "weight": 1.0
+            }
+          ],
+          [
+            {
+              "representative": "3dQh",
+              "members": [
+                "3dQh"
+              ],
+              "weight": 1.0
+            },
+            {
+              "representative": "6sJs",
+              "members": [
+                "6sJs"
+              ],
+              "weight": 0.5
+            },
+            {
+              "representative": "9hJd",
+              "members": [
+                "9hJd"
+              ],
+              "weight": 1.0
+            }
+          ],
+          [
+            {
+              "representative": "4d7c",
+              "members": [
+                "4d7c"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "8dAs",
+              "members": [
+                "8dAs"
+              ],
+              "weight": 0.2
+            },
+            {
+              "representative": "JhTc",
+              "members": [
+                "JhTc"
+              ],
+              "weight": 0.5
+            }
+          ]
+        ],
+        "pair_checks": 270,
+        "original_widths": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "compressed_widths": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 187596,
+        "raw_lineups_checked": 729,
+        "blocked_lineups_checked": 567,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 1.3877787807814457e-17,
+        "verified": true
+      },
+      "full_deals": 162,
+      "compressed_deals": 162,
+      "public_nodes": 385,
+      "full_metrics": {
+        "policy_payoffs": [
+          -59.99751278434905,
+          109.56299485263156,
+          -58.66209887449125,
+          56.51713245258886,
+          9.092072676820269,
+          -56.51258832320038
+        ],
+        "best_response_payoffs": [
+          -59.96392150827239,
+          109.72586265898616,
+          -58.607640641556586,
+          56.64395803645421,
+          9.21652614946187,
+          -56.451338963156964
+        ],
+        "unilateral_gains": [
+          0.03359127607665613,
+          0.16286780635459763,
+          0.0544582329346639,
+          0.12682558386534737,
+          0.12445347264160134,
+          0.06124936004341919
+        ],
+        "nash_conv_chips": 0.5634457319162856,
+        "max_unilateral_gain_pct_pot": 0.04524105732072156
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          -59.99260546546571,
+          109.66325268946966,
+          -58.67656798383773,
+          56.512501337508894,
+          9.068638673124047,
+          -56.57521925079915
+        ],
+        "best_response_payoffs": [
+          -59.95943649256215,
+          109.8883845230659,
+          -58.61131328170161,
+          56.64281812701184,
+          9.20339085770029,
+          -56.50615653668996
+        ],
+        "unilateral_gains": [
+          0.033168972903560245,
+          0.22513183359623667,
+          0.06525470213611584,
+          0.1303167895029489,
+          0.13475218457624294,
+          0.06906271410919373
+        ],
+        "nash_conv_chips": 0.6576871968242983,
+        "max_unilateral_gain_pct_pot": 0.06253662044339908
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          -59.9926054654657,
+          109.66325268946963,
+          -58.676567983837714,
+          56.51250133750887,
+          9.068638673124056,
+          -56.57521925079913
+        ],
+        "best_response_payoffs": [
+          -59.95943649256215,
+          109.88838452306587,
+          -58.61131328170161,
+          56.64281812701181,
+          9.203390857700299,
+          -56.50615653668994
+        ],
+        "unilateral_gains": [
+          0.03316897290355314,
+          0.22513183359623667,
+          0.06525470213610163,
+          0.13031678950293468,
+          0.13475218457624294,
+          0.06906271410918663
+        ],
+        "nash_conv_chips": 0.6576871968242557,
+        "max_unilateral_gain_pct_pot": 0.06253662044339908
+      },
+      "max_lifted_metric_error_chips": 3.552713678800501e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.465736042,
+        "compression": 0.0005830000000000002,
+        "compressed_build": 0.46137612500000014,
+        "full_train": 0.30207958300000004,
+        "compressed_train": 0.2951250000000001
+      },
+      "peak_rss_mib": 31.62890625,
+      "wall_seconds": 3.9733155420000017,
+      "sampled_peak_rss_mib": 31.62890625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "equivalent_6",
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "AhAd",
+                1.0
+              ],
+              [
+                "AcAs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "KhKd",
+                1.0
+              ],
+              [
+                "KcKs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "QhQd",
+                1.0
+              ],
+              [
+                "QcQs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "ThTd",
+                1.0
+              ],
+              [
+                "TcTs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "8h8d",
+                1.0
+              ],
+              [
+                "8c8s",
+                3.0
+              ]
+            ],
+            [
+              [
+                "6h6d",
+                1.0
+              ],
+              [
+                "6c6s",
+                3.0
+              ]
+            ]
+          ],
+          "pot": 360,
+          "stacks": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            60,
+            60,
+            60,
+            60
+          ],
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "AcAs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "KcKs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "QcQs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "TcTs",
+              4.0
+            ]
+          ],
+          [
+            [
+              "8c8s",
+              4.0
+            ]
+          ],
+          [
+            [
+              "6c6s",
+              4.0
+            ]
+          ]
+        ],
+        "mapping": [
+          {
+            "AcAs": "AcAs",
+            "AhAd": "AcAs"
+          },
+          {
+            "KcKs": "KcKs",
+            "KhKd": "KcKs"
+          },
+          {
+            "QcQs": "QcQs",
+            "QhQd": "QcQs"
+          },
+          {
+            "TcTs": "TcTs",
+            "ThTd": "TcTs"
+          },
+          {
+            "8c8s": "8c8s",
+            "8h8d": "8c8s"
+          },
+          {
+            "6c6s": "6c6s",
+            "6h6d": "6c6s"
+          }
+        ],
+        "groups": [
+          [
+            {
+              "representative": "AcAs",
+              "members": [
+                "AcAs",
+                "AhAd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "KcKs",
+              "members": [
+                "KcKs",
+                "KhKd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "QcQs",
+              "members": [
+                "QcQs",
+                "QhQd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "TcTs",
+              "members": [
+                "TcTs",
+                "ThTd"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "8c8s",
+              "members": [
+                "8c8s",
+                "8h8d"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "6c6s",
+              "members": [
+                "6c6s",
+                "6h6d"
+              ],
+              "weight": 4.0
+            }
+          ]
+        ],
+        "pair_checks": 120,
+        "original_widths": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "compressed_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 74112,
+        "raw_lineups_checked": 64,
+        "blocked_lineups_checked": 0,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 0.0,
+        "verified": true
+      },
+      "full_deals": 64,
+      "compressed_deals": 1,
+      "public_nodes": 385,
+      "full_metrics": {
+        "policy_payoffs": [
+          300.0805766312442,
+          -60.00804562831354,
+          -60.01208813053262,
+          -60.01612099431546,
+          -60.02014870466543,
+          -60.02417317341717
+        ],
+        "best_response_payoffs": [
+          300.1187854059921,
+          -59.99997295588139,
+          -59.99999030083328,
+          -59.999996914359926,
+          -59.99999926543292,
+          -60.00000000000001
+        ],
+        "unilateral_gains": [
+          0.03820877474794315,
+          0.008072672432149375,
+          0.012097829699335705,
+          0.016124079955531556,
+          0.020149439232511668,
+          0.024173173417160854
+        ],
+        "nash_conv_chips": 0.11882596948463231,
+        "max_unilateral_gain_pct_pot": 0.01061354854109532
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          300.0805766312441,
+          -60.008045628313525,
+          -60.012088130532604,
+          -60.016120994315436,
+          -60.02014870466542,
+          -60.024173173417154
+        ],
+        "best_response_payoffs": [
+          300.1187854059921,
+          -59.99997295588137,
+          -59.99999030083326,
+          -59.99999691435991,
+          -59.999999265432905,
+          -59.999999999999986
+        ],
+        "unilateral_gains": [
+          0.038208774747999996,
+          0.00807267243215648,
+          0.01209782969934281,
+          0.01612407995552445,
+          0.020149439232511668,
+          0.02417317341716796
+        ],
+        "nash_conv_chips": 0.11882596948470336,
+        "max_unilateral_gain_pct_pot": 0.01061354854111111
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          300.0805766312442,
+          -60.00804562831353,
+          -60.012088130532604,
+          -60.01612099431544,
+          -60.02014870466542,
+          -60.02417317341717
+        ],
+        "best_response_payoffs": [
+          300.1187854059921,
+          -59.999972955881375,
+          -59.99999030083327,
+          -59.99999691435991,
+          -59.999999265432905,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.03820877474794315,
+          0.00807267243215648,
+          0.012097829699335705,
+          0.016124079955531556,
+          0.020149439232511668,
+          0.02417317341716796
+        ],
+        "nash_conv_chips": 0.11882596948464652,
+        "max_unilateral_gain_pct_pot": 0.01061354854109532
+      },
+      "max_lifted_metric_error_chips": 5.684341886080802e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.18807191699999998,
+        "compression": 0.0004179170000000454,
+        "compressed_build": 0.0051582079999999975,
+        "full_train": 0.127535416,
+        "compressed_train": 0.004171416000000039
+      },
+      "peak_rss_mib": 28.53515625,
+      "wall_seconds": 1.1804213340000018,
+      "sampled_peak_rss_mib": 28.53515625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "sidepot_folded_blocker",
+        "input": {
+          "board": [
+            "2c",
+            "4d",
+            "7h",
+            "9s",
+            "Jc"
+          ],
+          "ranges": [
+            [
+              [
+                "AhAd",
+                1.0
+              ],
+              [
+                "AcAs",
+                2.0
+              ]
+            ],
+            [
+              [
+                "AhKd",
+                1.0
+              ],
+              [
+                "AcKs",
+                3.0
+              ]
+            ],
+            [
+              [
+                "QhQd",
+                2.0
+              ],
+              [
+                "QcQs",
+                1.0
+              ]
+            ],
+            []
+          ],
+          "pot": 200,
+          "stacks": [
+            100,
+            100,
+            0,
+            0
+          ],
+          "initial_contributions": [
+            60,
+            60,
+            20,
+            60
+          ],
+          "folded": [
+            3
+          ],
+          "dealer": 3,
+          "bet_sizes": [
+            40
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 10,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "AcAs",
+              2.0
+            ],
+            [
+              "AhAd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "AcKs",
+              3.0
+            ],
+            [
+              "AhKd",
+              1.0
+            ]
+          ],
+          [
+            [
+              "QcQs",
+              3.0
+            ]
+          ],
+          []
+        ],
+        "mapping": [
+          {
+            "AcAs": "AcAs",
+            "AhAd": "AhAd"
+          },
+          {
+            "AcKs": "AcKs",
+            "AhKd": "AhKd"
+          },
+          {
+            "QcQs": "QcQs",
+            "QhQd": "QcQs"
+          },
+          {}
+        ],
+        "groups": [
+          [
+            {
+              "representative": "AcAs",
+              "members": [
+                "AcAs"
+              ],
+              "weight": 2.0
+            },
+            {
+              "representative": "AhAd",
+              "members": [
+                "AhAd"
+              ],
+              "weight": 1.0
+            }
+          ],
+          [
+            {
+              "representative": "AcKs",
+              "members": [
+                "AcKs"
+              ],
+              "weight": 3.0
+            },
+            {
+              "representative": "AhKd",
+              "members": [
+                "AhKd"
+              ],
+              "weight": 1.0
+            }
+          ],
+          [
+            {
+              "representative": "QcQs",
+              "members": [
+                "QcQs",
+                "QhQd"
+              ],
+              "weight": 3.0
+            }
+          ],
+          []
+        ],
+        "pair_checks": 24,
+        "original_widths": [
+          2,
+          2,
+          2,
+          0
+        ],
+        "compressed_widths": [
+          2,
+          2,
+          1,
+          0
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 80,
+        "raw_lineups_checked": 8,
+        "blocked_lineups_checked": 4,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 1.1102230246251565e-16,
+        "verified": true
+      },
+      "full_deals": 4,
+      "compressed_deals": 2,
+      "public_nodes": 9,
+      "full_metrics": {
+        "policy_payoffs": [
+          140.0071240858739,
+          -60.007125262229195,
+          -19.999998823644738,
+          -60.0
+        ],
+        "best_response_payoffs": [
+          140.01188118811882,
+          -60.0,
+          -19.999998823644738,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.004757102244923317,
+          0.007125262229195073,
+          0,
+          0
+        ],
+        "nash_conv_chips": 0.01188236447411839,
+        "max_unilateral_gain_pct_pot": 0.0035626311145975365
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          140.00712408587393,
+          -60.007125262229195,
+          -19.99999882364474,
+          -60.0
+        ],
+        "best_response_payoffs": [
+          140.01188118811882,
+          -60.0,
+          -19.99999882364474,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.004757102244894895,
+          0.007125262229195073,
+          0,
+          0
+        ],
+        "nash_conv_chips": 0.011882364474089968,
+        "max_unilateral_gain_pct_pot": 0.0035626311145975365
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          140.00712408587395,
+          -60.007125262229195,
+          -19.999998823644745,
+          -60.0
+        ],
+        "best_response_payoffs": [
+          140.01188118811882,
+          -60.0,
+          -19.999998823644745,
+          -60.0
+        ],
+        "unilateral_gains": [
+          0.0047571022448664735,
+          0.007125262229195073,
+          0,
+          0
+        ],
+        "nash_conv_chips": 0.011882364474061546,
+        "max_unilateral_gain_pct_pot": 0.0035626311145975365
+      },
+      "max_lifted_metric_error_chips": 2.842170943040401e-14,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.005411459000000007,
+        "compression": 0.00022879200000000544,
+        "compressed_build": 0.00041695799999999505,
+        "full_train": 0.010363959000000006,
+        "compressed_train": 0.0013575840000000228
+      },
+      "peak_rss_mib": 27.04296875,
+      "wall_seconds": 0.48042520899999985,
+      "sampled_peak_rss_mib": 25.35546875,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "case": {
+        "name": "board_tie_odd_chips",
+        "input": {
+          "board": [
+            "Ts",
+            "Js",
+            "Qs",
+            "Ks",
+            "As"
+          ],
+          "ranges": [
+            [
+              [
+                "2c3d",
+                1.0
+              ],
+              [
+                "2h3c",
+                2.0
+              ]
+            ],
+            [
+              [
+                "4c5d",
+                3.0
+              ],
+              [
+                "4h5c",
+                1.0
+              ]
+            ],
+            [
+              [
+                "6c7d",
+                1.0
+              ]
+            ],
+            []
+          ],
+          "pot": 19,
+          "stacks": [
+            20,
+            20,
+            0,
+            0
+          ],
+          "initial_contributions": [
+            5,
+            5,
+            4,
+            5
+          ],
+          "folded": [
+            3
+          ],
+          "dealer": 3,
+          "bet_sizes": [
+            3
+          ],
+          "raise_sizes": [],
+          "max_raises": 0,
+          "min_bet": 1,
+          "max_joint_combos": 4096
+        }
+      },
+      "status": "completed",
+      "quotient": {
+        "name": "exact_river_relation_quotient_v1",
+        "ranges": [
+          [
+            [
+              "2c3d",
+              3.0
+            ]
+          ],
+          [
+            [
+              "4c5d",
+              4.0
+            ]
+          ],
+          [
+            [
+              "6c7d",
+              1.0
+            ]
+          ],
+          []
+        ],
+        "mapping": [
+          {
+            "2c3d": "2c3d",
+            "2h3c": "2c3d"
+          },
+          {
+            "4c5d": "4c5d",
+            "4h5c": "4c5d"
+          },
+          {
+            "6c7d": "6c7d"
+          },
+          {}
+        ],
+        "groups": [
+          [
+            {
+              "representative": "2c3d",
+              "members": [
+                "2c3d",
+                "2h3c"
+              ],
+              "weight": 3.0
+            }
+          ],
+          [
+            {
+              "representative": "4c5d",
+              "members": [
+                "4c5d",
+                "4h5c"
+              ],
+              "weight": 4.0
+            }
+          ],
+          [
+            {
+              "representative": "6c7d",
+              "members": [
+                "6c7d"
+              ],
+              "weight": 1.0
+            }
+          ],
+          []
+        ],
+        "pair_checks": 16,
+        "original_widths": [
+          2,
+          2,
+          1,
+          0
+        ],
+        "compressed_widths": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "live_advice_allowed": false,
+        "scope": "Exact equivalence for supplied river ranges only; no full-range calibration or earlier-street claim."
+      },
+      "verification": {
+        "terminal_player_checks": 80,
+        "raw_lineups_checked": 4,
+        "blocked_lineups_checked": 0,
+        "max_utility_error_chips": 0.0,
+        "max_normalized_joint_mass_error": 1.1102230246251565e-16,
+        "verified": true
+      },
+      "full_deals": 4,
+      "compressed_deals": 1,
+      "public_nodes": 9,
+      "full_metrics": {
+        "policy_payoffs": [
+          3.0000989804921083,
+          0.9995297617880599,
+          1.0003712577198314,
+          -5.0
+        ],
+        "best_response_payoffs": [
+          3.0002970297029705,
+          1.0002475247524751,
+          1.0003712577198314,
+          -5.0
+        ],
+        "unilateral_gains": [
+          0.0001980492108621945,
+          0.0007177629644152805,
+          0,
+          0
+        ],
+        "nash_conv_chips": 0.000915812175277475,
+        "max_unilateral_gain_pct_pot": 0.003777699812712003
+      },
+      "compressed_metrics": {
+        "policy_payoffs": [
+          3.0000989804921083,
+          0.9995297617880599,
+          1.0003712577198314,
+          -5.0
+        ],
+        "best_response_payoffs": [
+          3.00029702970297,
+          1.0002475247524751,
+          1.0003712577198314,
+          -5.0
+        ],
+        "unilateral_gains": [
+          0.00019804921086175042,
+          0.0007177629644152805,
+          0,
+          0
+        ],
+        "nash_conv_chips": 0.000915812175277031,
+        "max_unilateral_gain_pct_pot": 0.003777699812712003
+      },
+      "lifted_full_metrics": {
+        "policy_payoffs": [
+          3.0000989804921083,
+          0.9995297617880599,
+          1.0003712577198314,
+          -5.0
+        ],
+        "best_response_payoffs": [
+          3.0002970297029705,
+          1.0002475247524751,
+          1.0003712577198314,
+          -5.0
+        ],
+        "unilateral_gains": [
+          0.0001980492108621945,
+          0.0007177629644152805,
+          0,
+          0
+        ],
+        "nash_conv_chips": 0.000915812175277475,
+        "max_unilateral_gain_pct_pot": 0.003777699812712003
+      },
+      "max_lifted_metric_error_chips": 4.440892098500626e-16,
+      "passes_quality_gate": true,
+      "seconds": {
+        "full_build": 0.004954374999999983,
+        "compression": 0.0001817500000000083,
+        "compressed_build": 0.00030920800000000526,
+        "full_train": 0.010083000000000009,
+        "compressed_train": 0.0013901659999999982
+      },
+      "peak_rss_mib": 27.265625,
+      "wall_seconds": 0.4790527499999975,
+      "sampled_peak_rss_mib": 25.7890625,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    }
+  ]
+}

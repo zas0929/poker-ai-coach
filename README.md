@@ -287,3 +287,9 @@ against uniform subsets on 12 decision/own-hand probes. More repeatable actions 
 not improve reference EV diagnostics; neither selection is validated for live advice.
 See [docs/SOLVER_RANGE_STABILITY.md](docs/SOLVER_RANGE_STABILITY.md) for the 168 solves,
 matched-population comparisons, reference disagreement and next abstraction work.
+
+An offline exact river range quotient now merges only hands with identical
+blocker and showdown relations, preserving group mass. Seventeen full-vs-compressed
+controls verified legal/illegal lineups, terminal payouts and lifted-policy best
+responses. Compression is conservative and often absent; live advice is unchanged.
+See [docs/SOLVER_EXACT_RANGE_QUOTIENT.md](docs/SOLVER_EXACT_RANGE_QUOTIENT.md).
