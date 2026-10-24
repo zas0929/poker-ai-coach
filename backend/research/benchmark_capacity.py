@@ -117,7 +117,7 @@ if __name__=='__main__':
     parser.add_argument('--iterations',type=int,default=100)
     parser.add_argument('--timeout-seconds',type=float,default=45)
     parser.add_argument('--worker',action='store_true')
-    parser.add_argument('--method',choices=['cfr_plus','cfr_plus_indexed'],default='cfr_plus')
+    parser.add_argument('--method',choices=['cfr_plus','cfr_plus_indexed','cfr_plus_native'],default='cfr_plus')
     parser.add_argument('--include-policy',action='store_true',help='Export policy for numerical equivalence checks')
     parser.add_argument('--check',action='store_true',help='Fail on incomplete/failed quality controls or wrong expected rejection')
     args=parser.parse_args()

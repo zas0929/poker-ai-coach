@@ -12,3 +12,9 @@ dist/
 
 # Local private room database and journal files
 .data/
+
+# Locally compiled research kernels (default build output is outside the repo)
+/backend/research/native/*.so
+/backend/research/native/*.dylib
+/backend/research/native/*.dll
+/backend/research/native/*.o

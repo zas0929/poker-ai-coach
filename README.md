@@ -238,3 +238,7 @@ for paired timings, equivalence checks and the unchanged research limits.
 Expanded range budgets are opt-in (default remains 64 raw combinations), with
 a separate time/RSS-monitored research runner. Successes, timeouts and quality
 failures are documented in [docs/SOLVER_EXPANDED_RANGES.md](docs/SOLVER_EXPANDED_RANGES.md).
+
+An explicitly built C++17 research kernel and compact float64 payoffs are available
+via `cfr_plus_native` / `utility_storage='compact'`. No runtime auto-compilation
+or production trainer switch occurs. See [docs/SOLVER_NATIVE.md](docs/SOLVER_NATIVE.md).

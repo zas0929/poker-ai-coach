@@ -24,7 +24,7 @@ class Node:
 class RiverGame:
     def __init__(self, board, ranges, pot=100, bet=50, stack=100, *,
                  bet_sizes=None, raise_sizes=(), max_raises=0, min_bet=1, max_nodes=20000,
-                 stacks=None, initial_contributions=None, dealer=None, folded=(), max_joint_combos=64):
+                 stacks=None, initial_contributions=None, dealer=None, folded=(), max_joint_combos=64, utility_storage='dict'):
         n=len(ranges)
         if not 2<=n<=6 or len(board)!=5 or len(set(board))!=5 or not all(re.fullmatch(r'[2-9TJQKA][cdhs]', c) for c in board):
             raise ValueError('Two to six players and five distinct river cards required.')
@@ -141,14 +141,20 @@ class RiverGame:
         self.root=build((),order,self.live,(0,)*n,0,min_bet,0,(None,)*n)
         if len(self.nodes)*len(self.deals)>1000000:
             raise ValueError('Tree/deal product exceeds one million; reduce explicit ranges/tree.')
-        self.utilities={}
+        if utility_storage not in ('dict','compact'):raise ValueError('Choose dict or compact utility storage.')
+        self.utility_storage=utility_storage
+        if utility_storage=='compact':
+            from research.compact_utilities import CompactUtilities
+            self.utilities=CompactUtilities(self.nodes,len(self.deals),n)
+        else:self.utilities={}
         for node in self.nodes:
             if node.actor!=-1:continue
             for index,(_,_,scores_) in enumerate(self.deals):
                 awards,_,_=self.settle(node,scores_)
                 values=tuple(awards[p]-node.invested[p]-self.initial_contributions[p] for p in range(n))
                 if abs(sum(values))>1e-7:raise ValueError('Payoffs must be zero-sum.')
-                self.utilities[(id(node),index)]=values
+                if utility_storage=='compact':self.utilities.put(node,index,values)
+                else:self.utilities[(id(node),index)]=values
         # An information set contains only the acting player's cards and public history.
         self.keys={(node.actor,texts[node.actor],node.history) for node in self.nodes if node.actor!=-1 for texts,_,_ in self.deals}
         self.action_counts={(node.actor,texts[node.actor],node.history):len(node.actions)
@@ -193,8 +199,11 @@ class RiverGame:
     def key(self,node,deal):return (node.actor,self.deals[deal][0][node.actor],node.history)
 
     def train(self, iterations=200, method='cfr'):
-        if method not in ('cfr', 'cfr_plus', 'cfr_plus_indexed'):
-            raise ValueError('Choose cfr, cfr_plus or cfr_plus_indexed.')
+        if method not in ('cfr', 'cfr_plus', 'cfr_plus_indexed', 'cfr_plus_native'):
+            raise ValueError('Choose cfr, cfr_plus, cfr_plus_indexed or cfr_plus_native.')
+        if method == 'cfr_plus_native':
+            from research.native_cfr import train_native
+            return train_native(self,iterations)
         if method == 'cfr_plus_indexed':
             from research.indexed_cfr import train_indexed
             return train_indexed(self,iterations)
@@ -295,7 +304,7 @@ if __name__=='__main__':
     import argparse,json,platform
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--iterations',type=int,default=100)
-    parser.add_argument('--method',choices=['cfr','cfr_plus','cfr_plus_indexed'],default='cfr_plus')
+    parser.add_argument('--method',choices=['cfr','cfr_plus','cfr_plus_indexed','cfr_plus_native'],default='cfr_plus')
     parser.add_argument('--players',type=int,nargs='+',default=list(range(2,7)))
     parser.add_argument('--bet-sizes',type=int,nargs='+',default=[50])
     parser.add_argument('--raise-sizes',type=int,nargs='*',default=[])
@@ -306,6 +315,7 @@ if __name__=='__main__':
     parser.add_argument('--initial-contributions',type=int,nargs='+')
     parser.add_argument('--min-bet',type=int,default=1)
     parser.add_argument('--max-joint-combos',type=int,default=64)
+    parser.add_argument('--utility-storage',choices=['dict','compact'],default='dict')
     args=parser.parse_args()
     if (args.stacks is not None or args.initial_contributions is not None) and len(args.players)!=1:
         parser.error('Use one explicit --players N with --stacks/--initial-contributions.')
@@ -314,7 +324,7 @@ if __name__=='__main__':
         started=time.perf_counter()
         game=RiverGame(['2c','4d','7h','9s','Jc'],demo_ranges(n),stack=args.stack,pot=args.pot,
                        stacks=args.stacks,initial_contributions=args.initial_contributions,bet_sizes=args.bet_sizes,raise_sizes=args.raise_sizes,
-                       max_raises=args.max_raises,min_bet=args.min_bet,max_joint_combos=args.max_joint_combos)
+                       max_raises=args.max_raises,min_bet=args.min_bet,max_joint_combos=args.max_joint_combos,utility_storage=args.utility_storage)
         uniform={k:[1/m]*m for k,m in game.action_counts.items()}
         before=game.measure(uniform);policy=game.train(args.iterations,method=args.method);after=game.measure(policy)
         results.append({'players':n,'stacks':game.stacks,'initial_contributions':game.initial_contributions,'integer_payouts':game.integer_payouts,'root_actor':game.root.actor,'joint_deals':len(game.deals),'public_nodes':len(game.nodes),'information_sets':len(game.keys),'iterations':args.iterations,'seconds':round(time.perf_counter()-started,3),'before':before,'after':after,'root_policy':[{'hand':combo,'actions':game.root.actions,'probabilities':policy[(game.root.actor,combo,())]} for combo,_ in game.ranges[game.root.actor]] if game.root.actor!=-1 else []})

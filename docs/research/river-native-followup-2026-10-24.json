@@ -1,0 +1,171 @@
+{
+  "iterations": 200,
+  "method": "cfr_plus_native",
+  "timeout_seconds": 45,
+  "memory_mib": 128,
+  "python": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "selected_cases": [
+    "flush_6"
+  ],
+  "quality_gate_pct_pot": 0.5,
+  "scope": "Fixed synthetic weighted ranges, explicit raw budget 4096; unchanged node/deal budget one million. 0.2s RSS sampling can overshoot; no OS hard memory limit.",
+  "results": [
+    {
+      "name": "flush_6",
+      "raw_combinations": 96,
+      "input": {
+        "board": [
+          "2s",
+          "5s",
+          "9s",
+          "Kh",
+          "Ad"
+        ],
+        "ranges": [
+          [
+            [
+              "2h7s",
+              0.5
+            ],
+            [
+              "7hAc",
+              2.0
+            ],
+            [
+              "2d3d",
+              2.0
+            ]
+          ],
+          [
+            [
+              "7hQd",
+              1.0
+            ],
+            [
+              "4c7s",
+              1.0
+            ]
+          ],
+          [
+            [
+              "4h4s",
+              0.2
+            ],
+            [
+              "6hAh",
+              2.0
+            ]
+          ],
+          [
+            [
+              "6hKs",
+              1.0
+            ],
+            [
+              "4hQc",
+              0.2
+            ]
+          ],
+          [
+            [
+              "8dQh",
+              1.0
+            ],
+            [
+              "8h9c",
+              2.0
+            ]
+          ],
+          [
+            [
+              "AsJs",
+              1.0
+            ],
+            [
+              "QhTd",
+              1.0
+            ]
+          ]
+        ],
+        "pot": 360,
+        "stacks": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "initial_contributions": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "bet_sizes": [
+          40
+        ],
+        "raise_sizes": [
+          80
+        ],
+        "max_raises": 1,
+        "min_bet": 10,
+        "max_joint_combos": 4096,
+        "utility_storage": "compact"
+      },
+      "method": "cfr_plus_native",
+      "status": "completed",
+      "build_seconds": 1.001014666,
+      "train_seconds": 1.3135433330000001,
+      "measure_seconds": 1.5165139170000002,
+      "peak_rss_mib": 37.98828125,
+      "public_nodes": 5263,
+      "joint_deals": 24,
+      "information_sets": 5499,
+      "metrics": {
+        "policy_payoffs": [
+          -20.743530592985604,
+          -60.00252032494046,
+          -1.2270789537810067,
+          -30.75756030710621,
+          -59.081760087332505,
+          171.8124502661458
+        ],
+        "best_response_payoffs": [
+          -20.41121658285062,
+          -59.99999762358978,
+          -0.9507803899039722,
+          -30.472811551586616,
+          -58.834869512368016,
+          172.71280760880524
+        ],
+        "unilateral_gains": [
+          0.33231401013498285,
+          0.002522701350684997,
+          0.27629856387703455,
+          0.284748755519594,
+          0.24689057496448896,
+          0.9003573426594471
+        ],
+        "nash_conv_chips": 2.0431319485062325,
+        "max_unilateral_gain_pct_pot": 0.25009926184984643
+      },
+      "passes_quality_gate": true,
+      "wall_seconds": 4.115151,
+      "sampled_peak_rss_mib": 37.98828125,
+      "memory_limit_mib": 128,
+      "rss_poll_seconds": 0.2
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "completed": 1,
+    "quality_passed": 1,
+    "statuses": {
+      "completed": 1
+    }
+  }
+}

@@ -47,10 +47,10 @@ def read_rss_mib(pid):
     return int(text)/1024 if text else None # ps reports RSS in KiB on macOS/Linux
 
 
-def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_seconds=.2):
+def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_seconds=.2,method='cfr_plus_indexed'):
     if type(iterations) is not int or not 1<=iterations<=2000 or any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in (timeout_seconds,memory_mib,poll_seconds)):
         raise ValueError('Positive finite time, memory, polling and bounded integer iterations required.')
-    command=[sys.executable,'-m','research.benchmark_capacity','--worker','--method','cfr_plus_indexed','--iterations',str(iterations)]
+    command=[sys.executable,'-m','research.benchmark_capacity','--worker','--method',method,'--iterations',str(iterations)]
     start=time.perf_counter();sampled_peak=0.;stopped=None;monitor_error=None
     with tempfile.TemporaryFile(mode='w+t') as output,tempfile.TemporaryFile(mode='w+t') as errors:
         process=subprocess.Popen(command,stdin=subprocess.PIPE,stdout=output,stderr=errors,text=True)
@@ -89,20 +89,22 @@ def run_guarded(case,iterations=100,timeout_seconds=45,memory_mib=128,poll_secon
         return {**result,**base}
 
 
-def benchmark(iterations=100,timeout_seconds=45,memory_mib=128,names=None):
+def benchmark(iterations=100,timeout_seconds=45,memory_mib=128,names=None,method='cfr_plus_indexed',utility_storage=None):
     cases=list(scenarios())
     if names is not None:
         if not names or len(set(names))!=len(names) or set(names)-{c['name'] for c in cases}:
             raise ValueError('Select nonempty, distinct known case names.')
         cases=[c for c in cases if c['name'] in names]
+    if utility_storage is not None:
+        cases=[{**c,'input':{**c['input'],'utility_storage':utility_storage}} for c in cases]
     rows=[]
     for case in cases:
         print('Starting '+case['name'],file=sys.stderr,flush=True)
-        result=run_guarded(case,iterations,timeout_seconds,memory_mib)
+        result=run_guarded(case,iterations,timeout_seconds,memory_mib,method=method)
         rows.append({**case,**result})
         print(case['name']+': '+result['status']+(' gap='+str(result['metrics']['max_unilateral_gain_pct_pot']) if 'metrics' in result else ''),file=sys.stderr,flush=True)
     completed=[r for r in rows if r['status']=='completed']
-    return {'iterations':iterations,'method':'cfr_plus_indexed','timeout_seconds':timeout_seconds,'memory_mib':memory_mib,
+    return {'iterations':iterations,'method':method,'timeout_seconds':timeout_seconds,'memory_mib':memory_mib,
             'python':sys.version,'platform':platform.platform(),'selected_cases':[c['name'] for c in cases],'quality_gate_pct_pot':.5,
             'scope':'Fixed synthetic weighted ranges, explicit raw budget 4096; unchanged node/deal budget one million. 0.2s RSS sampling can overshoot; no OS hard memory limit.',
             'results':rows,'summary':{'total':len(rows),'completed':len(completed),
@@ -114,8 +116,10 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--iterations',type=int,default=100);parser.add_argument('--timeout-seconds',type=float,default=45)
     parser.add_argument('--memory-mib',type=float,default=128)
+    parser.add_argument('--method',choices=['cfr_plus_indexed','cfr_plus_native'],default='cfr_plus_indexed')
+    parser.add_argument('--utility-storage',choices=['dict','compact'])
     parser.add_argument('--cases',nargs='+',help='Explicit subset for follow-up measurements')
     args=parser.parse_args()
     if not 1<=args.iterations<=2000 or any(not math.isfinite(v) or v<=0 for v in (args.timeout_seconds,args.memory_mib)):
         parser.error('Positive finite time/memory and 1–2000 iterations required.')
-    print(json.dumps(benchmark(args.iterations,args.timeout_seconds,args.memory_mib,args.cases),indent=2))
+    print(json.dumps(benchmark(args.iterations,args.timeout_seconds,args.memory_mib,args.cases,args.method,args.utility_storage),indent=2))
