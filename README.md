@@ -242,3 +242,8 @@ failures are documented in [docs/SOLVER_EXPANDED_RANGES.md](docs/SOLVER_EXPANDED
 An explicitly built C++17 research kernel and compact float64 payoffs are available
 via `cfr_plus_native` / `utility_storage='compact'`. No runtime auto-compilation
 or production trainer switch occurs. See [docs/SOLVER_NATIVE.md](docs/SOLVER_NATIVE.md).
+
+The public river adapter also reconstructs decisions after checks, wagers, calls,
+raises and folds. See [docs/SOLVER_RIVER_CONTINUATION.md](docs/SOLVER_RIVER_CONTINUATION.md)
+for replay rules, chip accounting and paired Python/native controls. This remains
+offline research with explicit public range subsets.

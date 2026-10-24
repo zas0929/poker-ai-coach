@@ -10,14 +10,15 @@ def compare_every_path(game):
     """Independent game-engine execution, including each private deal and payout."""
     engine=PokerEngine();visited=0;leaves=0
     for d,(texts,_,_) in enumerate(game.deals):
-        state=HandState(hand_id='sidepot-control',street=Street.RIVER,pot=game.pot,
+        state=HandState(hand_id='sidepot-control',street=Street.RIVER,pot=game.decision_pot,
                         small_blind=1,big_blind=game.min_bet,board=cards(''.join(game.board)),
-                        players=[Player(id=str(i),name=str(i),stack=game.stacks[i],position='',
-                                        status=PlayerStatus.FOLDED if i in game.folded else (PlayerStatus.ACTIVE if game.stacks[i] else PlayerStatus.ALL_IN),
+                        players=[Player(id=str(i),name=str(i),stack=game.stacks[i]-game.root_state.invested[i],current_bet=game.root_state.invested[i],position='',
+                                        status=PlayerStatus.FOLDED if i in game.folded else (PlayerStatus.ACTIVE if game.stacks[i]>game.root_state.invested[i] else PlayerStatus.ALL_IN),
                                         cards=cards(texts[i]) if texts[i] else []) for i in range(game.n)],
                         current_player_id=str(game.root.actor) if game.root.actor!=-1 else None,
-                        dealer_player_id=str(game.dealer),last_full_raise=game.min_bet,
-                        contributions={str(i):v for i,v in enumerate(game.initial_contributions)})
+                        dealer_player_id=str(game.dealer),last_full_raise=game.root_state.increment,
+                        acted_at_bet={str(i):v for i,v in enumerate(game.root_state.acted) if v is not None},
+                        contributions={str(i):v+game.root_state.invested[i] for i,v in enumerate(game.initial_contributions)})
         def visit(node,state):
             nonlocal visited,leaves
             visited+=1

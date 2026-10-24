@@ -13,7 +13,7 @@ from research.river_snapshot import build_river_from_snapshot
 from research.sidepot_reference import compare_every_path
 
 
-def control(n,mode='plain'):
+def control(n,mode='plain',river_actions=()):
     engine=PokerEngine()
     state=engine.start_hand(player_count=n,starting_stacks=[30,100,200] if mode=='prior_sidepot' else None)
     board=['2c','4d','7h','9s','Jc']
@@ -31,6 +31,8 @@ def control(n,mode='plain'):
         elif mode=='folded' and not folded and state.street==Street.FLOP:
             engine.apply_action(state,state.current_player_id,ActionType.FOLD);folded=True
         else:engine.apply_action(state,state.current_player_id,ActionType.CALL if state.betting.call_amount else ActionType.CHECK)
+    for action,amount in river_actions:
+        engine.apply_action(state,state.current_player_id,ActionType(action),amount)
     return prepare_solver_snapshot(state)
 
 

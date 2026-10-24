@@ -1,0 +1,1191 @@
+{
+  "iterations": 20,
+  "scope": "Seven deterministic mid-river transport controls with one explicitly selected public hand per live seat. Not full-range coaching quality validation.",
+  "bet_sizes": [
+    10
+  ],
+  "raise_sizes": [
+    40
+  ],
+  "future_raise_cap": 1,
+  "results": [
+    {
+      "players": 2,
+      "scenario": "plain",
+      "metadata": {
+        "source_information_key": "f8ef52a602ec92ee2c3cbb888d6ad52b8a9889b73291f7de8ae874580c54a6de",
+        "task_key": "25af607dcf36b60473a28411c89339760871ddb073f44160de1d798011fb3189",
+        "seat_ids": [
+          "hero",
+          "villain"
+        ],
+        "actor_id": "hero",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 1
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 64,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 20,
+          "decision_pot": 50,
+          "street_committed": [
+            10,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 10,
+            "villain": 20
+          },
+          "pending_ids": [
+            "hero"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "selected_public_hands": {
+        "hero": [
+          "AsAh"
+        ],
+        "villain": [
+          "AdAc"
+        ]
+      },
+      "observed_actions": [
+        [
+          "check",
+          null
+        ],
+        [
+          "bet",
+          10
+        ],
+        [
+          "raise",
+          20
+        ]
+      ],
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "root_history": [
+        [
+          1,
+          "CHECK"
+        ],
+        [
+          0,
+          "BET 10"
+        ],
+        [
+          1,
+          "RAISE 20"
+        ]
+      ],
+      "root_actor": 0,
+      "root_actions": [
+        "FOLD",
+        "CALL",
+        "RAISE 40"
+      ],
+      "public_nodes": 6,
+      "joint_deals": 1,
+      "engine_comparison": {
+        "node_deal_visits": 6,
+        "terminal_deal_checks": 4
+      },
+      "build_seconds": 0.013088749999999982,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.0006780419999999898,
+        "cfr_plus_native": 0.017003500000000005
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0,
+      "metrics": {
+        "policy_payoffs": [
+          0.03299319727891159,
+          -0.032993197278911576
+        ],
+        "best_response_payoffs": [
+          0.07142857142857144,
+          0.031746031746031744
+        ],
+        "unilateral_gains": [
+          0.03843537414965985,
+          0.06473922902494332
+        ],
+        "nash_conv_chips": 0.10317460317460317,
+        "max_unilateral_gain_pct_pot": 0.12947845804988664
+      },
+      "root_policy": [
+        {
+          "hand": "AsAh",
+          "probabilities": [
+            0.001587301587301587,
+            0.09206349206349204,
+            0.9063492063492065
+          ]
+        }
+      ]
+    },
+    {
+      "players": 3,
+      "scenario": "plain",
+      "metadata": {
+        "source_information_key": "9fee13fcab9b2d975b1ad8d141b5ba193256202172b2a87e46bec2b8559f88d1",
+        "task_key": "e9c68e7361f99e7a507689e46b35867e92e1a45f201cebf74183b64e1c0b1aca",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 1
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 64,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 30,
+          "decision_pot": 60,
+          "street_committed": [
+            20,
+            0,
+            10
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 20,
+            "villain": 0,
+            "villain_2": 10
+          },
+          "pending_ids": [
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "selected_public_hands": {
+        "hero": [
+          "AsAh"
+        ],
+        "villain": [
+          "AdAc"
+        ],
+        "villain_2": [
+          "KsKh"
+        ]
+      },
+      "observed_actions": [
+        [
+          "check",
+          null
+        ],
+        [
+          "bet",
+          10
+        ],
+        [
+          "raise",
+          20
+        ]
+      ],
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "root_history": [
+        [
+          1,
+          "CHECK"
+        ],
+        [
+          2,
+          "BET 10"
+        ],
+        [
+          0,
+          "RAISE 20"
+        ]
+      ],
+      "root_actor": 1,
+      "root_actions": [
+        "FOLD",
+        "CALL",
+        "RAISE 40"
+      ],
+      "public_nodes": 24,
+      "joint_deals": 1,
+      "engine_comparison": {
+        "node_deal_visits": 24,
+        "terminal_deal_checks": 14
+      },
+      "build_seconds": 0.01223966700000001,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.0013784170000000762,
+        "cfr_plus_native": 0.0015985419999999806
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0,
+      "metrics": {
+        "policy_payoffs": [
+          10.014784493706674,
+          10.079902654896625,
+          -20.0946871486033
+        ],
+        "best_response_payoffs": [
+          10.089819719850116,
+          10.131037414965986,
+          -20.000000000000004
+        ],
+        "unilateral_gains": [
+          0.07503522614344149,
+          0.05113476006936146,
+          0.09468714860329541
+        ],
+        "nash_conv_chips": 0.22085713481609837,
+        "max_unilateral_gain_pct_pot": 0.1578119143388257
+      },
+      "root_policy": [
+        {
+          "hand": "AdAc",
+          "probabilities": [
+            0.0015873015873015873,
+            0.21290104694360015,
+            0.7855116514690983
+          ]
+        }
+      ]
+    },
+    {
+      "players": 4,
+      "scenario": "plain",
+      "metadata": {
+        "source_information_key": "5074ef1e648c64ccc54b70b10c57e0d515453f6837691d96415abdefd3ce0545",
+        "task_key": "8cedb4b18f13633f28cf35a98eb238a292033ee9bfb211822f880ef4e4f3ffb1",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [
+          1
+        ],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain",
+            "public": 0,
+            "selected": 0
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 1
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 64,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 90,
+          "street_committed": [
+            20,
+            0,
+            10,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 20,
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20
+          },
+          "pending_ids": [
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "selected_public_hands": {
+        "hero": [
+          "AsAh"
+        ],
+        "villain_2": [
+          "AdAc"
+        ],
+        "villain_3": [
+          "KsKh"
+        ]
+      },
+      "observed_actions": [
+        [
+          "check",
+          null
+        ],
+        [
+          "bet",
+          10
+        ],
+        [
+          "raise",
+          20
+        ],
+        [
+          "call",
+          null
+        ],
+        [
+          "fold",
+          null
+        ]
+      ],
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "root_history": [
+        [
+          1,
+          "CHECK"
+        ],
+        [
+          2,
+          "BET 10"
+        ],
+        [
+          3,
+          "RAISE 20"
+        ],
+        [
+          0,
+          "CALL"
+        ],
+        [
+          1,
+          "FOLD"
+        ]
+      ],
+      "root_actor": 2,
+      "root_actions": [
+        "FOLD",
+        "CALL",
+        "RAISE 40"
+      ],
+      "public_nodes": 10,
+      "joint_deals": 1,
+      "engine_comparison": {
+        "node_deal_visits": 10,
+        "terminal_deal_checks": 6
+      },
+      "build_seconds": 0.011886167000000003,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.0005865000000000453,
+        "cfr_plus_native": 0.0018191250000000325
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0,
+      "metrics": {
+        "policy_payoffs": [
+          20.00755197846334,
+          -10.0,
+          20.020401425120312,
+          -30.027953403583652
+        ],
+        "best_response_payoffs": [
+          20.07746876528389,
+          -10.0,
+          20.142913832199547,
+          -30.0
+        ],
+        "unilateral_gains": [
+          0.06991678682054925,
+          0,
+          0.12251240707923472,
+          0.027953403583651948
+        ],
+        "nash_conv_chips": 0.22038259748343592,
+        "max_unilateral_gain_pct_pot": 0.13612489675470524
+      },
+      "root_policy": [
+        {
+          "hand": "AdAc",
+          "probabilities": [
+            0.0015873015873015873,
+            0.4113912231559291,
+            0.5870214752567693
+          ]
+        }
+      ]
+    },
+    {
+      "players": 5,
+      "scenario": "plain",
+      "metadata": {
+        "source_information_key": "e7a79ead2cfad57c4ddf90ead2dddc0c50b2f306012abe4a3b757369ca26b25a",
+        "task_key": "a1e5738f17acbc5a1f6c4a68007dc6cb7f0ad6379fa0c09ea652104e18559029",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [
+          0
+        ],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 0,
+            "selected": 0
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 1
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 64,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 50,
+          "decision_pot": 100,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20,
+            "villain_4": 20
+          },
+          "pending_ids": [
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "selected_public_hands": {
+        "villain": [
+          "AsAh"
+        ],
+        "villain_2": [
+          "AdAc"
+        ],
+        "villain_3": [
+          "KsKh"
+        ],
+        "villain_4": [
+          "KdKc"
+        ]
+      },
+      "observed_actions": [
+        [
+          "check",
+          null
+        ],
+        [
+          "bet",
+          10
+        ],
+        [
+          "raise",
+          20
+        ],
+        [
+          "call",
+          null
+        ],
+        [
+          "fold",
+          null
+        ]
+      ],
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "root_history": [
+        [
+          1,
+          "CHECK"
+        ],
+        [
+          2,
+          "BET 10"
+        ],
+        [
+          3,
+          "RAISE 20"
+        ],
+        [
+          4,
+          "CALL"
+        ],
+        [
+          0,
+          "FOLD"
+        ]
+      ],
+      "root_actor": 1,
+      "root_actions": [
+        "FOLD",
+        "CALL",
+        "RAISE 40"
+      ],
+      "public_nodes": 44,
+      "joint_deals": 1,
+      "engine_comparison": {
+        "node_deal_visits": 44,
+        "terminal_deal_checks": 24
+      },
+      "build_seconds": 0.01703974999999991,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.0031212089999999026,
+        "cfr_plus_native": 0.0019194160000000071
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0,
+      "metrics": {
+        "policy_payoffs": [
+          -10.0,
+          35.117097445022765,
+          34.99295468398685,
+          -30.043880551779793,
+          -30.066171577229824
+        ],
+        "best_response_payoffs": [
+          -10.0,
+          35.237896960371444,
+          35.21418182881618,
+          -29.973544973544975,
+          -29.973544973544975
+        ],
+        "unilateral_gains": [
+          0,
+          0.12079951534867917,
+          0.22122714482932793,
+          0.07033557823481829,
+          0.09262660368484887
+        ],
+        "nash_conv_chips": 0.5049888420976743,
+        "max_unilateral_gain_pct_pot": 0.22122714482932793
+      },
+      "root_policy": [
+        {
+          "hand": "AsAh",
+          "probabilities": [
+            0.001587301587301587,
+            0.14794584500466848,
+            0.8504668534080299
+          ]
+        }
+      ]
+    },
+    {
+      "players": 6,
+      "scenario": "plain",
+      "metadata": {
+        "source_information_key": "e0942bdfb06428aa42c6afe68a960264296deb8ad6b7e75ad36a579b947c59eb",
+        "task_key": "98ffb1a746e61fce2f807aab7d004309f2ba5c2921c2be0975b0c3049b8e32a8",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3",
+          "villain_4",
+          "villain_5"
+        ],
+        "actor_id": "hero",
+        "folded_seats": [
+          5
+        ],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_4",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_5",
+            "public": 0,
+            "selected": 0
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 64,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 60,
+          "decision_pot": 110,
+          "street_committed": [
+            0,
+            0,
+            10,
+            20,
+            20,
+            0
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 0,
+            "villain_2": 10,
+            "villain_3": 20,
+            "villain_4": 20
+          },
+          "pending_ids": [
+            "hero",
+            "villain",
+            "villain_2"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "selected_public_hands": {
+        "hero": [
+          "AsAh"
+        ],
+        "villain": [
+          "AdAc"
+        ],
+        "villain_2": [
+          "KsKh"
+        ],
+        "villain_3": [
+          "KdKc"
+        ],
+        "villain_4": [
+          "QsQh"
+        ]
+      },
+      "observed_actions": [
+        [
+          "check",
+          null
+        ],
+        [
+          "bet",
+          10
+        ],
+        [
+          "raise",
+          20
+        ],
+        [
+          "call",
+          null
+        ],
+        [
+          "fold",
+          null
+        ]
+      ],
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "root_history": [
+        [
+          1,
+          "CHECK"
+        ],
+        [
+          2,
+          "BET 10"
+        ],
+        [
+          3,
+          "RAISE 20"
+        ],
+        [
+          4,
+          "CALL"
+        ],
+        [
+          5,
+          "FOLD"
+        ]
+      ],
+      "root_actor": 0,
+      "root_actions": [
+        "FOLD",
+        "CALL",
+        "RAISE 40"
+      ],
+      "public_nodes": 160,
+      "joint_deals": 1,
+      "engine_comparison": {
+        "node_deal_visits": 160,
+        "terminal_deal_checks": 84
+      },
+      "build_seconds": 0.021955084000000014,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.013024374999999866,
+        "cfr_plus_native": 0.0025243329999999897
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0,
+      "metrics": {
+        "policy_payoffs": [
+          45.189486282727486,
+          45.07898230099947,
+          -20.084794194799585,
+          -30.059427310716206,
+          -30.12424707821115,
+          -10.000000000000002
+        ],
+        "best_response_payoffs": [
+          45.33285208098735,
+          45.32113596883073,
+          -19.934523809523814,
+          -29.95370370370371,
+          -30.000000000000004,
+          -10.000000000000002
+        ],
+        "unilateral_gains": [
+          0.14336579825986462,
+          0.24215366783126058,
+          0.1502703852757712,
+          0.1057236070124965,
+          0.12424707821114822,
+          0
+        ],
+        "nash_conv_chips": 0.7657605365905411,
+        "max_unilateral_gain_pct_pot": 0.2201396980284187
+      },
+      "root_policy": [
+        {
+          "hand": "AsAh",
+          "probabilities": [
+            0.0015873015873015875,
+            0.08193462445637585,
+            0.9164780739563226
+          ]
+        }
+      ]
+    },
+    {
+      "players": 4,
+      "scenario": "folded",
+      "metadata": {
+        "source_information_key": "3edb0c3cbf98cdaaedb0baa0ed75aff62ac8914da7e1d45651cf7906c433ec86",
+        "task_key": "66ebfdac99b6459cb3479c75908def215c4bcb31c46a8c73bd1820496f85778a",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2",
+          "villain_3"
+        ],
+        "actor_id": "villain_2",
+        "folded_seats": [
+          1
+        ],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain",
+            "public": 0,
+            "selected": 0
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_3",
+            "public": 1081,
+            "selected": 1
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 64,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 40,
+          "decision_pot": 70,
+          "street_committed": [
+            20,
+            0,
+            0,
+            10
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "hero": 20,
+            "villain_2": 0,
+            "villain_3": 10
+          },
+          "pending_ids": [
+            "villain_2",
+            "villain_3"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "selected_public_hands": {
+        "hero": [
+          "AsAh"
+        ],
+        "villain_2": [
+          "AdAc"
+        ],
+        "villain_3": [
+          "KsKh"
+        ]
+      },
+      "observed_actions": [
+        [
+          "check",
+          null
+        ],
+        [
+          "bet",
+          10
+        ],
+        [
+          "raise",
+          20
+        ]
+      ],
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "root_history": [
+        [
+          2,
+          "CHECK"
+        ],
+        [
+          3,
+          "BET 10"
+        ],
+        [
+          0,
+          "RAISE 20"
+        ]
+      ],
+      "root_actor": 2,
+      "root_actions": [
+        "FOLD",
+        "CALL",
+        "RAISE 40"
+      ],
+      "public_nodes": 24,
+      "joint_deals": 1,
+      "engine_comparison": {
+        "node_deal_visits": 24,
+        "terminal_deal_checks": 14
+      },
+      "build_seconds": 0.012524375000000143,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.0015695410000000631,
+        "cfr_plus_native": 0.0015500419999998627
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0,
+      "metrics": {
+        "policy_payoffs": [
+          15.016022812190762,
+          -10.0,
+          15.078905276780569,
+          -20.09492808897133
+        ],
+        "best_response_payoffs": [
+          15.097893990066854,
+          -10.0,
+          15.142942176870749,
+          -20.0
+        ],
+        "unilateral_gains": [
+          0.0818711778760921,
+          0,
+          0.06403690009017993,
+          0.09492808897132932
+        ],
+        "nash_conv_chips": 0.24083616693760135,
+        "max_unilateral_gain_pct_pot": 0.1356115556733276
+      },
+      "root_policy": [
+        {
+          "hand": "AdAc",
+          "probabilities": [
+            0.001587301587301587,
+            0.23656447053707322,
+            0.7618482278756252
+          ]
+        }
+      ]
+    },
+    {
+      "players": 3,
+      "scenario": "prior_sidepot",
+      "metadata": {
+        "source_information_key": "3d42173264c596226c335e4cc0cebe2373a206b66d5ed717bb6652fd85e75510",
+        "task_key": "206fe00da2f20a8f8c40d428bf84385415d2f33732dd9d05aadbeb349412984f",
+        "seat_ids": [
+          "hero",
+          "villain",
+          "villain_2"
+        ],
+        "actor_id": "villain",
+        "folded_seats": [],
+        "range_selection": "explicit_subset",
+        "range_counts": [
+          {
+            "id": "hero",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain",
+            "public": 1081,
+            "selected": 1
+          },
+          {
+            "id": "villain_2",
+            "public": 1081,
+            "selected": 1
+          }
+        ],
+        "utility_storage": "compact",
+        "max_joint_combos": 64,
+        "folded_card_bunching_modelled": false,
+        "river_state": {
+          "prior_pot": 150,
+          "decision_pot": 180,
+          "street_committed": [
+            0,
+            10,
+            20
+          ],
+          "last_full_raise": 10,
+          "acted_at_bet": {
+            "villain": 10,
+            "villain_2": 20
+          },
+          "pending_ids": [
+            "villain"
+          ],
+          "observed_raises": 1,
+          "future_raise_cap": 1
+        },
+        "scope": "Offline public river continuation; selected subsets and heuristic posterior ranges are not full-range/GTO advice."
+      },
+      "selected_public_hands": {
+        "hero": [
+          "AsAh"
+        ],
+        "villain": [
+          "AdAc"
+        ],
+        "villain_2": [
+          "KsKh"
+        ]
+      },
+      "observed_actions": [
+        [
+          "bet",
+          10
+        ],
+        [
+          "raise",
+          20
+        ]
+      ],
+      "board": [
+        "2c",
+        "4d",
+        "7h",
+        "9s",
+        "Jc"
+      ],
+      "root_history": [
+        [
+          1,
+          "BET 10"
+        ],
+        [
+          2,
+          "RAISE 20"
+        ]
+      ],
+      "root_actor": 1,
+      "root_actions": [
+        "FOLD",
+        "CALL",
+        "RAISE 40"
+      ],
+      "public_nodes": 6,
+      "joint_deals": 1,
+      "engine_comparison": {
+        "node_deal_visits": 6,
+        "terminal_deal_checks": 4
+      },
+      "build_seconds": 0.011823417000000003,
+      "train_seconds": {
+        "cfr_plus_indexed": 0.00028470799999991137,
+        "cfr_plus_native": 0.0017294999999999394
+      },
+      "max_policy_difference": 0.0,
+      "max_metric_difference": 0.0,
+      "metrics": {
+        "policy_payoffs": [
+          15.071428571428573,
+          64.81202488932081,
+          -79.88345346074938
+        ],
+        "best_response_payoffs": [
+          15.071428571428573,
+          65.04761904761905,
+          -79.85714285714286
+        ],
+        "unilateral_gains": [
+          0,
+          0.23559415829824104,
+          0.026310603606518157
+        ],
+        "nash_conv_chips": 0.2619047619047592,
+        "max_unilateral_gain_pct_pot": 0.1308856434990228
+      },
+      "root_policy": [
+        {
+          "hand": "AdAc",
+          "probabilities": [
+            0.0015873015873015873,
+            0.445890022675737,
+            0.5525226757369615
+          ]
+        }
+      ]
+    }
+  ],
+  "terminal_deal_checks": 150
+}

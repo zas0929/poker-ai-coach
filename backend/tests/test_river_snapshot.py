@@ -136,14 +136,15 @@ class RiverSnapshotAdapterTests(unittest.TestCase):
         self.assertNotEqual(meta['task_key'],different['task_key'])
         self.assertEqual(meta['source_information_key'],different['source_information_key'])
 
-    def test_reject_other_streets_midriver_actor_and_corrupted_inputs(self):
+    def test_accept_midriver_but_reject_other_streets_actor_and_corrupted_inputs(self):
         engine,state=river_state(3);snapshot=prepare_solver_snapshot(state);chosen=selection(snapshot)
         engine.apply_action(state,state.current_player_id,ActionType.CHECK)
-        with self.assertRaisesRegex(UnsupportedSolverState,'Mid-river history'):
-            build_river_from_snapshot(prepare_solver_snapshot(state),chosen,bet_sizes=(10,))
+        game,_=build_river_from_snapshot(prepare_solver_snapshot(state),chosen,bet_sizes=(10,))
+        self.assertEqual(game.root.actor,2)
         engine.apply_action(state,state.current_player_id,ActionType.BET,10)
-        with self.assertRaisesRegex(UnsupportedSolverState,'Mid-river commitments'):
-            build_river_from_snapshot(prepare_solver_snapshot(state),chosen,bet_sizes=(10,))
+        game,_=build_river_from_snapshot(prepare_solver_snapshot(state),chosen,bet_sizes=(10,))
+        self.assertEqual(game.decision_pot,state.pot)
+        compare_every_path(game)
         cases=[]
         for key,value in [('street','turn'),('actor_id','missing'),('postflop_order',[]),('schema_version',2)]:
             bad=copy.deepcopy(snapshot);bad[key]=value;bad['information_key']=digest({k:v for k,v in bad.items() if k!='information_key'});cases.append(bad)

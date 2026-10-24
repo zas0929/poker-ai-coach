@@ -24,10 +24,11 @@ class Node:
 class RiverGame:
     def __init__(self, board, ranges, pot=100, bet=50, stack=100, *,
                  bet_sizes=None, raise_sizes=(), max_raises=0, min_bet=1, max_nodes=20000,
-                 stacks=None, initial_contributions=None, dealer=None, folded=(), max_joint_combos=64, utility_storage='dict'):
+                 stacks=None, initial_contributions=None, dealer=None, folded=(), max_joint_combos=64, utility_storage='dict', river_actions=()):
         n=len(ranges)
         if not 2<=n<=6 or len(board)!=5 or len(set(board))!=5 or not all(re.fullmatch(r'[2-9TJQKA][cdhs]', c) for c in board):
             raise ValueError('Two to six players and five distinct river cards required.')
+        self.river_actions=tuple(tuple(a) for a in river_actions)
         self.folded=tuple(folded)
         if any(type(p) is not int or not 0<=p<n for p in self.folded) or len(set(self.folded))!=len(self.folded) or n-len(self.folded)<2:
             raise ValueError('Distinct folded seat indices and at least two live seats required.')
@@ -51,13 +52,17 @@ class RiverGame:
         self.dealer=n-1 if dealer is None else dealer
         if type(self.dealer) is not int or not 0<=self.dealer<n:
             raise ValueError('Dealer must be a seat index.')
+        from research.river_replay import replay_river
+        self.root_state=replay_river(self.stacks,self.dealer,min_bet,self.folded,self.river_actions)
+        river_folders={a[0] for a in self.river_actions if a[1]=='fold'}
+        initial_live=set(self.live)|river_folders
         self.integer_payouts=initial_contributions is not None
         self.initial_contributions=tuple(initial_contributions) if self.integer_payouts else (pot/n,)*n
         if self.integer_payouts:
             if len(self.initial_contributions)!=n or any(type(v) is not int or v<0 for v in self.initial_contributions) or sum(self.initial_contributions)!=pot:
                 raise ValueError('Nonnegative integer prior contributions must sum to pot.')
             highest=max(self.initial_contributions)
-            if any(chips>0 and prior!=highest for p,(chips,prior) in enumerate(zip(self.stacks,self.initial_contributions)) if p in self.live):
+            if any(chips>0 and prior!=highest for p,(chips,prior) in enumerate(zip(self.stacks,self.initial_contributions)) if p in initial_live):
                 raise ValueError('Funded players must have matched prior streets; lower contributors must be all-in.')
         if type(max_raises) is not int or not 0<=max_raises<=3:
             raise ValueError('0–3 raises per betting line required.')
@@ -112,7 +117,8 @@ class RiverGame:
             def add(action, next_pending, next_alive, next_invested,
                     next_current=current, next_increment=increment, next_raises=raises):
                 actions.append(action)
-                next_acted=list(acted);next_acted[actor]=next_current
+                next_acted=list(acted)
+                if action!='FOLD':next_acted[actor]=next_current
                 children.append(build(history+((actor,action),),next_pending,next_alive,
                                       next_invested,next_current,next_increment,next_raises,tuple(next_acted)))
             facing=current>invested[actor]
@@ -137,8 +143,10 @@ class RiverGame:
                 add(('BET ' if current==0 else 'RAISE ')+str(total),responders,alive,tuple(paid),
                     total,max(increment,total-current),raises+int(current>0))
             return save(Node(actor,history,tuple(actions),tuple(children),invested,alive))
-        order=tuple((self.dealer+offset)%n for offset in range(1,n+1))
-        self.root=build((),order,self.live,(0,)*n,0,min_bet,0,(None,)*n)
+        cursor=self.root_state
+        # max_raises bounds future branches, not the already fixed public prefix.
+        self.root=build(cursor.history,cursor.pending,cursor.alive,cursor.invested,cursor.current,cursor.increment,0,cursor.acted)
+        self.decision_pot=pot+sum(cursor.invested)
         if len(self.nodes)*len(self.deals)>1000000:
             raise ValueError('Tree/deal product exceeds one million; reduce explicit ranges/tree.')
         if utility_storage not in ('dict','compact'):raise ValueError('Choose dict or compact utility storage.')
@@ -292,7 +300,7 @@ class RiverGame:
             values.append(sum(recurse(self.root,me,g,False) for g in groups.values()))
             best.append(sum(recurse(self.root,me,g,True) for g in groups.values()))
         gains=[max(0,b-v) for b,v in zip(best,values)]
-        return {'policy_payoffs':values,'best_response_payoffs':best,'unilateral_gains':gains,'nash_conv_chips':sum(gains),'max_unilateral_gain_pct_pot':max(gains)/self.pot*100}
+        return {'policy_payoffs':values,'best_response_payoffs':best,'unilateral_gains':gains,'nash_conv_chips':sum(gains),'max_unilateral_gain_pct_pot':max(gains)/self.decision_pot*100}
 
 
 def demo_ranges(n):
@@ -327,7 +335,7 @@ if __name__=='__main__':
                        max_raises=args.max_raises,min_bet=args.min_bet,max_joint_combos=args.max_joint_combos,utility_storage=args.utility_storage)
         uniform={k:[1/m]*m for k,m in game.action_counts.items()}
         before=game.measure(uniform);policy=game.train(args.iterations,method=args.method);after=game.measure(policy)
-        results.append({'players':n,'stacks':game.stacks,'initial_contributions':game.initial_contributions,'integer_payouts':game.integer_payouts,'root_actor':game.root.actor,'joint_deals':len(game.deals),'public_nodes':len(game.nodes),'information_sets':len(game.keys),'iterations':args.iterations,'seconds':round(time.perf_counter()-started,3),'before':before,'after':after,'root_policy':[{'hand':combo,'actions':game.root.actions,'probabilities':policy[(game.root.actor,combo,())]} for combo,_ in game.ranges[game.root.actor]] if game.root.actor!=-1 else []})
+        results.append({'players':n,'stacks':game.stacks,'initial_contributions':game.initial_contributions,'integer_payouts':game.integer_payouts,'root_actor':game.root.actor,'joint_deals':len(game.deals),'public_nodes':len(game.nodes),'information_sets':len(game.keys),'iterations':args.iterations,'seconds':round(time.perf_counter()-started,3),'before':before,'after':after,'root_policy':[{'hand':combo,'actions':game.root.actions,'probabilities':policy[(game.root.actor,combo,game.root.history)]} for combo,_ in game.ranges[game.root.actor]] if game.root.actor!=-1 else []})
     print(json.dumps({'method':args.method,'bet_sizes':args.bet_sizes,'raise_sizes':args.raise_sizes,
                       'max_raises':args.max_raises,'max_joint_combos':args.max_joint_combos,'stack':args.stack,'min_bet':args.min_bet,
                       'scope':'Restricted synthetic river game with explicit sizes and raise cap. Unequal stacks and layered pots; no future streets. Not production GTO.',

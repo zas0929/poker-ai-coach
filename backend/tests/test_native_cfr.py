@@ -63,6 +63,18 @@ class NativeCfrTests(unittest.TestCase):
                              stacks=(200,60,80,200),initial_contributions=(60,)*4,
                              bet_sizes=(40,),raise_sizes=(60,80,120),max_raises=3))
 
+    def test_nonempty_public_prefix_with_short_raises_and_fold(self):
+        game,policy=self.equivalent(dict(board=BOARD,ranges=demo_ranges(3),pot=300,
+            initial_contributions=(100,100,100),stacks=(200,200,60),dealer=0,
+            river_actions=((1,'bet',40),(2,'raise',60),(0,'call',60)),
+            bet_sizes=(40,),raise_sizes=(100,120),max_raises=2))
+        self.assertEqual(game.root.actions,('FOLD','CALL'))
+        self.assertIn((game.root.actor,game.ranges[game.root.actor][0][0],game.root.history),policy)
+        self.equivalent(dict(board=BOARD,ranges=[demo_ranges(3)[0],[],demo_ranges(3)[2]],
+            folded=(1,),pot=300,initial_contributions=(100,)*3,stacks=(200,200,200),dealer=0,
+            river_actions=((1,'check',None),(2,'bet',40),(0,'raise',80),(1,'fold',None)),
+            bet_sizes=(40,),raise_sizes=(120,),max_raises=1))
+
     def test_terminal_tie_and_repeated_native_calls(self):
         game,policy=self.equivalent(dict(board=['As','Ks','Qs','Js','Ts'],ranges=[[('2h2d',1)],[('3h3d',1)]],
                                           stacks=(0,0),pot=3,initial_contributions=(1,2),bet_sizes=(1,)))
