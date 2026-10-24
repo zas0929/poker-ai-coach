@@ -381,3 +381,10 @@ variance, but 180 checks confirmed no small threshold violations; one candidate
 also missed a defect known to the exact best response. A separate obvious-blunder
 test confirms the detection path works. This never admits quality or live advice.
 See [docs/SOLVER_FIXED_DEVIATION.md](docs/SOLVER_FIXED_DEVIATION.md).
+
+Public-tree signed deviation envelopes now narrow all 720 player intervals in
+180 paired checks on the known small models, by about 29% on average at 8192
+draws. They still confirm no small threshold violations and never admit quality.
+See [docs/SOLVER_STRUCTURAL_DEVIATION.md](docs/SOLVER_STRUCTURAL_DEVIATION.md).
+Current delivery priorities, including the planned local bounded river review,
+are in [docs/TRAINER_DELIVERY_PLAN.md](docs/TRAINER_DELIVERY_PLAN.md).

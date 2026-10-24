@@ -163,3 +163,6 @@ PYTHONPATH=backend backend/.venv/bin/python -m unittest backend.tests.test_fixed
 
 Нужна заранее собранная native-библиотека. Автоматической компиляции,
 внешних API и изменений хостинга нет.
+
+Структурные пределы проверены следующим отдельным этапом:
+[сужение интервалов и фактические ограничения](SOLVER_STRUCTURAL_DEVIATION.md).
