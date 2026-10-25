@@ -392,8 +392,8 @@ are in [docs/TRAINER_DELIVERY_PLAN.md](docs/TRAINER_DELIVERY_PLAN.md).
 The first local river lesson UI is now available at `/practice/river`, linked from
 Practice. Five fixed 2–6-seat examples show explicit ranges, model parameters,
 async calculation, admitted action frequencies and bounded-game quality.
-Enable the opt-in API locally with `POKER_LOCAL_RIVER_LESSONS=1`; the default
-server and hosted coach do not switch to the research solver. See
+Enable the opt-in API locally with `POKER_LOCAL_RIVER_LESSONS=1`. Staging has the
+bounded river analysis enabled; the fast heuristic coach remains available. See
 [docs/RIVER_LESSONS.md](docs/RIVER_LESSONS.md) for startup and end-to-end checks.
 
 Разбор собственных завершённых решений ривера: [docs/RIVER_HISTORY.md](docs/RIVER_HISTORY.md).
@@ -402,11 +402,13 @@ server and hosted coach do not switch to the research solver. See
 План остальных улиц: [docs/MULTISTREET_SOLVER.md](docs/MULTISTREET_SOLVER.md).
 
 Первый offline-решатель тёрн → ривер, отдельный native-адаптер, границы и проверки:
-[docs/TURN_REFERENCE.md](docs/TURN_REFERENCE.md). В интерфейсе пока доступен ривер.
+[docs/TURN_REFERENCE.md](docs/TURN_REFERENCE.md).
+Продолжение тёрна с наблюдёнными ставками, рейзами и адаптером публичной позиции:
+[docs/TURN_CONTINUATION.md](docs/TURN_CONTINUATION.md). В интерфейсе пока доступен ривер.
 
 Приоритет интеграции — анализ текущего хода во время тренировочной игры:
 [docs/LIVE_TRAINER_ANALYSIS.md](docs/LIVE_TRAINER_ANALYSIS.md).
 
-Фоновый расчёт текущего ривера подключён к панели тренера локально: частоты,
+Фоновый расчёт текущего ривера подключён к панели тренера локально и на staging: частоты,
 EV, размеры и покрытие малой модели без блокировки действий.
 Запуск и ограничения: [docs/LIVE_TRAINER_ANALYSIS.md](docs/LIVE_TRAINER_ANALYSIS.md).

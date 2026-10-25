@@ -4,8 +4,8 @@ Chance is enumerated as joint (private hands, river) outcomes. A unary public
 reveal node exposes that river only AFTER turn betting. Turn information sets
 merge every indistinguishable outcome; river information sets include the card.
 No sampling, actual archived future card, or independent per-river turn solves.
-This first model starts at the beginning of the turn, with opening bets and no
-raises on either street. It is an offline reference, not a production solver.
+Observed turn actions are replayed before the decision. Explicit sizes and
+per-street future raise caps bound both continuations. Offline reference only.
 """
 import itertools
 import math
@@ -34,12 +34,14 @@ class TurnNode:
 
 
 class TurnGame:
-    model_version = 'bounded-turn-reference-v1'
+    model_version = 'bounded-turn-reference-v2'
 
     def __init__(self, board, ranges, *, pot=100, stack=100, stacks=None,
                  initial_contributions=None, dealer=None, folded=(), min_bet=1,
                  turn_bet_sizes=(50,), river_bet_sizes=(50,), max_joint_combos=64,
-                 max_nodes=20000, max_outcomes=4096, max_work=1000000):
+                 max_nodes=20000, max_outcomes=4096, max_work=1000000,
+                 turn_actions=(), turn_raise_sizes=(), river_raise_sizes=(),
+                 turn_max_raises=0, river_max_raises=0):
         self.board = tuple(board)
         self.n = n = len(ranges)
         if (not 2 <= n <= 6 or len(board) != 4 or len(set(board)) != 4
@@ -69,6 +71,12 @@ class TurnGame:
         self.stacks = tuple(stacks)
         if len(self.stacks) != n or any(type(v) is not int or not 0 <= v <= 10000 for v in self.stacks):
             raise ValueError('One integer remaining stack per seat required.')
+        self.turn_actions = tuple(tuple(action) for action in turn_actions)
+        from research.river_replay import replay_river
+        # Replay is public, independent of any hidden cards or future river.
+        self.root_state = replay_river(self.stacks, self.dealer, min_bet, self.folded, self.turn_actions)
+        initial_live = set(self.live) | {a[0] for a in self.turn_actions if a[1] == 'fold'}
+        self.decision_pot = pot + sum(self.root_state.invested)
         self.integer_payouts = initial_contributions is not None
         self.initial_contributions = (tuple(initial_contributions) if self.integer_payouts
                                       else (pot / n,) * n)
@@ -78,18 +86,24 @@ class TurnGame:
                     or sum(self.initial_contributions) != pot):
                 raise ValueError('Nonnegative integer prior contributions must sum to pot.')
             highest = max(self.initial_contributions)
-            if any(self.stacks[p] and self.initial_contributions[p] != highest for p in self.live):
+            if any(self.stacks[p] and self.initial_contributions[p] != highest for p in initial_live):
                 raise ValueError('Funded players must have matched prior streets.')
 
-        def sizes(values):
+        def sizes(values, minimum=min_bet):
             result = tuple(values)
             if (len(result) > 2 or len(set(result)) != len(result)
-                    or any(type(v) is not int or not min_bet <= v <= 10000 for v in result)):
+                    or any(type(v) is not int or not minimum <= v <= 10000 for v in result)):
                 raise ValueError('Up to two distinct opening sizes meeting minimum bet required.')
             return tuple(sorted(result))
 
         self.turn_bet_sizes = sizes(turn_bet_sizes)
         self.river_bet_sizes = sizes(river_bet_sizes)
+        self.turn_raise_sizes = sizes(turn_raise_sizes, 1)
+        self.river_raise_sizes = sizes(river_raise_sizes, 1)
+        for cap in (turn_max_raises, river_max_raises):
+            if type(cap) is not int or not 0 <= cap <= 3:
+                raise ValueError('Per-street future raise caps must be integers 0-3.')
+        self.turn_max_raises, self.river_max_raises = turn_max_raises, river_max_raises
         self.ranges = tuple(tuple(r) for r in ranges)
         if (any(self.ranges[p] for p in self.folded)
                 or any(not self.ranges[p] for p in self.live)
@@ -144,13 +158,15 @@ class TurnGame:
             self.nodes.append(node)
             return node
 
-        def round_tree(street, history, alive, prior):
+        def round_tree(street, history, alive, prior, cursor=None):
             available = tuple(self.stacks[p] - prior[p] for p in range(n))
             pending = tuple((self.dealer + i) % n for i in range(1, n+1)
                             if (self.dealer + i) % n in alive)
             sizes_ = self.turn_bet_sizes if street == 'turn' else self.river_bet_sizes
+            raises_ = self.turn_raise_sizes if street == 'turn' else self.river_raise_sizes
+            cap = self.turn_max_raises if street == 'turn' else self.river_max_raises
 
-            def build(history, alive, paid, pending, current):
+            def build(history, alive, paid, pending, current, increment, raises, acted):
                 funded = tuple(p for p in alive if paid[p] < available[p])
                 pending = tuple(p for p in pending if p in funded)
                 invested = tuple(a+b for a, b in zip(prior, paid))
@@ -170,10 +186,15 @@ class TurnGame:
                 actor = pending[0]
                 actions, children = [], []
 
-                def add(label, next_alive, next_paid, queue, next_current=current):
+                def add(label, next_alive, next_paid, queue, next_current=current,
+                        next_increment=increment, next_raises=raises):
                     actions.append(label)
+                    next_acted = list(acted)
+                    if label != 'FOLD':
+                        next_acted[actor] = next_current
                     children.append(build(history + ((actor, label),), next_alive,
-                                          next_paid, queue, next_current))
+                                          next_paid, queue, next_current, next_increment,
+                                          next_raises, tuple(next_acted)))
 
                 if paid[actor] < current:
                     add('FOLD', tuple(p for p in alive if p != actor), paid, pending[1:])
@@ -182,19 +203,30 @@ class TurnGame:
                     add('CALL', alive, tuple(called), pending[1:])
                 else:
                     add('CHECK', alive, paid, pending[1:])
-                # No raises in v1. Previously checked players respond to an opening.
-                if current == 0 and len(funded) >= 2:
-                    for target in sorted({min(size, available[actor]) for size in sizes_}):
-                        wagered = list(paid)
-                        wagered[actor] = target
-                        responders = tuple((actor+i) % n for i in range(1, n)
-                                           if (actor+i) % n in funded)
-                        add('BET ' + str(target), alive, tuple(wagered), responders, target)
+                # A short all-in is legal, but only a cumulative full increment
+                # reopens a player who already acted. Caps count future raises.
+                reopened = acted[actor] is None or current - acted[actor] >= increment
+                targets = sizes_ if current == 0 else (raises_ if raises < cap and reopened else ())
+                if len(funded) < 2:
+                    targets = ()
+                for target in sorted({min(size, available[actor]) for size in targets}):
+                    minimum = self.min_bet if current == 0 else current + increment
+                    if target <= current or (target < minimum and target != available[actor]):
+                        continue
+                    wagered = list(paid)
+                    wagered[actor] = target
+                    responders = tuple((actor+i) % n for i in range(1, n) if (actor+i) % n in funded)
+                    add(('BET ' if current == 0 else 'RAISE ') + str(target), alive,
+                        tuple(wagered), responders, target, max(increment, target-current),
+                        raises + int(current > 0))
                 return save(TurnNode(actor, street, history, tuple(actions), tuple(children), invested, alive))
 
-            return build(history, alive, (0,) * n, pending, 0)
+            if cursor is not None:
+                return build(cursor.history, cursor.alive, cursor.invested, cursor.pending,
+                             cursor.current, cursor.increment, 0, cursor.acted)
+            return build(history, alive, (0,) * n, pending, 0, self.min_bet, 0, (None,) * n)
 
-        self.root = round_tree('turn', (), self.live, (0,) * n)
+        self.root = round_tree('turn', (), self.live, (0,) * n, self.root_state)
         self.utilities = CompactUtilities(self.nodes, len(self.outcomes), n)
         for node in self.nodes:
             if node.actor != TERMINAL:
@@ -360,12 +392,14 @@ class TurnGame:
                        for p, child in zip(policy[self.key(node, deal)], node.children))
 
         values = [sum(w / mass * continuation(child, d) for d, w in outcomes)
-                  + self.initial_contributions[actor] for child in self.root.children]
+                  + self.initial_contributions[actor] + self.root.invested[actor]
+                  for child in self.root.children]
         probabilities = policy[self.key(self.root, outcomes[0][0])]
         best = max(values)
         return {'actor': actor, 'own_hand': own_hand, 'conditional_mass': mass,
                 'ev_basis': 'from_current_decision_prior_contributions_are_sunk',
                 'continuation': 'same_fixed_profile_after_each_first_action',
+                'sunk_chips': self.initial_contributions[actor] + self.root.invested[actor],
                 'policy_ev_chips': sum(p*v for p, v in zip(probabilities, values)),
                 'actions': [{'action': label, 'probability': p, 'ev_chips': value,
                              'gap_to_best_first_action_chips': best - value}

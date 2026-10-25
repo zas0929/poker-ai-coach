@@ -20,18 +20,37 @@ def compare_every_path(game, outcome_indices=None):
     visited = terminals = 0
     for deal in indices:
         hands, river, _, _ = game.outcomes[deal]
+        observed_folds = {a[0] for a in game.turn_actions if a[1] == 'fold'}
+        initial_folded = set(game.folded) - observed_folds
         state = HandState(
             hand_id='turn-reference-oracle', street=Street.TURN, pot=game.pot,
             small_blind=1, big_blind=game.min_bet, board=cards(''.join(game.board)),
             players=[Player(id=str(p), name=str(p), position='', stack=game.stacks[p],
                             cards=cards(hand) if hand else [],
-                            status=PlayerStatus.FOLDED if p in game.folded else
+                            status=PlayerStatus.FOLDED if p in initial_folded else
                             (PlayerStatus.ACTIVE if game.stacks[p] else PlayerStatus.ALL_IN))
                      for p, hand in enumerate(hands)],
             current_player_id=str(game.root.actor) if game.root.actor >= 0 else None,
             dealer_player_id=str(game.dealer), last_full_raise=game.min_bet,
             contributions={str(p): v for p, v in enumerate(game.initial_contributions)})
         state._deck = cards(river)
+        # Reconstruct the observed prefix independently through production actions,
+        # not by copying the research replay cursor into engine bookkeeping.
+        state.current_player_id = engine._next_pending(state, state.dealer_player_id)
+        engine._refresh_betting(state)
+        for actor, label, added in game.turn_actions:
+            if state.current_player_id != str(actor):
+                raise AssertionError('Observed prefix actor mismatch.')
+            player = state.players[actor]
+            if label == 'call' and state.betting.call_amount != added:
+                raise AssertionError('Observed call amount mismatch.')
+            amount = player.current_bet + added if label in ('bet', 'raise') else None
+            engine.apply_action(state, str(actor), ActionType(label), amount)
+        if state.result is None and game.root.actor >= 0:
+            if (state.pot != game.decision_pot or state.current_player_id != str(game.root.actor)
+                    or tuple(p.current_bet for p in state.players) != game.root_state.invested
+                    or state.last_full_raise != game.root_state.increment):
+                raise AssertionError('Observed turn cursor disagrees with engine.')
 
         def visit(node, current):
             nonlocal visited, terminals

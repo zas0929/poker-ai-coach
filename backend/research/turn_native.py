@@ -12,7 +12,7 @@ from types import SimpleNamespace
 from research.native_cfr import train_native
 from research.turn_reference import REVEAL
 
-ADAPTER_VERSION = 'turn-delayed-reveal-native-v1'
+ADAPTER_VERSION = 'turn-delayed-reveal-native-v2'
 
 
 def compile_turn(game):
