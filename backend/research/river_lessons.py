@@ -18,7 +18,7 @@ class LessonError(Exception):
 
 
 class RiverLessons:
-    def __init__(self, executor=None):
+    def __init__(self, executor=None, store=None):
         path = Path(__file__).parent / 'fixtures/river-lessons-v1.json'
         raw = path.read_bytes()
         self.version = sha256(raw).hexdigest()
@@ -32,6 +32,7 @@ class RiverLessons:
             validate_request(row['request'])
         self.limits = ResearchLimits(iterations=300, wall_seconds=10, memory_mib=128)
         self.executor = executor if executor is not None else ShadowExecutor(max_pending=2, max_retained=64, analyzer=analyze)
+        self.store = store
         self.owners = OrderedDict()
         self.lock = RLock()
 
@@ -57,6 +58,9 @@ class RiverLessons:
             raise LessonError('LESSON_VERSION_CHANGED', 409)
         if lesson_id not in self.examples:
             raise LessonError('LESSON_NOT_FOUND', 404)
+        return self._submit(owner, lesson_id, version, self.examples[lesson_id]['request'])
+
+    def _submit(self, owner, lesson_id, version, request):
         with self.lock:
             if owner not in self.owners:
                 while len(self.owners) >= 64:
@@ -70,12 +74,43 @@ class RiverLessons:
                 # A fresh UI run gets a fresh ticket even for the same example.
                 # A delayed DELETE for the previous ticket must not cancel it.
                 self.executor.cancel(previous['ticket_id'])
-            submitted = self.executor.submit('river-lesson:' + owner, self.examples[lesson_id]['request'], self.limits)
+            submitted = self.executor.submit('river-lesson:' + owner, request, self.limits)
             if submitted.get('ticket_id') is None:
                 raise LessonError('LESSON_BUSY', 503)
             self.owners[owner] = {'ticket_id': submitted['ticket_id'], 'lesson_id': lesson_id, 'version': version}
             self.owners.move_to_end(owner)
             return {**submitted, 'lesson_id': lesson_id, 'version': version}
+
+    def history(self, owner, before=None):
+        if self.store is None:
+            raise LessonError('HISTORY_UNAVAILABLE', 503)
+        return self.store.completed_river_decisions(owner, before)
+
+    def history_model(self, owner, decision_id, model=None, version=None):
+        if self.store is None:
+            raise LessonError('HISTORY_UNAVAILABLE', 503)
+        try:
+            saved = self.store.completed_river_decision(owner, decision_id)
+        except ValueError:
+            raise LessonError('HISTORY_NOT_FOUND', 404)
+        from research.history_river import source, assess
+        try:
+            snapshot, hand, current, defaults = source(saved)
+        except (ValueError, TypeError, KeyError, StopIteration):
+            raise LessonError('HISTORY_SNAPSHOT_UNAVAILABLE', 422)
+        if version is not None and version != current:
+            raise LessonError('LESSON_VERSION_CHANGED', 409)
+        return assess(saved, snapshot, hand, current, defaults if model is None else model)
+
+    def history_detail(self, owner, decision_id):
+        return self.history_model(owner, decision_id)[0]
+
+    def submit_history(self, owner, decision_id, model, version):
+        assessment, request = self.history_model(owner, decision_id, model, version)
+        if not assessment['supported']:
+            return {'ticket_id':None,'assessment':assessment}
+        job = self._submit(owner, assessment['lesson']['id'], assessment['version'], request)
+        return {**job,'assessment':assessment}
 
     def poll(self, owner, ticket_id):
         with self.lock:

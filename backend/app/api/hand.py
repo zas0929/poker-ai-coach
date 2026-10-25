@@ -12,6 +12,7 @@ from app.services.ai_opponent import AIOpponentService
 from app.services.decision_engine import DecisionEngine
 from app.services.poker_engine import PokerEngine
 from app.services import trainer_shadow
+from app.services.training_completion import observe_completed
 
 router = APIRouter()
 
@@ -50,6 +51,7 @@ def serialized(function):
             try:
                 return function(*args, **kwargs)
             finally:
+                observe_completed(owner, current_state)
                 trainer_shadow.observe(owner, current_state)
                 profile_states[owner] = (current_state, monotonic())
                 current_state = previous

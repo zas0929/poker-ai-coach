@@ -41,7 +41,7 @@ app = FastAPI(title="Poker AI Coach API", lifespan=lifespan)
 async def private_training_table(request, call_next):
     path = request.url.path
     protected = (path.startswith('/api/hand/') or path == '/api/training/decision'
-                 or path.startswith('/api/river-lessons/jobs'))
+                 or path.startswith('/api/river-lessons/jobs') or path.startswith('/api/river-lessons/history'))
     if not protected or request.method == 'OPTIONS':
         return await call_next(request)
     try:

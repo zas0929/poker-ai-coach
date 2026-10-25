@@ -1,0 +1,396 @@
+{
+  "scope": "Real completed trainer decisions, original public snapshots, manual small-range models; localhost only.",
+  "checks": {
+    "unauthorized_rejected": true,
+    "active_hand_not_listed": true,
+    "foreign_profile_rejected": true,
+    "hidden_request_fields_rejected": true,
+    "stale_version_rejected": true,
+    "private_no_store": true,
+    "live_hand_unchanged": true
+  },
+  "results": [
+    {
+      "players": 2,
+      "decision_id": 4,
+      "supported": true,
+      "reason": null,
+      "coverage": [
+        {
+          "player_id": "hero",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.00174054795094948
+        },
+        {
+          "player_id": "villain",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.001842499028506283
+        }
+      ],
+      "chosen_action": "check",
+      "status": "ready",
+      "quality": {
+        "value": 0.0034328870542310597,
+        "gate": 0.5,
+        "passed": true,
+        "metric": "max_unilateral_gain_pct_decision_pot",
+        "evidence": {
+          "policy_payoffs": [
+            -10.000686577410846,
+            10.000686577410846
+          ],
+          "best_response_payoffs": [
+            -10.0,
+            10.000686600221485
+          ],
+          "unilateral_gains": [
+            0.0006865774108462119,
+            2.2810638711234787e-08
+          ],
+          "nash_conv_chips": 0.0006866002214849232,
+          "max_unilateral_gain_pct_pot": 0.0034328870542310597
+        }
+      },
+      "actions": [
+        "CHECK",
+        "BET 10"
+      ],
+      "ev_chips": [
+        0.0,
+        -9.99966777408638
+      ],
+      "probabilities": [
+        0.9999313399778516,
+        6.866002214839425e-05
+      ]
+    },
+    {
+      "players": 3,
+      "decision_id": 8,
+      "supported": true,
+      "reason": null,
+      "coverage": [
+        {
+          "player_id": "hero",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0018149918483038939
+        },
+        {
+          "player_id": "villain",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0018435457648936294
+        },
+        {
+          "player_id": "villain_2",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0012013734640380696
+        }
+      ],
+      "chosen_action": "check",
+      "status": "ready",
+      "quality": {
+        "value": 0.0028896995135715047,
+        "gate": 0.5,
+        "passed": true,
+        "metric": "max_unilateral_gain_pct_decision_pot",
+        "evidence": {
+          "policy_payoffs": [
+            -10.000866909854071,
+            -6.104456689598323,
+            16.105323599452397
+          ],
+          "best_response_payoffs": [
+            -10.0,
+            -6.104425371279062,
+            16.105339519179974
+          ],
+          "unilateral_gains": [
+            0.0008669098540714515,
+            3.131831926150852e-05,
+            1.591972757708504e-05
+          ],
+          "nash_conv_chips": 0.000914147900910045,
+          "max_unilateral_gain_pct_pot": 0.0028896995135715047
+        }
+      },
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 15"
+      ],
+      "ev_chips": [
+        0.0,
+        -9.999258509024166,
+        -14.999169440734654
+      ],
+      "probabilities": [
+        0.9999135732637648,
+        5.887737526511336e-05,
+        2.754936097015543e-05
+      ]
+    },
+    {
+      "players": 4,
+      "decision_id": 12,
+      "supported": true,
+      "reason": null,
+      "coverage": [
+        {
+          "player_id": "hero",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.001920334149300367
+        },
+        {
+          "player_id": "villain",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0012753377963484185
+        },
+        {
+          "player_id": "villain_2",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.002214661139957832
+        },
+        {
+          "player_id": "villain_3",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0011262415989349071
+        }
+      ],
+      "chosen_action": "check",
+      "status": "ready",
+      "quality": {
+        "value": 0.0023026414625415548,
+        "gate": 0.5,
+        "passed": true,
+        "metric": "max_unilateral_gain_pct_decision_pot",
+        "evidence": {
+          "policy_payoffs": [
+            -5.636641700203769,
+            3.6140607053040945,
+            -10.000000045281357,
+            12.022581040181034
+          ],
+          "best_response_payoffs": [
+            -5.635720643618752,
+            3.6140607322586646,
+            -10.0,
+            12.022607486328383
+          ],
+          "unilateral_gains": [
+            0.0009210565850166219,
+            2.6954570131465516e-08,
+            4.528135733039562e-08,
+            2.6446147348480054e-05
+          ],
+          "nash_conv_chips": 0.0009475749682925638,
+          "max_unilateral_gain_pct_pot": 0.0023026414625415548
+        }
+      },
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "ev_chips": [
+        10.501513815270982,
+        5.585287372531098,
+        -3.1475117198619613
+      ],
+      "probabilities": [
+        0.9998180816022019,
+        0.00014199562241662438,
+        3.992277538156342e-05
+      ]
+    },
+    {
+      "players": 5,
+      "decision_id": 16,
+      "supported": true,
+      "reason": null,
+      "coverage": [
+        {
+          "player_id": "hero",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0015497702418093484
+        },
+        {
+          "player_id": "villain",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.001744621826408065
+        },
+        {
+          "player_id": "villain_2",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0019496895698090913
+        },
+        {
+          "player_id": "villain_3",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0015576476622041083
+        },
+        {
+          "player_id": "villain_4",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0020419752607216766
+        }
+      ],
+      "chosen_action": "check",
+      "status": "ready",
+      "quality": {
+        "value": 0.22217861816196202,
+        "gate": 0.5,
+        "passed": true,
+        "metric": "max_unilateral_gain_pct_decision_pot",
+        "evidence": {
+          "policy_payoffs": [
+            23.592886957493725,
+            -0.5572658262442061,
+            -9.14921819186723,
+            -5.28845793175997,
+            -8.597945007622322
+          ],
+          "best_response_payoffs": [
+            23.703976266574706,
+            -0.5382757322005602,
+            -9.148742278029195,
+            -5.269178279403604,
+            -8.584086988623495
+          ],
+          "unilateral_gains": [
+            0.11108930908098102,
+            0.018990094043645822,
+            0.00047591383803613496,
+            0.019279652356365418,
+            0.013858018998826438
+          ],
+          "nash_conv_chips": 0.16369298831785484,
+          "max_unilateral_gain_pct_pot": 0.22217861816196202
+        }
+      },
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 25"
+      ],
+      "ev_chips": [
+        1.6006181335862766,
+        -4.43331812766,
+        0.9398606824822188
+      ],
+      "probabilities": [
+        0.668885484358999,
+        0.00012636799683402942,
+        0.33098814764416695
+      ]
+    },
+    {
+      "players": 6,
+      "decision_id": 20,
+      "supported": true,
+      "reason": null,
+      "coverage": [
+        {
+          "player_id": "hero",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0020333871899261354
+        },
+        {
+          "player_id": "villain",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0016435494822283456
+        },
+        {
+          "player_id": "villain_2",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0021041237180289113
+        },
+        {
+          "player_id": "villain_3",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0013909998893069824
+        },
+        {
+          "player_id": "villain_4",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.001408765344199467
+        },
+        {
+          "player_id": "villain_5",
+          "public_combos": 1081,
+          "selected_combos": 2,
+          "weight_share": 0.0024939171942746194
+        }
+      ],
+      "chosen_action": "check",
+      "status": "ready",
+      "quality": {
+        "value": 0.0016801852922417502,
+        "gate": 0.5,
+        "passed": true,
+        "metric": "max_unilateral_gain_pct_decision_pot",
+        "evidence": {
+          "policy_payoffs": [
+            -10.001008111175345,
+            -3.9621516048714778,
+            -10.000017553290597,
+            28.623711336036404,
+            5.339483497306808,
+            -10.000017564005796
+          ],
+          "best_response_payoffs": [
+            -10.0,
+            -3.9620633228342954,
+            -10.0,
+            28.623764194918913,
+            5.339522831463824,
+            -9.999999999324409
+          ],
+          "unilateral_gains": [
+            0.00100811117534505,
+            8.828203718236338e-05,
+            1.755329059704991e-05,
+            5.285888250838866e-05,
+            3.933415701595777e-05,
+            1.7564681387582937e-05
+          ],
+          "nash_conv_chips": 0.0012237042240363927,
+          "max_unilateral_gain_pct_pot": 0.0016801852922417502
+        }
+      },
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 30"
+      ],
+      "ev_chips": [
+        0.0,
+        -9.998587049845023,
+        -29.997513387628405
+      ],
+      "probabilities": [
+        0.9998397053227531,
+        0.00012083115671643715,
+        3.946352053039321e-05
+      ]
+    }
+  ]
+}

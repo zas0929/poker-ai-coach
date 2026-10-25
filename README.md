@@ -395,3 +395,5 @@ async calculation, admitted action frequencies and bounded-game quality.
 Enable the opt-in API locally with `POKER_LOCAL_RIVER_LESSONS=1`; the default
 server and hosted coach do not switch to the research solver. See
 [docs/RIVER_LESSONS.md](docs/RIVER_LESSONS.md) for startup and end-to-end checks.
+
+Разбор собственных завершённых решений ривера: [docs/RIVER_HISTORY.md](docs/RIVER_HISTORY.md).

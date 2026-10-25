@@ -94,7 +94,7 @@ export default function RiverLessonPage() {
   return <main className="app-shell play-shell practice-shell river-lab">
     <AppHeader />
     <nav className="play-modes" aria-label={t('Game mode')}><Link href="/">{t('AI training')}</Link><Link href="/friends">{t('Play with friends')}</Link><Link href="/practice" aria-current="page">{t('Practice')}</Link></nav>
-    <section className="river-intro"><div><Link className="mode-link" href="/practice">← {t('Back to practice')}</Link><p className="eyebrow">{t('Teaching model · river')}</p><h2>{t('River lesson')}</h2><p>{t('Explore a small, explicit model with one to five opponents. Run the calculation when you are ready.')}</p></div>
+    <section className="river-intro"><div><Link className="mode-link" href="/practice">← {t('Back to practice')}</Link><Link className="mode-link river-history-link" href="/practice/river/history">{t('Completed river decisions')} →</Link><p className="eyebrow">{t('Teaching model · river')}</p><h2>{t('River lesson')}</h2><p>{t('Explore a small, explicit model with one to five opponents. Run the calculation when you are ready.')}</p></div>
       {catalog?.enabled ? <label className="river-picker">{t('Opponents')}<select value={selected} onChange={event => { stop(); setSelected(event.target.value); setError(null); }}>{catalog.lessons.map(item => <option key={item.id} value={item.id}>{item.opponents}</option>)}</select></label> : null}
     </section>
     {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button onClick={() => { setError(null); if (catalog?.enabled) void run(); else setRetry(n => n+1); }}>{t('Retry')}</button></div> : null}

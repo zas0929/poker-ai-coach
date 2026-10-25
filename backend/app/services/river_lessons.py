@@ -14,7 +14,8 @@ def start_river_lessons():
         return False
     try:
         from research.river_lessons import RiverLessons
-        _service = RiverLessons()
+        from app.api.training import store
+        _service = RiverLessons(store=store)
         _reason = None
         return True
     except Exception:

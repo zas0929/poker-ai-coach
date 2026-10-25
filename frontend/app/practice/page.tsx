@@ -100,7 +100,7 @@ export default function PracticePage() {
       <section className="practice-title"><p className="eyebrow">{t("Saved training · exact rules and call prices")}</p><h2>{t("Practice & decisions")}</h2></section>
       <section className="session-strip practice-progress"><div><span>{t("Answered")}</span><strong>{progress?.attempts ?? 0}</strong></div><div><span>{t("Correct answers")}</span><strong>{progress?.correct_attempts ?? 0}</strong></div><div><span>{t("Questions correct on last try")}</span><strong>{progress?.last_answer_correct ?? 0}</strong></div><div><span>{t("Questions to review")}</span><strong>{progress?.to_review ?? 0}</strong></div></section>
       {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button disabled={loading} onClick={() => void retry()}>{t("Retry")}</button></div> : null}
-      {riverEnabled ? <section className="control-panel river-lesson-entry"><div><strong>{t("River lesson")}</strong><p className="room-note">{t("Explore a small, explicit model with one to five opponents.")}</p></div><Link href="/practice/river">{t("Open river lesson")} →</Link></section> : null}
+      {riverEnabled ? <section className="control-panel river-lesson-entry"><div><strong>{t("River lesson")}</strong><p className="room-note">{t("Explore a small, explicit model with one to five opponents.")}</p></div><div className="river-run-actions"><Link href="/practice/river">{t("Open river lesson")} →</Link><Link href="/practice/river/history">{t("Completed river decisions")} →</Link></div></section> : null}
       <section className="game-layout">
         <div className="table-column">
           <section className="control-panel practice-question">

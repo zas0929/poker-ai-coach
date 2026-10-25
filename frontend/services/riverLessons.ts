@@ -36,10 +36,15 @@ const ERRORS: Record<string, string> = {
   LESSON_NOT_FOUND: 'This example is unavailable.',
   LESSON_JOB_NOT_FOUND: 'This calculation has expired. Start it again.',
   LESSON_BUSY: 'The calculation queue is full. Try again shortly.',
+  HISTORY_NOT_FOUND: 'This completed river decision is unavailable.',
+  HISTORY_UNAVAILABLE: 'Saved river history is unavailable.',
+  HISTORY_SNAPSHOT_UNAVAILABLE: 'This saved decision cannot be reconstructed safely.',
+  HISTORY_INVALID_SIZES: 'Use one or two positive integer sizes, up to 10000.',
+  HISTORY_SELECT_TWO_HANDS: 'Choose exactly two distinct hands for every live seat.',
 };
 export function lessonError(code: string) { return ERRORS[code] ?? 'Could not complete the river calculation. Please retry.'; }
 async function request<T>(path: string, signal?: AbortSignal, method = 'GET', body?: object): Promise<T> {
-  const profile = path.startsWith('/jobs') ? await ensureProfile() : null;
+  const profile = (path.startsWith('/jobs') || path.startsWith('/history')) ? await ensureProfile() : null;
   if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
   const response = await fetch(`${BASE}/api/river-lessons${path}`, {
     method, signal, cache: 'no-store', headers: { 'Content-Type': 'application/json',
@@ -121,3 +126,31 @@ export function lessonActionValues(result: LessonAnalysis | null | undefined, le
       Math.abs(candidate.probabilities.reduce((sum, p, i) => sum + p * chips[i], 0) - values.policy_ev_chips) > 1e-7) return null;
   return values;
 }
+
+export interface HistoryRiverModel {
+  selected_hands: Record<string, string[]>; bet_sizes: number[]; raise_sizes: number[]; max_raises: number;
+}
+export interface HistoryRiverDecision {
+  decision_id: number; hand_id: string; created_at: string; completed_at: string;
+  chosen_action: string; amount: number | null;
+}
+export interface HistoryRiverAssessment {
+  decision_id: number; hand_id: string; completed_at: string; source_version: string; version: string | null;
+  supported: boolean; reason: string | null; lesson: RiverLesson; model: HistoryRiverModel;
+  chosen_action: string; chosen_amount: number | null; heuristic_action?: string | null; heuristic_amount?: number | null; joint_deals?: number; public_nodes?: number;
+  coverage: { player_id: string; public_combos: number; selected_combos: number; weight_share: number }[];
+}
+export const RiverHistoryApi = {
+  list: (before?: number, signal?: AbortSignal) => request<{items: HistoryRiverDecision[]; next_cursor: number | null}>(`/history${before ? `?before=${before}` : ''}`, signal),
+  detail: (id: number, signal?: AbortSignal) => request<HistoryRiverAssessment>(`/history/${id}`, signal),
+  submit: (id: number, version: string, model: HistoryRiverModel, signal?: AbortSignal) =>
+    request<{ticket_id:string|null; lesson_id?:string; version?:string; assessment:HistoryRiverAssessment}>(`/history/${id}/jobs`, signal, 'POST', {version, ...model}),
+};
+export const HISTORY_REASONS: Record<string, string> = {
+  HISTORY_SELECT_TWO_HANDS: 'Choose exactly two distinct hands for every live seat.',
+  HISTORY_INVALID_HANDS: 'Use two distinct legal combinations per seat, such as AsKd 7h7d. Board cards cannot be used.',
+  HISTORY_OWN_HAND_REQUIRED: 'Your range must include your saved hand and one alternative.',
+  HISTORY_CARD_COLLISIONS: 'No compatible deal includes your hand. Change the assumed ranges.',
+  HISTORY_TREE_TOO_LARGE: 'The tree exceeds the model budget. Use fewer sizes or disable future raises.',
+  HISTORY_UNSUPPORTED_TREE: 'These ranges or bet sizes do not fit the bounded model. Try smaller sizes or disable future raises.',
+};

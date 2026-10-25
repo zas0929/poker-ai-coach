@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+from datetime import datetime, timezone
 import json
 import math
 import secrets
@@ -72,6 +73,14 @@ class TrainingStore:
     def open(self):
         # RoomRepository creates this private database before this store opens it.
         self.connection = connect(self.source, threaded=True)
+        self.connection.executescript('''
+            CREATE TABLE IF NOT EXISTS training_decision_sources (
+                decision_id BIGINT PRIMARY KEY, profile_id TEXT NOT NULL, hand_id TEXT NOT NULL,
+                street TEXT NOT NULL, completed_at TEXT
+            );
+            CREATE INDEX IF NOT EXISTS training_source_hand ON training_decision_sources(profile_id,hand_id);
+            CREATE INDEX IF NOT EXISTS training_source_history ON training_decision_sources(profile_id,street,decision_id);
+        ''')
         if self.postgres:
             # RoomRepository initializes the private hosted schema first.
             return
@@ -159,6 +168,8 @@ class TrainingStore:
                     cursor = self.connection.execute(sql + (' RETURNING id' if self.postgres else ''),
                                                      (profile_id, command_id, fingerprint, json.dumps(payload)))
                     decision_id = cursor.fetchone()[0] if self.postgres else cursor.lastrowid
+                    self.connection.execute('INSERT INTO training_decision_sources(decision_id,profile_id,hand_id,street) VALUES(?,?,?,?)',
+                                            (decision_id, profile_id, state.hand_id, state.street.value))
                     self._add_question(profile_id, str(decision_id), state, 'legal_actions', 'Your saved decision')
                     if len(state.players) == 2 and state.betting.call_amount > 0:
                         self._add_question(profile_id, str(decision_id), state, 'call_price', 'Your saved decision')
@@ -179,6 +190,37 @@ class TrainingStore:
                 items.append({'decision_id': decision_id, 'created_at': created_at + 'Z', **payload,
                               'exercises': {kind: qid for qid, kind in questions}})
         return {'items': items, 'next_cursor': items[-1]['decision_id'] if len(rows) > limit else None}
+
+    def mark_hand_completed(self, profile_id, state):
+        if not state.result:
+            return
+        with self.lock, self.connection:
+            self.connection.execute('''UPDATE training_decision_sources SET completed_at=?
+                WHERE profile_id=? AND hand_id=? AND completed_at IS NULL''',
+                (datetime.now(timezone.utc).isoformat(), profile_id, state.hand_id))
+
+    def completed_river_decisions(self, profile_id, before=None, limit=20):
+        with self.lock:
+            rows = self.connection.execute('''SELECT d.id,d.created_at,d.payload,s.completed_at
+                FROM training_decisions d JOIN training_decision_sources s ON s.decision_id=d.id AND s.profile_id=d.profile_id
+                WHERE d.profile_id=? AND s.street='river' AND s.completed_at IS NOT NULL
+                AND (CAST(? AS BIGINT) IS NULL OR d.id < ?) ORDER BY d.id DESC LIMIT ?''',
+                (profile_id, before, before, limit+1)).fetchall()
+        items = [{'decision_id': row[0], 'created_at': row[1]+'Z', 'completed_at': row[3],
+                  'hand_id': (payload := json.loads(row[2]))['hand']['hand_id'],
+                  'board': payload['hand']['board'], 'chosen_action': payload['chosen_action'],
+                  'amount': payload['amount']} for row in rows[:limit]]
+        return {'items': items, 'next_cursor': items[-1]['decision_id'] if len(rows)>limit else None}
+
+    def completed_river_decision(self, profile_id, decision_id):
+        with self.lock:
+            row = self.connection.execute('''SELECT d.payload,s.completed_at FROM training_decisions d
+                JOIN training_decision_sources s ON s.decision_id=d.id AND s.profile_id=d.profile_id
+                WHERE d.profile_id=? AND d.id=? AND s.street='river' AND s.completed_at IS NOT NULL''',
+                (profile_id, decision_id)).fetchone()
+        if row is None:
+            raise ValueError('Completed river decision not found.')
+        return {'decision_id': decision_id, 'completed_at': row[1], **json.loads(row[0])}
 
     def question(self, profile_id, question_id):
         with self.lock:
