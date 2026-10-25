@@ -1,0 +1,680 @@
+{
+  "version": 1,
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "iterations": 100,
+  "wall_seconds": 10,
+  "memory_mib": 128,
+  "fixture_sha256": "97383316f076f4bc8c3670bcbc22bdfd958ef6a7eedd16cfc789f52036c0fd5b",
+  "sources": {
+    "turn_reference.py": "033cee2ffb13f4802ed9d314be45dd1cc21aacc838620a3703c0c94e933aade2",
+    "turn_snapshot.py": "a1aa9d368f92d6d3bd49cd9140d39b7365b7472d3b3fb1b5b0dedb6ca3ecddb2",
+    "turn_packed.py": "8500847b89774ae88aaed40c8109d0a59fa0c25692fa1a44093b31e563fe2415",
+    "build_turn_kernel.py": "fcaa2d3751bf01557b43e9574518d63ae42d9f0f167b90a4cebf8eeab4d3c30d",
+    "native/turn_cfr.cpp": "115290e6e8109b78be22343269e4d7d8073f8c69df20e36593277f17442ad0c1",
+    "turn_native.py": "ab108515e39737634d265327d7bd85d878b35a2b9d826315bf05b3892f77974f",
+    "custom_river.py": "7e3fc1317c6dae884363d01672d1865b3dd82ff9efc145de9951fc985dc87029",
+    "native_cfr.py": "9019a33a0393b7aed64cb43d3f937707608a681d83f6bfeacaf9b5fa0918017d",
+    "native/cfr.cpp": "3b5b81d286d407269d3fbddee9eb1630a3a376a714c3cd11a5ac164bc3737481",
+    "benchmark_turn_factored.py": "9a0211e79286794a30bed677a91a0c39fbaaaee5a46a563bf184f01fd6920231",
+    "benchmark_expanded.py": "785896135ed050a21c02ad63166df380a48029cdd17951b402f8add0ed90d377"
+  },
+  "scope": "Identical frozen public decisions, weighted explicit two-hand subsets, all compatible rivers, same legal sizes/caps. Only representation and computational guards differ. RSS sampling is a soft limit; local timings are not server guarantees.",
+  "results": [
+    {
+      "players": 2,
+      "model_key": "ec01d833d2e1f156174be7196fe0c7adefb1ddb73e43c170f39a2c1d7049ac9d",
+      "reference": {
+        "status": "completed",
+        "peak_rss_mib": 29.76953125,
+        "iterations": 100,
+        "build_seconds": 0.047848874999999985,
+        "train_seconds": 0.03075470800000002,
+        "measure_seconds": 0.030742292000000004,
+        "public_nodes": 35,
+        "outcomes": 176,
+        "dense_equivalent_entries": 6160,
+        "storage_entries": null,
+        "terminal_states": null,
+        "rank_orders": null,
+        "training_visits": null,
+        "measurement_visits": null,
+        "policy_slots": null,
+        "metrics": {
+          "policy_payoffs": [
+            -2.3858459082527017,
+            2.385845908252702
+          ],
+          "best_response_payoffs": [
+            -2.359915023283041,
+            2.416346850819179
+          ],
+          "unilateral_gains": [
+            0.025930884969660895,
+            0.03050094256647684
+          ],
+          "nash_conv_chips": 0.056431827536137735,
+          "max_unilateral_gain_pct_pot": 0.1525047128323842
+        },
+        "root_values": {
+          "actor": 0,
+          "own_hand": "JsJd",
+          "conditional_mass": 0.5712105610233666,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "sunk_chips": 10,
+          "policy_ev_chips": 12.358128502072919,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.9946356185390914,
+              "ev_chips": 12.369418189037999,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 10",
+              "probability": 0.005364381460908597,
+              "ev_chips": 10.264853655857227,
+              "gap_to_best_first_action_chips": 2.1045645331807723
+            }
+          ]
+        },
+        "model": {
+          "configuration": {
+            "max_joint_combos": 64,
+            "max_nodes": 1500,
+            "max_outcomes": 3072,
+            "max_work": 200000,
+            "river_bet_sizes": [
+              10
+            ],
+            "river_max_raises": 0,
+            "river_raise_sizes": [],
+            "turn_bet_sizes": [
+              10
+            ],
+            "turn_max_raises": 1,
+            "turn_raise_sizes": [
+              20
+            ]
+          },
+          "source_information_key": "2796c1fa7801b54f502c18f59e99465075437a9054b530f6e57732633c033637"
+        },
+        "scope": "same_full_explicit_subsets_all_rivers_no_truncation",
+        "wall_seconds": 0.555668667,
+        "sampled_peak_rss_mib": 28.82421875,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      },
+      "factored": {
+        "status": "completed",
+        "peak_rss_mib": 29.88671875,
+        "iterations": 100,
+        "build_seconds": 0.02824016700000001,
+        "train_seconds": 0.012979791000000018,
+        "measure_seconds": 0.0020769170000000114,
+        "public_nodes": 35,
+        "outcomes": 176,
+        "dense_equivalent_entries": 6160,
+        "storage_entries": 2358,
+        "terminal_states": 10,
+        "rank_orders": 2,
+        "training_visits": 989477,
+        "measurement_visits": 6249,
+        "policy_slots": 2318,
+        "metrics": {
+          "policy_payoffs": [
+            -2.3858459082527053,
+            2.3858459082527035
+          ],
+          "best_response_payoffs": [
+            -2.3599150232830404,
+            2.41634685081918
+          ],
+          "unilateral_gains": [
+            0.02593088496966489,
+            0.030500942566476397
+          ],
+          "nash_conv_chips": 0.05643182753614129,
+          "max_unilateral_gain_pct_pot": 0.15250471283238198
+        },
+        "root_values": {
+          "actor": 0,
+          "own_hand": "JsJd",
+          "conditional_mass": 0.5712105610233666,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "sunk_chips": 10,
+          "policy_ev_chips": 12.35812850207291,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.9946356185390914,
+              "ev_chips": 12.36941818903799,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 10",
+              "probability": 0.005364381460908634,
+              "ev_chips": 10.26485365585724,
+              "gap_to_best_first_action_chips": 2.104564533180751
+            }
+          ]
+        },
+        "model": {
+          "configuration": {
+            "max_joint_combos": 64,
+            "max_nodes": 30000,
+            "max_outcomes": 3072,
+            "max_work": 6000000,
+            "river_bet_sizes": [
+              10
+            ],
+            "river_max_raises": 0,
+            "river_raise_sizes": [],
+            "turn_bet_sizes": [
+              10
+            ],
+            "turn_max_raises": 1,
+            "turn_raise_sizes": [
+              20
+            ],
+            "utility_storage": "factored"
+          },
+          "source_information_key": "2796c1fa7801b54f502c18f59e99465075437a9054b530f6e57732633c033637"
+        },
+        "scope": "same_full_explicit_subsets_all_rivers_no_truncation",
+        "wall_seconds": 0.547620667,
+        "sampled_peak_rss_mib": 29.39453125,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      }
+    },
+    {
+      "players": 3,
+      "model_key": "5a8117274d2e702369e42bfdde790882c1cd0eed6602ad574cad71805eedec66",
+      "reference": {
+        "status": "completed",
+        "peak_rss_mib": 37.74609375,
+        "iterations": 100,
+        "build_seconds": 0.364101125,
+        "train_seconds": 0.257220958,
+        "measure_seconds": 0.4528147079999999,
+        "public_nodes": 189,
+        "outcomes": 336,
+        "dense_equivalent_entries": 63504,
+        "storage_entries": null,
+        "terminal_states": null,
+        "rank_orders": null,
+        "training_visits": null,
+        "measurement_visits": null,
+        "policy_slots": null,
+        "metrics": {
+          "policy_payoffs": [
+            12.525448709705987,
+            -3.074144408653357,
+            -9.451304301052634
+          ],
+          "best_response_payoffs": [
+            12.566529245954174,
+            -3.0355845979112415,
+            -9.440260290333248
+          ],
+          "unilateral_gains": [
+            0.041080536248186306,
+            0.03855981074211545,
+            0.011044010719386321
+          ],
+          "nash_conv_chips": 0.09068435770968808,
+          "max_unilateral_gain_pct_pot": 0.13693512082728768
+        },
+        "root_values": {
+          "actor": 0,
+          "own_hand": "Tc2c",
+          "conditional_mass": 0.5450765292283134,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "sunk_chips": 10,
+          "policy_ev_chips": 32.633314936357195,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.0005193859000621982,
+              "ev_chips": 21.411814919922904,
+              "gap_to_best_first_action_chips": 11.227331334024512
+            },
+            {
+              "action": "BET 15",
+              "probability": 0.9994806140999378,
+              "ev_chips": 32.639146253947416,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        },
+        "model": {
+          "configuration": {
+            "max_joint_combos": 64,
+            "max_nodes": 1500,
+            "max_outcomes": 3072,
+            "max_work": 200000,
+            "river_bet_sizes": [
+              15
+            ],
+            "river_max_raises": 0,
+            "river_raise_sizes": [],
+            "turn_bet_sizes": [
+              15
+            ],
+            "turn_max_raises": 1,
+            "turn_raise_sizes": [
+              30
+            ]
+          },
+          "source_information_key": "80f30cc501b45a2b4d9e38d2f8941892cfdd8b75ab6b58c63ccd4c409fa0d8ee"
+        },
+        "scope": "same_full_explicit_subsets_all_rivers_no_truncation",
+        "wall_seconds": 1.48451675,
+        "sampled_peak_rss_mib": 37.74609375,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      },
+      "factored": {
+        "status": "completed",
+        "peak_rss_mib": 31.9765625,
+        "iterations": 100,
+        "build_seconds": 0.039538041000000024,
+        "train_seconds": 0.04684987500000004,
+        "measure_seconds": 0.004698541999999972,
+        "public_nodes": 189,
+        "outcomes": 336,
+        "dense_equivalent_entries": 63504,
+        "storage_entries": 15362,
+        "terminal_states": 40,
+        "rank_orders": 6,
+        "training_visits": 5288187,
+        "measurement_visits": 43447,
+        "policy_slots": 14642,
+        "metrics": {
+          "policy_payoffs": [
+            12.525448709705973,
+            -3.074144408653506,
+            -9.451304301052467
+          ],
+          "best_response_payoffs": [
+            12.56652924595215,
+            -3.035584597911941,
+            -9.440260290333079
+          ],
+          "unilateral_gains": [
+            0.041080536246177246,
+            0.038559810741565226,
+            0.011044010719388098
+          ],
+          "nash_conv_chips": 0.09068435770713057,
+          "max_unilateral_gain_pct_pot": 0.1369351208205908
+        },
+        "root_values": {
+          "actor": 0,
+          "own_hand": "Tc2c",
+          "conditional_mass": 0.5450765292283134,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "sunk_chips": 10,
+          "policy_ev_chips": 32.63331493635484,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.0005193859000621864,
+              "ev_chips": 21.41181491992289,
+              "gap_to_best_first_action_chips": 11.227331334022168
+            },
+            {
+              "action": "BET 15",
+              "probability": 0.9994806140999378,
+              "ev_chips": 32.63914625394506,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        },
+        "model": {
+          "configuration": {
+            "max_joint_combos": 64,
+            "max_nodes": 30000,
+            "max_outcomes": 3072,
+            "max_work": 6000000,
+            "river_bet_sizes": [
+              15
+            ],
+            "river_max_raises": 0,
+            "river_raise_sizes": [],
+            "turn_bet_sizes": [
+              15
+            ],
+            "turn_max_raises": 1,
+            "turn_raise_sizes": [
+              30
+            ],
+            "utility_storage": "factored"
+          },
+          "source_information_key": "80f30cc501b45a2b4d9e38d2f8941892cfdd8b75ab6b58c63ccd4c409fa0d8ee"
+        },
+        "scope": "same_full_explicit_subsets_all_rivers_no_truncation",
+        "wall_seconds": 0.5595306670000002,
+        "sampled_peak_rss_mib": 31.12890625,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      }
+    },
+    {
+      "players": 4,
+      "model_key": "da2da6baaac3f1e0dac94f5641469333f6f2352b087bef35aaa0f4af68218b72",
+      "reference": {
+        "status": "rejected",
+        "reason": "Unsupported turn model: Public tree/outcome budget exceeded; choose smaller explicit model.",
+        "wall_seconds": 0.5488063329999999,
+        "sampled_peak_rss_mib": 32.40234375,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      },
+      "factored": {
+        "status": "completed",
+        "peak_rss_mib": 34.05078125,
+        "iterations": 100,
+        "build_seconds": 0.062563708,
+        "train_seconds": 0.230820833,
+        "measure_seconds": 0.021742583999999954,
+        "public_nodes": 957,
+        "outcomes": 640,
+        "dense_equivalent_entries": 612480,
+        "storage_entries": 97290,
+        "terminal_states": 154,
+        "rank_orders": 28,
+        "training_visits": 26890637,
+        "measurement_visits": 257983,
+        "policy_slots": 80042,
+        "metrics": {
+          "policy_payoffs": [
+            -4.014199988126916,
+            -3.1850048019238746,
+            6.913882247521804,
+            0.2853225425289896
+          ],
+          "best_response_payoffs": [
+            -3.97372607818718,
+            -3.1246194157475955,
+            6.958985043841911,
+            0.3258416592732134
+          ],
+          "unilateral_gains": [
+            0.040473909939735986,
+            0.06038538617627909,
+            0.04510279632010672,
+            0.040519116744223815
+          ],
+          "nash_conv_chips": 0.1864812091803456,
+          "max_unilateral_gain_pct_pot": 0.15096346544069772
+        },
+        "root_values": {
+          "actor": 0,
+          "own_hand": "Ts6c",
+          "conditional_mass": 0.4865947985408637,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "sunk_chips": 10,
+          "policy_ev_chips": 5.577923578715292,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.9990833891481999,
+              "ev_chips": 5.593765793878542,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 20",
+              "probability": 0.0009166108518001348,
+              "ev_chips": -11.689703120042864,
+              "gap_to_best_first_action_chips": 17.283468913921407
+            }
+          ]
+        },
+        "model": {
+          "configuration": {
+            "max_joint_combos": 64,
+            "max_nodes": 30000,
+            "max_outcomes": 3072,
+            "max_work": 6000000,
+            "river_bet_sizes": [
+              20
+            ],
+            "river_max_raises": 0,
+            "river_raise_sizes": [],
+            "turn_bet_sizes": [
+              20
+            ],
+            "turn_max_raises": 1,
+            "turn_raise_sizes": [
+              40
+            ],
+            "utility_storage": "factored"
+          },
+          "source_information_key": "7b54b3c55ce7286a4dd9522cf05b1977d2d761ec0c9b89b6cd05334cf2413785"
+        },
+        "scope": "same_full_explicit_subsets_all_rivers_no_truncation",
+        "wall_seconds": 0.7977947499999996,
+        "sampled_peak_rss_mib": 33.984375,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      }
+    },
+    {
+      "players": 5,
+      "model_key": "325e6ae12dd47868dcc51596e2b35152ae2dc9e625ab0ba993a7d8a93f627ff0",
+      "reference": {
+        "status": "rejected",
+        "reason": "Unsupported turn model: Public tree/outcome budget exceeded; choose smaller explicit model.",
+        "wall_seconds": 0.5622826249999999,
+        "sampled_peak_rss_mib": 32.49609375,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      },
+      "factored": {
+        "status": "completed",
+        "peak_rss_mib": 47.82421875,
+        "iterations": 100,
+        "build_seconds": 0.13464900000000002,
+        "train_seconds": 0.8905280420000001,
+        "measure_seconds": 0.14707870900000009,
+        "public_nodes": 4657,
+        "outcomes": 1216,
+        "dense_equivalent_entries": 5662912,
+        "storage_entries": 642202,
+        "terminal_states": 592,
+        "rank_orders": 79,
+        "training_visits": 101954454,
+        "measurement_visits": 1421443,
+        "policy_slots": 408362,
+        "metrics": {
+          "policy_payoffs": [
+            -3.666409309775616,
+            -2.9336529227157864,
+            -9.667463679526048,
+            -3.793942853506414,
+            20.061468765523873
+          ],
+          "best_response_payoffs": [
+            -3.5847691504289676,
+            -2.8822323422505916,
+            -9.654879531812057,
+            -3.7487648015853328,
+            20.135702108816663
+          ],
+          "unilateral_gains": [
+            0.08164015934664848,
+            0.05142058046519482,
+            0.012584147713990745,
+            0.04517805192108115,
+            0.0742333432927893
+          ],
+          "nash_conv_chips": 0.2650562827397045,
+          "max_unilateral_gain_pct_pot": 0.16328031869329696
+        },
+        "root_values": {
+          "actor": 0,
+          "own_hand": "4d2s",
+          "conditional_mass": 0.4818378166731268,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "sunk_chips": 10,
+          "policy_ev_chips": 1.0386491042586383,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.9996082928225448,
+              "ev_chips": 1.042937188622485,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 25",
+              "probability": 0.0003917071774551875,
+              "ev_chips": -9.904231029496934,
+              "gap_to_best_first_action_chips": 10.947168218119419
+            }
+          ]
+        },
+        "model": {
+          "configuration": {
+            "max_joint_combos": 64,
+            "max_nodes": 30000,
+            "max_outcomes": 3072,
+            "max_work": 6000000,
+            "river_bet_sizes": [
+              25
+            ],
+            "river_max_raises": 0,
+            "river_raise_sizes": [],
+            "turn_bet_sizes": [
+              25
+            ],
+            "turn_max_raises": 1,
+            "turn_raise_sizes": [
+              50
+            ],
+            "utility_storage": "factored"
+          },
+          "source_information_key": "cd2b8904798817c20c5c31875c7a2e09e08e63f97bd896bfb2de777f1b7f4c6a"
+        },
+        "scope": "same_full_explicit_subsets_all_rivers_no_truncation",
+        "wall_seconds": 1.7635913750000007,
+        "sampled_peak_rss_mib": 47.59765625,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      }
+    },
+    {
+      "players": 6,
+      "model_key": "f57622506e0486d4265e0e21f9d726ce404226fd324237dc1aed7260be9f9ea4",
+      "reference": {
+        "status": "rejected",
+        "reason": "Unsupported turn model: Public tree/outcome budget exceeded; choose smaller explicit model.",
+        "wall_seconds": 0.5508394579999996,
+        "sampled_peak_rss_mib": 35.3203125,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      },
+      "factored": {
+        "status": "completed",
+        "peak_rss_mib": 108.72265625,
+        "iterations": 100,
+        "build_seconds": 0.457630209,
+        "train_seconds": 6.934500334,
+        "measure_seconds": 1.0454562910000007,
+        "public_nodes": 22037,
+        "outcomes": 2304,
+        "dense_equivalent_entries": 50773248,
+        "storage_entries": 4039670,
+        "terminal_states": 2290,
+        "rank_orders": 149,
+        "training_visits": 611217398,
+        "measurement_visits": 7451663,
+        "policy_slots": 1992410,
+        "metrics": {
+          "policy_payoffs": [
+            3.621890483861222,
+            -3.0615256047700665,
+            -1.710009594314302,
+            15.019917347058994,
+            -7.326701785773182,
+            -6.543570846062661
+          ],
+          "best_response_payoffs": [
+            3.796299221091388,
+            -3.0007165793197634,
+            -1.6566898904432104,
+            15.135384401666554,
+            -7.286237961204242,
+            -6.499065692341672
+          ],
+          "unilateral_gains": [
+            0.17440873723016637,
+            0.06080902545030309,
+            0.05331970387109175,
+            0.11546705460756002,
+            0.040463824568940154,
+            0.044505153720988844
+          ],
+          "nash_conv_chips": 0.4889734994490502,
+          "max_unilateral_gain_pct_pot": 0.29068122871694396
+        },
+        "root_values": {
+          "actor": 0,
+          "own_hand": "Jh3d",
+          "conditional_mass": 0.49895965955443067,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "sunk_chips": 10,
+          "policy_ev_chips": 0.6278987622620963,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.9937805397326017,
+              "ev_chips": 0.6438049617754888,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 30",
+              "probability": 0.006219460267398239,
+              "ev_chips": -1.9136837638573692,
+              "gap_to_best_first_action_chips": 2.557488725632858
+            }
+          ]
+        },
+        "model": {
+          "configuration": {
+            "max_joint_combos": 64,
+            "max_nodes": 30000,
+            "max_outcomes": 3072,
+            "max_work": 6000000,
+            "river_bet_sizes": [
+              30
+            ],
+            "river_max_raises": 0,
+            "river_raise_sizes": [],
+            "turn_bet_sizes": [
+              30
+            ],
+            "turn_max_raises": 1,
+            "turn_raise_sizes": [
+              60
+            ],
+            "utility_storage": "factored"
+          },
+          "source_information_key": "2a7a67999fd8f87a27d5581d7c57c44e994901f4fce4d9419e545dabed292b7f"
+        },
+        "scope": "same_full_explicit_subsets_all_rivers_no_truncation",
+        "wall_seconds": 8.938042791,
+        "sampled_peak_rss_mib": 108.703125,
+        "memory_limit_mib": 128,
+        "rss_poll_seconds": 0.2
+      }
+    }
+  ]
+}

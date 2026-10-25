@@ -132,7 +132,7 @@ class CurrentTurnTests(unittest.TestCase):
     def test_bad_public_requests_are_rejected_before_worker_launch(self):
         mutations=(
             lambda r:r['snapshot'].update(deck=['As']),
-            lambda r:r['input'].update(max_work=200001),
+            lambda r:r['input'].update(max_work=6000001),
             lambda r:r['input'].update(turn_max_raises=True),
             lambda r:r['input'].update(river_raise_sizes=[1,2,3]),
             lambda r:r.update(own_hand='AsAs'),
@@ -187,7 +187,7 @@ class CurrentTurnTests(unittest.TestCase):
                 time.sleep(.02)
             results=[executor.poll(t['ticket_id'])['result'] for t in tickets]
             self.assertEqual([r['status'] for r in results],['ready','ready'])
-            self.assertEqual([r['contract_version'] for r in results],['bounded_current_turn_v1',1])
+            self.assertEqual([r['contract_version'] for r in results],['bounded_current_turn_v2',1])
             self.assertTrue(valid_turn_result(results[0],self.request,self.limits))
 
     def test_current_turn_api_binds_profile_position_and_cancels_when_player_acts(self):

@@ -61,7 +61,7 @@ def prepare(state):
         tree = {'turn_bet_sizes':[bet], 'turn_raise_sizes':[raise_to] if raise_to > current else [],
                 'turn_max_raises':int(raise_to > current), 'river_bet_sizes':[bet],
                 'river_raise_sizes':[], 'river_max_raises':0,
-                'max_nodes':1500, 'max_joint_combos':64, 'max_outcomes':3072, 'max_work':200000}
+                'utility_storage':'factored', 'max_nodes':30000, 'max_joint_combos':64, 'max_outcomes':3072, 'max_work':6000000}
         request = {'snapshot':snapshot, 'selected_hands':selected, 'own_hand':own, 'input':tree}
         turn_analysis.validate_request(request)
         actions = turn_analysis.expected_root_actions(request)

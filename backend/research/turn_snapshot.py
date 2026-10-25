@@ -83,7 +83,7 @@ def _build(snapshot, selected, tree):
             'dealer':button,'folded':folded,'turn_actions':actions,'min_bet':snapshot['big_blind'],**tree}
     # Reject overrides of public state even when called directly, outside HTTP.
     if set(tree) - {'turn_bet_sizes','river_bet_sizes','turn_raise_sizes','river_raise_sizes',
-                    'turn_max_raises','river_max_raises','max_joint_combos','max_outcomes','max_work','max_nodes'}:
+                    'turn_max_raises','river_max_raises','max_joint_combos','max_outcomes','max_work','max_nodes','utility_storage'}:
         raise ValueError('Only explicit tree sizes and bounded resource configuration may be overridden.')
     game = TurnGame(**spec)
     if (game.root.actor < 0 or ids[game.root.actor] != actor

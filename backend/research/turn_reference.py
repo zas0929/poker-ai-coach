@@ -41,7 +41,10 @@ class TurnGame:
                  turn_bet_sizes=(50,), river_bet_sizes=(50,), max_joint_combos=64,
                  max_nodes=20000, max_outcomes=4096, max_work=1000000,
                  turn_actions=(), turn_raise_sizes=(), river_raise_sizes=(),
-                 turn_max_raises=0, river_max_raises=0):
+                 turn_max_raises=0, river_max_raises=0, utility_storage="compact"):
+        if utility_storage not in ("compact", "factored"):
+            raise ValueError("Unknown turn storage layout.")
+        self.utility_storage = utility_storage
         self.board = tuple(board)
         self.n = n = len(ranges)
         if (not 2 <= n <= 6 or len(board) != 4 or len(set(board)) != 4
@@ -49,9 +52,9 @@ class TurnGame:
             raise ValueError('Two to six seats and four distinct turn cards required.')
         for value, upper, label in ((pot, 10000, 'pot'), (min_bet, 10000, 'minimum bet'),
                                      (max_joint_combos, 4096, 'joint combo budget'),
-                                     (max_nodes, 20000, 'node budget'),
+                                     (max_nodes, 30000 if utility_storage == "factored" else 20000, 'node budget'),
                                      (max_outcomes, 4096, 'outcome budget'),
-                                     (max_work, 2000000, 'node/outcome budget')):
+                                     (max_work, 6000000 if utility_storage == "factored" else 2000000, 'node/outcome budget')):
             if type(value) is not int or not 1 <= value <= upper:
                 raise ValueError('Invalid ' + label + '.')
         self.pot = self.decision_pot = pot
@@ -153,7 +156,7 @@ class TurnGame:
         self.nodes = []
 
         def save(node):
-            if len(self.nodes) >= max_nodes or (len(self.nodes) + 1) * len(self.outcomes) > max_work:
+            if len(self.nodes) >= max_nodes or (utility_storage == "compact" and (len(self.nodes) + 1) * len(self.outcomes) > max_work):
                 raise ValueError('Public tree/outcome budget exceeded; choose smaller explicit model.')
             self.nodes.append(node)
             return node
@@ -227,6 +230,10 @@ class TurnGame:
             return build(history, alive, (0,) * n, pending, 0, self.min_bet, 0, (None,) * n)
 
         self.root = round_tree('turn', (), self.live, (0,) * n, self.root_state)
+        if utility_storage == "factored":
+            from research.turn_packed import initialize
+            initialize(self, max_work)
+            return
         self.utilities = CompactUtilities(self.nodes, len(self.outcomes), n)
         for node in self.nodes:
             if node.actor != TERMINAL:
@@ -259,6 +266,9 @@ class TurnGame:
         return (node.actor, hands[node.actor], node.history, river if node.street == 'river' else None)
 
     def uniform_policy(self):
+        if self.utility_storage == "factored":
+            from research.turn_packed import uniform
+            return uniform(self)
         return {key: [1 / size] * size for key, size in self.action_counts.items()}
 
     def train(self, iterations=50, *, max_visits=20000000, method='cfr_plus'):
@@ -271,8 +281,13 @@ class TurnGame:
             raise ValueError('Choose Python CFR+ or the versioned turn native adapter.')
         if type(iterations) is not int or not 1 <= iterations <= 2000:
             raise ValueError('1–2000 iterations required.')
-        if type(max_visits) is not int or not 1 <= max_visits <= 200000000:
+        if type(max_visits) is not int or not 1 <= max_visits <= (1000000000 if self.utility_storage == "factored" else 200000000):
             raise ValueError('Invalid traversal budget.')
+        if self.utility_storage == "factored":
+            if method != "cfr_plus_native":
+                raise ValueError("Factored turn storage uses its separate native provider.")
+            from research.turn_packed import train
+            return train(self, iterations, max_visits)
         owned = [[key for key in self.action_counts if key[0] == p] for p in range(self.n)]
         work = iterations * sum(bool(keys) for keys in owned) * len(self.nodes) * len(self.outcomes)
         if work > max_visits:
@@ -327,6 +342,9 @@ class TurnGame:
 
     def measure(self, policy):
         """Exact unilateral BR respecting own hand and time of public river reveal."""
+        if self.utility_storage == "factored":
+            from research.turn_packed import measure
+            return measure(self, policy)
         if (set(policy) != self.keys
                 or any(len(row) != self.action_counts[key]
                        or any(not math.isfinite(p) or not 0 <= p <= 1 for p in row)
@@ -370,6 +388,9 @@ class TurnGame:
         """
         if self.root.actor < 0:
             raise ValueError('No player decision at the turn root.')
+        if self.utility_storage == "factored":
+            from research.turn_packed import root_values
+            return root_values(self, policy, own_hand)
         # Validate the full policy before inspecting any continuation.
         if (set(policy) != self.keys
                 or any(len(row) != self.action_counts[key]

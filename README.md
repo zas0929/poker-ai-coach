@@ -407,6 +407,8 @@ bounded river analysis enabled; the fast heuristic coach remains available. See
 [docs/TURN_CONTINUATION.md](docs/TURN_CONTINUATION.md).
 Текущий тёрн подключён локально к той же панели, с явными ограничениями multiway:
 [docs/LIVE_TURN_ANALYSIS.md](docs/LIVE_TURN_ANALYSIS.md).
+Компактный точный расчёт тёрна на тех же моделях с 1–5 оппонентами:
+[docs/TURN_FACTORED.md](docs/TURN_FACTORED.md).
 
 Приоритет интеграции — анализ текущего хода во время тренировочной игры:
 [docs/LIVE_TRAINER_ANALYSIS.md](docs/LIVE_TRAINER_ANALYSIS.md).

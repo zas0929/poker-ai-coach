@@ -1,0 +1,146 @@
+{
+  "input": {
+    "max_joint_combos": 64,
+    "max_nodes": 30000,
+    "max_outcomes": 3072,
+    "max_work": 6000000,
+    "river_bet_sizes": [
+      10
+    ],
+    "river_max_raises": 0,
+    "river_raise_sizes": [],
+    "turn_bet_sizes": [
+      10
+    ],
+    "turn_max_raises": 1,
+    "turn_raise_sizes": [
+      20
+    ],
+    "utility_storage": "factored"
+  },
+  "own_hand": "JsJd",
+  "selected_hands": {
+    "hero": [
+      "JsJd",
+      "7h3c"
+    ],
+    "villain": [
+      "Th2d",
+      "KdQd"
+    ]
+  },
+  "snapshot": {
+    "actor_id": "hero",
+    "assumptions": [
+      "Ranges use public actions and board only; no player hole cards are read.",
+      "Weights are heuristic, not calibrated solver frequencies.",
+      "Folded hand card-bunching is not modelled.",
+      "No rake or tournament ICM is modelled.",
+      "History amounts are chips ADDED, not raise-to totals."
+    ],
+    "big_blind": 10,
+    "board": [
+      "8h",
+      "9h",
+      "As",
+      "Qs"
+    ],
+    "button_id": "hero",
+    "dealt_player_count": 2,
+    "history": [
+      {
+        "action": "small_blind",
+        "amount_added": 5,
+        "player_id": "hero",
+        "street": "preflop"
+      },
+      {
+        "action": "big_blind",
+        "amount_added": 10,
+        "player_id": "villain",
+        "street": "preflop"
+      },
+      {
+        "action": "call",
+        "amount_added": 5,
+        "player_id": "hero",
+        "street": "preflop"
+      },
+      {
+        "action": "check",
+        "amount_added": null,
+        "player_id": "villain",
+        "street": "preflop"
+      },
+      {
+        "action": "check",
+        "amount_added": null,
+        "player_id": "villain",
+        "street": "flop"
+      },
+      {
+        "action": "check",
+        "amount_added": null,
+        "player_id": "hero",
+        "street": "flop"
+      },
+      {
+        "action": "check",
+        "amount_added": null,
+        "player_id": "villain",
+        "street": "turn"
+      }
+    ],
+    "information_key": "db9fdd37741df38a6ab0336edf4fda01c8768cd72af5abba87355c4ec527cdae",
+    "live_player_count": 2,
+    "players": [
+      {
+        "id": "hero",
+        "position": "small_blind_button",
+        "range": [
+          {
+            "cards": "JsJd",
+            "weight": 0.8998458500640109
+          },
+          {
+            "cards": "7h3c",
+            "weight": 0.6754854051072354
+          }
+        ],
+        "seat": 0,
+        "stack": 990,
+        "status": "active",
+        "street_committed": 0,
+        "total_committed": 10
+      },
+      {
+        "id": "villain",
+        "position": "big_blind",
+        "range": [
+          {
+            "cards": "KdQd",
+            "weight": 0.5843266539772496
+          },
+          {
+            "cards": "Th2d",
+            "weight": 0.9178230016521408
+          }
+        ],
+        "seat": 1,
+        "stack": 990,
+        "status": "active",
+        "street_committed": 0,
+        "total_committed": 10
+      }
+    ],
+    "postflop_order": [
+      "villain",
+      "hero"
+    ],
+    "pot": 20,
+    "range_model": "public_action_heuristic_v1",
+    "schema_version": 1,
+    "small_blind": 5,
+    "street": "turn"
+  }
+}

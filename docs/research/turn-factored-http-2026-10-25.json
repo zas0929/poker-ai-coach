@@ -1,0 +1,370 @@
+{
+  "created_at": "2026-10-25T13:16:16.387948+00:00",
+  "scope": "Local actual HTTP/native workers; disposable profiles only. Not a staging performance claim.",
+  "turn": {
+    "api": "http://127.0.0.1:8012",
+    "street": "turn",
+    "scope": "Disposable passive training profiles, actual native worker, no existing rooms",
+    "results": [
+      {
+        "opponents": 1,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_turn_v1",
+        "model_scope": "two_hands_per_live_seat_all_compatible_rivers_one_turn_raise_no_river_raises_no_rake_no_icm",
+        "tree": {
+          "turn_bet_sizes": [
+            10
+          ],
+          "turn_raise_sizes": [
+            20
+          ],
+          "turn_max_raises": 1,
+          "river_bet_sizes": [
+            10
+          ],
+          "river_raise_sizes": [],
+          "river_max_raises": 0,
+          "utility_storage": "factored",
+          "max_nodes": 30000,
+          "max_joint_combos": 64,
+          "max_outcomes": 3072,
+          "max_work": 6000000
+        },
+        "quality": 0.08591044605161913,
+        "total_seconds": 0.967,
+        "concurrent_state_read_seconds": 0.016,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      },
+      {
+        "opponents": 2,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_turn_v1",
+        "model_scope": "two_hands_per_live_seat_all_compatible_rivers_one_turn_raise_no_river_raises_no_rake_no_icm",
+        "tree": {
+          "turn_bet_sizes": [
+            15
+          ],
+          "turn_raise_sizes": [
+            30
+          ],
+          "turn_max_raises": 1,
+          "river_bet_sizes": [
+            15
+          ],
+          "river_raise_sizes": [],
+          "river_max_raises": 0,
+          "utility_storage": "factored",
+          "max_nodes": 30000,
+          "max_joint_combos": 64,
+          "max_outcomes": 3072,
+          "max_work": 6000000
+        },
+        "quality": 0.21201217421899324,
+        "total_seconds": 1.101,
+        "concurrent_state_read_seconds": 0.021,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      },
+      {
+        "opponents": 3,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_turn_v1",
+        "model_scope": "two_hands_per_live_seat_all_compatible_rivers_one_turn_raise_no_river_raises_no_rake_no_icm",
+        "tree": {
+          "turn_bet_sizes": [
+            20
+          ],
+          "turn_raise_sizes": [
+            40
+          ],
+          "turn_max_raises": 1,
+          "river_bet_sizes": [
+            20
+          ],
+          "river_raise_sizes": [],
+          "river_max_raises": 0,
+          "utility_storage": "factored",
+          "max_nodes": 30000,
+          "max_joint_combos": 64,
+          "max_outcomes": 3072,
+          "max_work": 6000000
+        },
+        "quality": 0.060960179390892044,
+        "total_seconds": 1.391,
+        "concurrent_state_read_seconds": 0.025,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      },
+      {
+        "opponents": 4,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_turn_v1",
+        "model_scope": "two_hands_per_live_seat_all_compatible_rivers_one_turn_raise_no_river_raises_no_rake_no_icm",
+        "tree": {
+          "turn_bet_sizes": [
+            25
+          ],
+          "turn_raise_sizes": [
+            50
+          ],
+          "turn_max_raises": 1,
+          "river_bet_sizes": [
+            25
+          ],
+          "river_raise_sizes": [],
+          "river_max_raises": 0,
+          "utility_storage": "factored",
+          "max_nodes": 30000,
+          "max_joint_combos": 64,
+          "max_outcomes": 3072,
+          "max_work": 6000000
+        },
+        "quality": 0.13541281028179064,
+        "total_seconds": 2.629,
+        "concurrent_state_read_seconds": 0.018,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      },
+      {
+        "opponents": 5,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_turn_v1",
+        "model_scope": "two_hands_per_live_seat_all_compatible_rivers_one_turn_raise_no_river_raises_no_rake_no_icm",
+        "tree": {
+          "turn_bet_sizes": [
+            30
+          ],
+          "turn_raise_sizes": [
+            60
+          ],
+          "turn_max_raises": 1,
+          "river_bet_sizes": [
+            30
+          ],
+          "river_raise_sizes": [],
+          "river_max_raises": 0,
+          "utility_storage": "factored",
+          "max_nodes": 30000,
+          "max_joint_combos": 64,
+          "max_outcomes": 3072,
+          "max_work": 6000000
+        },
+        "quality": 0.1100201003534244,
+        "total_seconds": 8.382,
+        "concurrent_state_read_seconds": 0.028,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      }
+    ]
+  },
+  "river_regression": {
+    "api": "http://127.0.0.1:8012",
+    "street": "river",
+    "scope": "Disposable passive training profiles, actual native worker, no existing rooms",
+    "results": [
+      {
+        "opponents": 1,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_river_v1",
+        "model_scope": "two_hands_per_live_seat_one_future_raise_no_rake_no_icm",
+        "tree": {
+          "bet_sizes": [
+            10
+          ],
+          "raise_sizes": [
+            20
+          ],
+          "max_raises": 1,
+          "max_nodes": 4000,
+          "max_joint_combos": 64,
+          "utility_storage": "compact"
+        },
+        "quality": 0.0011073972284769695,
+        "total_seconds": 0.96,
+        "concurrent_state_read_seconds": 0.009,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      },
+      {
+        "opponents": 2,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_river_v1",
+        "model_scope": "two_hands_per_live_seat_one_future_raise_no_rake_no_icm",
+        "tree": {
+          "bet_sizes": [
+            15
+          ],
+          "raise_sizes": [
+            30
+          ],
+          "max_raises": 1,
+          "max_nodes": 4000,
+          "max_joint_combos": 64,
+          "utility_storage": "compact"
+        },
+        "quality": 0.0013987962300632262,
+        "total_seconds": 1.139,
+        "concurrent_state_read_seconds": 0.021,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      },
+      {
+        "opponents": 3,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_river_v1",
+        "model_scope": "two_hands_per_live_seat_one_future_raise_no_rake_no_icm",
+        "tree": {
+          "bet_sizes": [
+            20
+          ],
+          "raise_sizes": [
+            40
+          ],
+          "max_raises": 1,
+          "max_nodes": 4000,
+          "max_joint_combos": 64,
+          "utility_storage": "compact"
+        },
+        "quality": 0.09435255705115386,
+        "total_seconds": 1.308,
+        "concurrent_state_read_seconds": 0.014,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      },
+      {
+        "opponents": 4,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_river_v1",
+        "model_scope": "two_hands_per_live_seat_one_future_raise_no_rake_no_icm",
+        "tree": {
+          "bet_sizes": [
+            25
+          ],
+          "raise_sizes": [
+            50
+          ],
+          "max_raises": 1,
+          "max_nodes": 4000,
+          "max_joint_combos": 64,
+          "utility_storage": "compact"
+        },
+        "quality": 0.0018081019372999663,
+        "total_seconds": 1.615,
+        "concurrent_state_read_seconds": 0.016,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      },
+      {
+        "opponents": 5,
+        "state": "ready",
+        "reason": null,
+        "contract_version": "trainer_current_river_v1",
+        "model_scope": "two_hands_per_live_seat_one_future_raise_no_rake_no_icm",
+        "tree": {
+          "bet_sizes": [
+            30
+          ],
+          "raise_sizes": [
+            60
+          ],
+          "max_raises": 1,
+          "max_nodes": 4000,
+          "max_joint_combos": 64,
+          "utility_storage": "compact"
+        },
+        "quality": 0.0026573551426212205,
+        "total_seconds": 3.101,
+        "concurrent_state_read_seconds": 0.034,
+        "cached_job_reused": true,
+        "foreign_profile_rejected": true,
+        "stale_result_removed": true
+      }
+    ]
+  },
+  "active_cancellation": {
+    "scope": "Disposable local profiles; actual six-seat active worker cancelled by hero action; subsequent real task completes.",
+    "action_seconds": 0.004,
+    "active_state_before_action": "running",
+    "stale_result_removed": true,
+    "queue_continued": "ready",
+    "next_task_seconds": 0.842
+  },
+  "packaging": {
+    "native_kernel": "verified",
+    "isolated_river_models": [
+      {
+        "opponents": 1,
+        "status": "ready",
+        "quality_pct_pot": 0.041978623785068336
+      },
+      {
+        "opponents": 2,
+        "status": "ready",
+        "quality_pct_pot": 0.0905472155502777
+      },
+      {
+        "opponents": 3,
+        "status": "ready",
+        "quality_pct_pot": 0.045185366563205154
+      },
+      {
+        "opponents": 4,
+        "status": "ready",
+        "quality_pct_pot": 0.03750392109382261
+      },
+      {
+        "opponents": 5,
+        "status": "ready",
+        "quality_pct_pot": 0.017299311326794964
+      }
+    ],
+    "turn_kernel": "verified",
+    "isolated_turn_probe": {
+      "status": "ready",
+      "quality_pct_pot": 0.15250471283238198
+    }
+  },
+  "checks": {
+    "backend_full": {
+      "tests": 506,
+      "passed": true,
+      "skipped": 3
+    },
+    "final_targeted": {
+      "tests": 20,
+      "passed": true
+    },
+    "frozen_river_manifest_valid": true
+  },
+  "sources": {
+    "backend/research/turn_analysis.py": "38df585861ca23dedae1a66c5664729ca04b032b11f12a8edc720ebef57d148e",
+    "backend/research/turn_reference.py": "033cee2ffb13f4802ed9d314be45dd1cc21aacc838620a3703c0c94e933aade2",
+    "backend/research/turn_packed.py": "8500847b89774ae88aaed40c8109d0a59fa0c25692fa1a44093b31e563fe2415",
+    "backend/research/build_turn_kernel.py": "fcaa2d3751bf01557b43e9574518d63ae42d9f0f167b90a4cebf8eeab4d3c30d",
+    "backend/research/native/turn_cfr.cpp": "115290e6e8109b78be22343269e4d7d8073f8c69df20e36593277f17442ad0c1",
+    "backend/research/trainer_current.py": "cd06bd55feffab28e25c42d0a666e3ce7b1747554ed1ccdb05ceb945bd0770f3",
+    "backend/tests/test_turn_factored.py": "3bb5d80edd934463aecd030fca5ab44992357061e744a5dd9a1ff57342708d68",
+    "backend/tests/current_trainer_http_smoke.py": "6964e33f006b5c9a1848f65a763e90e69a6556c875b936108dae5ddcc4861859",
+    "backend/Dockerfile": "7c3fab6797b830bdf83a77d8a68e429a62188c0b87e5e394d4b35408133eb1ac",
+    "backend/research/verify_packaged.py": "60380f26fa43effaa914094d992fc8ae79c637f9331f47db6f30cc67ac374659"
+  }
+}

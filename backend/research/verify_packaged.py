@@ -17,7 +17,16 @@ def verify():
             raise RuntimeError('Packaged river check failed: '+row['id']+' '+str(codes))
         rows.append({'opponents':row['opponents'],'status':result['status'],
                      'quality_pct_pot':result['quality']['value']})
-    return {'native_kernel':'verified','isolated_river_models':rows}
+    from research.build_turn_kernel import load_library as load_turn
+    from research.turn_analysis import analyze as analyze_turn
+    load_turn()
+    probe=json.loads((Path(__file__).parent/'fixtures/turn-package-probe-v1.json').read_text())
+    turn=analyze_turn(probe,ResearchLimits(iterations=100,wall_seconds=10,memory_mib=128))
+    if turn['status']!='ready' or not turn.get('action_values'):
+        raise RuntimeError('Packaged turn check failed: '+str(turn['reasons']))
+    return {'native_kernel':'verified','isolated_river_models':rows,
+            'turn_kernel':'verified','isolated_turn_probe':{
+                'status':turn['status'],'quality_pct_pot':turn['quality']['value']}}
 
 
 if __name__=='__main__':

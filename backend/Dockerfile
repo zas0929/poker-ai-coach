@@ -5,11 +5,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends g++ \
 WORKDIR /build
 COPY research/build_native.py ./research/build_native.py
 COPY research/native/cfr.cpp ./research/native/cfr.cpp
+COPY research/build_turn_kernel.py ./research/build_turn_kernel.py
+COPY research/native/turn_cfr.cpp ./research/native/turn_cfr.cpp
 RUN python research/build_native.py --output /opt/poker/native/libpoker_cfr.so
+RUN python research/build_turn_kernel.py --output /opt/poker/native/libpoker_turn.so
 
 FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
-    POKER_RESEARCH_NATIVE_LIB=/opt/poker/native/libpoker_cfr.so
+    POKER_RESEARCH_NATIVE_LIB=/opt/poker/native/libpoker_cfr.so \
+    POKER_TURN_NATIVE_LIB=/opt/poker/native/libpoker_turn.so
 # The bounded subprocess monitor uses ps; the compiled kernel needs libstdc++.
 RUN apt-get update && apt-get install -y --no-install-recommends procps libstdc++6 \
     && rm -rf /var/lib/apt/lists/*

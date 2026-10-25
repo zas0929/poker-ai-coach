@@ -16,14 +16,14 @@ from research.lesson_values import VALUE_VERSION, valid_values
 from research.river_snapshot import combo_key, digest
 from research.turn_snapshot import build_turn_from_snapshot
 
-CONTRACT_VERSION = 'bounded_current_turn_v1'
+CONTRACT_VERSION = 'bounded_current_turn_v2'
 SCOPE = 'offline_bounded_current_turn'
 finish = base.finish
 recheck_decision = base.recheck_decision
 TREE_FIELDS = {'turn_bet_sizes', 'turn_raise_sizes', 'turn_max_raises',
                'river_bet_sizes', 'river_raise_sizes', 'river_max_raises',
-               'max_nodes', 'max_joint_combos', 'max_outcomes', 'max_work'}
-FILES = ('turn_analysis.py', 'turn_snapshot.py', 'turn_reference.py', 'turn_native.py',
+               'max_nodes', 'max_joint_combos', 'max_outcomes', 'max_work', 'utility_storage'}
+FILES = ('turn_packed.py', 'build_turn_kernel.py', 'native/turn_cfr.cpp', 'turn_analysis.py', 'turn_snapshot.py', 'turn_reference.py', 'turn_native.py',
          'analysis_contract.py', 'lesson_values.py', 'river_replay.py', 'river_snapshot.py',
          'custom_river.py', 'compact_utilities.py', 'native_cfr.py', 'native/cfr.cpp',
          'benchmark_expanded.py', '../app/services/hand_evaluator.py',
@@ -35,7 +35,7 @@ def provenance():
     return {'engine_version': CONTRACT_VERSION,
             'engine_source_sha256': digest({p: sha256((root/p).read_bytes()).hexdigest() for p in FILES}),
             'range_version': base.RANGE_VERSION, 'method': 'cfr_plus_native',
-            'turn_adapter': 'turn-delayed-reveal-native-v2'}
+            'turn_adapter': 'factored-turn-native-v1', 'turn_kernel_abi': 2}
 
 
 def validate_request(request):
@@ -44,7 +44,7 @@ def validate_request(request):
         raise ValueError('Explicit public turn request required.')
     base.validate_request({**request, 'input': {}})
     config = request['input']; snapshot = request['snapshot']
-    if set(config) != TREE_FIELDS:
+    if set(config) != TREE_FIELDS or config.get('utility_storage') != 'factored':
         raise ValueError('Complete explicit turn tree required.')
     if (snapshot['schema_version'] != 1 or snapshot['street'] != 'turn'
             or snapshot['range_model'] != base.RANGE_VERSION
@@ -58,8 +58,8 @@ def validate_request(request):
     for name in ('turn_max_raises', 'river_max_raises'):
         if type(config[name]) is not int or not 0 <= config[name] <= 3:
             raise ValueError('Invalid per-street future raise cap.')
-    for name, high in (('max_nodes', 4000), ('max_joint_combos', 64),
-                       ('max_outcomes', 3072), ('max_work', 200000)):
+    for name, high in (('max_nodes', 30000), ('max_joint_combos', 64),
+                       ('max_outcomes', 3072), ('max_work', 6000000)):
         if type(config[name]) is not int or not 1 <= config[name] <= high:
             raise ValueError('Invalid bounded turn capacity.')
     if any(type(v) is not list or not v or len(v) > 2 for v in request['selected_hands'].values()):
@@ -119,9 +119,14 @@ def valid_candidate(candidate, request):
 
 def valid_tree(tree, request):
     if type(tree) is not dict or set(tree) != TREE_FIELDS | {
-            'min_bet', 'public_nodes', 'joint_private_deals', 'joint_river_outcomes'}:
+            'min_bet', 'public_nodes', 'joint_private_deals', 'joint_river_outcomes', 'layout_version',
+            'storage_entries', 'terminal_states', 'rank_orders', 'policy_slots', 'dense_equivalent_entries',
+            'training_visits', 'measurement_visits'}:
         return False
-    if any(tree[k] != v for k,v in request['input'].items()) or tree['min_bet'] != request['snapshot']['big_blind']:
+    if (any(type(tree[k]) is not type(v) or tree[k] != v or
+            (isinstance(v,list) and any(type(x) is not int for x in tree[k]))
+            for k,v in request['input'].items())
+            or type(tree['min_bet']) is not int or tree['min_bet'] != request['snapshot']['big_blind']):
         return False
     if any(type(tree[k]) is not int or tree[k] < 1 for k in
            ('public_nodes', 'joint_private_deals', 'joint_river_outcomes')):
@@ -130,7 +135,16 @@ def valid_tree(tree, request):
     return (tree['public_nodes'] <= tree['max_nodes']
             and tree['joint_private_deals'] <= raw <= tree['max_joint_combos']
             and tree['joint_private_deals'] <= tree['joint_river_outcomes'] <= tree['max_outcomes']
-            and tree['public_nodes'] * tree['joint_river_outcomes'] <= tree['max_work'])
+            and tree['layout_version'] == 'factored-turn-native-v1'
+            and all(type(tree[k]) is int and tree[k] >= 0 for k in
+                    ('storage_entries','terminal_states','rank_orders','policy_slots',
+                     'dense_equivalent_entries','training_visits','measurement_visits'))
+            and 1 <= tree['terminal_states'] <= tree['public_nodes']
+            and 1 <= tree['rank_orders'] <= tree['joint_river_outcomes']
+            and tree['dense_equivalent_entries'] == tree['public_nodes'] * tree['joint_river_outcomes']
+            and tree['storage_entries'] == tree['terminal_states'] * tree['rank_orders'] * len(request['snapshot']['players']) + tree['policy_slots']
+            and 1 <= tree['storage_entries'] <= tree['max_work']
+            and tree['training_visits'] <= 1000000000 and tree['measurement_visits'] <= 200000000)
 
 
 def worker(request, iterations):
@@ -146,15 +160,21 @@ def worker(request, iterations):
         return {'status': 'invalid_probe'}
     try:
         progress('train'); start = time.perf_counter()
-        policy = game.train(iterations, method='cfr_plus_native', max_visits=200000000)
+        policy = game.train(iterations, method='cfr_plus_native', max_visits=1000000000)
     except (RuntimeError, OSError):
         return {'status': 'provider_unavailable'}
     except ValueError as error:
         return {'status': 'model_budget_exceeded' if 'budget' in str(error).lower() else 'rejected'}
     train = time.perf_counter() - start
     progress('measure'); start = time.perf_counter()
-    metrics = game.measure(policy); own = request['own_hand']
-    root = game.root_action_values(policy, own)
+    own = request['own_hand']
+    try:
+        root = game.root_action_values(policy, own)
+        metrics = game.measure(policy)
+    except ValueError as error:
+        return {'status': 'model_budget_exceeded' if 'budget' in str(error).lower() else 'rejected'}
+    except (RuntimeError, OSError):
+        return {'status': 'provider_unavailable'}
     compatible = {hands for hands, _, _, _ in game.outcomes if hands[game.root.actor] == own}
     candidate = {'actor_id': request['snapshot']['actor_id'], 'own_hand': own,
                  'actions': [row['action'] for row in root['actions']],
@@ -169,7 +189,14 @@ def worker(request, iterations):
     return {'status': 'completed', 'iterations': iterations, 'provenance': provenance(),
             'request_key': digest(request), 'metadata': metadata,
             'tree': {**request['input'], 'min_bet': game.min_bet, 'public_nodes': len(game.nodes),
-                     'joint_private_deals': game.joint_private_deals, 'joint_river_outcomes': len(game.outcomes)},
+                     'joint_private_deals': game.joint_private_deals, 'joint_river_outcomes': len(game.outcomes),
+                     'layout_version': 'factored-turn-native-v1',
+                     'storage_entries': game.packed['storage_entries'],
+                     'terminal_states': game.packed['terminal_states'],
+                     'rank_orders': game.packed['rank_orders'], 'policy_slots': game.packed['slots'],
+                     'dense_equivalent_entries': len(game.nodes)*len(game.outcomes),
+                     'training_visits': game.packed['training_visits'],
+                     'measurement_visits': game.packed['measurement_visits']},
             'metrics': metrics, 'candidate': candidate, 'action_values': values,
             'build_seconds': build, 'train_seconds': train,
             'measure_seconds': time.perf_counter() - start, 'peak_rss_mib': peak_rss_mib()}
