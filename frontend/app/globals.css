@@ -1496,3 +1496,19 @@ h2 {
 @media (prefers-reduced-motion: reduce) { .trainer-solver-progress::before { animation: none; } }
 
 .trainer-solver p.trainer-solver-warning { color: #ebd895; padding-inline-start: 9px; border-inline-start: 2px solid #a89557; }
+
+/* Clear action states and compact at-table training facts. */
+.seat-turn-label { background: transparent !important; color: #f1d779 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; font-size: .7rem; letter-spacing: .05em; }
+.folded-seat .hole-cards { opacity: .42; filter: grayscale(.55); }
+.action-grid .fold-action { background: #352a2b; border-color: #785153; }
+.action-grid .passive-action { background: #263b38; border-color: #507c70; }
+.action-grid .recommended-action { border-color: #d6bf70; box-shadow: inset 0 0 0 2px #d6bf70; }
+.table-quick-metrics { display: none; }
+.public-tables { margin-block: 18px; }
+.public-tables a { display: block; padding: 12px; border-bottom: 1px solid #3d5144; color: #dfd6a6; }
+.public-tables a[aria-disabled="true"] { opacity: .55; }
+.room-created-dialog .poker-sheet { margin: auto; }
+.room-created-dialog .sheet-surface { display: grid; gap: 16px; }
+.room-created-dialog input { width: 100%; min-width: 0; }
+@media (max-width: 767px) { .table-quick-metrics { display: flex; justify-content: space-between; gap: 8px; padding: 6px 12px; font-size: .75rem; color: #b9cbbf; } .table-quick-metrics b { color: #f0dda3; } }
+.room-created-dialog input { padding: 12px; color: var(--text, #eef2ea); background: #101d18; border: 1px solid #526558; border-radius: 10px; font: inherit; }

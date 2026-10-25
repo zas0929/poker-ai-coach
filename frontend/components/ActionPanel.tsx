@@ -34,6 +34,7 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
   const [sizingContext, setSizingContext] = useState<string | null>(null);
   const currentPlayer = hand?.players.find((player) => player.id === hand.current_player_id);
   const viewer = hand?.players.find((player) => player.id === viewerId);
+  const folded = viewer?.status === 'folded';
   const handEnded = Boolean(hand?.result || hand?.street === 'showdown');
   const canAct = Boolean(currentPlayer?.id === viewerId && !handEnded && !blocked);
   const betting = hand?.betting;
@@ -81,9 +82,9 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
       {trainingControls && canAct && analysis ? <span className="coach-action-hint" role="status">{t('Coach: {0}').replace('{0}', adviceLabel)}</span> : null}
       {secondsLeft !== null && secondsLeft !== undefined && !handEnded ? <span className={`dock-clock ${secondsLeft <= 10 ? 'urgent' : ''}`} role="timer" aria-label={t('Time remaining')}>{secondsLeft}s</span> : <span>{t('Stack')} <b>{heroStack}</b></span>}
     </div>
-    {pausedActions ? <div className="hand-actions">{pausedActions}</div> : !hand || handEnded || actionClosed ? <div className="hand-actions">
-      {trainingControls && (!hand || handEnded) ? <button className="primary-button" disabled={isLoading} onClick={onStartHand}>{t(hand ? 'Next hand' : 'New hand')}</button> : null}
-      {trainingControls && actionClosed ? <button className="primary-button" disabled={isLoading} onClick={onAdvance}>{t('Advance')}</button> : null}
+    {pausedActions ? <div className="hand-actions">{pausedActions}</div> : !hand || handEnded || (trainingControls && folded) || actionClosed ? <div className="hand-actions">
+      {trainingControls && (!hand || handEnded || folded) ? <button className="primary-button" disabled={isLoading} onClick={onStartHand}>{t(hand ? 'Next hand' : 'New hand')}</button> : null}
+      {trainingControls && actionClosed && !folded ? <button className="primary-button" disabled={isLoading} onClick={onAdvance}>{t('Advance')}</button> : null}
       {!trainingControls ? betweenActions : null}
     </div> : <div className="action-grid">
       <button className={`fold-action${isRecommended('fold')}`} disabled={!allows('fold') || isLoading} onClick={() => submit('fold')}>{t('Fold')}</button>

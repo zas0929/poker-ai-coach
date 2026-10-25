@@ -22,6 +22,7 @@ interface PokerTableProps {
   turnTimer?: TurnTimer | null;
   silent?: boolean;
   thinkingPlayerId?: string | null;
+  revealedFoldIds?: string[];
 }
 
 function Seat({
@@ -60,7 +61,7 @@ function Seat({
     <div data-player-id={player?.id} className={`seat seat-${slot} ${active ? 'active-seat' : ''} ${timer ? 'timed-seat' : ''} ${timer && timer.remaining <= 10 ? 'seat-time-urgent' : ''} ${player ? '' : 'empty-seat'} ${cardsHidden ? 'concealed-seat' : ''} ${status === 'folded' ? 'folded-seat' : ''}`}>
       {dealer ? <span className="dealer-marker" aria-label={t("Button")}>D</span> : null}
       <div className="seat-bar">
-        {active ? <span className="seat-turn-label"><span aria-hidden="true">▶</span> {turnLabel ?? t('To act')}</span> : null}
+        {active ? <span className="seat-turn-label"><span aria-hidden="true">●</span> {turnLabel ?? t('To act')}</span> : null}
         {timer ? <span className="seat-turn-timer" role="timer" aria-label={`${t("Time remaining")}: ${timer.remaining}`}><span aria-hidden="true">◷</span> {timer.remaining}<small>s</small></span> : null}
         <span className="seat-avatar" aria-hidden="true">{player ? displayName.slice(0, 1).toUpperCase() : "+"}</span>
         <div className="seat-info">
@@ -80,8 +81,8 @@ function Seat({
       </div>
       {player ? (
         <div className="seat-hand">
-          <div className="hole-cards" aria-hidden={status === 'folded' || undefined}>
-            {status !== 'folded' ? Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
+          <div className="hole-cards" aria-hidden={status === 'folded' && cardsHidden || undefined}>
+            {(status !== 'folded' || !cardsHidden) ? Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
               <CardView key={`${player.id}-${index}`} card={card} hidden={cardsHidden} />
             )) : null}
           </div>
@@ -125,7 +126,7 @@ export default function PokerTable(props: PokerTableProps) {
   return <TableScene key={key} {...props} />;
 }
 
-function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer, thinkingPlayerId, silent = false }: PokerTableProps) {
+function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer, thinkingPlayerId, revealedFoldIds, silent = false }: PokerTableProps) {
   const { t } = useI18n();
   const { play } = useTableSound();
   const previousBoard = useRef(hand && isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand?.board.length ?? 0);
@@ -210,7 +211,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
             thinking={Boolean(seat.player && thinkingPlayerId === seat.player.id)}
             turnLabel={t(seat.player?.id === viewerId ? 'Your turn' : 'To act')}
             active={Boolean(!hand?.result && seat.player && hand?.current_player_id === seat.player.id)}
-            cardsHidden={Boolean(seat.player?.id !== viewerId && (!revealVillainCards || seat.player?.status === 'folded'))}
+            cardsHidden={Boolean(seat.player?.id !== viewerId && (!revealVillainCards || seat.player?.status === 'folded')) && !revealedFoldIds?.includes(seat.player?.id ?? '')}
             lastAction={seat.player ? lastActionFor(hand, seat.player.id) : undefined}
             label={seat.label}
             slot={seat.slot}

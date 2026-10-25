@@ -35,8 +35,9 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 export const PokerApi = {
-  startHand(playerCount?: number, blinds?: TrainingBlinds) {
+  startHand(playerCount?: number, blinds?: TrainingBlinds, restart = false) {
     const query = new URLSearchParams();
+    if (restart) query.set('restart', 'true');
     if (playerCount !== undefined) query.set('player_count', String(playerCount));
     if (blinds) {
       query.set('small_blind', String(blinds.small_blind));

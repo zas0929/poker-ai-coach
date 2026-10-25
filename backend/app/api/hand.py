@@ -68,7 +68,7 @@ def get_current_state() -> HandState:
 
 @router.post("/start", response_model=HandState)
 @serialized
-def start_hand(player_count: Optional[int] = None, small_blind: Optional[int] = None, big_blind: Optional[int] = None):
+def start_hand(player_count: Optional[int] = None, small_blind: Optional[int] = None, big_blind: Optional[int] = None, restart: bool = False):
     global current_state
     # Refreshing the browser must not discard a live pot or reset its stacks.
     if player_count is not None and (type(player_count) is not int or not 2 <= player_count <= 6):
@@ -78,6 +78,12 @@ def start_hand(player_count: Optional[int] = None, small_blind: Optional[int] = 
     if (type(small) is not int or type(big) is not int
             or not 1 <= small <= 10000 or not 2 <= big <= 20000 or small >= big):
         raise HTTPException(status_code=400, detail="Blinds must be positive integers with small blind below big blind (maximum 10000/20000).")
+    if restart and current_state is not None and current_state.result is None:
+        hero = next(p for p in current_state.players if p.id == 'hero')
+        if hero.status.value == 'folded':
+            auto_play_until_hero()
+        else:
+            current_state = None  # Explicit New game only; ordinary refresh retains the pot.
     if current_state is not None and current_state.result is None:
         if player_count is not None and player_count != len(current_state.players):
             raise HTTPException(status_code=409, detail="Finish the hand before changing table size.")

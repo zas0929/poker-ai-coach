@@ -58,7 +58,7 @@ export function usePokerHand() {
     let settledHand = nextHand;
     setAnalysis(null);
     setHand(settledHand);
-    if (!settledHand.result && settledHand.current_player_id !== 'hero') {
+    if (!settledHand.result && settledHand.players.find(p => p.id === 'hero')?.status !== 'folded' && settledHand.current_player_id !== 'hero') {
       settledHand = await playTrainerTurns(settledHand, {
         aiAction: PokerApi.aiAction,
         advance: PokerApi.advance,
@@ -75,10 +75,10 @@ export function usePokerHand() {
     }
   }, []);
 
-  const startHand = useCallback(async (playerCount?: number, blinds?: TrainingBlinds) => run(async () => {
+  const startHand = useCallback(async (playerCount?: number, blinds?: TrainingBlinds, restart = false) => run(async () => {
     setAnalysis(null);
     setActionReview(null);
-    const next = await PokerApi.startHand(playerCount, blinds);
+    const next = await PokerApi.startHand(playerCount, blinds, restart);
     if (tableSize.current !== null && tableSize.current !== next.players.length) setDecisionLog([]);
     tableSize.current = next.players.length;
     await applyState(next);

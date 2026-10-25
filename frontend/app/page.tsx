@@ -66,14 +66,15 @@ export default function HomePage() {
       <section className="game-layout">
         <div className="table-column">
           <PokerTable hand={hand} seatCount={hand?.players.length ?? 2} thinkingPlayerId={isLoading && !hand?.result && hand?.current_player_id !== 'hero' ? hand?.current_player_id : null} />
+          {analysis && hand && !hand.result && analysis.hand_id === hand.hand_id && analysis.street === hand.street && analysis.pot === hand.pot && hand.current_player_id === 'hero' ? <div className="table-quick-metrics" aria-label={t('Coach')}><span>{t('Equity')} <b>{(analysis.equity * 100).toFixed(1)}%</b></span><span>{t('Call')} <b>{hand.betting?.call_amount ?? 0}</b></span><span>{t('Required')} <b>{(analysis.required_equity * 100).toFixed(1)}%</b></span></div> : null}
           <ActionPanel
             analysis={analysis}
             hand={actionHand}
             isLoading={isLoading}
             onAction={action}
             onAdvance={advance}
-            tools={<><button aria-haspopup="dialog" onClick={() => setPanel('coach')}>{t('Coach')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button></>}
-            onStartHand={() => { const [small, big] = (blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`).split('/').map(Number); void startHand(seatCount ?? hand?.players.length ?? 2, { small_blind: small, big_blind: big }); }}
+            tools={<><button disabled={isLoading} onClick={() => { const [small, big] = (blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`).split('/').map(Number); void startHand(seatCount ?? hand?.players.length ?? 2, { small_blind: small, big_blind: big }, true); }}>{t('New game')}</button><button aria-haspopup="dialog" onClick={() => setPanel('coach')}>{t('Coach')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button></>}
+            onStartHand={() => { const [small, big] = (blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`).split('/').map(Number); void startHand(seatCount ?? hand?.players.length ?? 2, { small_blind: small, big_blind: big }, true); }}
           />
         </div>
         <PanelSidebar active={panel} onClose={() => setPanel(null)} panels={[

@@ -29,3 +29,10 @@ test('after a failed transition the controls use the recovered server state, not
  f.rejectBot(new Error('Bot transition failed'));await pending;
  assert.equal(f.read().isLoading,false);assert.equal(f.read().actionHand,f.intermediate);assert.deepEqual(f.read().actionHand.betting.legal_actions,[]);
 });
+test('folded hero stops playback and exposes the folded state immediately',async()=>{
+ const f=fixture();await f.read().startHand();
+ f.intermediate.players=[{id:'hero',status:'folded'}];
+ const pending=f.read().action('fold');await pending;
+ assert.equal(f.read().isLoading,false);
+ assert.equal(f.read().actionHand.players[0].status,'folded');
+});
