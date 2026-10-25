@@ -57,7 +57,7 @@ test('mismatched server identity and failed calculations leave the usual coach a
  const next=h.runner.request(fixture.hand);h.starts[1].reject(new Error('timeout'));await next;assert.equal(h.updates.at(-1).state,'unavailable');
 });
 test('no solver request runs for another street or another acting player',async()=>{
- const h=harness();await h.runner.request({...fixture.hand,street:'turn'});await h.runner.request({...fixture.hand,current_player_id:'villain'});
+ const h=harness();await h.runner.request({...fixture.hand,street:'flop'});await h.runner.request({...fixture.hand,current_player_id:'villain'});
  assert.equal(h.starts.length,0);assert.equal(h.updates.at(-1),null);
 });
 test('actual coach supplement renders sizes, EV, coverage and busy state without action controls',()=>{
@@ -68,4 +68,35 @@ test('actual coach supplement renders sizes, EV, coverage and busy state without
  const content=text(scope.exports.default({result:fixture.result,hand:fixture.hand}));
  assert.match(content,/EV/);assert.match(content,/range coverage/);assert.match(content,/Frequency/);assert.match(content,/bet \d+/);
  const busy=text(scope.exports.default({result:pending('one'),hand:fixture.hand}));assert.match(busy,/You can act/);assert.doesNotMatch(busy,/Frequency/);
+});
+
+const turnFixture = require('./fixtures/trainer-turn.json');
+test('turn calculation uses its own contract and cannot render a river result', async()=>{
+ const api=load();assert.equal(api.trainerPosition(turnFixture.hand),turnFixture.position);
+ assert.ok(api.currentModelActions(turnFixture.result,turnFixture.hand));
+ for(const change of [r=>r.contract_version='trainer_current_river_v1',r=>r.model.board.push('As'),r=>r.client_position='old-turn',r=>r.actions[0].gap_chips=10000]){
+  const bad=copy(turnFixture.result);change(bad);assert.equal(api.currentModelActions(bad,turnFixture.hand),null);
+ }
+ const h=harness();const pending=h.runner.request(turnFixture.hand);
+ h.starts[0].resolve({...copy(turnFixture.result),ticket_id:'turn-job',state:'running',actions:null,quality:null});await tick();
+ assert.equal(h.updates.at(-1).state,'running');h.waits[0].resolve();await tick();
+ h.polls[0].resolve({...copy(turnFixture.result),ticket_id:'turn-job'});await pending;
+ assert.equal(h.updates.at(-1).state,'ready');
+ h.runner.cancel();assert.equal(h.updates.at(-1),null);assert.ok(h.cancellations.includes('turn-job'));
+});
+test('a river response to a turn request is unavailable and cannot replace action buttons',async()=>{
+ const h=harness();const pending=h.runner.request(turnFixture.hand);
+ h.starts[0].resolve({...copy(turnFixture.result),contract_version:'trainer_current_river_v1'});await pending;
+ assert.equal(h.updates.at(-1).state,'unavailable');assert.equal(h.updates.at(-1).reason,'CURRENT_TURN_UNAVAILABLE');
+});
+test('turn panel shows future river scope, per-street raise caps and sizes',()=>{
+ const h=load(),jsx=(type,props)=>({type,props});
+ const scope={exports:{},require:name=>name==='react/jsx-runtime'?{jsx,jsxs:jsx}:name.includes('LanguageProvider')?{useI18n:()=>({t:v=>v})}:h};
+ vm.runInNewContext(ts.transpileModule(fs.readFileSync(path.join(__dirname,'../components/TrainerSolverPanel.tsx'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText,scope);
+ function text(tree){if(tree==null)return '';if(typeof tree!=='object')return String(tree);if(Array.isArray(tree))return tree.map(text).join('');return text(tree.props?.children);}
+ const content=text(scope.exports.default({result:turnFixture.result,hand:turnFixture.hand}));
+ assert.match(content,/Current turn model/);assert.match(content,/All compatible river cards/);
+ assert.match(content,/turn 1, river 0/);assert.match(content,/Model sizes/);assert.match(content,/EV/);
+ const refused=text(scope.exports.default({result:{...copy(turnFixture.result),state:'unavailable',actions:null,quality:null,reason:'MODEL_BUDGET_EXCEEDED'},hand:turnFixture.hand}));
+ assert.match(refused,/tree budget/);assert.doesNotMatch(refused,/Frequency/);
 });

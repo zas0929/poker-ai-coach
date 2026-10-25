@@ -8,7 +8,9 @@ export interface TrainerModel {
   model?: {
     own_hand: string; actor_id: string; board: string[]; actions: string[];
     players: { id: string; total_committed: number; range?: { cards: string; weight: number }[] }[];
-    tree: { bet_sizes: number[]; raise_sizes: number[]; max_raises: number };
+    tree: { bet_sizes?: number[]; raise_sizes?: number[]; max_raises?: number;
+      turn_bet_sizes?: number[]; turn_raise_sizes?: number[]; turn_max_raises?: number;
+      river_bet_sizes?: number[]; river_raise_sizes?: number[]; river_max_raises?: number };
     coverage: { player_id: string; selected_combos: number; public_combos: number; weight_share: number }[];
   } | null;
   quality?: { passed: boolean; value: number; gate: number } | null;
@@ -47,12 +49,16 @@ export const TrainerSolverApi = {
   cancel: (ticket: string) => request(`/${encodeURIComponent(ticket)}`, undefined, 'DELETE'),
 };
 
+export function trainerContract(hand: HandState): string | null {
+  return hand.street === 'river' ? 'trainer_current_river_v1' : hand.street === 'turn' ? 'trainer_current_turn_v1' : null;
+}
+
 export function currentModelActions(result: TrainerModel | null, hand: HandState | null) {
   const model = result?.model, rows = result?.actions, quality = result?.quality;
-  if (!hand || hand.result || hand.street !== 'river' || hand.current_player_id !== 'hero' ||
-      result?.contract_version !== 'trainer_current_river_v1' || result.hand_id !== hand.hand_id ||
+  if (!hand || hand.result || !trainerContract(hand) || hand.current_player_id !== 'hero' ||
+      result?.contract_version !== trainerContract(hand) || result.hand_id !== hand.hand_id ||
       result.state !== 'ready' || result.client_position !== trainerPosition(hand) || result.replaces_heuristic !== false || !model || model.actor_id !== 'hero' ||
-      !rows?.length || !quality?.passed || !Number.isFinite(quality.value) || !Number.isFinite(quality.gate) ||
+      !rows?.length || JSON.stringify(model.board) !== JSON.stringify(hand.board.map(c => c.rank + ({clubs:'c',diamonds:'d',hearts:'h',spades:'s'}[c.suit]))) || !quality?.passed || !Number.isFinite(quality.value) || !Number.isFinite(quality.gate) ||
       quality.value < 0 || quality.gate <= 0 || quality.gate > .5 || quality.value > quality.gate ||
       rows.length !== model.actions.length || rows.some((r, i) => r.action !== model.actions[i]) ||
       model.own_hand.match(/../g)?.sort().join('') !== hand.players.find(p => p.id === 'hero')?.cards.map(c => c.rank + ({clubs:'c',diamonds:'d',hearts:'h',spades:'s'}[c.suit])).sort().join('') ||
@@ -99,7 +105,7 @@ export class CurrentTrainerSolver {
 
   async request(hand: HandState) {
     this.cancel();
-    if (hand.result || hand.street !== 'river' || hand.current_player_id !== 'hero') return;
+    if (hand.result || !trainerContract(hand) || hand.current_player_id !== 'hero') return;
     const sequence = this.sequence, controller = new AbortController(); this.controller = controller;
     let ticket: string | null = null;
     const current = () => sequence === this.sequence && !controller.signal.aborted;
@@ -111,7 +117,7 @@ export class CurrentTrainerSolver {
       if (!current()) { if (ticket) void this.api.cancel(ticket).catch(() => {}); return; }
       this.ticket = ticket;
       const key = job.position_key;
-      if (job.state !== 'disabled' && (job.contract_version !== 'trainer_current_river_v1' || job.hand_id !== hand.hand_id || !key?.match(/^[a-f0-9]{64}$/))) throw new Error('identity');
+      if (job.state !== 'disabled' && (job.contract_version !== trainerContract(hand) || job.hand_id !== hand.hand_id || !key?.match(/^[a-f0-9]{64}$/))) throw new Error('identity');
       while (current()) {
         job = { ...job, client_position: trainerPosition(hand) };
         if (job.state === 'ready' && !currentModelActions(job, hand)) throw new Error('invalid');
@@ -121,10 +127,10 @@ export class CurrentTrainerSolver {
         if (!current()) return;
         job = await this.api.poll(ticket, controller.signal);
         if (!current()) return;
-        if (job.position_key !== key || job.hand_id !== hand.hand_id || job.ticket_id !== ticket || job.contract_version !== 'trainer_current_river_v1') throw new Error('identity');
+        if (job.position_key !== key || job.hand_id !== hand.hand_id || job.ticket_id !== ticket || job.contract_version !== trainerContract(hand)) throw new Error('identity');
       }
     } catch {
-      if (sequence === this.sequence) this.update({ state: 'unavailable', reason: 'CURRENT_RIVER_UNAVAILABLE', ticket_id: null });
+      if (sequence === this.sequence) this.update({ state: 'unavailable', reason: hand.street === 'turn' ? 'CURRENT_TURN_UNAVAILABLE' : 'CURRENT_RIVER_UNAVAILABLE', ticket_id: null });
       if (ticket) void this.api.cancel(ticket).catch(() => {});
     } finally {
       clearTimeout(timeout);

@@ -1,0 +1,266 @@
+{
+  "hand": {
+    "hand_id": "48951859-901b-4fe2-b040-32251bf83f27",
+    "street": "turn",
+    "pot": 20,
+    "small_blind": 5,
+    "big_blind": 10,
+    "board": [
+      {
+        "rank": "8",
+        "suit": "hearts"
+      },
+      {
+        "rank": "9",
+        "suit": "hearts"
+      },
+      {
+        "rank": "A",
+        "suit": "spades"
+      },
+      {
+        "rank": "Q",
+        "suit": "spades"
+      }
+    ],
+    "players": [
+      {
+        "id": "hero",
+        "name": "You",
+        "stack": 990,
+        "position": "small_blind_button",
+        "cards": [
+          {
+            "rank": "J",
+            "suit": "spades"
+          },
+          {
+            "rank": "J",
+            "suit": "diamonds"
+          }
+        ],
+        "status": "active",
+        "current_bet": 0
+      },
+      {
+        "id": "villain",
+        "name": "AI 1",
+        "stack": 990,
+        "position": "big_blind",
+        "cards": [],
+        "status": "active",
+        "current_bet": 0
+      }
+    ],
+    "current_player_id": "hero",
+    "dealer_player_id": "hero",
+    "history": [
+      {
+        "player_id": "hero",
+        "action": "small_blind",
+        "amount": 5,
+        "street": "preflop"
+      },
+      {
+        "player_id": "villain",
+        "action": "big_blind",
+        "amount": 10,
+        "street": "preflop"
+      },
+      {
+        "player_id": "hero",
+        "action": "call",
+        "amount": 5,
+        "street": "preflop"
+      },
+      {
+        "player_id": "villain",
+        "action": "check",
+        "amount": null,
+        "street": "preflop"
+      },
+      {
+        "player_id": "villain",
+        "action": "check",
+        "amount": null,
+        "street": "flop"
+      },
+      {
+        "player_id": "hero",
+        "action": "check",
+        "amount": null,
+        "street": "flop"
+      },
+      {
+        "player_id": "villain",
+        "action": "check",
+        "amount": null,
+        "street": "turn"
+      }
+    ],
+    "notes": [
+      "New 2-player training hand. Button: hero.",
+      "Flop dealt.",
+      "Turn dealt."
+    ],
+    "result": null,
+    "last_full_raise": 10,
+    "acted_at_bet": {
+      "villain": 0
+    },
+    "betting": {
+      "player_id": "hero",
+      "legal_actions": [
+        "fold",
+        "check",
+        "bet"
+      ],
+      "call_amount": 0,
+      "min_bet": 10,
+      "min_raise_to": null,
+      "max_raise_to": 990
+    },
+    "contributions": {
+      "hero": 10,
+      "villain": 10
+    }
+  },
+  "position": "[\"48951859-901b-4fe2-b040-32251bf83f27\",\"turn\",\"hero\",\"hero\",5,10,10,20,[[\"8\",\"hearts\"],[\"9\",\"hearts\"],[\"A\",\"spades\"],[\"Q\",\"spades\"]],[[\"hero\",990,0,\"active\",\"small_blind_button\"],[\"villain\",990,0,\"active\",\"big_blind\"]],[[\"hero\",\"small_blind\",5,\"preflop\"],[\"villain\",\"big_blind\",10,\"preflop\"],[\"hero\",\"call\",5,\"preflop\"],[\"villain\",\"check\",null,\"preflop\"],[\"villain\",\"check\",null,\"flop\"],[\"hero\",\"check\",null,\"flop\"],[\"villain\",\"check\",null,\"turn\"]],[[\"hero\",10],[\"villain\",10]],[[\"villain\",0]],[[[\"J\",\"spades\"],[\"J\",\"diamonds\"]]],false]",
+  "result": {
+    "contract_version": "trainer_current_turn_v1",
+    "position_key": "8a48a3c31884885cc2c49382d4298b7f33115dac2a768263cfa20a5577784306",
+    "hand_id": "48951859-901b-4fe2-b040-32251bf83f27",
+    "ticket_id": "67c8a40efba40bfe2c13cf663d1a50f513396a5faad1e1d2",
+    "state": "ready",
+    "reason": null,
+    "model": {
+      "version": "trainer_current_turn_v1",
+      "street": "turn",
+      "board": [
+        "8h",
+        "9h",
+        "As",
+        "Qs"
+      ],
+      "own_hand": "JsJd",
+      "actor_id": "hero",
+      "pot": 20,
+      "players": [
+        {
+          "id": "hero",
+          "seat": 0,
+          "position": "small_blind_button",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10,
+          "range": [
+            {
+              "cards": "JsJd",
+              "weight": 0.8998458500640109
+            },
+            {
+              "cards": "7h3c",
+              "weight": 0.6754854051072354
+            }
+          ]
+        },
+        {
+          "id": "villain",
+          "seat": 1,
+          "position": "big_blind",
+          "status": "active",
+          "stack": 990,
+          "street_committed": 0,
+          "total_committed": 10,
+          "range": [
+            {
+              "cards": "Th2d",
+              "weight": 0.9178230016521408
+            },
+            {
+              "cards": "KdQd",
+              "weight": 0.5843266539772496
+            }
+          ]
+        }
+      ],
+      "tree": {
+        "turn_bet_sizes": [
+          10
+        ],
+        "turn_raise_sizes": [
+          20
+        ],
+        "turn_max_raises": 1,
+        "river_bet_sizes": [
+          10
+        ],
+        "river_raise_sizes": [],
+        "river_max_raises": 0,
+        "max_nodes": 1500,
+        "max_joint_combos": 64,
+        "max_outcomes": 3072,
+        "max_work": 200000
+      },
+      "actions": [
+        "CHECK",
+        "BET 10"
+      ],
+      "coverage": [
+        {
+          "player_id": "hero",
+          "selected_combos": 2,
+          "public_combos": 1128,
+          "weight_share": 0.0016464903947023546
+        },
+        {
+          "player_id": "villain",
+          "selected_combos": 2,
+          "public_combos": 1128,
+          "weight_share": 0.0016590954453934283
+        }
+      ],
+      "range_model": "public_action_heuristic_v1",
+      "scope": "two_hands_per_live_seat_all_compatible_rivers_one_turn_raise_no_river_raises_no_rake_no_icm"
+    },
+    "quality": {
+      "value": 0.1525047128323842,
+      "gate": 0.5,
+      "passed": true,
+      "metric": "max_unilateral_gain_pct_decision_pot",
+      "evidence": {
+        "policy_payoffs": [
+          -2.3858459082527017,
+          2.385845908252702
+        ],
+        "best_response_payoffs": [
+          -2.359915023283041,
+          2.416346850819179
+        ],
+        "unilateral_gains": [
+          0.025930884969660895,
+          0.03050094256647684
+        ],
+        "nash_conv_chips": 0.056431827536137735,
+        "max_unilateral_gain_pct_pot": 0.1525047128323842
+      }
+    },
+    "actions": [
+      {
+        "action": "CHECK",
+        "probability": 0.9946356185390914,
+        "ev_chips": 12.369418189037999,
+        "gap_chips": 0.0
+      },
+      {
+        "action": "BET 10",
+        "probability": 0.005364381460908597,
+        "ev_chips": 10.264853655857227,
+        "gap_chips": 2.1045645331807723
+      }
+    ],
+    "replaces_heuristic": false,
+    "client_position": "[\"48951859-901b-4fe2-b040-32251bf83f27\",\"turn\",\"hero\",\"hero\",5,10,10,20,[[\"8\",\"hearts\"],[\"9\",\"hearts\"],[\"A\",\"spades\"],[\"Q\",\"spades\"]],[[\"hero\",990,0,\"active\",\"small_blind_button\"],[\"villain\",990,0,\"active\",\"big_blind\"]],[[\"hero\",\"small_blind\",5,\"preflop\"],[\"villain\",\"big_blind\",10,\"preflop\"],[\"hero\",\"call\",5,\"preflop\"],[\"villain\",\"check\",null,\"preflop\"],[\"villain\",\"check\",null,\"flop\"],[\"hero\",\"check\",null,\"flop\"],[\"villain\",\"check\",null,\"turn\"]],[[\"hero\",10],[\"villain\",10]],[[\"villain\",0]],[[[\"J\",\"spades\"],[\"J\",\"diamonds\"]]],false]"
+  }
+}

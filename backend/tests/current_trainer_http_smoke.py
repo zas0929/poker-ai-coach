@@ -11,7 +11,9 @@ from app.services.trainer_solver import position_text
 ALLOWED = {'http://127.0.0.1:8012', 'https://poker-ai-coach-api.onrender.com'}
 
 
-def run(base):
+def run(base, street='river'):
+    if street not in ('turn','river'):
+        raise ValueError('Choose turn or river.')
     if base not in ALLOWED:
         raise ValueError('Only the dedicated local preview or authorized staging API is allowed.')
 
@@ -34,7 +36,7 @@ def run(base):
         status,state,_=call('/api/hand/start?player_count='+str(count),token,{},'POST')
         assert status==200
         for _ in range(120):
-            if state['street']=='river' and state['current_player_id']=='hero':break
+            if state['street']==street and state['current_player_id']=='hero':break
             assert not state['result']
             if state['current_player_id'] is None:
                 status,state,_=call('/api/hand/advance',token,{},'POST')
@@ -42,7 +44,7 @@ def run(base):
                 action='check' if 'check' in state['betting']['legal_actions'] else 'call'
                 status,state,_=call('/api/hand/action',token,{'player_id':state['current_player_id'],'action':action})
             assert status==200
-        assert state['street']=='river' and state['current_player_id']=='hero'
+        assert state['street']==street and state['current_player_id']=='hero'
         position=position_text(HandState.model_validate(state))
         start=time.monotonic()
         status,job,headers=call('/api/hand/solver',token,{'position':position,'nonce':'first'})
@@ -73,17 +75,21 @@ def run(base):
         assert stale['state']=='stale' and stale['actions'] is None,stale
         assert call('/api/hand/solver',token,{'position':position,'nonce':'old'})[0]==409
         rows.append({'opponents':count-1,'state':job['state'],'reason':job.get('reason'),
+                     'contract_version':job.get('contract_version'),
+                     'model_scope':(job.get('model') or {}).get('scope'),
+                     'tree':(job.get('model') or {}).get('tree'),
                      'quality':job.get('quality',{}).get('value') if job.get('quality') else None,
                      'total_seconds':round(time.monotonic()-start,3),
                      'concurrent_state_read_seconds':round(responsive,3),
                      'cached_job_reused':True,'foreign_profile_rejected':True,'stale_result_removed':True})
         print(json.dumps(rows[-1]),flush=True)
-    return {'api':base,'scope':'Disposable passive training profiles, actual native worker, no existing rooms', 'results':rows}
+    return {'api':base,'street':street,'scope':'Disposable passive training profiles, actual native worker, no existing rooms', 'results':rows}
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--url',default='http://127.0.0.1:8012')
     parser.add_argument('--output',type=Path)
-    args=parser.parse_args(); result=run(args.url)
+    parser.add_argument('--street',choices=('turn','river'),default='river')
+    args=parser.parse_args(); result=run(args.url,args.street)
     if args.output:args.output.write_text(json.dumps(result,indent=2)+'\n')

@@ -21,3 +21,6 @@ dist/
 
 # Separate local river lesson preview build
 .next-river-*/
+
+# Separate local turn analysis verification build
+.next-turn-*/

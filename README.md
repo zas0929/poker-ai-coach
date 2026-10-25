@@ -404,7 +404,9 @@ bounded river analysis enabled; the fast heuristic coach remains available. See
 Первый offline-решатель тёрн → ривер, отдельный native-адаптер, границы и проверки:
 [docs/TURN_REFERENCE.md](docs/TURN_REFERENCE.md).
 Продолжение тёрна с наблюдёнными ставками, рейзами и адаптером публичной позиции:
-[docs/TURN_CONTINUATION.md](docs/TURN_CONTINUATION.md). В интерфейсе пока доступен ривер.
+[docs/TURN_CONTINUATION.md](docs/TURN_CONTINUATION.md).
+Текущий тёрн подключён локально к той же панели, с явными ограничениями multiway:
+[docs/LIVE_TURN_ANALYSIS.md](docs/LIVE_TURN_ANALYSIS.md).
 
 Приоритет интеграции — анализ текущего хода во время тренировочной игры:
 [docs/LIVE_TRAINER_ANALYSIS.md](docs/LIVE_TRAINER_ANALYSIS.md).

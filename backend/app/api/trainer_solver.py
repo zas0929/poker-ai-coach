@@ -49,7 +49,7 @@ def submit(body: CurrentModelRequest):
     def operation(service):
         state = current(body.position)
         # Range preparation is outside the game lock; CFR runs in a child process.
-        from research.trainer_river import prepare
+        from research.trainer_current import prepare
         assessment, request = prepare(state)
         return enqueue(service, body, assessment, request)
     return invoke(operation)

@@ -6,6 +6,7 @@ heuristic advice. No access to opponent cards, deck or archived future cards.
 """
 from collections import OrderedDict
 from copy import deepcopy
+from dataclasses import replace
 import random
 import secrets
 from threading import RLock
@@ -116,11 +117,12 @@ class TrainerRiver:
                     self.owners.pop(victim)
             if previous:
                 self.executor.cancel(previous['internal'])
-            job = self.executor.submit('trainer-current:' + owner, request, self.limits)
+            limits = replace(self.limits, iterations=100) if request['snapshot']['street'] == 'turn' else self.limits
+            job = self.executor.submit('trainer-current:' + owner, request, limits)
             if not job.get('ticket_id'):
                 return {**assessment, 'state': 'busy', 'reason': 'TRAINER_SOLVER_BUSY'}
             item = {'assessment': deepcopy(assessment), 'request': request, 'identity': identity,
-                    'internal': job['ticket_id'], 'handles': {nonce: secrets.token_hex(24)}, 'invalidated': False}
+                    'limits': limits, 'internal': job['ticket_id'], 'handles': {nonce: secrets.token_hex(24)}, 'invalidated': False}
             self.owners[owner] = item
             self.owners.move_to_end(owner)
             return self._view(item, item['handles'][nonce])
@@ -131,18 +133,23 @@ class TrainerRiver:
         output = {**deepcopy(item['assessment']), 'ticket_id': handle, 'state': job['state']}
         if job['state'] in ('queued', 'running'):
             return output
+        unavailable = 'CURRENT_TURN_UNAVAILABLE' if item['request']['snapshot']['street'] == 'turn' else 'CURRENT_RIVER_UNAVAILABLE'
         output.update(state=job['state'] if job['state'] != 'completed' else 'unavailable',
-                      reason='CURRENT_RIVER_UNAVAILABLE')
+                      reason=unavailable)
         if job['state'] != 'completed' or not isinstance(result, dict):
             return output
         request = item['request']
         if result.get('request_key') != item['identity'] or result.get('source_information_key') != request['snapshot']['information_key']:
             return output
         if result.get('status') != 'ready':
-            output['reason'] = (result.get('reasons') or [{'code': 'CURRENT_RIVER_UNAVAILABLE'}])[0]['code']
+            output['reason'] = (result.get('reasons') or [{'code': unavailable}])[0]['code']
             return output
         candidate, values, quality = result.get('candidate'), result.get('action_values'), result.get('quality')
-        if (not isinstance(quality, dict) or quality.get('passed') is not True
+        if request['snapshot']['street'] == 'turn':
+            from research.trainer_current import valid_turn_result
+            if not valid_turn_result(result, request, item['limits']):
+                return output
+        elif (not isinstance(quality, dict) or quality.get('passed') is not True
                 or not finite_number(quality.get('value')) or not finite_number(quality.get('gate'))
                 or quality['gate'] != self.limits.quality_gate_pct_pot or not 0 <= quality['value'] <= quality['gate']
                 or result.get('admission') != {'offline_analysis_allowed': True, 'live_advice_allowed': False}

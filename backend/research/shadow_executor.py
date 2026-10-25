@@ -1,5 +1,6 @@
-"""Single-worker, bounded OFFLINE shadow queue. Never called by live game routes.
-One in-flight job may serve multiple contexts. No completed-result cache.
+"""Single-worker bounded analysis queue with separate per-job protocols.
+Shared by opt-in training analyses; one in-flight job may serve multiple contexts.
+No completed-result cache.
 """
 from collections import OrderedDict,deque
 import copy
@@ -9,20 +10,21 @@ import json
 import re
 from threading import Condition,Event,Thread
 import time
-from research.analysis_contract import (CONTRACT_VERSION,ResearchLimits,analyze,finish,
-    provenance,recheck_decision,validate_request)
+from research import analysis_contract as default_protocol
+from research.analysis_contract import ResearchLimits,analyze
 from research.river_snapshot import digest
 
 TERMINAL={'completed','stale','cancelled','error'}
 
 
 class ShadowExecutor:
-    def __init__(self,*,max_pending=2,max_retained=128,max_events=256,analyzer=analyze):
+    def __init__(self,*,max_pending=2,max_retained=128,max_events=256,analyzer=analyze,protocol_for=None):
         for value in (max_pending,max_retained,max_events):
             if type(value) is not int or not 1<=value<=4096:raise ValueError('Integer capacities 1–4096 required.')
-        if not callable(analyzer):raise ValueError('Callable analyzer required.')
+        if not callable(analyzer) or (protocol_for is not None and not callable(protocol_for)):
+            raise ValueError('Callable analyzer and optional protocol selector required.')
         self.max_pending=max_pending;self.max_retained=max_retained;self.max_events=max_events
-        self._analyzer=analyzer;self._cv=Condition();self._queue=deque();self._jobs={};self._identities={}
+        self._analyzer=analyzer;self._protocol_for=protocol_for or (lambda request: default_protocol);self._cv=Condition();self._queue=deque();self._jobs={};self._identities={}
         self._tickets=OrderedDict();self._contexts={};self._events=deque(maxlen=max_events)
         self._counter=0;self._sequence=0;self._closed=False;self._active=None
         self._thread=Thread(target=self._loop,name='offline-poker-shadow',daemon=False);self._thread.start()
@@ -38,10 +40,11 @@ class ShadowExecutor:
         self._events.append({'sequence':self._sequence,'time_monotonic':time.monotonic(),'event':event,**fields})
 
     def _envelope(self,ticket,status,code):
-        base={'contract_version':CONTRACT_VERSION,'scope':'offline_bounded_river','provenance':ticket['provenance'],
+        protocol=ticket['protocol']
+        base={'contract_version':protocol.CONTRACT_VERSION,'scope':getattr(protocol,'SCOPE','offline_bounded_river'),'provenance':ticket['provenance'],
               'request_key':ticket['request_key'],'source_information_key':ticket['source_key'],
               'task_key':None,'limits':asdict(ticket['limits']),'timing':None,'quality':None,'model':None}
-        return finish(base,status,code,'Shadow executor did not admit this task.','shadow')
+        return protocol.finish(base,status,code,'Shadow executor did not admit this task.','shadow')
 
     def _detach(self,ticket,status,code):
         ticket['state']=status;ticket['result']=self._envelope(ticket,status,code)
@@ -78,9 +81,10 @@ class ShadowExecutor:
         limits=ResearchLimits() if limits is None else limits
         if not isinstance(limits,ResearchLimits):raise ValueError('ResearchLimits required.')
         try:
-            validate_request(request)
+            protocol=self._protocol_for(request)
+            protocol.validate_request(request)
             frozen=json.loads(json.dumps(request,allow_nan=False))
-            request_key=digest(frozen);engine=provenance()
+            request_key=digest(frozen);engine=protocol.provenance()
             identity=digest({'request_key':request_key,'limits':asdict(limits),'provenance':engine})
             source_key=frozen['snapshot']['information_key']
             if type(source_key) is not str or not re.fullmatch('[0-9a-f]{64}',source_key):raise ValueError('Source key required.')
@@ -110,11 +114,11 @@ class ShadowExecutor:
             if job is None:
                 job_id=self._id('job-')
                 job={'job_id':job_id,'identity':identity,'request':frozen,'limits':limits,'provenance':engine,
-                     'state':'queued','subscribers':set(),'cancel':Event(),'queued_at':time.monotonic()}
+                     'protocol':protocol,'state':'queued','subscribers':set(),'cancel':Event(),'queued_at':time.monotonic()}
                 self._jobs[job_id]=job;self._identities[identity]=job_id;self._queue.append(job_id)
             ticket_id=self._id('ticket-')
             ticket={'ticket_id':ticket_id,'job_id':job_id,'identity':identity,'request_key':request_key,
-                    'source_key':source_key,'context_id':context_id,'provenance':engine,'limits':limits,
+                    'source_key':source_key,'context_id':context_id,'provenance':engine,'limits':limits,'protocol':protocol,
                     'state':job['state'],'result':None,'submitted_at':time.monotonic()}
             self._tickets[ticket_id]=ticket;job['subscribers'].add(ticket_id)
             self._contexts[context_id]={'source_key':source_key,'ticket_id':ticket_id}
@@ -172,7 +176,7 @@ class ShadowExecutor:
                     result.get('fallback',{}).get('retain_current_advice') is not True):
                     raise ValueError('Invalid shadow result envelope')
                 ready=result.get('status')=='ready'
-                if (result.get('contract_version')!=CONTRACT_VERSION or result.get('limits')!=asdict(job['limits']) or
+                if (result.get('contract_version')!=job['protocol'].CONTRACT_VERSION or result.get('limits')!=asdict(job['limits']) or
                     result.get('status') not in ('ready','invalid_input','unsupported','stale','quality_rejected','budget_exceeded','unavailable','error','cancelled') or
                     result.get('admission',{}).get('offline_analysis_allowed') is not ready or
                     (result.get('candidate') is not None)!=ready or type(result.get('reasons')) is not list or
@@ -192,7 +196,7 @@ class ShadowExecutor:
                     if result is None:
                         ticket['state']='error';ticket['result']=self._envelope(ticket,'error','SHADOW_WORKER_FAILED')
                     else:
-                        ticket['result']=recheck_decision(result,context['source_key'])
+                        ticket['result']=job['protocol'].recheck_decision(result,context['source_key'])
                         ticket['state']='stale' if ticket['result']['status']=='stale' else 'completed'
                     self._log('delivered',job_id=job_id,ticket_id=tid,status=ticket['result']['status'],
                               reason_codes=[r['code'] for r in ticket['result']['reasons']],
