@@ -26,6 +26,7 @@ class RoomSettings(BaseModel):
     small_blind: StrictInt = Field(default=1, ge=1, le=10000)
     big_blind: StrictInt = Field(default=2, ge=2, le=20000)
     turn_seconds: StrictInt = Field(default=30, ge=10, le=120)
+    visibility: str = Field(default="private", pattern="^(private|public)$")
     auto_deal: bool = Field(default=True, strict=True)
 
     @model_validator(mode='after')
@@ -89,6 +90,7 @@ class Room:
     settled_hand_id: Optional[str] = None
     next_hand_at: Optional[float] = None
     settings: RoomSettings = field(default_factory=RoomSettings)
+    revealed_folds: set[str] = field(default_factory=set)
     top_up_requests: list[dict] = field(default_factory=list)
 
     @property
@@ -135,11 +137,15 @@ class Room:
 
     def snapshot(self, viewer: Member) -> dict:
         hand = project_hand(self.hand, viewer.player_id) if self.hand else None
+        if hand:
+            for player in hand['players']:
+                if player['id'] in self.revealed_folds and player['status'] == 'folded':
+                    player['cards'] = next(p for p in self.hand.players if p.id == player['id']).model_dump(mode='json')['cards']
         if hand and self.hand.result:
             for player in hand['players']:
                 player['stack'] = next(m.stack for m in self.members if m.player_id == player['id'])
         return {
-            'type': 'state', 'code': self.code, 'revision': self.revision,
+            'type': 'state', 'revealed_folds': sorted(self.revealed_folds), 'code': self.code, 'revision': self.revision,
             'viewer_id': viewer.player_id, 'host_id': self.host_id,
             'viewer_left': viewer.leaving, 'turn_seconds': self.turn_seconds,
             'turn_grace_seconds': TURN_GRACE_SECONDS,
@@ -166,7 +172,12 @@ class Room:
             raise ValueError('You have left this room. Join again for a new seat.')
         if command.revision != self.revision:
             raise ValueError('Table changed. The latest state has been loaded; choose your action again.')
-        if command.kind == 'ready':
+        if command.kind == 'show_fold':
+            player = next((p for p in self.hand.players if p.id == member.player_id), None) if self.hand else None
+            if not player or player.status.value != 'folded' or command.hand_id != self.hand.hand_id:
+                raise ValueError('Only your folded cards from this hand can be shown.')
+            self.revealed_folds.add(member.player_id)
+        elif command.kind == 'ready':
             if self.hand and not self.hand.result:
                 raise ValueError('Finish the current hand first.')
             if command.ready is None:
@@ -275,6 +286,7 @@ class Room:
         if any(m.stack < self.settings.big_blind for m in playing):
             raise ValueError('Add chips or sit out before the next hand.')
         stacks = [m.stack for m in playing]
+        self.revealed_folds.clear()
         self.hand = self.engine.start_hand(player_count=len(playing), starting_stacks=stacks,
                                            small_blind=self.settings.small_blind, big_blind=self.settings.big_blind)
         mapping = {p.id: m.player_id
@@ -359,6 +371,7 @@ class Room:
         if hand is not None:
             hand['_deck'] = [card.model_dump(mode='json') for card in self.hand._deck]
         return {
+            'revealed_folds': sorted(self.revealed_folds),
             'top_up_requests': [dict(request) for request in self.top_up_requests],
             'schema_version': 1, 'settled_hand_id': self.settled_hand_id, 'code': self.code, 'revision': self.revision,
             'host_player_id': self.host_player_id, 'used_ids': sorted(self.used_ids),
@@ -373,6 +386,7 @@ class Room:
     def restore(self, record):
         if record['schema_version'] != 1:
             raise ValueError('Unsupported room database version.')
+        self.revealed_folds = set(record.get('revealed_folds', []))
         self.top_up_requests = [dict(request) for request in record.get('top_up_requests', [])]
         self.revision = record['revision']
         self.host_player_id = record['host_player_id']

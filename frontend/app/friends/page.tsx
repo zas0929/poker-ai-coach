@@ -1,5 +1,6 @@
 'use client';
 
+import Sheet from '@/components/Sheet';
 import ServerWakeLoader from '@/components/ServerWakeLoader';
 
 import RoomSession from '@/components/RoomSession';
@@ -31,7 +32,16 @@ export default function FriendsPage() {
   const [topUp, setTopUp] = useState('400');
   const [autoDeal, setAutoDeal] = useState(true);
   const [creationDraft, setCreationDraft] = useState<SettingsDraft>({ starting_stack: '400', small_blind: '1', big_blind: '2', turn_seconds: '30' });
-  const creationSettings: RoomSettings = { starting_stack: Number(creationDraft.starting_stack), small_blind: Number(creationDraft.small_blind), big_blind: Number(creationDraft.big_blind), turn_seconds: Number(creationDraft.turn_seconds), auto_deal: autoDeal };
+  const [visibility, setVisibility] = useState<'private' | 'public'>('private');
+  const [createdInvite, setCreatedInvite] = useState<string | null>(null);
+  const [publicTables, setPublicTables] = useState<{code:string;players:number;small_blind:number;big_blind:number;can_join:boolean}[]>([]);
+  const [listingError, setListingError] = useState(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    const load = () => fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8000'}/api/rooms`, {signal:controller.signal,cache:'no-store'}).then(r => {if (!r.ok) throw new Error(); return r.json();}).then(data => {setPublicTables(data.rooms);setListingError(false);}).catch(() => {if (!controller.signal.aborted) setListingError(true);});
+    void load(); const timer = setInterval(load,15000); return () => {controller.abort();clearInterval(timer);};
+  }, []);
+  const creationSettings: RoomSettings = { visibility, starting_stack: Number(creationDraft.starting_stack), small_blind: Number(creationDraft.small_blind), big_blind: Number(creationDraft.big_blind), turn_seconds: Number(creationDraft.turn_seconds), auto_deal: autoDeal };
   const validCreation = Object.values(creationDraft).every(value => value.trim() !== '' && Number.isInteger(Number(value))) && creationSettings.small_blind >= 1 && creationSettings.small_blind <= 10000 && creationSettings.big_blind > creationSettings.small_blind && creationSettings.big_blind <= 20000 && creationSettings.starting_stack >= Math.max(100, 20 * creationSettings.big_blind) && creationSettings.starting_stack <= 1000000 && creationSettings.turn_seconds >= 10 && creationSettings.turn_seconds <= 120;
   const validBuyIn = buyIn.trim() !== '' && Number.isInteger(Number(buyIn)) && Number(buyIn) >= 2 && Number(buyIn) <= 1000000;
   const [code, setCode] = useState('');
@@ -176,6 +186,7 @@ export default function FriendsPage() {
       window.history.replaceState(null, '', `/friends?room=${next.code}`);
       setCode(next.code);
       setCredentials(next);
+      if (!join) setCreatedInvite(`${window.location.origin}/friends?room=${next.code}`);
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Could not enter room.'); }
     finally { setBusy(false); entering.current = false; }
   };
@@ -209,7 +220,7 @@ export default function FriendsPage() {
   const settingsBaseline = JSON.stringify(settings);
   const editedDraft: SettingsDraft = settingsEntry && settingsEntry.code === room?.code && settingsEntry.baseline === settingsBaseline
     ? settingsEntry.value : { starting_stack: String(settings.starting_stack), small_blind: String(settings.small_blind), big_blind: String(settings.big_blind), turn_seconds: String(settings.turn_seconds) };
-  const editedSettings: RoomSettings = { starting_stack: Number(editedDraft.starting_stack), small_blind: Number(editedDraft.small_blind), big_blind: Number(editedDraft.big_blind), turn_seconds: Number(editedDraft.turn_seconds), auto_deal: settings.auto_deal };
+  const editedSettings: RoomSettings = { visibility: settings.visibility ?? 'private', starting_stack: Number(editedDraft.starting_stack), small_blind: Number(editedDraft.small_blind), big_blind: Number(editedDraft.big_blind), turn_seconds: Number(editedDraft.turn_seconds), auto_deal: settings.auto_deal };
   const validSettings = Object.values(editedDraft).every(value => value.trim() !== '' && Number.isInteger(Number(value)))
     && editedSettings.small_blind >= 1 && editedSettings.small_blind <= 10000
     && editedSettings.big_blind > editedSettings.small_blind && editedSettings.big_blind <= 20000
@@ -311,9 +322,11 @@ export default function FriendsPage() {
       </section> : null}
       {ownChipRequest?.status === 'pending' ? <p role="status" className="chip-request-status">{t('Chip request: {0}. Waiting for host approval.').replace('{0}', String(ownChipRequest.amount))}</p> : null}
       {notice ? <Toast key={notice.id} message={notice.message} error={notice.error} onDismiss={notice.dismiss} /> : null}
+      <div className="room-created-dialog"><Sheet open={Boolean(createdInvite)} title={t('Table created')} onClose={() => setCreatedInvite(null)}><p>{t('Share this link to invite players.')}</p><label>{t('Invitation link')}<input readOnly value={createdInvite ?? ''} onFocus={event => event.target.select()} /></label><button className="primary-button" onClick={copyInvite}>{t('Copy invitation')}</button><button onClick={() => setCreatedInvite(null)}>{t('Return to table')}</button></Sheet></div>
       {!credentials ? (
         <section className="room-entry control-panel">
-          <h2>{t("Your private poker table")}</h2>
+          <h2>{t('Poker tables')}</h2>
+          {!invited ? <label>{t('Table visibility')}<select value={visibility} onChange={event => setVisibility(event.target.value as 'private' | 'public')}><option value="private">{t('Private table')}</option><option value="public">{t('Public table')}</option></select></label> : null}
           <p>{t("Create a room and share its invitation. Bring 2–6 players, mark everyone ready, then deal.")}</p>
           <label>{t("Your name")}<input autoComplete="nickname" maxLength={24} value={name} onChange={(event) => setName(event.target.value)} placeholder="Roman" /></label>
           {!invited ? <details className="creation-settings"><summary>{t('Table settings')}</summary><fieldset disabled={busy}>
@@ -323,6 +336,7 @@ export default function FriendsPage() {
           </fieldset></details> : null}
           <label>{t('Buy-in chips')}<input type="number" inputMode="numeric" min={2} max={1000000} value={buyIn} onChange={event => setBuyIn(event.target.value)} /></label>
           <button className="primary-button" disabled={busy || !validBuyIn || (!invited && !validCreation) || !name.trim() || (invited && code.trim().length !== 8)} onClick={() => enter(invited)}>{t(invited ? "Join room" : "Create room")}</button>
+          {!invited ? <section className="public-tables"><h3>{t('Public tables')}</h3>{listingError ? <p role="status">{t('Could not load public tables.')}</p> : !publicTables.length ? <p>{t('No public tables yet.')}</p> : publicTables.map(table => <a key={table.code} href={`/friends?room=${table.code}`} aria-disabled={!table.can_join} onClick={event => {if (!table.can_join) event.preventDefault();}}><b>{table.code}</b> · {table.players}/6 · {t('Blinds')} {table.small_blind}/{table.big_blind} · {t(table.can_join ? 'Join room' : 'Hand in progress')}</a>)}</section> : null}
           <div className="room-join"><label>{t("Room code")}<input maxLength={8} value={code} onChange={(event) => setCode(event.target.value.toUpperCase())} placeholder={t("Invitation code")} /></label>{!invited ? <button disabled={busy || !validBuyIn || !name.trim() || code.trim().length !== 8} onClick={() => enter(true)}>{t("Join room")}</button> : null}</div>
           <p className="room-note">{t("Local preview. Friends on other networks will need the hosting stage. Rooms, seats and hands are saved on this server.")}</p>
         </section>
@@ -331,8 +345,8 @@ export default function FriendsPage() {
           {hand ? <div className="table-meta"><span>{t(hand.street)} · {hand.players.length} {t('players')}</span><span>{t('Blinds')} {settings.small_blind} / {settings.big_blind}</span></div> : null}
           <section className="game-layout">
             <div className="table-column">
-              <PokerTable emptyStack={settings.starting_stack} hand={hand} seatCount={hand?.players.length ?? Math.max(2, room?.members.length ?? 2)} viewerId={room?.viewer_id} turnTimer={turnTimer} />
-              <ActionPanel pausedActions={me?.sitting_out ? <button className="primary-button" disabled={busy || !connected || !betweenHands} title={!betweenHands ? t('You can return after this hand finishes.') : undefined} onClick={() => send('sit_out', { sit_out: false })}>{t('Return to table')}</button> : undefined} betweenActions={betweenHands ? <div className="room-hand-controls"><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{t(hand ? 'Deal next hand' : 'Deal first hand')}</button> : null}</div> : null} analysis={null} stack={canTopUp ? me?.stack : undefined} hand={hand} isLoading={busy} blocked={!connected || Boolean(me?.sitting_out)} waitingLabel={!connected ? t(status) : me?.sitting_out ? t(betweenHands ? "Sitting out" : "Return after this hand") : autoDealStatus} viewerId={room?.viewer_id} trainingControls={false} secondsLeft={visibleSecondsLeft} tools={<><button aria-haspopup="dialog" onClick={() => setPanel('players')}>{t('Players')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('archive')}>{t('Hand archive')} ↑</button></>} onAction={action} onAdvance={() => {}} onStartHand={() => {}} />
+              <PokerTable revealedFoldIds={room?.revealed_folds} emptyStack={settings.starting_stack} hand={hand} seatCount={hand?.players.length ?? Math.max(2, room?.members.length ?? 2)} viewerId={room?.viewer_id} turnTimer={turnTimer} />
+              <ActionPanel pausedActions={me?.sitting_out ? <button className="primary-button" disabled={busy || !connected || !betweenHands} title={!betweenHands ? t('You can return after this hand finishes.') : undefined} onClick={() => send('sit_out', { sit_out: false })}>{t('Return to table')}</button> : undefined} betweenActions={betweenHands ? <div className="room-hand-controls"><button disabled={busy || !connected || Boolean(me?.sitting_out)} onClick={() => send('ready', { ready: !me?.ready })}>{t(me?.ready ? 'Not ready' : "I'm ready")}</button>{isHost ? <button className="primary-button" disabled={busy || !connected || !everyoneReady} onClick={() => send('start')}>{t(hand ? 'Deal next hand' : 'Deal first hand')}</button> : null}</div> : null} analysis={null} stack={canTopUp ? me?.stack : undefined} hand={hand} isLoading={busy} blocked={!connected || Boolean(me?.sitting_out)} waitingLabel={!connected ? t(status) : me?.sitting_out ? t(betweenHands ? "Sitting out" : "Return after this hand") : autoDealStatus} viewerId={room?.viewer_id} trainingControls={false} secondsLeft={visibleSecondsLeft} tools={<>{hand?.players.find(p => p.id === room?.viewer_id)?.status === 'folded' && !room?.revealed_folds?.includes(room.viewer_id) ? <button disabled={busy || !connected} onClick={() => send('show_fold', {hand_id: hand.hand_id})}>{t('Show folded cards')}</button> : null}<button aria-haspopup="dialog" onClick={() => setPanel('players')}>{t('Players')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('archive')}>{t('Hand archive')} ↑</button></>} onAction={action} onAdvance={() => {}} onStartHand={() => {}} />
             </div>
             <PanelSidebar notice={visibleSecondsLeft !== null ? <p className={`sheet-timer ${visibleSecondsLeft !== null && visibleSecondsLeft <= 10 ? "urgent" : ""}`} role="timer">{t("Time remaining")}: {visibleSecondsLeft}s</p> : null} active={panel} onClose={() => setPanel(null)} panels={[
               { id: 'players', title: t('Players'), content: lobby },

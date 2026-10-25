@@ -58,7 +58,7 @@ class PersistenceTests(unittest.TestCase):
 
     def test_settings_authority_validation_and_readiness_reset(self):
         self.command(self.host, 'ready', ready=True)
-        settings = dict(starting_stack=2000, small_blind=10, big_blind=20, turn_seconds=45, auto_deal=False)
+        settings = dict(visibility='private', starting_stack=2000, small_blind=10, big_blind=20, turn_seconds=45, auto_deal=False)
         with self.assertRaises(ValueError):
             self.command(self.guest, 'settings', settings=settings)
         self.command(self.host, 'settings', settings=settings)

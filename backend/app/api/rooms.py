@@ -38,6 +38,16 @@ class CreateRequest(JoinRequest):
     settings: Optional[RoomSettings] = None
 
 
+@router.get('')
+async def public_rooms(response: Response):
+    response.headers['Cache-Control'] = 'no-store'
+    return {'rooms': [{'code': room.code, 'players': len(room.seated),
+                      'small_blind': room.settings.small_blind, 'big_blind': room.settings.big_blind,
+                      'starting_stack': room.settings.starting_stack,
+                      'can_join': len(room.seated) < 6 and (not room.hand or bool(room.hand.result))}
+                     for room in list(store.rooms.values()) if room.settings.visibility == 'public' and room.seated][:50]}
+
+
 @router.post('')
 async def create_room(request: CreateRequest):
     try:
