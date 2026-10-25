@@ -1,0 +1,73 @@
+{
+  "api": "https://poker-ai-coach-api.onrender.com",
+  "scope": "Disposable passive training profiles, actual native worker, no existing rooms",
+  "results": [
+    {
+      "opponents": 1,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.0004779494297668663,
+      "total_seconds": 9.768,
+      "concurrent_state_read_seconds": 0.198,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    },
+    {
+      "opponents": 2,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.000829661225987266,
+      "total_seconds": 10.66,
+      "concurrent_state_read_seconds": 0.169,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    },
+    {
+      "opponents": 3,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.0012830129509433519,
+      "total_seconds": 12.781,
+      "concurrent_state_read_seconds": 0.202,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    },
+    {
+      "opponents": 4,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.002512067546820873,
+      "total_seconds": 13.895,
+      "concurrent_state_read_seconds": 0.221,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    },
+    {
+      "opponents": 5,
+      "state": "unavailable",
+      "reason": "TIME_BUDGET_EXCEEDED",
+      "quality": null,
+      "total_seconds": 18.968,
+      "concurrent_state_read_seconds": 0.233,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    }
+  ],
+  "deployed_commit": "e47aa026fc99b754b5c3b0aa2e8ad73a63d12973",
+  "deploy_id": "dep-dbeumccs728c73dgt5s0",
+  "deploy_status": "live",
+  "feature_flag": "POKER_TRAINER_SOLVER_ENABLED=1",
+  "frontend": {
+    "url": "https://poker-ai-coach-eight.vercel.app/",
+    "http_status": 200,
+    "current_solver_bundle": "/_next/static/chunks/2fs196lsmxxfb.js",
+    "production_api_embedded": true
+  },
+  "acceptance": "passed_with_budget_fallback",
+  "timing_note": "total_seconds includes network, authentication, polling, cache and stale-result checks; it is not native training time"
+}
