@@ -1,0 +1,61 @@
+{
+  "api": "http://127.0.0.1:8012",
+  "scope": "Disposable passive training profiles, actual native worker, no existing rooms",
+  "results": [
+    {
+      "opponents": 1,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.0007382798080524111,
+      "total_seconds": 0.969,
+      "concurrent_state_read_seconds": 0.017,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    },
+    {
+      "opponents": 2,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.00214299260202407,
+      "total_seconds": 0.949,
+      "concurrent_state_read_seconds": 0.016,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    },
+    {
+      "opponents": 3,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.002583300667378108,
+      "total_seconds": 1.27,
+      "concurrent_state_read_seconds": 0.019,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    },
+    {
+      "opponents": 4,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.003432361431093156,
+      "total_seconds": 1.628,
+      "concurrent_state_read_seconds": 0.04,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    },
+    {
+      "opponents": 5,
+      "state": "ready",
+      "reason": null,
+      "quality": 0.002195199940737691,
+      "total_seconds": 3.332,
+      "concurrent_state_read_seconds": 0.023,
+      "cached_job_reused": true,
+      "foreign_profile_rejected": true,
+      "stale_result_removed": true
+    }
+  ]
+}

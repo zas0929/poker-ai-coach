@@ -11,7 +11,7 @@ from app.models.poker import HandAnalysis, HandState, PlayerActionRequest, Stree
 from app.services.ai_opponent import AIOpponentService
 from app.services.decision_engine import DecisionEngine
 from app.services.poker_engine import PokerEngine
-from app.services import trainer_shadow
+from app.services import trainer_shadow, trainer_solver
 from app.services.training_completion import observe_completed
 
 router = APIRouter()
@@ -39,6 +39,7 @@ def serialized(function):
                     return function(*args, **kwargs)
                 finally:
                     trainer_shadow.observe(owner, current_state)
+                    trainer_solver.observe(owner, current_state)
             now = monotonic()
             if owner not in profile_states:
                 for key, (_, touched) in list(profile_states.items()):
@@ -53,6 +54,7 @@ def serialized(function):
             finally:
                 observe_completed(owner, current_state)
                 trainer_shadow.observe(owner, current_state)
+                trainer_solver.observe(owner, current_state)
                 profile_states[owner] = (current_state, monotonic())
                 current_state = previous
     return wrapper

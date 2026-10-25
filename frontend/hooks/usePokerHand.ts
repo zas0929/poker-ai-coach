@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { CurrentTrainerSolver, type TrainerModel } from '@/services/trainerSolver';
 import { LatestAnalysis } from '@/services/latestAnalysis';
 import { PokerApi, type TrainingBlinds } from '@/services/pokerApi';
 import { playTrainerTurns } from '@/services/trainerPlayback';
@@ -15,6 +16,9 @@ export function usePokerHand() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [solverModel, setSolverModel] = useState<TrainerModel | null>(null);
+  const solver = useRef<CurrentTrainerSolver | null>(null);
+  if (solver.current === null) solver.current = new CurrentTrainerSolver(setSolverModel);
   const hints = useRef<LatestAnalysis | null>(null);
   if (hints.current === null) {
     hints.current = new LatestAnalysis(
@@ -31,6 +35,7 @@ export function usePokerHand() {
     if (busy.current) return null;
     busy.current = true;
     hints.current?.cancel();
+    solver.current?.cancel();
     setIsLoading(true);
     setError(null);
 
@@ -63,6 +68,7 @@ export function usePokerHand() {
     }
     // Keep the prior action buttons until the entire bot/street transition finishes.
     setActionHand(settledHand);
+    void solver.current?.request(settledHand);
     const hero = settledHand.players.find((p) => p.id === 'hero');
     if (!settledHand.result && hero?.status !== 'folded') {
       void hints.current?.request(settledHand);
@@ -100,11 +106,13 @@ export function usePokerHand() {
   useEffect(() => {
     mounted.current = true;
     void startHand();
-    return () => { mounted.current = false; hints.current?.cancel(); playback.current?.abort(); };
+    return () => { mounted.current = false; solver.current?.cancel(); hints.current?.cancel(); playback.current?.abort(); };
   }, [startHand]);
 
   return {
     analysis,
+    solverModel,
+    retrySolver: () => { if (hand && !busy.current) void solver.current?.request(hand); },
     actionReview,
     decisionLog,
     error,

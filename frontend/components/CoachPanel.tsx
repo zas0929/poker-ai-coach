@@ -1,12 +1,16 @@
 'use client';
 
 
+import TrainerSolverPanel from '@/components/TrainerSolverPanel';
+import type { TrainerModel } from '@/services/trainerSolver';
 import InfoTip from '@/components/InfoTip';
 import { displayPlayer } from '@/i18n/translate';
 import { useI18n } from '@/i18n/LanguageProvider';
 import type { ActionReview, HandAnalysis, HandState } from '@/types/poker';
 
 interface CoachPanelProps {
+  solverModel?: TrainerModel | null;
+  onRetrySolver?: () => void;
   analysis: HandAnalysis | null;
   actionReview: ActionReview | null;
   decisionLog: ActionReview[];
@@ -24,6 +28,8 @@ function label(value?: string) {
 }
 
 export default function CoachPanel({
+  solverModel = null,
+  onRetrySolver,
   analysis,
   actionReview,
   decisionLog,
@@ -51,6 +57,8 @@ export default function CoachPanel({
         <span className="status-pill">{t(isLoading ? 'thinking' : hand?.street ?? 'idle')}</span>
       </div>
 
+      <p className="range-detail">{t("Current advice: equity and betting heuristics.")}</p>
+      <TrainerSolverPanel result={solverModel} hand={hand} onRetry={onRetrySolver} />
       <div className="metric-grid">
         <div className="coach-metric">
           <InfoTip label="Equity" explanation="Equity estimates your share of the pot against assumed opponent ranges. It includes split pots and is not a guarantee." />

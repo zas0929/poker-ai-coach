@@ -1478,3 +1478,19 @@ h2 {
   .chip-request { flex-wrap: wrap; }
   .chip-request > div { margin-left: auto; }
 }
+
+/* Supplemental current-decision analysis never changes the action panel height. */
+.trainer-solver { margin-block: 12px 18px; padding: 14px; border: 1px solid var(--border, #3d5144); border-radius: 14px; min-width: 0; }
+.trainer-solver-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.trainer-solver-heading > span { font-size: .78rem; color: #bfd4c5; }
+.trainer-solver p { margin-block: 9px; font-size: .82rem; color: #bac9be; overflow-wrap: anywhere; }
+.trainer-solver-actions { display: flex; flex-direction: column; gap: 8px; margin-block: 12px; }
+.trainer-solver-action { display: grid; grid-template-columns: minmax(65px, 1.2fr) repeat(3, minmax(0, 1fr)); align-items: center; gap: 6px; padding: 10px 8px; border: 1px solid #3d5144; border-radius: 10px; min-width: 0; }
+.trainer-solver-action > strong { color: #ece4b9; overflow-wrap: anywhere; font-size: .88rem; }
+.trainer-solver-action > span { display: grid; grid-template-columns: 1fr; gap: 2px; font-size: .78rem; }
+.trainer-solver-best { border-color: #caba73; background: #d6c7780c; }
+.trainer-solver details, .trainer-solver button { font-size: .82rem; }
+.trainer-solver-progress { display: flex; align-items: center; gap: 8px; }
+.trainer-solver-progress::before { content: ''; flex-shrink: 0; width: 10px; height: 10px; border: 2px solid #637b68; border-top-color: #e4d189; border-radius: 50%; animation: trainer-model-spin 1s linear infinite; }
+@keyframes trainer-model-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .trainer-solver-progress::before { animation: none; } }

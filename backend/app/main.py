@@ -15,6 +15,8 @@ from app.api.hand import router as hand_router, training_owner
 from app.api.rooms import router as room_router, store
 from app.api.river_lessons import router as river_lessons_router
 from app.services.river_lessons import start_river_lessons, stop_river_lessons
+from app.api.trainer_solver import router as trainer_solver_router
+from app.services.trainer_solver import start_trainer_solver, stop_trainer_solver
 
 @asynccontextmanager
 async def lifespan(app):
@@ -23,6 +25,7 @@ async def lifespan(app):
     task = asyncio.create_task(store.run_timers())
     start_local_shadow()
     start_river_lessons()
+    start_trainer_solver()
     try:
         yield
     finally:
@@ -30,6 +33,7 @@ async def lifespan(app):
         with suppress(asyncio.CancelledError):
             await task
         await run_in_threadpool(stop_local_shadow)
+        await run_in_threadpool(stop_trainer_solver)
         await run_in_threadpool(stop_river_lessons)
         training_store.close()
         store.close()
@@ -72,6 +76,7 @@ app.add_middleware(
 
 
 app.include_router(training_router, prefix="/api/training", tags=["training"])
+app.include_router(trainer_solver_router, prefix="/api/hand/solver", tags=["trainer-model"])
 app.include_router(hand_router, prefix="/api/hand", tags=["hand"])
 app.include_router(room_router, prefix="/api/rooms", tags=["rooms"])
 app.include_router(river_lessons_router, prefix="/api/river-lessons", tags=["river-lessons"])

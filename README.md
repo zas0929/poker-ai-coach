@@ -406,3 +406,7 @@ server and hosted coach do not switch to the research solver. See
 
 Приоритет интеграции — анализ текущего хода во время тренировочной игры:
 [docs/LIVE_TRAINER_ANALYSIS.md](docs/LIVE_TRAINER_ANALYSIS.md).
+
+Фоновый расчёт текущего ривера подключён к панели тренера локально: частоты,
+EV, размеры и покрытие малой модели без блокировки действий.
+Запуск и ограничения: [docs/LIVE_TRAINER_ANALYSIS.md](docs/LIVE_TRAINER_ANALYSIS.md).
