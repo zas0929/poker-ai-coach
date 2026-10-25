@@ -2942,5 +2942,77 @@
   "The recommendation was adjusted to the legal betting options.": {
     "ru": "Совет скорректирован с учётом допустимых действий.",
     "uk": "Пораду скориговано з урахуванням дозволених дій."
+  },
+  "In position": {
+    "ru": "В позиции",
+    "uk": "У позиції"
+  },
+  "Out of position": {
+    "ru": "Без позиции",
+    "uk": "Без позиції"
+  },
+  "Remaining effective stack / current pot": {
+    "ru": "Оставшийся эффективный стек / текущий банк",
+    "uk": "Залишок ефективного стека / поточний банк"
+  },
+  "Contextual call threshold": {
+    "ru": "Учебный порог колла с поправками",
+    "uk": "Навчальний поріг колу з поправками"
+  },
+  "Draw completion on the next card": {
+    "ru": "Завершение дро на следующей карте",
+    "uk": "Завершення дро на наступній карті"
+  },
+  "distinct cards; not guaranteed winning outs": {
+    "ru": "уникальных карт; не гарантируют победу",
+    "uk": "унікальних карт; не гарантують перемогу"
+  },
+  "The call does not clear the contextual threshold after position and betting pressure guards.": {
+    "ru": "Эквити недостаточно для учебного порога колла с поправками на позицию и давление ставок.",
+    "uk": "Еквіті недостатньо для навчального порога колу з поправками на позицію та тиск ставок."
+  },
+  "Avoid chasing a draw": {
+    "ru": "Не переплачивать за дро",
+    "uk": "Не переплачувати за дро"
+  },
+  "The draw alone does not justify this price for one card. Future winnings and a free river are not assumed.": {
+    "ru": "Одного дро недостаточно для такой цены за одну карту. Будущая оплата и бесплатный ривер не предполагаются.",
+    "uk": "Одного дро недостатньо для такої ціни за одну карту. Майбутня оплата та безкоштовний ривер не припускаються."
+  },
+  "Equity clears the contextual call threshold; this does not establish a profitable raise.": {
+    "ru": "Эквити проходит учебный порог колла с поправками; прибыльность рейза этим не установлена.",
+    "uk": "Еквіті проходить навчальний поріг колу з поправками; прибутковість рейзу цим не встановлена."
+  },
+  "Out of position against the previous aggressor, keep this one-pair hand in the checking range.": {
+    "ru": "Без позиции против агрессора прошлой улицы оставляем эту руку с одной парой в диапазоне чека.",
+    "uk": "Без позиції проти агресора минулої вулиці залишаємо цю руку з однією парою в діапазоні чеку."
+  },
+  "The made hand supports a value bet. The size reflects board texture and hand class, not solved opponent responses.": {
+    "ru": "Готовая рука допускает вэлью-ставку. Размер учитывает текстуру борда и класс руки; ответы соперников не рассчитаны.",
+    "uk": "Готова рука допускає ставку на велью. Розмір враховує текстуру борду й клас руки; відповіді суперників не розраховані."
+  },
+  "Take the free card with this draw; fold equity has not been established for a semi-bluff.": {
+    "ru": "Берём бесплатную карту с дро: фолд-эквити для полублефа не установлено.",
+    "uk": "Беремо безкоштовну карту з дро: фолд-еквіті для напівблефу не встановлено."
+  },
+  "Educational postflop rules, not GTO or action EV. Draw completions are not guaranteed winning outs; opponent responses and future payments are not solved.": {
+    "ru": "Учебные постфлоп-правила, не GTO и не EV действий. Карты завершения дро не гарантируют победу; ответы соперников и будущая оплата не рассчитаны.",
+    "uk": "Навчальні постфлоп-правила, не GTO й не EV дій. Карти завершення дро не гарантують перемогу; відповіді суперників і майбутня оплата не розраховані."
+  },
+  "straight draw": {
+    "ru": "стрит-дро",
+    "uk": "стрит-дро"
+  },
+  "Value with a short effective stack": {
+    "ru": "Вэлью с коротким эффективным стеком",
+    "uk": "Велью з коротким ефективним стеком"
+  },
+  "With a strong made hand and a short effective stack, size the value bet to the remaining contestable stack.": {
+    "ru": "С сильной готовой рукой и коротким эффективным стеком размер вэлью-ставки ограничиваем оставшимся стеком, за который можно бороться.",
+    "uk": "Із сильною готовою рукою та коротким ефективним стеком розмір ставки на велью обмежуємо залишком стека, за який можна боротися."
+  },
+  " draw completion cards": {
+    "ru": " карт завершения дро",
+    "uk": " карт завершення дро"
   }
 }

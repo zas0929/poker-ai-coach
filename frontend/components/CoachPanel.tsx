@@ -85,11 +85,17 @@ export default function CoachPanel({
       {analysis ? (
         <div className="coach-summary">
           {analysis.rule_advice ? <div className="rule-advice"><strong>{t(analysis.rule_advice.hand_label)}</strong>{analysis.rule_advice.scenario ? <div><p>{t(analysis.rule_advice.scenario)}</p><p>{t('Your position')}: {t(hand?.players.find(p => p.id === analysis.player_id)?.position ?? '')}{analysis.rule_advice.opener_position ? ` · ${t('Opening position')}: ${t(analysis.rule_advice.opener_position)}` : ''}</p><p>{t('Effective stack')}: {analysis.rule_advice.effective_stack_bb} BB · {t(analysis.rule_advice.stack_band ?? '')}</p><p>{t(analysis.rule_advice.range_status ?? '')}</p>{analysis.rule_advice.range_hands?.length ? <details><summary>{t('Situation range')}</summary><p>{analysis.rule_advice.range_hands.join(', ')}</p></details> : null}</div> : null}<p>{analysis.rule_advice.board_texture.map(v => t(v)).join(' · ')}</p><p>{t('Action purpose')}: {t(analysis.rule_advice.purpose)}</p>{analysis.rule_advice.close_price ? <p>{t('Close to the call threshold; the range estimate can change this decision.')}</p> : null}</div> : null}
+          {analysis.rule_advice?.context ? <div className="rule-advice">
+            <p>{t(analysis.rule_advice.context.position_label)} · {t('Effective stack')}: {analysis.rule_advice.context.effective_stack}</p>
+            <p>{t('Remaining effective stack / current pot')}: {analysis.rule_advice.context.stack_to_pot}</p>
+            {analysis.call_amount > 0 ? <p>{t('Contextual call threshold')}: {percent(analysis.rule_advice.context.call_equity_threshold)}</p> : null}
+            {analysis.rule_advice.context.outs > 0 ? <p>{t('Draw completion on the next card')}: {percent(analysis.rule_advice.context.next_card_probability)} · {analysis.rule_advice.context.outs} {t('distinct cards; not guaranteed winning outs')}</p> : null}
+          </div> : null}
           <p>{t(analysis.coach_summary)}</p>
           {analysis.rule_advice ? <p className="room-note">{t(analysis.rule_advice.limitations)}</p> : null}
           {analysis.recommended_amount != null ? <p>{t('Suggested size uses a simple betting heuristic, not a solved optimal size. Raises show the total bet on this street.')}</p> : null}
           <div className="summary-meta">
-            {analysis.rule_advice?.version === 'preflop_rules_v1' ? <span>{t('Educational preset')}</span> : <><span>{t("Heuristic score ")}{t(percent(analysis.confidence))}</span><span>{t("Risk ")}{t(label(analysis.risk_level))}</span></>}
+            {analysis.rule_advice ? <span>{t('Educational preset')}</span> : <><span>{t("Heuristic score ")}{t(percent(analysis.confidence))}</span><span>{t("Risk ")}{t(label(analysis.risk_level))}</span></>}
             <span>{t(label(analysis.preflop_profile.category))}</span>
           </div>
           {analysis.preflop_profile.tags.length ? (
@@ -101,8 +107,8 @@ export default function CoachPanel({
           ) : null}
           {analysis.draw_profile.draws.length ? (
             <div className="draw-box">
-              <strong>{t(analysis.draw_profile.outs)}{t(" estimated outs")}</strong>
-              <span>{t(analysis.draw_profile.draws.map(label).join(', '))}</span>
+              <strong>{t(analysis.draw_profile.outs)}{t(analysis.rule_advice?.context ? " draw completion cards" : " estimated outs")}</strong>
+              <span>{analysis.draw_profile.draws.map(v => t(label(v))).join(', ')}</span>
             </div>
           ) : null}
           <ul>

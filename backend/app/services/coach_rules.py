@@ -1,5 +1,8 @@
 """Small, conservative postflop rules. Thresholds are presets, not solved EV."""
 from collections import Counter
+from math import ceil
+from app.models.poker import Card, Rank, Suit
+from app.services.betting_rules import betting_options, highest_bet
 from app.services.hand_evaluator import RANK_VALUES
 
 
@@ -40,28 +43,119 @@ def classify(hole, board, evaluator, strength=None):
     return label, texture, max(suits.values()) >= 4 or four_connected
 
 
+def draw_completions(hole, board, evaluator, strength=None):
+    """Distinct next cards making a hole-card-supported straight/flush, not winning outs."""
+    strength = strength or evaluator.evaluate([*hole, *board])
+    if len(board) not in (3, 4) or strength.rank >= 4:
+        return {'outs': 0, 'draws': [], 'next_card_probability': 0.0}
+    known = {(c.rank, c.suit) for c in [*hole, *board]}
+    completions = set()
+    kinds = set()
+    for rank in Rank:
+        for suit in Suit:
+            if (rank, suit) in known:
+                continue
+            card = Card(rank=rank, suit=suit)
+            score = evaluator.score([*hole, *board, card])
+            if score[0] not in (4, 5, 8):
+                continue
+            if len(board) == 4 and evaluator.score([*board, card]) >= score:
+                continue  # A draw completing only on the board is not our draw.
+            completions.add((rank, suit))
+            kinds.add('flush draw' if score[0] in (5, 8) else 'straight draw')
+    return {'outs': len(completions), 'draws': sorted(kinds),
+            'next_card_probability': len(completions) / (52 - len(known))}
+
+
+def postflop_context(state, player, opponents):
+    # Postflop order starts after the button. All-in players no longer act.
+    ids = [p.id for p in state.players]
+    button = ids.index(state.dealer_player_id)
+    order = ids[button + 1:] + ids[:button + 1]
+    can_act = {p.id for p in opponents if p.stack > 0}
+    acting = [pid for pid in order if pid in can_act or pid == player.id]
+    in_position = bool(can_act) and acting[-1] == player.id
+    effective = max((min(player.stack, p.stack) for p in opponents), default=0)
+    prior = [a for a in state.history if a.street.value in ('preflop', 'flop', 'turn')
+             and a.street != state.street and a.action in ('bet', 'raise')]
+    aggressor = prior[-1].player_id if prior else None
+    if aggressor not in {player.id, *(p.id for p in opponents)}:
+        aggressor = None
+    street_actions = [a for a in state.history if a.street == state.street]
+    return {'position_label': 'In position' if in_position else 'Out of position',
+            'effective_stack': effective,
+            'stack_to_pot': round(effective / max(1, state.pot), 2),
+            'previous_aggressor': aggressor,
+            'facing_raise': any(a.action == 'raise' for a in street_actions),
+            'in_position': in_position}
+
+
+def advice_size(state, player, action, fraction):
+    options = betting_options(state, player.id)
+    if action not in options.legal_actions:
+        return None
+    if action == 'bet':
+        target, minimum = ceil(state.pot * fraction), options.min_bet
+    elif action == 'raise':
+        target = highest_bet(state) + ceil((state.pot + options.call_amount) * fraction)
+        minimum = options.min_raise_to
+    else:
+        return None
+    contestable = max((p.stack + p.current_bet for p in state.players
+                       if p.id != player.id and p.status.value != 'folded'), default=0)
+    return min(options.max_raise_to, max(minimum, min(target, contestable)))
+
+
 def advise(state, player, equity, required, call, evaluator, strength=None):
-    if len(state.board) < 3: return None  # Preflop needs its own position/range presets.
+    if len(state.board) < 3:
+        return None
+    strength = strength or evaluator.evaluate([*player.cards, *state.board])
     label, texture, dangerous = classify(player.cards, state.board, evaluator, strength)
     opponents = [p for p in state.players if p.id != player.id and p.status.value != 'folded']
     multiway = len(opponents) > 1
+    context = postflop_context(state, player, opponents)
+    draw = draw_completions(player.cards, state.board, evaluator, strength)
+    context.update(draw)
     strong = label in {'Two pair','Set','Trips','Straight','Flush','Full house','Four of a kind','Straight flush'}
     premium = label in {'Full house','Four of a kind','Straight flush'}
+    pair = strength.rank == 1
     pair_value = label in {'Overpair','Top pair, good kicker'} and not multiway and not dangerous
-    pressure = any(a.street == state.street and a.action == 'raise' for a in state.history)
-    value = (strong and equity >= (.75 if multiway else .62) and (not dangerous or premium)) or (pair_value and equity >= .62)
+    wet = any(t in texture for t in ('Two-tone board', 'Connected board', 'Flush possible'))
+    pair_threshold = .62 if context['in_position'] else .68
+    value = (strong and equity >= (.75 if multiway else .62) and (not dangerous or premium)) or (pair_value and equity >= pair_threshold)
+    # Equity estimates reach showdown; marginal hands may have to pay again before then.
+    all_in_call = bool(call) and (call >= player.stack or all(p.stack == 0 for p in opponents))
+    margin = 0.0 if all_in_call else (.03 if multiway else 0) + (.03 if not context['in_position'] else 0)
+    if not all_in_call and pair and (context['facing_raise'] or (state.street.value in ('turn', 'river') and call >= state.pot / 3)):
+        margin += .08
+    threshold = min(1.0, required + margin)
+    context['call_equity_threshold'] = threshold
+    fraction = .75 if strong and wet else 2/3 if strong else .5 if wet else 1/3
     if call:
-        if value and equity >= (.85 if multiway else .75) and (not pressure or (premium and equity >= .9)):
+        if value and equity >= (.85 if multiway else .75) and (not context['facing_raise'] or (premium and equity >= .9)):
             action, purpose, reason = 'raise','Value','A strong made hand and the equity estimate support a cautious value raise.'
-        elif equity >= required:
-            action, purpose, reason = 'call','Continue at the offered price','Equity clears the call threshold, but a profitable raise has not been established.'
+        elif equity < threshold:
+            action, purpose, reason = 'fold','Avoid an expensive call','The call does not clear the contextual threshold after position and betting pressure guards.'
+        elif draw['outs'] and strength.rank == 0 and not all_in_call and draw['next_card_probability'] < required:
+            action, purpose, reason = 'fold','Avoid chasing a draw','The draw alone does not justify this price for one card. Future winnings and a free river are not assumed.'
         else:
-            action, purpose, reason = 'fold','Avoid an expensive call','Estimated equity is below the call threshold. Future winnings are not assumed.'
+            action, purpose, reason = 'call','Continue at the offered price','Equity clears the contextual call threshold; this does not establish a profitable raise.'
     elif value:
-        action, purpose, reason = 'bet','Value','The made hand and equity estimate support a value bet; weaker calls remain an assumption.'
+        if pair and not context['in_position'] and context['previous_aggressor'] not in (None, player.id):
+            action, purpose, reason = 'check','Control the pot','Out of position against the previous aggressor, keep this one-pair hand in the checking range.'
+        else:
+            action, purpose, reason = 'bet','Value','The made hand supports a value bet. The size reflects board texture and hand class, not solved opponent responses.'
     else:
         action, purpose, reason = 'check','Control the pot','Check: the rules do not establish enough value from weaker calls to justify a bet.'
-    return {'version':'postflop_rules_v1','action':action,'hand_label':label,'board_texture':texture,
-            'purpose':purpose,'reason':reason,'live_opponents':len(opponents),
-            'close_price':bool(call and abs(equity-required)<.03),
-            'limitations':'Conservative rules, not a comparison of action EVs. Opponent responses are not solved.'}
+    if action == 'check' and draw['outs'] and strength.rank == 0:
+        reason = 'Take the free card with this draw; fold equity has not been established for a semi-bluff.'
+    if action == 'bet' and strong and equity >= .85 and not dangerous and 0 < context['stack_to_pot'] <= 1:
+        fraction = context['effective_stack'] / max(1, state.pot)
+        purpose = 'Value with a short effective stack'
+        reason = 'With a strong made hand and a short effective stack, size the value bet to the remaining contestable stack.'
+    context['size_fraction'] = fraction if action in ('bet', 'raise') else None
+    return {'version':'postflop_rules_v2','action':action,'amount':advice_size(state, player, action, fraction),
+            'hand_label':label,'board_texture':texture,'purpose':purpose,'reason':reason,
+            'live_opponents':len(opponents),'context':context,
+            'close_price':bool(call and abs(equity-threshold)<.03),
+            'limitations':'Educational postflop rules, not GTO or action EV. Draw completions are not guaranteed winning outs; opponent responses and future payments are not solved.'}

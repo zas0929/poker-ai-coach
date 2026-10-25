@@ -132,7 +132,7 @@ export interface HandAnalysis {
   hand_strength: HandStrength;
   preflop_profile: PreflopProfile;
   draw_profile: DrawProfile;
-  rule_advice?: { scenario?: string; opener_position?: string | null; effective_stack_bb?: number; stack_band?: string; range_status?: string; range_hands?: string[]; range_covered?: boolean; version: string; action: string; hand_label: string; board_texture: string[]; purpose: string; reason: string; live_opponents: number; close_price: boolean; limitations: string } | null;
+  rule_advice?: { context?: { position_label: string; effective_stack: number; stack_to_pot: number; outs: number; draws: string[]; next_card_probability: number; call_equity_threshold: number; size_fraction: number | null }; scenario?: string; opener_position?: string | null; effective_stack_bb?: number; stack_band?: string; range_status?: string; range_hands?: string[]; range_covered?: boolean; version: string; action: string; hand_label: string; board_texture: string[]; purpose: string; reason: string; live_opponents: number; close_price: boolean; limitations: string } | null;
   coach_summary: string;
   confidence: number;
   risk_level: string;
