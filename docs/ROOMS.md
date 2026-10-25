@@ -132,3 +132,26 @@ local port or a future HTTPS deployment. The frontend reads
 Friends on different networks need the hosting stage: HTTPS/WSS, backup/cleanup,
 request limits and a real test from different devices/networks.
 The current server listens on loopback only.
+
+## Joining during a hand
+
+A newcomer can reserve a free physical seat while a hand is running. Their name
+and exact buy-in appear on a dimmed seat with a waiting label. The server exposes
+`members[].waiting_for_hand`, derived from membership in the current hand, so the
+state also survives reconnects and server restarts without a schema migration.
+The live `hand.players`, deck, pot, contributions, deadline and action order stay
+unchanged. A waiting member cannot submit an action for that hand and receives
+no hidden hole cards. On the next deal they enter through the normal readiness,
+connection, sit-out and stack checks. Auto-deal rooms make newcomers ready by
+default; manual tables still require readiness before the host deals.
+
+A departing current-hand participant keeps their physical seat reserved until
+settlement. Waiting players count toward the six-seat room capacity. After the
+hand finishes, released seats may be reused with a new player identity.
+
+Public tables remain joinable during a hand when a seat is available.
+`GET /api/rooms` returns only public rooms and safe table metadata including
+`hand_in_progress`, `seats_available`, `can_join`, blinds and default stack;
+private rooms, names, cards and seat tokens are not listed. The lobby renders
+status cards, occupied-seat markers and an explicit full-table state. Its
+private/public selector explains whether the table appears in this list.

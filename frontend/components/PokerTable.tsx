@@ -8,6 +8,8 @@ import type { CSSProperties } from 'react';
 
 import { useTableSound } from '@/components/TableSoundProvider';
 import { newActionSounds } from '@/services/tableSounds';
+import { tableSeats } from '@/services/tableSeats';
+import type { RoomMember } from '@/services/roomApi';
 import { chipBreakdown } from '@/services/chips';
 import CardView from '@/components/CardView';
 import type { HandAction, HandState, Player, Street } from '@/types/poker';
@@ -23,6 +25,7 @@ interface PokerTableProps {
   silent?: boolean;
   thinkingPlayerId?: string | null;
   revealedFoldIds?: string[];
+  members?: RoomMember[];
 }
 
 function Seat({
@@ -32,6 +35,7 @@ function Seat({
   thinking = false,
   timer,
   cardsHidden = false,
+  waiting = false,
   dealer = false,
   startingStack = 1000,
   lastAction,
@@ -44,6 +48,7 @@ function Seat({
   thinking?: boolean;
   timer?: TurnTimer | null;
   cardsHidden?: boolean;
+  waiting?: boolean;
   dealer?: boolean;
   startingStack?: number;
   lastAction?: HandAction;
@@ -58,7 +63,7 @@ function Seat({
   const status = player?.status ?? 'active';
 
   return (
-    <div data-player-id={player?.id} className={`seat seat-${slot} ${active ? 'active-seat' : ''} ${timer ? 'timed-seat' : ''} ${timer && timer.remaining <= 10 ? 'seat-time-urgent' : ''} ${player ? '' : 'empty-seat'} ${cardsHidden ? 'concealed-seat' : ''} ${status === 'folded' ? 'folded-seat' : ''}`}>
+    <div data-player-id={player?.id} className={`seat seat-${slot} ${waiting ? 'waiting-seat' : ''} ${active ? 'active-seat' : ''} ${timer ? 'timed-seat' : ''} ${timer && timer.remaining <= 10 ? 'seat-time-urgent' : ''} ${player ? '' : 'empty-seat'} ${cardsHidden ? 'concealed-seat' : ''} ${status === 'folded' ? 'folded-seat' : ''}`}>
       {dealer ? <span className="dealer-marker" aria-label={t("Button")}>D</span> : null}
       <div className="seat-bar">
         {active ? <span className="seat-turn-label"><span aria-hidden="true">●</span> {turnLabel ?? t('To act')}</span> : null}
@@ -69,7 +74,7 @@ function Seat({
           <p title={t(displayPosition)}>{shortPosition}</p>
           {player ? (
             <span className={`action-badge action-${lastAction?.action ?? status}`}>
-              {t(thinking ? 'thinking' : formatAction(lastAction, status))}
+              {t(waiting ? 'Waiting for next hand' : thinking ? 'thinking' : formatAction(lastAction, status))}
             </span>
           ) : (
             <span className="action-badge action-waiting">{t("Waiting")}</span>
@@ -81,7 +86,7 @@ function Seat({
       </div>
       {player ? (
         <div className="seat-hand">
-          <div className="hole-cards" aria-hidden={status === 'folded' && cardsHidden || undefined}>
+          <div className="hole-cards" aria-hidden={waiting || status === 'folded' && cardsHidden || undefined}>
             {(status !== 'folded' || !cardsHidden) ? Array.from({ length: 2 }, (_, index) => player.cards[index]).map((card, index) => (
               <CardView key={`${player.id}-${index}`} card={card} hidden={cardsHidden} />
             )) : null}
@@ -126,7 +131,7 @@ export default function PokerTable(props: PokerTableProps) {
   return <TableScene key={key} {...props} />;
 }
 
-function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer, thinkingPlayerId, revealedFoldIds, silent = false }: PokerTableProps) {
+function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, turnTimer, thinkingPlayerId, revealedFoldIds, members, silent = false }: PokerTableProps) {
   const { t } = useI18n();
   const { play } = useTableSound();
   const previousBoard = useRef(hand && isAllInRunout(hand) ? runoutStages(hand)[0] ?? hand.board.length : hand?.board.length ?? 0);
@@ -148,7 +153,7 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
     () => hand?.board.slice(0, boardCount) ?? [],
     [boardCount, hand?.board],
   );
-  const seats = tableSeats(hand, seatCount, viewerId);
+  const seats = tableSeats(hand, seatCount, viewerId, members);
   useEffect(() => {
     if (!silent && boardCount > previousBoard.current) play('reveal', boardCount - previousBoard.current);
     previousBoard.current = boardCount;
@@ -200,11 +205,12 @@ function TableScene({ hand, seatCount, viewerId = 'hero', emptyStack = 1000, tur
 
   return (
     <section className={`table-surface classic-table ${hand?.result ? "has-result" : ""}`} aria-label={t("Poker table")}>
-      <div ref={tableRef} className={`table-oval classic-oval table-seats-${seatCount} ${seatCount > 2 ? 'table-multiway' : ''}`}>
+      <div ref={tableRef} className={`table-oval classic-oval table-seats-${seats.length} ${seats.length > 2 ? 'table-multiway' : ''}`}>
         {seats.map((seat) => (
           <Seat
             key={seat.slot}
             player={seat.player}
+            waiting={seat.waiting}
             startingStack={emptyStack}
             timer={seat.player?.id === turnTimer?.playerId && hand?.current_player_id === seat.player?.id && !hand?.result ? turnTimer : null}
             dealer={Boolean(seat.player && seat.player.id === hand?.dealer_player_id)}
@@ -292,19 +298,6 @@ function ChipStack({ amount, className = '' }: { amount: number; className?: str
       </div>;
     })}
   </div>;
-}
-
-function tableSeats(hand: HandState | null, seatCount: number, viewerId = 'hero') {
-  const slotsByCount: Record<number, string[]> = {
-    2: ['bottom', 'top'],
-    3: ['bottom', 'left', 'right'],
-    4: ['bottom', 'top-left', 'top', 'top-right'],
-    5: ['bottom', 'left', 'top-left', 'top-right', 'right'],
-    6: ['bottom', 'left', 'top-left', 'top', 'top-right', 'right'],
-  };
-  const slots = slotsByCount[seatCount] ?? slotsByCount[2];
-  const offset = Math.max(0, hand?.players.findIndex((player) => player.id === viewerId) ?? 0);
-  return slots.map((slot, index) => ({ slot, player: hand?.players[(index + offset) % hand.players.length], label: `Seat ${index + 1}` }));
 }
 
 function lastActionFor(hand: HandState | null, playerId: string) {

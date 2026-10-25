@@ -115,15 +115,24 @@ class Room:
                 return member
         raise ValueError('Seat not found. Open the invitation to join this room.')
 
+    @property
+    def occupied_seats(self):
+        occupied = {m.seat for m in self.seated}
+        if self.hand and not self.hand.result:
+            playing_ids = {p.id for p in self.hand.players}
+            occupied.update(m.seat for m in self.members if m.player_id in playing_ids)
+        return occupied
+
+    def waiting_for_hand(self, member):
+        return bool(self.hand and all(p.id != member.player_id for p in self.hand.players))
+
     def join(self, name: str, buy_in: int | None = None) -> Member:
-        if self.hand is not None and not self.hand.result:
-            raise ValueError('Wait until the hand finishes before joining.')
-        if len(self.seated) >= 6:
+        if len(self.occupied_seats) >= 6:
             raise ValueError('This room is full (6 players).')
         chips = self.settings.starting_stack if buy_in is None else buy_in
         if type(chips) is not int or not self.settings.big_blind <= chips <= 1000000:
             raise ValueError('Buy-in must cover the big blind and be at most 1000000 chips.')
-        seat = next(i for i in range(6) if all(m.seat != i for m in self.seated))
+        seat = next(i for i in range(6) if i not in self.occupied_seats)
         player_id = SEAT_IDS[seat]
         if player_id in self.used_ids:
             player_id = 'seat_' + secrets.token_hex(12)
@@ -153,7 +162,7 @@ class Room:
             'next_hand_at': self.next_hand_at, 'deadline_at': self.deadline_at, 'server_now': time.time() * 1000,
             'members': [{'player_id': m.player_id, 'name': m.name, 'ready': m.ready,
                          'connected': bool(m.sockets), 'sitting_out': m.sitting_out,
-                         'seat': m.seat, 'stack': m.stack,
+                         'seat': m.seat, 'stack': m.stack, 'waiting_for_hand': self.waiting_for_hand(m),
                          'session_buy_in': m.session_buy_in, 'session_top_ups': m.session_top_ups,
                          'session_partial': m.session_partial} for m in self.seated],
             'hand': hand,
@@ -253,6 +262,8 @@ class Room:
                 raise ValueError('Finish the current hand first.')
             self._deal()
         elif command.kind == 'action':
+            if self.waiting_for_hand(member):
+                raise ValueError('You will join the next hand. Wait for the current hand to finish.')
             if not self.hand or command.hand_id != self.hand.hand_id:
                 raise ValueError('This hand is no longer active.')
             if command.action is None:

@@ -138,8 +138,11 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(self.room.hand.current_player_id, actor)
         self.assertFalse(self.room.hand.result)
         self.assertTrue(self.room.snapshot(third)['viewer_left'])
-        with self.assertRaises(ValueError):
-            self.room.join('Too soon')
+        before = self.room.hand.model_dump_json()
+        newcomer = self.room.join('Next hand')
+        self.assertNotEqual(newcomer.seat, third.seat)
+        self.assertTrue(self.room.waiting_for_hand(newcomer))
+        self.assertEqual(self.room.hand.model_dump_json(), before)
 
     def test_reconnect_does_not_reset_deadline(self):
         self.start()

@@ -44,7 +44,9 @@ async def public_rooms(response: Response):
     return {'rooms': [{'code': room.code, 'players': len(room.seated),
                       'small_blind': room.settings.small_blind, 'big_blind': room.settings.big_blind,
                       'starting_stack': room.settings.starting_stack,
-                      'can_join': len(room.seated) < 6 and (not room.hand or bool(room.hand.result))}
+                      'hand_in_progress': bool(room.hand and not room.hand.result),
+                      'seats_available': 6 - len(room.occupied_seats),
+                      'can_join': len(room.occupied_seats) < 6}
                      for room in list(store.rooms.values()) if room.settings.visibility == 'public' and room.seated][:50]}
 
 

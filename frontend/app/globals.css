@@ -1512,3 +1512,65 @@ h2 {
 .room-created-dialog input { width: 100%; min-width: 0; }
 @media (max-width: 767px) { .table-quick-metrics { display: flex; justify-content: space-between; gap: 8px; padding: 6px 12px; font-size: .75rem; color: #b9cbbf; } .table-quick-metrics b { color: #f0dda3; } }
 .room-created-dialog input { padding: 12px; color: var(--text, #eef2ea); background: #101d18; border: 1px solid #526558; border-radius: 10px; font: inherit; }
+
+/* Joining players occupy a visible seat without joining the live pot. */
+.waiting-seat .seat-bar { opacity: .6; border-style: dashed; box-shadow: none; }
+.waiting-seat .hole-cards { visibility: hidden; }
+.waiting-seat .player-chip-cluster { opacity: .68; }
+.waiting-seat .action-badge { color: #bed0c6; }
+
+.table-visibility { display: grid; gap: 9px; }
+.table-visibility .visibility-select { position: relative; display: flex; align-items: center; border: 1px solid #526652; border-radius: 14px; background: linear-gradient(110deg, #21362b, #14241e); }
+.visibility-icon { position: absolute; left: 15px; width: 24px; height: 24px; color: #d9c779; pointer-events: none; }
+.table-visibility select { appearance: none; width: 100%; height: 60px; padding: 0 48px 0 54px; border: 0; border-radius: inherit; background: transparent; color: #f1f4e9; font: inherit; font-weight: 650; cursor: pointer; }
+.table-visibility select option { color: #f1f4e9; background: #15271f; }
+.visibility-select:focus-within { outline: 2px solid #d9c779; outline-offset: 3px; }
+.visibility-caret { position: absolute; right: 18px; width: 18px; height: 18px; color: #f1f4e9; pointer-events: none; }
+.table-visibility p { margin: 0; font-size: 13px; }
+.public-tables { border-top: 1px solid #34483d; padding-top: 24px; min-width: 0; }
+.public-tables-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.public-tables-heading h3 { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 20px; }
+.public-tables-heading h3 span { display: inline-grid; place-items: center; min-width: 26px; height: 26px; border-radius: 8px; background: #2a3c30; color: #dfcd86; font-size: 12px; }
+.public-tables-heading p { margin: 8px 0 0; font-size: 13px; }
+.table-list-refresh { flex: 0 0 40px; width: 40px; height: 40px; padding: 10px; border-radius: 11px; }
+.table-list-refresh svg { width: 100%; height: 100%; }
+.public-table-list { display: grid; gap: 14px; margin: 18px 0 0; padding: 0; list-style: none; }
+.public-table-card { border: 1px solid #3e5747; border-radius: 16px; padding: 18px; background: linear-gradient(125deg, #20362a, #14231c); }
+.public-table-title { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.public-table-emblem { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: #d6c67e18; color: #dfcd86; font-size: 23px; }
+.public-table-title h4 { display: flex; gap: 7px; flex-wrap: wrap; margin: 0; font-size: 13px; font-weight: 400; color: #b4c7ba; }
+.public-table-title h4 b { color: #f1f3df; letter-spacing: .04em; }
+.table-status { margin-left: auto; padding: 5px 8px; border-radius: 7px; background: #a4c8ad12; color: #b4c7ba; font-size: 11px; }
+.table-status-live { color: #e3ce83; background: #d6c67e14; }
+.public-table-stats { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 12px; padding: 20px 0; }
+.public-table-stats > div { display: grid; align-content: start; gap: 7px; }
+.public-table-stats > div > span:first-child { color: #b2c6b9; font-size: 12px; }
+.public-table-stats strong { font-size: 22px; color: #f3f0d7; font-variant-numeric: tabular-nums; }
+.public-table-stats small { color: #a6b9ac; font-size: 13px; font-weight: 400; }
+.table-seat-dots { display: flex; gap: 3px; }
+.table-seat-dots i { width: 8px; height: 8px; border-radius: 50%; background: #a0c4aa1c; border: 1px solid #5a7863; }
+.table-seat-dots i.taken { background: #d7c77d; border-color: #d7c77d; }
+.public-table-card footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid #3a5141; padding-top: 14px; }
+.public-table-card footer > span { color: #b2c6b9; font-size: 12px; }
+.public-tables .public-table-join { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 40px; padding: 9px 13px; border: 1px solid #d7c77d65; border-radius: 10px; color: #e7d78f; background: #d7c77d0d; text-decoration: none; font-size: 13px; font-weight: 650; }
+.public-tables .public-table-join:hover { background: #d7c77d24; }
+.public-tables .public-table-join[aria-disabled="true"] { cursor: default; opacity: .5; }
+.public-tables-empty { display: grid; justify-items: center; gap: 10px; margin-top: 18px; padding: 24px 16px; border: 1px dashed #49614f; border-radius: 14px; text-align: center; color: #c7d4c9; }
+.public-tables-empty > span { font-size: 30px; color: #d7c77d; }
+.public-tables-empty p { margin: 0; font-size: 13px; }
+@media (max-width: 480px) {
+  .public-table-card { padding: 14px; }
+  .public-table-stats { gap: 8px; }
+  .public-table-stats strong { font-size: 19px; }
+  .public-table-title .table-status { margin-left: 39px; }
+  .public-table-card footer { align-items: stretch; flex-direction: column; }
+  .public-tables .public-table-join { width: 100%; }
+}
+@media (min-width: 900px) {
+  .room-entry-with-list { max-width: 1100px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-items: start; }
+  .room-entry-with-list > :not(.public-tables) { grid-column: 1; }
+  .room-entry-with-list > .public-tables { grid-column: 2; grid-row: 1; border-top: 0; border-left: 1px solid #34483d; margin: 0; padding: 0 0 0 32px; }
+}
+
+.room-create-form { display: grid; gap: 20px; min-width: 0; }
+.room-create-form > p { margin: 0; }
