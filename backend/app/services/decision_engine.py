@@ -8,6 +8,7 @@ from app.services.equity_service import EquityService
 from app.services.hand_evaluator import HandEvaluator
 from app.services.range_service import RangeService
 from app.services.coach_rules import advise
+from app.services.preflop_rules import advise as advise_preflop
 from app.services.betting_rules import betting_options, highest_bet
 
 
@@ -82,7 +83,8 @@ class DecisionEngine:
         preflop_profile = self.preflop_profile(player.cards)
         draw_profile = self._draw_profile(player.cards, state.board, state.street)
         recommended_action = self._recommend_action(equity, required_equity, call_amount)
-        rule_advice = advise(state, player, equity, required_equity, call_amount, self.evaluator, hand_strength)
+        rule_advice = (advise_preflop(state, player, equity, required_equity, call_amount) if state.street == Street.PREFLOP
+                       else advise(state, player, equity, required_equity, call_amount, self.evaluator, hand_strength))
         if rule_advice:
             recommended_action = rule_advice['action']
         if recommended_action == "bet" and highest_bet(state) > 0:
@@ -94,8 +96,8 @@ class DecisionEngine:
             recommended_action = "call" if options.call_amount else "check"
 
         if rule_advice and rule_advice['action'] != recommended_action:
-            rule_advice.update(action=recommended_action, purpose='Legal continuation',
-                               reason='The legal betting options limit the action to calling or checking.')
+            rule_advice.update(action=recommended_action, amount=None, purpose='Legal continuation',
+                               reason='The recommendation was adjusted to the legal betting options.')
         return HandAnalysis(
             rule_advice=rule_advice,
             hand_id=state.hand_id,
@@ -114,7 +116,8 @@ class DecisionEngine:
             equity_sampling_error=estimate.sampling_error,
             ev_call=ev_call,
             recommended_action=recommended_action,
-            recommended_amount=self.recommended_size(state, player_id, recommended_action),
+            recommended_amount=(rule_advice.get('amount') if rule_advice and rule_advice['version']=='preflop_rules_v1'
+                                else self.recommended_size(state, player_id, recommended_action)),
             hand_strength=hand_strength,
             preflop_profile=preflop_profile,
             draw_profile=draw_profile,

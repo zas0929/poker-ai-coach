@@ -84,13 +84,12 @@ export default function CoachPanel({
 
       {analysis ? (
         <div className="coach-summary">
-          {analysis.rule_advice ? <div className="rule-advice"><strong>{t(analysis.rule_advice.hand_label)}</strong><p>{analysis.rule_advice.board_texture.map(v => t(v)).join(' · ')}</p><p>{t('Action purpose')}: {t(analysis.rule_advice.purpose)}</p>{analysis.rule_advice.close_price ? <p>{t('Close to the call threshold; the range estimate can change this decision.')}</p> : null}</div> : null}
+          {analysis.rule_advice ? <div className="rule-advice"><strong>{t(analysis.rule_advice.hand_label)}</strong>{analysis.rule_advice.scenario ? <div><p>{t(analysis.rule_advice.scenario)}</p><p>{t('Your position')}: {t(hand?.players.find(p => p.id === analysis.player_id)?.position ?? '')}{analysis.rule_advice.opener_position ? ` · ${t('Opening position')}: ${t(analysis.rule_advice.opener_position)}` : ''}</p><p>{t('Effective stack')}: {analysis.rule_advice.effective_stack_bb} BB · {t(analysis.rule_advice.stack_band ?? '')}</p><p>{t(analysis.rule_advice.range_status ?? '')}</p>{analysis.rule_advice.range_hands?.length ? <details><summary>{t('Situation range')}</summary><p>{analysis.rule_advice.range_hands.join(', ')}</p></details> : null}</div> : null}<p>{analysis.rule_advice.board_texture.map(v => t(v)).join(' · ')}</p><p>{t('Action purpose')}: {t(analysis.rule_advice.purpose)}</p>{analysis.rule_advice.close_price ? <p>{t('Close to the call threshold; the range estimate can change this decision.')}</p> : null}</div> : null}
           <p>{t(analysis.coach_summary)}</p>
           {analysis.rule_advice ? <p className="room-note">{t(analysis.rule_advice.limitations)}</p> : null}
           {analysis.recommended_amount != null ? <p>{t('Suggested size uses a simple betting heuristic, not a solved optimal size. Raises show the total bet on this street.')}</p> : null}
           <div className="summary-meta">
-            <span>{t("Heuristic score ")}{t(percent(analysis.confidence))}</span>
-            <span>{t("Risk ")}{t(label(analysis.risk_level))}</span>
+            {analysis.rule_advice?.version === 'preflop_rules_v1' ? <span>{t('Educational preset')}</span> : <><span>{t("Heuristic score ")}{t(percent(analysis.confidence))}</span><span>{t("Risk ")}{t(label(analysis.risk_level))}</span></>}
             <span>{t(label(analysis.preflop_profile.category))}</span>
           </div>
           {analysis.preflop_profile.tags.length ? (
