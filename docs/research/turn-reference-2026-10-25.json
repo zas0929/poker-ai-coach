@@ -1,0 +1,1637 @@
+{
+  "model_version": "bounded-turn-reference-v1",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "python": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]",
+  "iterations": 100,
+  "sources": {
+    "turn_reference.py": "ea018a0eff12a10f560997b470a53d78f46930997b994559677245f5a663538c",
+    "turn_oracle.py": "a9ea4101781c08d2cf5d34949e10b004231aa77b0d7b51def1f19910f95130d6",
+    "turn_native.py": "ae92d8c5242c2007e978900f87ed5d33fb61b0333ae509b2109655233693814f",
+    "benchmark_turn.py": "b89be352eda3e435c22ed5258c96b1fdde522ff5b61921b4e641d185728d16d7",
+    "custom_river.py": "7e3fc1317c6dae884363d01672d1865b3dd82ff9efc145de9951fc985dc87029",
+    "native_cfr.py": "9019a33a0393b7aed64cb43d3f937707608a681d83f6bfeacaf9b5fa0918017d",
+    "native/cfr.cpp": "3b5b81d286d407269d3fbddee9eb1630a3a376a714c3cd11a5ac164bc3737481",
+    "compact_utilities.py": "a7817691ee64fd30d3713603749f9c6bbbe7109c8c445b31094aa04cc41c2ea9"
+  },
+  "scope": "Exact small turn/river games, opening bets only, no raises. Capacity controls have one hand per seat; separate 2-6 seat controls have two hands each, with strongly restricted compatible lineups at 3-6 seats. Measured deviations apply only to these bounded games. No production admission.",
+  "results": [
+    {
+      "name": "turn_capacity_2",
+      "range_scope": "one explicit hand per seat",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ]
+        ],
+        "pot": 40,
+        "initial_contributions": [
+          20,
+          20
+        ],
+        "stacks": [
+          5,
+          10
+        ],
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          10
+        ],
+        "river_bet_sizes": [
+          10
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 0.006235541000000011,
+      "train_seconds": 0.013201875000000002,
+      "trained_measure_seconds": 0.004111332999999995,
+      "peak_rss_mib": 26.89453125,
+      "public_nodes": 20,
+      "joint_private_deals": 1,
+      "joint_hand_river_outcomes": 44,
+      "information_sets": 180,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          14.914772727272721,
+          -14.914772727272721
+        ],
+        "best_response_payoffs": [
+          22.04545454545454,
+          -10.68181818181818
+        ],
+        "unilateral_gains": [
+          7.130681818181818,
+          4.232954545454541
+        ],
+        "nash_conv_chips": 11.36363636363636,
+        "max_unilateral_gain_pct_pot": 17.826704545454547
+      },
+      "metrics": {
+        "policy_payoffs": [
+          19.999681761750637,
+          -19.99968176175063
+        ],
+        "best_response_payoffs": [
+          20.000270027002703,
+          -19.998688083878072
+        ],
+        "unilateral_gains": [
+          0.0005882652520661225,
+          0.0009936778725574413
+        ],
+        "nash_conv_chips": 0.0015819431246235638,
+        "max_unilateral_gain_pct_pot": 0.0024841946813936033
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 0.9999999999999994,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 39.99968176175063,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.0002945416463840418,
+              "ev_chips": 38.00304736158781,
+              "gap_to_best_first_action_chips": 1.9972226654148884
+            },
+            {
+              "action": "BET 5",
+              "probability": 0.9997054583536159,
+              "ev_chips": 40.0002700270027,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 0.483559375,
+      "sampled_peak_rss_mib": 26.51953125,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_capacity_3",
+      "range_scope": "one explicit hand per seat",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ]
+        ],
+        "pot": 60,
+        "initial_contributions": [
+          20,
+          20,
+          20
+        ],
+        "stacks": [
+          5,
+          10,
+          15
+        ],
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          10
+        ],
+        "river_bet_sizes": [
+          10
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 0.017807083,
+      "train_seconds": 0.02127450000000003,
+      "trained_measure_seconds": 0.023258084000000012,
+      "peak_rss_mib": 27.35546875,
+      "public_nodes": 67,
+      "joint_private_deals": 1,
+      "joint_hand_river_outcomes": 42,
+      "information_sets": 684,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          28.769531249999996,
+          -8.825334821428564,
+          -19.944196428571423
+        ],
+        "best_response_payoffs": [
+          42.22470238095238,
+          -4.047619047619044,
+          -17.11309523809523
+        ],
+        "unilateral_gains": [
+          13.455171130952383,
+          4.77771577380952,
+          2.8311011904761934
+        ],
+        "nash_conv_chips": 21.0639880952381,
+        "max_unilateral_gain_pct_pot": 22.425285218253972
+      },
+      "metrics": {
+        "policy_payoffs": [
+          39.998324853056054,
+          -19.998986740642174,
+          -19.99933811241388
+        ],
+        "best_response_payoffs": [
+          40.00045525240286,
+          -19.99751535913836,
+          -19.99861230294574
+        ],
+        "unilateral_gains": [
+          0.002130399346803813,
+          0.001471381503812097,
+          0.0007258094681397154
+        ],
+        "nash_conv_chips": 0.004327590318755625,
+        "max_unilateral_gain_pct_pot": 0.0035506655780063547
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 1.0000000000000007,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 59.99832485305605,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.00035047129580365044,
+              "ev_chips": 53.921785266274064,
+              "gap_to_best_first_action_chips": 6.078669986128787
+            },
+            {
+              "action": "BET 5",
+              "probability": 0.9996495287041963,
+              "ev_chips": 60.00045525240285,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 0.48002045800000004,
+      "sampled_peak_rss_mib": 25.87109375,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_capacity_4",
+      "range_scope": "one explicit hand per seat",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ]
+        ],
+        "pot": 80,
+        "initial_contributions": [
+          20,
+          20,
+          20,
+          20
+        ],
+        "stacks": [
+          5,
+          10,
+          15,
+          20
+        ],
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          10
+        ],
+        "river_bet_sizes": [
+          10
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 0.078480625,
+      "train_seconds": 0.08207558300000001,
+      "trained_measure_seconds": 0.15035699999999996,
+      "peak_rss_mib": 30.71484375,
+      "public_nodes": 286,
+      "joint_private_deals": 1,
+      "joint_hand_river_outcomes": 40,
+      "information_sets": 3872,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          42.3974609375,
+          -3.1773681640625,
+          -17.73876953125,
+          -21.4813232421875
+        ],
+        "best_response_payoffs": [
+          61.58984375,
+          3.474609375,
+          -14.25,
+          -18.55859375
+        ],
+        "unilateral_gains": [
+          19.1923828125,
+          6.6519775390625,
+          3.48876953125,
+          2.9227294921875
+        ],
+        "nash_conv_chips": 32.255859375,
+        "max_unilateral_gain_pct_pot": 23.990478515625
+      },
+      "metrics": {
+        "policy_payoffs": [
+          59.99954776583388,
+          -19.999506148861148,
+          -20.000158849815485,
+          -19.999882767157224
+        ],
+        "best_response_payoffs": [
+          60.00137979196416,
+          -19.996079832403662,
+          -19.99846341791862,
+          -19.999376318303057
+        ],
+        "unilateral_gains": [
+          0.0018320261302804397,
+          0.0034263164574852567,
+          0.0016954318968629423,
+          0.0005064488541677292
+        ],
+        "nash_conv_chips": 0.007460223338796368,
+        "max_unilateral_gain_pct_pot": 0.004282895571856571
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 1.0000000000000004,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 79.99954776583387,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.0001309139663220649,
+              "ev_chips": 66.00725692064171,
+              "gap_to_best_first_action_chips": 13.994122871322432
+            },
+            {
+              "action": "BET 5",
+              "probability": 0.999869086033678,
+              "ev_chips": 80.00137979196414,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 0.9492528330000003,
+      "sampled_peak_rss_mib": 28.3359375,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_capacity_5",
+      "range_scope": "one explicit hand per seat",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ]
+          ]
+        ],
+        "pot": 100,
+        "initial_contributions": [
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "stacks": [
+          5,
+          10,
+          15,
+          20,
+          25
+        ],
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          10
+        ],
+        "river_bet_sizes": [
+          10
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 0.34946762499999995,
+      "train_seconds": 0.41665041599999997,
+      "trained_measure_seconds": 0.8417451659999999,
+      "peak_rss_mib": 48.80859375,
+      "public_nodes": 1181,
+      "joint_private_deals": 1,
+      "joint_hand_river_outcomes": 38,
+      "information_sets": 18016,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          58.73091848273026,
+          1.1676186009457137,
+          -15.670053582442444,
+          -20.095937628495072,
+          -24.13254587273849
+        ],
+        "best_response_payoffs": [
+          83.94608347039474,
+          9.105160361842103,
+          -10.515008223684216,
+          -16.064196134868425,
+          -19.779373972039487
+        ],
+        "unilateral_gains": [
+          25.21516498766448,
+          7.937541760896389,
+          5.155045358758228,
+          4.031741493626647,
+          4.353171900699003
+        ],
+        "nash_conv_chips": 46.69266550164475,
+        "max_unilateral_gain_pct_pot": 25.21516498766448
+      },
+      "metrics": {
+        "policy_payoffs": [
+          77.9067773272447,
+          -20.000134224381355,
+          -18.943701111150666,
+          -18.95616941176864,
+          -20.006772579944002
+        ],
+        "best_response_payoffs": [
+          77.90964431710216,
+          -19.99546383470766,
+          -18.937838623660287,
+          -18.944854012752717,
+          -19.99991773954452
+        ],
+        "unilateral_gains": [
+          0.002866989857466251,
+          0.004670389673695041,
+          0.005862487490379209,
+          0.011315399015924044,
+          0.006854840399480366
+        ],
+        "nash_conv_chips": 0.03157010643694491,
+        "max_unilateral_gain_pct_pot": 0.011315399015924044
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 0.9999999999999992,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 97.90677732724475,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.000247065489628082,
+              "ev_chips": 86.30547466239271,
+              "gap_to_best_first_action_chips": 11.604169654709523
+            },
+            {
+              "action": "BET 5",
+              "probability": 0.9997529345103718,
+              "ev_chips": 97.90964431710223,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 3.05127775,
+      "sampled_peak_rss_mib": 48.80859375,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_capacity_6",
+      "range_scope": "one explicit hand per seat",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ]
+          ],
+          [
+            [
+              "QcTc",
+              1
+            ]
+          ]
+        ],
+        "pot": 120,
+        "initial_contributions": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "stacks": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30
+        ],
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          10
+        ],
+        "river_bet_sizes": [
+          10
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 1.515640291,
+      "train_seconds": 2.24938675,
+      "trained_measure_seconds": 4.20071175,
+      "peak_rss_mib": 108.51171875,
+      "public_nodes": 4732,
+      "joint_private_deals": 1,
+      "joint_hand_river_outcomes": 36,
+      "information_sets": 75072,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          76.56289842393663,
+          7.51925362481011,
+          -15.121533075968433,
+          -20.28759426540799,
+          -23.60164006551107,
+          -25.07138464185927
+        ],
+        "best_response_payoffs": [
+          108.2465108235677,
+          18.25930277506511,
+          -9.08786349826389,
+          -16.271260579427082,
+          -19.342024061414936,
+          -19.998974270290805
+        ],
+        "unilateral_gains": [
+          31.683612399631073,
+          10.740049150254999,
+          6.0336695777045435,
+          4.016333685980907,
+          4.259616004096134,
+          5.072410371568466
+        ],
+        "nash_conv_chips": 61.805691189236114,
+        "max_unilateral_gain_pct_pot": 26.403010333025893
+      },
+      "metrics": {
+        "policy_payoffs": [
+          100.01326523240846,
+          -19.9988853336984,
+          -20.000790203126105,
+          -20.00120130796012,
+          -20.003311163461994,
+          -20.009077224161746
+        ],
+        "best_response_payoffs": [
+          100.01759166969659,
+          -19.994466569669754,
+          -19.99752034071108,
+          -19.998479652568832,
+          -19.999899171783515,
+          -19.999997163302695
+        ],
+        "unilateral_gains": [
+          0.004326437288128204,
+          0.004418764028645938,
+          0.0032698624150242495,
+          0.0027216553912872143,
+          0.003411991678479609,
+          0.009080060859051997
+        ],
+        "nash_conv_chips": 0.027228771660617213,
+        "max_unilateral_gain_pct_pot": 0.007566717382543332
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 1.0000000000000002,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 120.0132652324083,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.0003454094080522341,
+              "ev_chips": 107.49205765911206,
+              "gap_to_best_first_action_chips": 12.525534010584366
+            },
+            {
+              "action": "BET 5",
+              "probability": 0.9996545905919478,
+              "ev_chips": 120.01759166969643,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 12.929025209000002,
+      "sampled_peak_rss_mib": 108.55078125,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_private_uncertainty_2",
+      "range_scope": "two hands per seat, four joint private deals",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "3h3d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "5h5d",
+              1
+            ]
+          ]
+        ],
+        "pot": 40,
+        "initial_contributions": [
+          20,
+          20
+        ],
+        "stacks": [
+          20,
+          20
+        ],
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          10
+        ],
+        "river_bet_sizes": [
+          10
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 0.03319045799999998,
+      "train_seconds": 0.029383624999999997,
+      "trained_measure_seconds": 0.027019582999999958,
+      "peak_rss_mib": 27.83203125,
+      "public_nodes": 36,
+      "joint_private_deals": 4,
+      "joint_hand_river_outcomes": 176,
+      "information_sets": 1112,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          4.531250000000001,
+          -4.531249999999998
+        ],
+        "best_response_payoffs": [
+          18.409090909090907,
+          10.880681818181815
+        ],
+        "unilateral_gains": [
+          13.877840909090907,
+          15.411931818181813
+        ],
+        "nash_conv_chips": 29.28977272727272,
+        "max_unilateral_gain_pct_pot": 38.52982954545453
+      },
+      "metrics": {
+        "policy_payoffs": [
+          6.07698965628216,
+          -6.076989656282177
+        ],
+        "best_response_payoffs": [
+          6.096206510367338,
+          -6.055382940667077
+        ],
+        "unilateral_gains": [
+          0.019216854085177815,
+          0.02160671561509986
+        ],
+        "nash_conv_chips": 0.04082356970027767,
+        "max_unilateral_gain_pct_pot": 0.054016789037749646
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 0.49999999999999967,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 51.905434450536376,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.15630843685278803,
+              "ev_chips": 51.89239967723985,
+              "gap_to_best_first_action_chips": 0.015449690225537438
+            },
+            {
+              "action": "BET 10",
+              "probability": 0.8436915631472119,
+              "ev_chips": 51.90784936746539,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        },
+        {
+          "actor": 0,
+          "own_hand": "3h3d",
+          "conditional_mass": 0.49999999999999967,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 0.2485448620279581,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.7454338658947585,
+              "ev_chips": 0.25503225278046315,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 10",
+              "probability": 0.2545661341052416,
+              "ev_chips": 0.22954814518183397,
+              "gap_to_best_first_action_chips": 0.02548410759862918
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 0.4702273330000004,
+      "sampled_peak_rss_mib": 26.0703125,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_private_uncertainty_3",
+      "range_scope": "two hands per seat; shared alternate hand limits compatible lineups",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ]
+        ],
+        "pot": 60,
+        "initial_contributions": [
+          20,
+          20,
+          20
+        ],
+        "stack": 2,
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          2
+        ],
+        "river_bet_sizes": [
+          2
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 0.05241395799999998,
+      "train_seconds": 0.038680166000000016,
+      "trained_measure_seconds": 0.05973824999999999,
+      "peak_rss_mib": 27.78125,
+      "public_nodes": 59,
+      "joint_private_deals": 4,
+      "joint_hand_river_outcomes": 168,
+      "information_sets": 1080,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          17.0072544642857,
+          -3.8085937499999996,
+          -13.198660714285706
+        ],
+        "best_response_payoffs": [
+          28.130952380952355,
+          4.613095238095227,
+          -7.988095238095239
+        ],
+        "unilateral_gains": [
+          11.123697916666654,
+          8.421688988095227,
+          5.210565476190467
+        ],
+        "nash_conv_chips": 24.755952380952348,
+        "max_unilateral_gain_pct_pot": 18.539496527777757
+      },
+      "metrics": {
+        "policy_payoffs": [
+          23.57088512874434,
+          -4.714498303162685,
+          -18.856386825581666
+        ],
+        "best_response_payoffs": [
+          23.573376450778085,
+          -4.712568522600115,
+          -18.854749113511403
+        ],
+        "unilateral_gains": [
+          0.0024913220337445807,
+          0.0019297805625697606,
+          0.0016377120702628645
+        ],
+        "nash_conv_chips": 0.006058814666577206,
+        "max_unilateral_gain_pct_pot": 0.004152203389574301
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 0.7499999999999984,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 57.712164489718184,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.00023432297351798234,
+              "ev_chips": 47.3944587711198,
+              "gap_to_best_first_action_chips": 10.320123960731934
+            },
+            {
+              "action": "BET 2",
+              "probability": 0.9997656770264821,
+              "ev_chips": 57.714582731851735,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        },
+        {
+          "actor": 0,
+          "own_hand": "8c8d",
+          "conditional_mass": 0.25000000000000017,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 1.1470470458229554,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.35315209258958613,
+              "ev_chips": 1.1494104606902695,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 2",
+              "probability": 0.6468479074104139,
+              "ev_chips": 1.1457567194626357,
+              "gap_to_best_first_action_chips": 0.0036537412276338443
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 0.7162838749999985,
+      "sampled_peak_rss_mib": 25.98046875,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_private_uncertainty_4",
+      "range_scope": "two hands per seat; shared alternate hand limits compatible lineups",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ]
+        ],
+        "pot": 80,
+        "initial_contributions": [
+          20,
+          20,
+          20,
+          20
+        ],
+        "stack": 2,
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          2
+        ],
+        "river_bet_sizes": [
+          2
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 0.16284541600000002,
+      "train_seconds": 0.1171580419999999,
+      "trained_measure_seconds": 0.24891129200000006,
+      "peak_rss_mib": 30.04296875,
+      "public_nodes": 158,
+      "joint_private_deals": 5,
+      "joint_hand_river_outcomes": 200,
+      "information_sets": 2816,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          28.14035156250001,
+          -0.4539355468749986,
+          -11.700859374999997,
+          -15.985556640624996
+        ],
+        "best_response_payoffs": [
+          43.6375,
+          9.316249999999998,
+          -5.953124999999997,
+          -12.472812499999995
+        ],
+        "unilateral_gains": [
+          15.497148437499995,
+          9.770185546874997,
+          5.747734374999999,
+          3.512744140625001
+        ],
+        "nash_conv_chips": 34.527812499999996,
+        "max_unilateral_gain_pct_pot": 19.37143554687499
+      },
+      "metrics": {
+        "policy_payoffs": [
+          38.71840717429895,
+          -3.519102362344009,
+          -17.599437269121974,
+          -17.599867542832968
+        ],
+        "best_response_payoffs": [
+          38.72284490165558,
+          -3.5170463234865705,
+          -17.59769703916627,
+          -17.598838287231906
+        ],
+        "unilateral_gains": [
+          0.004437727356624066,
+          0.002056038857438658,
+          0.001740229955704109,
+          0.001029255601061152
+        ],
+        "nash_conv_chips": 0.009263251770827985,
+        "max_unilateral_gain_pct_pot": 0.0055471591957800825
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 0.8000000000000006,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 72.79727197002826,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.0008907395719889693,
+              "ev_chips": 68.47695952467163,
+              "gap_to_best_first_action_chips": 4.324164149480367
+            },
+            {
+              "action": "BET 2",
+              "probability": 0.999109260428011,
+              "ev_chips": 72.801123674152,
+              "gap_to_best_first_action_chips": 0.0
+            }
+          ]
+        },
+        {
+          "actor": 0,
+          "own_hand": "8c8d",
+          "conditional_mass": 0.2000000000000001,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 2.402947991381123,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.17853116581851536,
+              "ev_chips": 2.407845228628613,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 2",
+              "probability": 0.8214688341814846,
+              "ev_chips": 2.401883666797275,
+              "gap_to_best_first_action_chips": 0.0059615618313380025
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 1.2144889170000006,
+      "sampled_peak_rss_mib": 30.0390625,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_private_uncertainty_5",
+      "range_scope": "two hands per seat; shared alternate hand limits compatible lineups",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ]
+        ],
+        "pot": 100,
+        "initial_contributions": [
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "stack": 2,
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          2
+        ],
+        "river_bet_sizes": [
+          2
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 0.487110417,
+      "train_seconds": 0.39028354199999993,
+      "trained_measure_seconds": 0.9013123749999998,
+      "peak_rss_mib": 37.96875,
+      "public_nodes": 397,
+      "joint_private_deals": 6,
+      "joint_hand_river_outcomes": 228,
+      "information_sets": 6880,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          41.76785224780703,
+          2.56790000513981,
+          -10.248021175986834,
+          -15.01211065995065,
+          -19.07562041700931
+        ],
+        "best_response_payoffs": [
+          62.37719298245615,
+          13.328947368421062,
+          -3.901864035087706,
+          -10.973410087719284,
+          -18.150013706140335
+        ],
+        "unilateral_gains": [
+          20.609340734649123,
+          10.761047363281252,
+          6.346157140899128,
+          4.038700572231367,
+          0.9256067108689763
+        ],
+        "nash_conv_chips": 42.68085252192985,
+        "max_unilateral_gain_pct_pot": 20.609340734649123
+      },
+      "metrics": {
+        "policy_payoffs": [
+          55.50674883963812,
+          -4.096420046501841,
+          -16.202763345722325,
+          -16.203263802081732,
+          -19.004301645332255
+        ],
+        "best_response_payoffs": [
+          55.58026502623126,
+          -4.094318499900563,
+          -16.201422478440122,
+          -16.201763585979943,
+          -19.001400045810207
+        ],
+        "unilateral_gains": [
+          0.07351618659313885,
+          0.002101546601277704,
+          0.001340867282202396,
+          0.0015002161017889648,
+          0.0029015995220476043
+        ],
+        "nash_conv_chips": 0.08136041610045552,
+        "max_unilateral_gain_pct_pot": 0.07351618659313885
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 0.8333333333333355,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 89.85798923858664,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.274368640467242,
+              "ev_chips": 89.92230181793522,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 2",
+              "probability": 0.725631359532758,
+              "ev_chips": 89.83367199439783,
+              "gap_to_best_first_action_chips": 0.08862982353738857
+            }
+          ]
+        },
+        {
+          "actor": 0,
+          "own_hand": "8c8d",
+          "conditional_mass": 0.1666666666666668,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 3.7505468448955126,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.5759400711369846,
+              "ev_chips": 3.797726455411304,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 2",
+              "probability": 0.4240599288630154,
+              "ev_chips": 3.6864695143409953,
+              "gap_to_best_first_action_chips": 0.11125694107030881
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 3.068873916000001,
+      "sampled_peak_rss_mib": 37.96875,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    },
+    {
+      "name": "turn_private_uncertainty_6",
+      "range_scope": "two hands per seat; shared alternate hand limits compatible lineups",
+      "input": {
+        "board": [
+          "2c",
+          "4d",
+          "7h",
+          "9s"
+        ],
+        "ranges": [
+          [
+            [
+              "AhAd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "KhKd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "QhQd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "ThTd",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "AcKc",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ],
+          [
+            [
+              "QcTc",
+              1
+            ],
+            [
+              "8c8d",
+              1
+            ]
+          ]
+        ],
+        "pot": 120,
+        "initial_contributions": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "stack": 2,
+        "min_bet": 2,
+        "turn_bet_sizes": [
+          2
+        ],
+        "river_bet_sizes": [
+          2
+        ]
+      },
+      "status": "completed",
+      "model_version": "bounded-turn-reference-v1",
+      "iterations": 100,
+      "method": "cfr_plus_native",
+      "traversal_budget": 200000000,
+      "build_seconds": 1.384778084,
+      "train_seconds": 1.288850041,
+      "trained_measure_seconds": 3.0948751670000005,
+      "peak_rss_mib": 51.99609375,
+      "public_nodes": 956,
+      "joint_private_deals": 7,
+      "joint_hand_river_outcomes": 252,
+      "information_sets": 16128,
+      "uniform_metrics": {
+        "policy_payoffs": [
+          56.71888926672558,
+          7.088862827845986,
+          -9.539355928935695,
+          -15.236212109762521,
+          -18.782091897631453,
+          -20.25009215824188
+        ],
+        "best_response_payoffs": [
+          82.6592261904762,
+          19.541914682539684,
+          -3.2074652777777737,
+          -11.636718749999996,
+          -17.69825768849207,
+          -19.12831721230158
+        ],
+        "unilateral_gains": [
+          25.94033692375062,
+          12.453051854693697,
+          6.331890651157922,
+          3.5994933597625245,
+          1.0838342091393827,
+          1.1217749459402988
+        ],
+        "nash_conv_chips": 50.53038194444444,
+        "max_unilateral_gain_pct_pot": 21.61694743645885
+      },
+      "metrics": {
+        "policy_payoffs": [
+          75.0667899568745,
+          -2.30609602839879,
+          -17.276290384893088,
+          -17.27697083128954,
+          -18.958798363868787,
+          -19.248634348424293
+        ],
+        "best_response_payoffs": [
+          75.20844161431573,
+          -2.2898959834971913,
+          -17.274830133645697,
+          -17.27542056037206,
+          -18.956456948807105,
+          -19.2466852768386
+        ],
+        "unilateral_gains": [
+          0.14165165744122987,
+          0.016200044901598876,
+          0.001460251247390687,
+          0.0015502709174803897,
+          0.0023414150616822837,
+          0.0019490715856917973
+        ],
+        "nash_conv_chips": 0.1651527111550739,
+        "max_unilateral_gain_pct_pot": 0.11804304786769157
+      },
+      "root_values": [
+        {
+          "actor": 0,
+          "own_hand": "AhAd",
+          "conditional_mass": 0.8571428571428545,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 110.04532725829097,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.38634186941703264,
+              "ev_chips": 110.18684263536794,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 2",
+              "probability": 0.6136581305829674,
+              "ev_chips": 109.95623316402835,
+              "gap_to_best_first_action_chips": 0.23060947133959075
+            }
+          ]
+        },
+        {
+          "actor": 0,
+          "own_hand": "8c8d",
+          "conditional_mass": 0.1428571428571428,
+          "ev_basis": "from_current_decision_prior_contributions_are_sunk",
+          "continuation": "same_fixed_profile_after_each_first_action",
+          "policy_ev_chips": 5.195566148375674,
+          "actions": [
+            {
+              "action": "CHECK",
+              "probability": 0.5811477295635705,
+              "ev_chips": 5.254528288954132,
+              "gap_to_best_first_action_chips": 0.0
+            },
+            {
+              "action": "BET 2",
+              "probability": 0.4188522704364294,
+              "ev_chips": 5.11375755726627,
+              "gap_to_best_first_action_chips": 0.14077073168786214
+            }
+          ]
+        }
+      ],
+      "live_advice": false,
+      "production_ready": false,
+      "wall_seconds": 10.015382125000002,
+      "sampled_peak_rss_mib": 51.99609375,
+      "memory_limit_mib": 256,
+      "rss_poll_seconds": 0.2
+    }
+  ]
+}

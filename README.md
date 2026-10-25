@@ -400,3 +400,6 @@ server and hosted coach do not switch to the research solver. See
 
 Упаковка bounded solver для staging: [docs/SOLVER_STAGING.md](docs/SOLVER_STAGING.md).
 План остальных улиц: [docs/MULTISTREET_SOLVER.md](docs/MULTISTREET_SOLVER.md).
+
+Первый offline-решатель тёрн → ривер, отдельный native-адаптер, границы и проверки:
+[docs/TURN_REFERENCE.md](docs/TURN_REFERENCE.md). В интерфейсе пока доступен ривер.
