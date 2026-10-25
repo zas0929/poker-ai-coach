@@ -100,7 +100,7 @@ class CurrentTrainerTests(unittest.TestCase):
             assessment, request = prepare(trainer_solver.public_copy(river(count)))
             self.assertIsNotNone(request, assessment)
             self.assertEqual(len(assessment['model']['coverage']), count)
-            self.assertTrue(all(r['selected_combos']==2 and 0<r['weight_share']<1 for r in assessment['model']['coverage']))
+            self.assertTrue(all(r['selected_combos']==(8 if count==2 else 4 if count==3 else 2) and 0<r['weight_share']<1 for r in assessment['model']['coverage']))
             self.assertLessEqual(len(request['selected_hands']),6)
             self.assertFalse(assessment['replaces_heuristic'])
         bad = self.state.model_copy(deep=True);bad.current_player_id='villain'

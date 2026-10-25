@@ -1,5 +1,4 @@
-"""Current-turn preparation plus the unchanged current-river preparation."""
-import random
+"""Current-turn preparation and current-river public subset preparation."""
 from dataclasses import asdict
 
 from app.services.solver_snapshot import card_text, prepare_solver_snapshot
@@ -8,6 +7,7 @@ from research import turn_analysis
 from research.analysis_contract import finite_number, valid_quality
 from research.lesson_values import valid_values
 from research.river_snapshot import combo_key, digest
+from research.trainer_ranges import select_ranges
 from research.trainer_river import prepare as prepare_river
 
 VERSION = 'trainer_current_turn_v1'
@@ -29,30 +29,7 @@ def prepare(state):
         known = combo_key(''.join(card_text(c) for c in hero.cards))
         own = next(r['cards'] for p in snapshot['players'] if p['id'] == 'hero'
                    for r in p['range'] if combo_key(r['cards']) == known)
-        selected, used = {}, set()
-        for p in snapshot['players']:
-            if p['status'] == 'folded':
-                continue
-            rng = random.Random(VERSION + snapshot['information_key'] + p['id'])
-            selected[p['id']] = []
-            for _ in range(2):
-                choices = sorted(r['cards'] for r in p['range'] if not set(combo_key(r['cards'])) & used)
-                choice = rng.choice(choices)
-                selected[p['id']].append(choice); used.update(combo_key(choice))
-        if own not in selected['hero']:
-            selected['hero'][0] = own
-        players, coverage = [], []
-        for p in snapshot['players']:
-            view = {k:v for k,v in p.items() if k != 'range'}
-            if p['status'] != 'folded':
-                public = {combo_key(r['cards']):r for r in p['range']}
-                rows = [public[combo_key(c)] for c in selected[p['id']]]
-                selected[p['id']] = [r['cards'] for r in rows]
-                view['range'] = rows
-                coverage.append({'player_id':p['id'], 'selected_combos':len(rows),
-                                 'public_combos':len(public),
-                                 'weight_share':sum(r['weight'] for r in rows)/sum(r['weight'] for r in public.values())})
-            players.append(view)
+        selected, players, coverage, sampling = select_ranges(snapshot, own)
         ceiling = min(10000, max(p['stack'] + p['street_committed'] for p in snapshot['players'] if p['status'] != 'folded'))
         bet = max(state.big_blind, min(ceiling, state.pot//2))
         current = max(p.current_bet for p in state.players)
@@ -70,8 +47,8 @@ def prepare(state):
         model = {'version':VERSION, 'street':'turn', 'board':snapshot['board'],
                  'own_hand':own, 'actor_id':'hero', 'pot':snapshot['pot'],
                  'players':players, 'tree':tree, 'actions':actions, 'coverage':coverage,
-                 'range_model':snapshot['range_model'],
-                 'scope':'two_hands_per_live_seat_all_compatible_rivers_one_turn_raise_no_river_raises_no_rake_no_icm'}
+                 'range_model':snapshot['range_model'], 'sampling':sampling,
+                 'scope':'strength_stratified_public_subsets_all_compatible_rivers_one_turn_raise_no_river_raises_no_rake_no_icm'}
         return {**base, 'state':'prepared', 'reason':None, 'model':model}, request
     except (ValueError, KeyError, TypeError, StopIteration, IndexError):
         return {**base, 'reason':'CURRENT_TURN_UNSUPPORTED'}, None

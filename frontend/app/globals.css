@@ -1494,3 +1494,5 @@ h2 {
 .trainer-solver-progress::before { content: ''; flex-shrink: 0; width: 10px; height: 10px; border: 2px solid #637b68; border-top-color: #e4d189; border-radius: 50%; animation: trainer-model-spin 1s linear infinite; }
 @keyframes trainer-model-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .trainer-solver-progress::before { animation: none; } }
+
+.trainer-solver p.trainer-solver-warning { color: #ebd895; padding-inline-start: 9px; border-inline-start: 2px solid #a89557; }

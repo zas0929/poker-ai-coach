@@ -1,0 +1,1993 @@
+{
+  "version": 1,
+  "fixture_sha256": "97383316f076f4bc8c3670bcbc22bdfd958ef6a7eedd16cfc789f52036c0fd5b",
+  "sampling_version": "strength_stratified_subsets_v1",
+  "engine": {
+    "engine_version": "bounded_current_turn_v3",
+    "engine_source_sha256": "b1a377283400e37d40b4c505d43353bbd74a8ca7537250a6513bb455830bf44d",
+    "range_version": "public_action_heuristic_v1",
+    "method": "cfr_plus_native",
+    "turn_adapter": "factored-turn-native-v1",
+    "turn_kernel_abi": 2
+  },
+  "results": [
+    {
+      "source_information_key": "2796c1fa7801b54f502c18f59e99465075437a9054b530f6e57732633c033637",
+      "own_hand": "JsJd",
+      "live_players": 2,
+      "summary": {
+        "requested_samples": 3,
+        "admitted_samples": 3,
+        "status": "agreement_observed",
+        "common_best_actions": [
+          "CHECK"
+        ],
+        "ev_spans": {
+          "BET 10": {
+            "min": 15.287153203376777,
+            "max": 16.291006758055534,
+            "spread": 1.0038535546787575
+          },
+          "CHECK": {
+            "min": 16.47134349970665,
+            "max": 17.016491278220496,
+            "spread": 0.5451477785138472
+          }
+        },
+        "reliable_advice": false,
+        "interpretation": "Small-subset stress test only. Agreement does not establish full-range accuracy; EV spans are not confidence intervals."
+      },
+      "samples": [
+        {
+          "trial": 0,
+          "selected_hands": {
+            "hero": [
+              "6s3h",
+              "7s3h",
+              "Jd3s",
+              "KdJc",
+              "Jd8d",
+              "JsJd",
+              "Ad3s",
+              "Ac6d"
+            ],
+            "villain": [
+              "4c3s",
+              "Tc2h",
+              "Td7h",
+              "KhTh",
+              "5s5c",
+              "Kc9s",
+              "Ac4d",
+              "AdKc"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 8,
+              "public_combos": 1128,
+              "weight_share": 0.0070157560326101825
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 8,
+              "public_combos": 1128,
+              "weight_share": 0.006774456633966922
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 0,
+            "combos_per_live_seat": 8,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "52b825ebc286b2ca5f7eff5ba77a383a80f81e937304f121ccd7e818d2010d47",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.07999518942664152,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                1.8230561295633487,
+                -1.8230561295633483
+              ],
+              "best_response_payoffs": [
+                1.837514677935375,
+                -1.80705709167802
+              ],
+              "unilateral_gains": [
+                0.014458548372026314,
+                0.015999037885328304
+              ],
+              "nash_conv_chips": 0.03045758625735462,
+              "max_unilateral_gain_pct_pot": 0.07999518942664152
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.538525209,
+            "peak_rss_mib": 31.7734375,
+            "sampled_peak_rss_mib": 30.5390625,
+            "build_seconds": 0.05996150000000003,
+            "train_seconds": 0.09531212499999997,
+            "measure_seconds": 0.01063104199999998
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "JsJd",
+            "actions": [
+              "CHECK",
+              "BET 10"
+            ],
+            "ev_chips": [
+              16.47134349970665,
+              15.287153203376777
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              1.1841902963298718
+            ],
+            "policy_ev_chips": 16.462399158483613,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 8,
+            "conditional_mass": 0.14405080153421568
+          }
+        },
+        {
+          "trial": 1,
+          "selected_hands": {
+            "hero": [
+              "6d4d",
+              "Ts3h",
+              "Js6d",
+              "KdTh",
+              "Kh8d",
+              "JsJd",
+              "KhQc",
+              "QdQc"
+            ],
+            "villain": [
+              "5c2h",
+              "7h2c",
+              "Jd2h",
+              "Kd5s",
+              "5h5d",
+              "Tc9d",
+              "Qd4d",
+              "AcJc"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 8,
+              "public_combos": 1128,
+              "weight_share": 0.007698699115350665
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 8,
+              "public_combos": 1128,
+              "weight_share": 0.007245550990581358
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 1,
+            "combos_per_live_seat": 8,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "9f346dc5150e486976917475c700e562c9ec6f2000a07ec7354619e4a38bbed0",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.09416178542835718,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                3.6054283199373707,
+                -3.605428319937367
+              ],
+              "best_response_payoffs": [
+                3.617937184519414,
+                -3.5865959628516957
+              ],
+              "unilateral_gains": [
+                0.012508864582043255,
+                0.018832357085671436
+              ],
+              "nash_conv_chips": 0.03134122166771469,
+              "max_unilateral_gain_pct_pot": 0.09416178542835718
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.5415892500000001,
+            "peak_rss_mib": 32.9609375,
+            "sampled_peak_rss_mib": 30.89453125,
+            "build_seconds": 0.06311800000000001,
+            "train_seconds": 0.104157834,
+            "measure_seconds": 0.012974291999999998
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "JsJd",
+            "actions": [
+              "CHECK",
+              "BET 10"
+            ],
+            "ev_chips": [
+              16.642504448240924,
+              16.291006758055534
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              0.3514976901853899
+            ],
+            "policy_ev_chips": 16.64007545572228,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 7,
+            "conditional_mass": 0.11274298328190434
+          }
+        },
+        {
+          "trial": 2,
+          "selected_hands": {
+            "hero": [
+              "3h2s",
+              "6s5h",
+              "Th7s",
+              "Kd7c",
+              "8d2c",
+              "JsJd",
+              "Qh4s",
+              "AdJs"
+            ],
+            "villain": [
+              "4d2s",
+              "7c4c",
+              "Td5s",
+              "Kc7d",
+              "8c6s",
+              "9s2h",
+              "Qh6c",
+              "AdTs"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 8,
+              "public_combos": 1128,
+              "weight_share": 0.006875896188784873
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 8,
+              "public_combos": 1128,
+              "weight_share": 0.0075328081608460684
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 2,
+            "combos_per_live_seat": 8,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "d3aafae7b16f0a408469bb0b08e931f8912b161ab2e60b9b3c7d9184a046bd15",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.12913704711332352,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                2.9269361076154445,
+                -2.9269361076154485
+              ],
+              "best_response_payoffs": [
+                2.9402973820513463,
+                -2.901108698192784
+              ],
+              "unilateral_gains": [
+                0.013361274435901738,
+                0.025827409422664704
+              ],
+              "nash_conv_chips": 0.03918868385856644,
+              "max_unilateral_gain_pct_pot": 0.12913704711332352
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.5679661660000002,
+            "peak_rss_mib": 32.1484375,
+            "sampled_peak_rss_mib": 30.1171875,
+            "build_seconds": 0.06067562500000001,
+            "train_seconds": 0.09638104199999997,
+            "measure_seconds": 0.015620708000000039
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "JsJd",
+            "actions": [
+              "CHECK",
+              "BET 10"
+            ],
+            "ev_chips": [
+              17.016491278220496,
+              15.998373289069121
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              1.0181179891513743
+            ],
+            "policy_ev_chips": 17.012967860088477,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 8,
+            "conditional_mass": 0.14823438886307688
+          }
+        }
+      ]
+    },
+    {
+      "source_information_key": "80f30cc501b45a2b4d9e38d2f8941892cfdd8b75ab6b58c63ccd4c409fa0d8ee",
+      "own_hand": "Tc2c",
+      "live_players": 3,
+      "summary": {
+        "requested_samples": 3,
+        "admitted_samples": 3,
+        "status": "sensitive",
+        "common_best_actions": [],
+        "ev_spans": {
+          "BET 15": {
+            "min": 2.7866989256040204,
+            "max": 28.623772312319428,
+            "spread": 25.837073386715407
+          },
+          "CHECK": {
+            "min": 11.49068580144232,
+            "max": 24.630976264674505,
+            "spread": 13.140290463232185
+          }
+        },
+        "reliable_advice": false,
+        "interpretation": "Small-subset stress test only. Agreement does not establish full-range accuracy; EV spans are not confidence intervals."
+      },
+      "samples": [
+        {
+          "trial": 0,
+          "selected_hands": {
+            "hero": [
+              "7c3s",
+              "Kd3d",
+              "4s4c",
+              "Tc2c"
+            ],
+            "villain": [
+              "8c4c",
+              "KdQc",
+              "7c6c",
+              "AdTh"
+            ],
+            "villain_2": [
+              "8s4c",
+              "KdJh",
+              "6d3s",
+              "6s5c"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.0036140337570557323
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.003843194756285028
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.003553889402777859
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 0,
+            "combos_per_live_seat": 4,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "20e8f915358cbc8dc252fd598071ff22c53030a7c552e6bb891d325f902d2f1c",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.09123308643856613,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                -3.523905439382857,
+                1.2119682642682617,
+                2.311937175114598
+              ],
+              "best_response_payoffs": [
+                -3.496535513451287,
+                1.228720073523549,
+                2.32319756293484
+              ],
+              "unilateral_gains": [
+                0.02736992593156984,
+                0.01675180925528741,
+                0.01126038782024219
+              ],
+              "nash_conv_chips": 0.05538212300709944,
+              "max_unilateral_gain_pct_pot": 0.09123308643856613
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.7844092910000002,
+            "peak_rss_mib": 35.91796875,
+            "sampled_peak_rss_mib": 34.12109375,
+            "build_seconds": 0.057536083000000016,
+            "train_seconds": 0.13454304100000003,
+            "measure_seconds": 0.019372374999999997
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Tc2c",
+            "actions": [
+              "CHECK",
+              "BET 15"
+            ],
+            "ev_chips": [
+              11.49068580144232,
+              2.7866989256040204
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              8.7039868758383
+            ],
+            "policy_ev_chips": 11.453207927959037,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 14,
+            "conditional_mass": 0.40804397933373143
+          }
+        },
+        {
+          "trial": 1,
+          "selected_hands": {
+            "hero": [
+              "Qh2s",
+              "AhQh",
+              "6d4h",
+              "Tc2c"
+            ],
+            "villain": [
+              "Qc7c",
+              "Ac4h",
+              "Jh5d",
+              "9s6c"
+            ],
+            "villain_2": [
+              "3c2h",
+              "KsQs",
+              "Qh6c",
+              "9d8c"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.0035952689885675707
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.00365884412964068
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.0033843411455344438
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 1,
+            "combos_per_live_seat": 4,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "e5658150fe2027c98cab64fcc8d2693c22c4921eb67428dbc95c962f78e7f644",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.22710166289100422,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                5.193725915152949,
+                -0.2283452727099622,
+                -4.965380642442998
+              ],
+              "best_response_payoffs": [
+                5.227926770323201,
+                -0.16021477384266092,
+                -4.926126039173854
+              ],
+              "unilateral_gains": [
+                0.034200855170252176,
+                0.06813049886730127,
+                0.03925460326914365
+              ],
+              "nash_conv_chips": 0.1415859573066971,
+              "max_unilateral_gain_pct_pot": 0.22710166289100422
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.7543710000000003,
+            "peak_rss_mib": 36.26171875,
+            "sampled_peak_rss_mib": 35.62890625,
+            "build_seconds": 0.06223216700000003,
+            "train_seconds": 0.307422708,
+            "measure_seconds": 0.019062208000000025
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Tc2c",
+            "actions": [
+              "CHECK",
+              "BET 15"
+            ],
+            "ev_chips": [
+              24.630976264674505,
+              28.623772312319428
+            ],
+            "gap_to_best_chips": [
+              3.992796047644923,
+              0.0
+            ],
+            "policy_ev_chips": 28.621389632525982,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 15,
+            "conditional_mass": 0.3301306715701903
+          }
+        },
+        {
+          "trial": 2,
+          "selected_hands": {
+            "hero": [
+              "8h2d",
+              "Kh8h",
+              "Qc5d",
+              "Tc2c"
+            ],
+            "villain": [
+              "7d3d",
+              "QsJd",
+              "9d2d",
+              "Ts7s"
+            ],
+            "villain_2": [
+              "7s2h",
+              "KsJd",
+              "6c4h",
+              "9d8s"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.0034968829962590113
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.003700509375017787
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 4,
+              "public_combos": 1128,
+              "weight_share": 0.003600750935466659
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 2,
+            "combos_per_live_seat": 4,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "cc36ef835b114da09d3eaede4e0ca81a459157d5a8fe7a7ae287534c5847ca41",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.15566038605235347,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                1.3660267087867575,
+                2.887093950238577,
+                -4.253120659025333
+              ],
+              "best_response_payoffs": [
+                1.4033776959652995,
+                2.933792066054283,
+                -4.217830493932496
+              ],
+              "unilateral_gains": [
+                0.03735098717854202,
+                0.04669811581570604,
+                0.035290165092837
+              ],
+              "nash_conv_chips": 0.11933926808708506,
+              "max_unilateral_gain_pct_pot": 0.15566038605235347
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.7660946670000004,
+            "peak_rss_mib": 34.578125,
+            "sampled_peak_rss_mib": 33.68359375,
+            "build_seconds": 0.06077100000000002,
+            "train_seconds": 0.27264658300000005,
+            "measure_seconds": 0.017396750000000072
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Tc2c",
+            "actions": [
+              "CHECK",
+              "BET 15"
+            ],
+            "ev_chips": [
+              20.10141300720376,
+              20.11277962822404
+            ],
+            "gap_to_best_chips": [
+              0.01136662102027941,
+              0.0
+            ],
+            "policy_ev_chips": 20.11032405488919,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 13,
+            "conditional_mass": 0.2916823688235749
+          }
+        }
+      ]
+    },
+    {
+      "source_information_key": "7b54b3c55ce7286a4dd9522cf05b1977d2d761ec0c9b89b6cd05334cf2413785",
+      "own_hand": "Ts6c",
+      "live_players": 4,
+      "summary": {
+        "requested_samples": 3,
+        "admitted_samples": 3,
+        "status": "agreement_observed",
+        "common_best_actions": [
+          "CHECK"
+        ],
+        "ev_spans": {
+          "BET 20": {
+            "min": -7.414329042835789,
+            "max": 1.857983574314499,
+            "spread": 9.272312617150288
+          },
+          "CHECK": {
+            "min": 3.3666911079926845,
+            "max": 7.104065986675941,
+            "spread": 3.737374878683257
+          }
+        },
+        "reliable_advice": false,
+        "interpretation": "Small-subset stress test only. Agreement does not establish full-range accuracy; EV spans are not confidence intervals."
+      },
+      "samples": [
+        {
+          "trial": 0,
+          "selected_hands": {
+            "hero": [
+              "Ts6c",
+              "JcTs"
+            ],
+            "villain": [
+              "Ad3s",
+              "Jd3d"
+            ],
+            "villain_2": [
+              "6h5h",
+              "7h2d"
+            ],
+            "villain_3": [
+              "AcTc",
+              "QhQd"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018904637167828895
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0019895276081482037
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018982653128705267
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018351900639130335
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 0,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 16,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "86f005276f002741caa70292c8b6540fbc196278e216dff33e6ec4a542335002",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.19382989462779276,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                -1.95637443027084,
+                -6.226676497630029,
+                -6.729967361917792,
+                14.913018289818659
+              ],
+              "best_response_payoffs": [
+                -1.8788424724197228,
+                -6.188096363030393,
+                -6.6924424318488285,
+                14.960376309323657
+              ],
+              "unilateral_gains": [
+                0.0775319578511171,
+                0.03858013459963594,
+                0.03752493006896351,
+                0.04735801950499763
+              ],
+              "nash_conv_chips": 0.2009950420247142,
+              "max_unilateral_gain_pct_pot": 0.19382989462779276
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.770182792,
+            "peak_rss_mib": 39.171875,
+            "sampled_peak_rss_mib": 39.0703125,
+            "build_seconds": 0.05865416699999998,
+            "train_seconds": 0.170512292,
+            "measure_seconds": 0.030791583000000067
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Ts6c",
+            "actions": [
+              "CHECK",
+              "BET 20"
+            ],
+            "ev_chips": [
+              3.3666911079926845,
+              -3.1686652208108725
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              6.535356328803557
+            ],
+            "policy_ev_chips": 3.3621839353267298,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 8,
+            "conditional_mass": 0.509132753433281
+          }
+        },
+        {
+          "trial": 1,
+          "selected_hands": {
+            "hero": [
+              "Ts6c",
+              "9d6d"
+            ],
+            "villain": [
+              "Ad3h",
+              "Ts7h"
+            ],
+            "villain_2": [
+              "Td6h",
+              "QdJc"
+            ],
+            "villain_3": [
+              "8c4c",
+              "9d5h"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0019662888012175477
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0019249313561820393
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0017501903515235856
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018303920842004542
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 1,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 16,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "4933dbfa04892b0755cffa147f7cdbd6102a2f82ba8b940c13b461315969135c",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.17709976761172086,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                -1.5241289092042773,
+                -5.579214043857364,
+                4.6535639987594175,
+                2.4497789543022237
+              ],
+              "best_response_payoffs": [
+                -1.453289002159589,
+                -5.540577121314218,
+                4.703090345553198,
+                2.5040683951092846
+              ],
+              "unilateral_gains": [
+                0.07083990704468834,
+                0.03863692254314621,
+                0.04952634679378054,
+                0.054289440807060885
+              ],
+              "nash_conv_chips": 0.21329261718867598,
+              "max_unilateral_gain_pct_pot": 0.17709976761172086
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.7636987499999996,
+            "peak_rss_mib": 38.6015625,
+            "sampled_peak_rss_mib": 35.40234375,
+            "build_seconds": 0.053647583,
+            "train_seconds": 0.13312975,
+            "measure_seconds": 0.025215333999999978
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Ts6c",
+            "actions": [
+              "CHECK",
+              "BET 20"
+            ],
+            "ev_chips": [
+              4.641853206688858,
+              1.857983574314499
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              2.7838696323743592
+            ],
+            "policy_ev_chips": 4.629557514650389,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 4,
+            "conditional_mass": 0.5187450632863126
+          }
+        },
+        {
+          "trial": 2,
+          "selected_hands": {
+            "hero": [
+              "Ts6c",
+              "6h6c"
+            ],
+            "villain": [
+              "6s4s",
+              "Jh9h"
+            ],
+            "villain_2": [
+              "Qc3d",
+              "Ts8d"
+            ],
+            "villain_3": [
+              "5h2c",
+              "Jc2d"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018966864152313906
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0017462204095042633
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0017141312997816462
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.001327458475474974
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 2,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 16,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "f366f1a96062715c49d0c253c1b87fbcec143a30104e5d93668fe028a6ec6afe",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.11941394977091681,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                -5.726292728346897,
+                6.922330874493294,
+                4.100982906803681,
+                -5.297021052950083
+              ],
+              "best_response_payoffs": [
+                -5.687280486007454,
+                6.970096454401661,
+                4.128344614150565,
+                -5.254427480564323
+              ],
+              "unilateral_gains": [
+                0.039012242339443226,
+                0.04776557990836672,
+                0.027361707346884145,
+                0.042593572385760226
+              ],
+              "nash_conv_chips": 0.15673310198045431,
+              "max_unilateral_gain_pct_pot": 0.11941394977091681
+            }
+          },
+          "timing": {
+            "wall_seconds": 0.7599549589999999,
+            "peak_rss_mib": 39.45703125,
+            "sampled_peak_rss_mib": 35.734375,
+            "build_seconds": 0.05403408300000001,
+            "train_seconds": 0.138701792,
+            "measure_seconds": 0.029055416
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Ts6c",
+            "actions": [
+              "CHECK",
+              "BET 20"
+            ],
+            "ev_chips": [
+              7.104065986675941,
+              -7.414329042835789
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              14.51839502951173
+            ],
+            "policy_ev_chips": 7.091151937514977,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 4,
+            "conditional_mass": 0.3778451158827461
+          }
+        }
+      ]
+    },
+    {
+      "source_information_key": "cd2b8904798817c20c5c31875c7a2e09e08e63f97bd896bfb2de777f1b7f4c6a",
+      "own_hand": "4d2s",
+      "live_players": 5,
+      "summary": {
+        "requested_samples": 3,
+        "admitted_samples": 3,
+        "status": "sensitive",
+        "common_best_actions": [],
+        "ev_spans": {
+          "BET 25": {
+            "min": -33.91335550168031,
+            "max": 25.023089019371184,
+            "spread": 58.93644452105149
+          },
+          "CHECK": {
+            "min": -0.001813974816085917,
+            "max": 13.265408659271609,
+            "spread": 13.267222634087695
+          }
+        },
+        "reliable_advice": false,
+        "interpretation": "Small-subset stress test only. Agreement does not establish full-range accuracy; EV spans are not confidence intervals."
+      },
+      "samples": [
+        {
+          "trial": 0,
+          "selected_hands": {
+            "hero": [
+              "4d2s",
+              "QsTh"
+            ],
+            "villain": [
+              "8h7s",
+              "Ks9s"
+            ],
+            "villain_2": [
+              "3h2h",
+              "2s2d"
+            ],
+            "villain_3": [
+              "8c5d",
+              "Kd2d"
+            ],
+            "villain_4": [
+              "Jh3c",
+              "KdJc"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.00142377268008338
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018020035036468548
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018233590264406757
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0016595877466790332
+            },
+            {
+              "player_id": "villain_4",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.001822691111797045
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 0,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 32,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "a8779e12292952deedf0050713e75e6a3283400cf8c77b0bfbfd2b4a03f85a35",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.10389691763542432,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                35.79387209844331,
+                -10.016676751465198,
+                -10.015476505628055,
+                -5.737455293239867,
+                -10.024263548110204
+              ],
+              "best_response_payoffs": [
+                35.82502747714911,
+                -9.986981368924091,
+                -9.997480376599132,
+                -5.685506834422155,
+                -9.995217794183983
+              ],
+              "unilateral_gains": [
+                0.031155378705804537,
+                0.029695382541106596,
+                0.01799612902892278,
+                0.05194845881771215,
+                0.029045753926220996
+              ],
+              "nash_conv_chips": 0.15984110301976706,
+              "max_unilateral_gain_pct_pot": 0.10389691763542432
+            }
+          },
+          "timing": {
+            "wall_seconds": 1.4470540840000004,
+            "peak_rss_mib": 49.96875,
+            "sampled_peak_rss_mib": 48.0625,
+            "build_seconds": 0.11862554100000003,
+            "train_seconds": 0.884575209,
+            "measure_seconds": 0.11037104100000006
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "4d2s",
+            "actions": [
+              "CHECK",
+              "BET 25"
+            ],
+            "ev_chips": [
+              13.265408659271609,
+              25.023089019371184
+            ],
+            "gap_to_best_chips": [
+              11.757680360099576,
+              0.0
+            ],
+            "policy_ev_chips": 25.00888578548557,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 6,
+            "conditional_mass": 0.2695127566942776
+          }
+        },
+        {
+          "trial": 1,
+          "selected_hands": {
+            "hero": [
+              "4d2s",
+              "Ah7c"
+            ],
+            "villain": [
+              "8h7s",
+              "5h5c"
+            ],
+            "villain_2": [
+              "9h8h",
+              "6s5h"
+            ],
+            "villain_3": [
+              "4s2c",
+              "JsTc"
+            ],
+            "villain_4": [
+              "Js3d",
+              "Jc6h"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0015260994055040506
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.001802357006385911
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.001680085227740789
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0013194800056300627
+            },
+            {
+              "player_id": "villain_4",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0017776450092953945
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 1,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 32,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "15e7b7760c8361665e45c4b9201925eae4233e342426dc0e8b58a3b239b39a87",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.08218092847102909,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                -5.941215562656881,
+                -2.1404510394366616,
+                0.12362169366296227,
+                10.953022736881701,
+                -2.994977828451112
+              ],
+              "best_response_payoffs": [
+                -5.900125098421366,
+                -2.102122095367937,
+                0.15886041702609965,
+                10.98249244495732,
+                -2.969209619913224
+              ],
+              "unilateral_gains": [
+                0.041090464235514546,
+                0.038328944068724446,
+                0.03523872336313738,
+                0.02946970807561833,
+                0.025768208537888082
+              ],
+              "nash_conv_chips": 0.16989604828088278,
+              "max_unilateral_gain_pct_pot": 0.08218092847102909
+            }
+          },
+          "timing": {
+            "wall_seconds": 1.243299416000001,
+            "peak_rss_mib": 49.16015625,
+            "sampled_peak_rss_mib": 47.52734375,
+            "build_seconds": 0.11652875000000001,
+            "train_seconds": 0.557260042,
+            "measure_seconds": 0.10321575000000005
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "4d2s",
+            "actions": [
+              "CHECK",
+              "BET 25"
+            ],
+            "ev_chips": [
+              0.07413840305084562,
+              -33.4532230234195
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              33.52736142647034
+            ],
+            "policy_ev_chips": 0.07081886231555154,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 6,
+            "conditional_mass": 0.3304550894854878
+          }
+        },
+        {
+          "trial": 2,
+          "selected_hands": {
+            "hero": [
+              "4d2s",
+              "As3d"
+            ],
+            "villain": [
+              "Js2s",
+              "As9h"
+            ],
+            "villain_2": [
+              "Jh3d",
+              "7h7c"
+            ],
+            "villain_3": [
+              "9d5s",
+              "6h4h"
+            ],
+            "villain_4": [
+              "Qh3d",
+              "Kd3s"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0015119636098962323
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.002175563533676857
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0016437549310693805
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.001701314838399927
+            },
+            {
+              "player_id": "villain_4",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018108563206285582
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 2,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 32,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "02f55e69197896a593f7271e6fb97073f44db3ce7d314f18b3634765303b2341",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.0799757278593276,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                -8.749029958571187,
+                -6.627124651685765,
+                -5.459042534986965,
+                -8.51108050930252,
+                29.346277654546444
+              ],
+              "best_response_payoffs": [
+                -8.739177563116312,
+                -6.6057427566966656,
+                -5.420137351219789,
+                -8.484178656133729,
+                29.386265518476108
+              ],
+              "unilateral_gains": [
+                0.009852395454874596,
+                0.021381894989099592,
+                0.03890518376717633,
+                0.026901853168791234,
+                0.0399878639296638
+              ],
+              "nash_conv_chips": 0.13702919130960556,
+              "max_unilateral_gain_pct_pot": 0.0799757278593276
+            }
+          },
+          "timing": {
+            "wall_seconds": 1.7304410830000005,
+            "peak_rss_mib": 46.28515625,
+            "sampled_peak_rss_mib": 46.28125,
+            "build_seconds": 0.11398766699999996,
+            "train_seconds": 1.1160226249999998,
+            "measure_seconds": 0.09245479099999998
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "4d2s",
+            "actions": [
+              "CHECK",
+              "BET 25"
+            ],
+            "ev_chips": [
+              -0.001813974816085917,
+              -33.91335550168031
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              33.91154152686422
+            ],
+            "policy_ev_chips": -0.0051715531850823745,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 6,
+            "conditional_mass": 0.6808142373801237
+          }
+        }
+      ]
+    },
+    {
+      "source_information_key": "2a7a67999fd8f87a27d5581d7c57c44e994901f4fce4d9419e545dabed292b7f",
+      "own_hand": "Jh3d",
+      "live_players": 6,
+      "summary": {
+        "requested_samples": 3,
+        "admitted_samples": 3,
+        "status": "sensitive",
+        "common_best_actions": [],
+        "ev_spans": {
+          "BET 30": {
+            "min": -45.58349643913588,
+            "max": 0.5752361309520673,
+            "spread": 46.15873257008795
+          },
+          "CHECK": {
+            "min": -0.014043048179267714,
+            "max": 0.7165220690192253,
+            "spread": 0.730565117198493
+          }
+        },
+        "reliable_advice": false,
+        "interpretation": "Small-subset stress test only. Agreement does not establish full-range accuracy; EV spans are not confidence intervals."
+      },
+      "samples": [
+        {
+          "trial": 0,
+          "selected_hands": {
+            "hero": [
+              "Jh3d",
+              "KcQs"
+            ],
+            "villain": [
+              "Js2d",
+              "Th4d"
+            ],
+            "villain_2": [
+              "7d6s",
+              "AcQh"
+            ],
+            "villain_3": [
+              "As8c",
+              "8h4d"
+            ],
+            "villain_4": [
+              "Kc2c",
+              "4s2h"
+            ],
+            "villain_5": [
+              "7d2d",
+              "7s7c"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018479366754325754
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0017394736278511457
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0016722908915238908
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.00177633378597431
+            },
+            {
+              "player_id": "villain_4",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0013510387300641367
+            },
+            {
+              "player_id": "villain_5",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018016147859820058
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 0,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "e412361c82c85ec30c90257d45c8cb58d472e3a7fd6d4f2728932e96e8bd9416",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.31055361475708604,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                -4.079289803704672,
+                -6.486800130127825,
+                15.678691998169123,
+                -7.660782825638552,
+                3.179486662130219,
+                -0.6313059008282977
+              ],
+              "best_response_payoffs": [
+                -3.99983543816237,
+                -6.4536479324831815,
+                15.865024167023375,
+                -7.62302575341667,
+                3.2234423998303168,
+                -0.5842687773213453
+              ],
+              "unilateral_gains": [
+                0.0794543655423019,
+                0.03315219764464317,
+                0.18633216885425163,
+                0.03775707222188274,
+                0.04395573770009786,
+                0.04703712350695244
+              ],
+              "nash_conv_chips": 0.42768866547012974,
+              "max_unilateral_gain_pct_pot": 0.31055361475708604
+            }
+          },
+          "timing": {
+            "wall_seconds": 5.546143708000001,
+            "peak_rss_mib": 110.37109375,
+            "sampled_peak_rss_mib": 110.37109375,
+            "build_seconds": 0.39991958299999997,
+            "train_seconds": 4.0437903330000005,
+            "measure_seconds": 0.5864546659999998
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Jh3d",
+            "actions": [
+              "CHECK",
+              "BET 30"
+            ],
+            "ev_chips": [
+              0.7165220690192253,
+              -26.02724316709321
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              26.743765236112438
+            ],
+            "policy_ev_chips": 0.7023677686430195,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 14,
+            "conditional_mass": 0.7609207128755929
+          }
+        },
+        {
+          "trial": 1,
+          "selected_hands": {
+            "hero": [
+              "Jh3d",
+              "Ad5h"
+            ],
+            "villain": [
+              "Kc3c",
+              "Qs9h"
+            ],
+            "villain_2": [
+              "KcTc",
+              "Qh6d"
+            ],
+            "villain_3": [
+              "8c7d",
+              "6s6c"
+            ],
+            "villain_4": [
+              "AcKd",
+              "Jc9h"
+            ],
+            "villain_5": [
+              "7c2c",
+              "4h4d"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0019367416146576328
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0016619430871776318
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0015575769976566827
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0019073663127480724
+            },
+            {
+              "player_id": "villain_4",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0019644519613468323
+            },
+            {
+              "player_id": "villain_5",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0014553775090035517
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 1,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "4f2c871fed820ee4b1fde93e4d42c91bf432e258eecae9440c38019e5e71c323",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.1423549615180756,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                -8.780875411729543,
+                5.553598544988411,
+                1.5404069075943136,
+                -7.082348400923191,
+                -9.000085097594742,
+                17.769303457664755
+              ],
+              "best_response_payoffs": [
+                -8.740958751281394,
+                5.610077267782409,
+                1.6254777500420787,
+                -7.067911376594379,
+                -8.96091991085185,
+                17.8547164345756
+              ],
+              "unilateral_gains": [
+                0.039916660448149344,
+                0.05647872279399824,
+                0.08507084244776508,
+                0.014437024328811887,
+                0.03916518674289193,
+                0.08541297691084537
+              ],
+              "nash_conv_chips": 0.32048141367246186,
+              "max_unilateral_gain_pct_pot": 0.1423549615180756
+            }
+          },
+          "timing": {
+            "wall_seconds": 5.780830583,
+            "peak_rss_mib": 109.7265625,
+            "sampled_peak_rss_mib": 109.63671875,
+            "build_seconds": 0.41264170899999997,
+            "train_seconds": 4.10579375,
+            "measure_seconds": 0.8256563340000005
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Jh3d",
+            "actions": [
+              "CHECK",
+              "BET 30"
+            ],
+            "ev_chips": [
+              -0.014043048179267714,
+              -45.58349643913588
+            ],
+            "gap_to_best_chips": [
+              0.0,
+              45.56945339095661
+            ],
+            "policy_ev_chips": -0.01855487524767926,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 16,
+            "conditional_mass": 0.47627926659039826
+          }
+        },
+        {
+          "trial": 2,
+          "selected_hands": {
+            "hero": [
+              "Jh3d",
+              "Qs5h"
+            ],
+            "villain": [
+              "8c7c",
+              "4h3h"
+            ],
+            "villain_2": [
+              "Jc8s",
+              "4d2h"
+            ],
+            "villain_3": [
+              "7c3d",
+              "8d8c"
+            ],
+            "villain_4": [
+              "AcKh",
+              "9c7h"
+            ],
+            "villain_5": [
+              "7h2s",
+              "AhQd"
+            ]
+          },
+          "coverage": [
+            {
+              "player_id": "hero",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0018007692344357788
+            },
+            {
+              "player_id": "villain",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0016491709022709872
+            },
+            {
+              "player_id": "villain_2",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0017926330024383777
+            },
+            {
+              "player_id": "villain_3",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.001608796891174129
+            },
+            {
+              "player_id": "villain_4",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0019282416844521176
+            },
+            {
+              "player_id": "villain_5",
+              "selected_combos": 2,
+              "public_combos": 1128,
+              "weight_share": 0.0015848856740496079
+            }
+          ],
+          "sampling": {
+            "version": "strength_stratified_subsets_v1",
+            "trial": 2,
+            "combos_per_live_seat": 2,
+            "raw_joint_combos": 64,
+            "stratification": "equal_count_showdown_strength",
+            "weights": "original_public_combo_weights",
+            "stability": "not_checked",
+            "reliable_advice": false
+          },
+          "request_key": "6bd095ec765ba0741ae3606dd10da67669dcb164469793f3c9b03b8af7b8822d",
+          "status": "ready",
+          "reasons": [],
+          "quality": {
+            "value": 0.24327580622976502,
+            "gate": 0.5,
+            "passed": true,
+            "metric": "max_unilateral_gain_pct_decision_pot",
+            "evidence": {
+              "policy_payoffs": [
+                41.8380884541734,
+                -9.265833226725123,
+                -8.897590132275534,
+                -8.932444846116013,
+                -8.850496325313259,
+                -5.891723923743513
+              ],
+              "best_response_payoffs": [
+                41.917314316411606,
+                -9.248975517523906,
+                -8.865489521735867,
+                -8.866151260625855,
+                -8.798300212492908,
+                -5.745758440005654
+              ],
+              "unilateral_gains": [
+                0.0792258622382036,
+                0.016857709201216764,
+                0.03210061053966662,
+                0.06629358549015762,
+                0.05219611282035075,
+                0.145965483737859
+              ],
+              "nash_conv_chips": 0.39263936402745436,
+              "max_unilateral_gain_pct_pot": 0.24327580622976502
+            }
+          },
+          "timing": {
+            "wall_seconds": 6.522791084000001,
+            "peak_rss_mib": 108.37109375,
+            "sampled_peak_rss_mib": 107.5390625,
+            "build_seconds": 0.39336875,
+            "train_seconds": 5.136757416,
+            "measure_seconds": 0.5217048330000003
+          },
+          "action_values": {
+            "version": "fixed_policy_decision_ev_v1",
+            "actor_id": "hero",
+            "own_hand": "Jh3d",
+            "actions": [
+              "CHECK",
+              "BET 30"
+            ],
+            "ev_chips": [
+              0.37666453033195424,
+              0.5752361309520673
+            ],
+            "gap_to_best_chips": [
+              0.19857160062011303,
+              0.0
+            ],
+            "policy_ev_chips": 0.5015265149820876,
+            "sunk_chips": 10,
+            "continuation": "fixed_learned_policy",
+            "baseline": "current_decision",
+            "compatible_deals": 6,
+            "conditional_mass": 0.3669832879755426
+          }
+        }
+      ]
+    }
+  ]
+}

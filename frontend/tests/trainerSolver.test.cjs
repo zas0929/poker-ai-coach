@@ -100,3 +100,22 @@ test('turn panel shows future river scope, per-street raise caps and sizes',()=>
  const refused=text(scope.exports.default({result:{...copy(turnFixture.result),state:'unavailable',actions:null,quality:null,reason:'MODEL_BUDGET_EXCEEDED'},hand:turnFixture.hand}));
  assert.match(refused,/tree budget/);assert.doesNotMatch(refused,/Frequency/);
 });
+
+test('panel separates numerical convergence from advice reliability and flags disagreement',()=>{
+ const h=load(), jsx=(type,props)=>({type,props});
+ const scope={exports:{},require:name=>name==='react/jsx-runtime'?{jsx,jsxs:jsx}:name.includes('LanguageProvider')?{useI18n:()=>({t:v=>v})}:h};
+ vm.runInNewContext(ts.transpileModule(fs.readFileSync(path.join(__dirname,'../components/TrainerSolverPanel.tsx'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText,scope);
+ function text(tree){if(tree==null)return '';if(typeof tree!=='object')return String(tree);if(Array.isArray(tree))return tree.map(text).join('');return text(tree.props?.children);}
+ const result=copy(turnFixture.result), hand=turnFixture.hand;
+ const best=result.actions.reduce((a,b)=>a.ev_chips>b.ev_chips?a:b).action.split(' ')[0].toLowerCase();
+ const advice={hand_id:hand.hand_id,street:hand.street,pot:hand.pot,recommended_action:best==='check'?'fold':'check'};
+ const content=text(scope.exports.default({result,hand,analysis:advice}));
+ assert.match(content,/reliability has not been established/);
+ assert.match(content,/100% is not a win probability/);
+ assert.match(content,/does not measure full-range advice accuracy/);
+ assert.match(content,/model and heuristic coach disagree/);
+ const same=text(scope.exports.default({result,hand,analysis:{...advice,recommended_action:best}}));
+ assert.doesNotMatch(same,/model and heuristic coach disagree/);
+ const stale=text(scope.exports.default({result,hand,analysis:{...advice,hand_id:'old'}}));
+ assert.doesNotMatch(stale,/model and heuristic coach disagree/);
+});

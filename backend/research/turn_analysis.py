@@ -16,14 +16,14 @@ from research.lesson_values import VALUE_VERSION, valid_values
 from research.river_snapshot import combo_key, digest
 from research.turn_snapshot import build_turn_from_snapshot
 
-CONTRACT_VERSION = 'bounded_current_turn_v2'
+CONTRACT_VERSION = 'bounded_current_turn_v3'
 SCOPE = 'offline_bounded_current_turn'
 finish = base.finish
 recheck_decision = base.recheck_decision
 TREE_FIELDS = {'turn_bet_sizes', 'turn_raise_sizes', 'turn_max_raises',
                'river_bet_sizes', 'river_raise_sizes', 'river_max_raises',
                'max_nodes', 'max_joint_combos', 'max_outcomes', 'max_work', 'utility_storage'}
-FILES = ('turn_packed.py', 'build_turn_kernel.py', 'native/turn_cfr.cpp', 'turn_analysis.py', 'turn_snapshot.py', 'turn_reference.py', 'turn_native.py',
+FILES = ('trainer_ranges.py', 'turn_packed.py', 'build_turn_kernel.py', 'native/turn_cfr.cpp', 'turn_analysis.py', 'turn_snapshot.py', 'turn_reference.py', 'turn_native.py',
          'analysis_contract.py', 'lesson_values.py', 'river_replay.py', 'river_snapshot.py',
          'custom_river.py', 'compact_utilities.py', 'native_cfr.py', 'native/cfr.cpp',
          'benchmark_expanded.py', '../app/services/hand_evaluator.py',
@@ -62,8 +62,9 @@ def validate_request(request):
                        ('max_outcomes', 3072), ('max_work', 6000000)):
         if type(config[name]) is not int or not 1 <= config[name] <= high:
             raise ValueError('Invalid bounded turn capacity.')
-    if any(type(v) is not list or not v or len(v) > 2 for v in request['selected_hands'].values()):
-        raise ValueError('One or two explicit combos per live seat required.')
+    if (any(type(v) is not list or not v or len(v) > 8 for v in request['selected_hands'].values())
+            or math.prod(len(v) for v in request['selected_hands'].values()) > config['max_joint_combos']):
+        raise ValueError('One to eight explicit combos per live seat, within the joint budget, required.')
     actor = snapshot['actor_id']
     if combo_key(request['own_hand']) not in [combo_key(v) for v in request['selected_hands'][actor]]:
         raise ValueError('Own probe must be selected.')

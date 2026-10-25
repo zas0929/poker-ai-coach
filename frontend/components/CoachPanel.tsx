@@ -58,7 +58,7 @@ export default function CoachPanel({
       </div>
 
       <p className="range-detail">{t("Current advice: equity and betting heuristics.")}</p>
-      <TrainerSolverPanel result={solverModel} hand={hand} onRetry={onRetrySolver} />
+      <TrainerSolverPanel result={solverModel} hand={hand} analysis={analysis} onRetry={onRetrySolver} />
       <div className="metric-grid">
         <div className="coach-metric">
           <InfoTip label="Equity" explanation="Equity estimates your share of the pot against assumed opponent ranges. It includes split pots and is not a guarantee." />

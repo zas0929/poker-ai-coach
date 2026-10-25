@@ -47,7 +47,7 @@ class CurrentTurnTests(unittest.TestCase):
             self.assertIsNotNone(request,assessment)
             self.assertEqual(assessment['contract_version'],'trainer_current_turn_v1')
             self.assertEqual(len(assessment['model']['coverage']),count)
-            self.assertTrue(all(r['selected_combos']==2 for r in assessment['model']['coverage']))
+            self.assertTrue(all(r['selected_combos']==(8 if count==2 else 4 if count==3 else 2) for r in assessment['model']['coverage']))
             self.assertEqual(request['input']['river_max_raises'],0)
             self.assertTrue(all(a['street']!='river' for a in request['snapshot']['history']))
             poisoned=state.model_copy(deep=True)
@@ -187,7 +187,7 @@ class CurrentTurnTests(unittest.TestCase):
                 time.sleep(.02)
             results=[executor.poll(t['ticket_id'])['result'] for t in tickets]
             self.assertEqual([r['status'] for r in results],['ready','ready'])
-            self.assertEqual([r['contract_version'] for r in results],['bounded_current_turn_v2',1])
+            self.assertEqual([r['contract_version'] for r in results],['bounded_current_turn_v3',1])
             self.assertTrue(valid_turn_result(results[0],self.request,self.limits))
 
     def test_current_turn_api_binds_profile_position_and_cancels_when_player_acts(self):

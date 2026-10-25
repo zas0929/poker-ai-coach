@@ -7,7 +7,6 @@ heuristic advice. No access to opponent cards, deck or archived future cards.
 from collections import OrderedDict
 from copy import deepcopy
 from dataclasses import replace
-import random
 import secrets
 from threading import RLock
 
@@ -16,6 +15,7 @@ from app.services.trainer_solver import position_key
 from research.analysis_contract import validate_request, expected_root_actions, valid_candidate, finite_number
 from research.lesson_values import valid_values
 from research.river_snapshot import combo_key, digest
+from research.trainer_ranges import select_ranges
 from research.river_lessons import LessonError
 
 VERSION = 'trainer_current_river_v1'
@@ -37,33 +37,7 @@ def prepare(state):
         known = combo_key(''.join(card_text(c) for c in hero.cards))
         own = next(row['cards'] for p in snapshot['players'] if p['id'] == 'hero'
                    for row in p['range'] if combo_key(row['cards']) == known)
-        selected, used = {}, set()
-        for player in snapshot['players']:
-            if player['status'] == 'folded':
-                continue
-            rng = random.Random(VERSION + snapshot['information_key'] + player['id'])
-            selected[player['id']] = []
-            for _ in range(2):
-                choices = sorted(row['cards'] for row in player['range']
-                                 if not set(combo_key(row['cards'])) & used)
-                choice = rng.choice(choices)
-                selected[player['id']].append(choice)
-                used.update(combo_key(choice))
-        # Opponent suggestions are fixed from public data before the known probe.
-        if own not in selected['hero']:
-            selected['hero'][0] = own
-        coverage, players = [], []
-        for player in snapshot['players']:
-            view = {k: v for k, v in player.items() if k != 'range'}
-            if player['status'] != 'folded':
-                public = {combo_key(row['cards']): row for row in player['range']}
-                rows = [public[combo_key(c)] for c in selected[player['id']]]
-                selected[player['id']] = [row['cards'] for row in rows]
-                view['range'] = rows
-                coverage.append({'player_id': player['id'], 'selected_combos': len(rows),
-                                 'public_combos': len(public),
-                                 'weight_share': sum(r['weight'] for r in rows) / sum(r['weight'] for r in public.values())})
-            players.append(view)
+        selected, players, coverage, sampling = select_ranges(snapshot, own)
         ceiling = min(10000, max(p['stack'] + p['street_committed'] for p in snapshot['players']
                                  if p['status'] != 'folded'))
         bet = min(ceiling, max(state.big_blind, state.pot // 2))
@@ -77,8 +51,8 @@ def prepare(state):
         actions = expected_root_actions(request)
         model = {'version': VERSION, 'board': snapshot['board'], 'own_hand': own, 'actor_id': 'hero',
                  'pot': snapshot['pot'], 'players': players, 'tree': tree, 'actions': actions,
-                 'coverage': coverage, 'range_model': snapshot['range_model'],
-                 'scope': 'two_hands_per_live_seat_one_future_raise_no_rake_no_icm'}
+                 'coverage': coverage, 'range_model': snapshot['range_model'], 'sampling': sampling,
+                 'scope': 'strength_stratified_public_subsets_one_future_raise_no_rake_no_icm'}
         return {**base, 'state': 'prepared', 'reason': None, 'model': model}, request
     except (ValueError, KeyError, TypeError, StopIteration, IndexError):
         return {**base, 'reason': 'CURRENT_RIVER_UNSUPPORTED'}, None
