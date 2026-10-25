@@ -166,6 +166,7 @@ class OpponentRangeSummary(BaseModel):
 
 
 class HandAnalysis(BaseModel):
+    rule_advice: Optional[dict] = None
     hand_id: str
     street: Street
     pot: int

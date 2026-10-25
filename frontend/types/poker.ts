@@ -132,6 +132,7 @@ export interface HandAnalysis {
   hand_strength: HandStrength;
   preflop_profile: PreflopProfile;
   draw_profile: DrawProfile;
+  rule_advice?: { version: string; action: string; hand_label: string; board_texture: string[]; purpose: string; reason: string; live_opponents: number; close_price: boolean; limitations: string } | null;
   coach_summary: string;
   confidence: number;
   risk_level: string;

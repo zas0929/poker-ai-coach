@@ -84,7 +84,9 @@ export default function CoachPanel({
 
       {analysis ? (
         <div className="coach-summary">
+          {analysis.rule_advice ? <div className="rule-advice"><strong>{t(analysis.rule_advice.hand_label)}</strong><p>{analysis.rule_advice.board_texture.map(v => t(v)).join(' · ')}</p><p>{t('Action purpose')}: {t(analysis.rule_advice.purpose)}</p>{analysis.rule_advice.close_price ? <p>{t('Close to the call threshold; the range estimate can change this decision.')}</p> : null}</div> : null}
           <p>{t(analysis.coach_summary)}</p>
+          {analysis.rule_advice ? <p className="room-note">{t(analysis.rule_advice.limitations)}</p> : null}
           {analysis.recommended_amount != null ? <p>{t('Suggested size uses a simple betting heuristic, not a solved optimal size. Raises show the total bet on this street.')}</p> : null}
           <div className="summary-meta">
             <span>{t("Heuristic score ")}{t(percent(analysis.confidence))}</span>
