@@ -6,7 +6,7 @@ import AppHeader from '@/components/AppHeader';
 import CardView from '@/components/CardView';
 import { useI18n } from '@/i18n/LanguageProvider';
 import type { Card } from '@/types/poker';
-import { RiverLessonsApi, followLessonJob, lessonResultMatches, type RiverCatalog, type LessonJob } from '@/services/riverLessons';
+import { RiverLessonsApi, followLessonJob, lessonResultMatches, lessonActionValues, type RiverCatalog, type LessonJob } from '@/services/riverLessons';
 import './river-lessons.css';
 
 const SUITS = { s: 'spades', h: 'hearts', d: 'diamonds', c: 'clubs' } as const;
@@ -87,6 +87,9 @@ export default function RiverLessonPage() {
   const ready = result?.status === 'ready' && result.admission.offline_analysis_allowed && result.admission.live_advice_allowed === false && result.quality?.passed;
   const candidate = ready ? result.candidate : null;
   const reason = result?.reasons[0]?.code;
+  const values = lessonActionValues(result, lesson);
+  const chips = (value: number) => `${value > 0 ? '+' : ''}${(Math.abs(value) < .005 ? 0 : value).toFixed(2)}`;
+  const gap = (value: number) => value < 1e-7 ? t('Best in this comparison') : value < .005 ? '<0.01' : value.toFixed(2);
 
   return <main className="app-shell play-shell practice-shell river-lab">
     <AppHeader />
@@ -107,8 +110,13 @@ export default function RiverLessonPage() {
         <div className="river-section-title"><h3>{t('Model calculation')}</h3><div className="river-run-actions">{busy ? <button onClick={() => { stop(); setError(null); }}>{t('Cancel')}</button> : null}<button className="primary-button" disabled={busy} onClick={() => void run()}>{t(busy ? 'Calculating model…' : result ? 'Calculate again' : 'Calculate model')}</button></div></div>
         {busy ? <p role="status">{t(job?.state === 'queued' ? 'Waiting for the calculation slot…' : 'Calculating the strategy and checking its quality…')}</p> : !result ? <p>{t('Choose an example and start the calculation. The result will appear here.')}</p> : null}
         {result?.quality ? <p className="river-quality"><strong>{t('Quality in this model')}</strong><span>{result.quality.value.toFixed(3)}% {t('of the pot')} · {t('Threshold')}: {result.quality.gate}%</span></p> : null}
-        {candidate ? <><h4>{t('Action frequencies')}</h4><div className="river-frequencies">{candidate.actions.map((label, index) => <div className="river-frequency" key={label}><span>{action(label)}</span><div className="river-frequency-track" aria-hidden="true"><i style={{ width: `${candidate.probabilities[index]*100}%` }} /></div><strong>{(candidate.probabilities[index]*100).toFixed(1)}%</strong></div>)}</div><p>{t('A mixed strategy can use several actions. These frequencies describe only the displayed ranges and bet sizes.')}</p></> : result ? <p role="status">{t(REASONS[reason ?? ''] ?? 'Could not complete the river calculation. Please retry.')}</p> : null}
-        <p className="room-note">{t('Quality measures the best unilateral deviation inside this small model. Action EV and full-range GTO are not calculated here.')}</p>
+        {candidate ? <><h4>{t(values ? 'Compare actions' : 'Action frequencies')}</h4>
+          <table className="river-action-table"><thead><tr><th scope="col">{t('Action')}</th><th scope="col">{t('Frequency')}</th>{values ? <><th scope="col">{t('EV · chips')}</th><th scope="col">{t('Behind best · chips')}</th></> : null}</tr></thead>
+            <tbody>{candidate.actions.map((label, index) => <tr className="river-frequency" key={label}><th scope="row">{action(label)}</th><td><div className="river-frequency-cell"><div className="river-frequency-track" aria-hidden="true"><i style={{ width: `${candidate.probabilities[index]*100}%` }} /></div><strong>{(candidate.probabilities[index]*100).toFixed(1)}%</strong></div></td>{values ? <><td className="river-ev">{chips(values.ev_chips[index])}</td><td className={values.gap_to_best_chips[index] < 1e-7 ? 'river-best' : ''}>{gap(values.gap_to_best_chips[index])}</td></> : null}</tr>)}</tbody>
+          </table>
+          {values ? <><p className="river-policy-ev">{t('EV of the mixed strategy')}: <strong>{chips(values.policy_ev_chips)} {t('chips')}</strong></p><p>{t('EV is the expected change in your stack from this decision. Earlier contributions are already spent; future payments are deducted from receipts, including refunds.')}</p><p className="room-note">{t('Finite iterations can leave small EV differences between actions in a mixed strategy.')} {t('After each first action, every player follows the same calculated strategy. The gap compares these first actions with that fixed continuation; it is not a full best response or a guarantee of profit.')}</p></> : <p className="room-note">{t('Action EV is unavailable for this result. Calculate again.')}</p>}
+          <p>{t('A mixed strategy can use several actions. These frequencies describe only the displayed ranges and bet sizes.')}</p></> : result ? <p role="status">{t(REASONS[reason ?? ''] ?? 'Could not complete the river calculation. Please retry.')}</p> : null}
+        <p className="room-note">{t('Quality measures the best unilateral deviation inside this small model. It does not establish full-range GTO or the accuracy of the assumed ranges.')}</p>
       </section>
     </div><aside className="river-ranges control-panel"><h3>{t('Explicit ranges')}</h3><p className="room-note">{t('Each seat has two possible hands with relative weights. Opponent hands are assumptions, not revealed cards.')}</p>
       {lesson.players.map(player => <section className="river-range-player" key={player.id}><h4>{player.id === lesson.actor_id ? t('You · first to act') : `${t('Seat')} ${player.seat+1}`}{player.id === lesson.button_id ? ' · BTN' : ''}</h4><p>{t('Stack')}: <strong>{player.stack}</strong> · {t('Contributed')}: {player.total_committed}</p><ul>{player.range?.map(row => <li key={row.cards}><span className="river-combo">{row.cards.slice(0,2)} {row.cards.slice(2)}</span><span>{t('Weight')}: {row.weight.toFixed(3)}</span></li>)}</ul></section>)}

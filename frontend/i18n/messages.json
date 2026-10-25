@@ -2278,5 +2278,57 @@
   "This model is not supported by the calculation engine.": {
     "ru": "Вычислитель не поддерживает эту модель.",
     "uk": "Обчислювач не підтримує цю модель."
+  },
+  "Compare actions": {
+    "ru": "Сравнение действий",
+    "uk": "Порівняння дій"
+  },
+  "Frequency": {
+    "ru": "Частота",
+    "uk": "Частота"
+  },
+  "EV · chips": {
+    "ru": "EV · фишки",
+    "uk": "EV · фішки"
+  },
+  "Behind best · chips": {
+    "ru": "Отставание · фишки",
+    "uk": "Відставання · фішки"
+  },
+  "Best in this comparison": {
+    "ru": "Лучшее в сравнении",
+    "uk": "Найкраще в порівнянні"
+  },
+  "EV of the mixed strategy": {
+    "ru": "EV смешанной стратегии",
+    "uk": "EV змішаної стратегії"
+  },
+  "EV is the expected change in your stack from this decision. Earlier contributions are already spent; future payments are deducted from receipts, including refunds.": {
+    "ru": "EV — ожидаемое изменение стека от текущего решения. Предыдущие вложения уже потрачены; будущие платежи вычитаются из полученных фишек, включая возвраты неуравненных ставок.",
+    "uk": "EV — очікувана зміна стека від поточного рішення. Попередні внески вже витрачені; майбутні платежі віднімаються від отриманих фішок, включно з поверненням незрівняних ставок."
+  },
+  "After each first action, every player follows the same calculated strategy. The gap compares these first actions with that fixed continuation; it is not a full best response or a guarantee of profit.": {
+    "ru": "После первого действия каждый игрок следует одной и той же рассчитанной стратегии. Отставание сравнивает первые действия при таком продолжении: это не полный лучший ответ и не гарантия прибыли.",
+    "uk": "Після першої дії кожен гравець дотримується тієї самої розрахованої стратегії. Відставання порівнює перші дії за такого продовження: це не повна найкраща відповідь і не гарантія прибутку."
+  },
+  "Action EV is unavailable for this result. Calculate again.": {
+    "ru": "EV действий для этого результата недоступен. Запустите расчёт ещё раз.",
+    "uk": "EV дій для цього результату недоступний. Запустіть розрахунок ще раз."
+  },
+  "Quality measures the best unilateral deviation inside this small model. It does not establish full-range GTO or the accuracy of the assumed ranges.": {
+    "ru": "Качество измеряет лучшее одностороннее отклонение внутри этой небольшой модели. Оно не подтверждает GTO на полных диапазонах или точность принятых диапазонов.",
+    "uk": "Якість вимірює найкраще одностороннє відхилення всередині цієї невеликої моделі. Вона не підтверджує GTO на повних діапазонах або точність прийнятих діапазонів."
+  },
+  "Action": {
+    "ru": "Действие",
+    "uk": "Дія"
+  },
+  "chips": {
+    "ru": "фишек",
+    "uk": "фішок"
+  },
+  "Finite iterations can leave small EV differences between actions in a mixed strategy.": {
+    "ru": "Из-за конечного числа итераций у действий смешанной стратегии могут оставаться небольшие различия EV.",
+    "uk": "Через скінченну кількість ітерацій у дій змішаної стратегії можуть залишатися невеликі відмінності EV."
   }
 }

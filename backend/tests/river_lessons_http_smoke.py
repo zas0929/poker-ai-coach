@@ -1,6 +1,7 @@
 """Explicit localhost-only integration check; creates disposable browser profiles."""
 import argparse
 import json
+import math
 from pathlib import Path
 import time
 from urllib.error import HTTPError
@@ -52,9 +53,16 @@ def check(base):
         assert result['candidate']['actions'] == example['actions']
         assert abs(sum(result['candidate']['probabilities'])-1) < 1e-8
         assert result['quality']['passed'] and not result['admission']['live_advice_allowed']
+        values = result['action_values']
+        assert values['actions'] == example['actions'] and values['own_hand'] == example['own_hand']
+        assert values['actor_id'] == example['actor_id']
+        assert values['continuation'] == 'fixed_learned_policy' and values['baseline'] == 'current_decision'
+        assert all(math.isfinite(v) for v in values['ev_chips'])
+        assert all(abs(max(values['ev_chips'])-v-gap)<1e-7 for v,gap in zip(values['ev_chips'],values['gap_to_best_chips']))
+        assert abs(values['policy_ev_chips']-sum(p*v for p,v in zip(result['candidate']['probabilities'],values['ev_chips'])))<1e-7
         rows.append({'lesson_id':example['id'], 'opponents':example['opponents'], 'status':result['status'],
             'quality_pct_pot':result['quality']['value'], 'actions':result['candidate']['actions'],
-            'probabilities':result['candidate']['probabilities'], 'elapsed_seconds':round(time.monotonic()-started,3)})
+            'probabilities':result['candidate']['probabilities'], 'action_values':values, 'value_provenance':result['value_provenance'], 'elapsed_seconds':round(time.monotonic()-started,3)})
     _, after, _ = call('/api/hand/state', token=a)
     assert original['hand_id'] == after['hand_id'] and original['history'] == after['history'] and original['players'] == after['players']
     _, old, _ = submit('river-5')

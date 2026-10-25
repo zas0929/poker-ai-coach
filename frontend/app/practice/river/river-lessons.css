@@ -20,9 +20,18 @@
 .river-result p { line-height: 1.5; }
 .river-quality { display: grid; gap: 5px; border-left: 3px solid var(--accent); padding-left: 12px; }
 .river-quality span { color: var(--muted); }
-.river-frequency { display: grid; grid-template-columns: minmax(80px, 1fr) 2fr 64px; align-items: center; gap: 12px; padding: 10px 0; }
-.river-frequency > span { text-transform: capitalize; }
-.river-frequency > strong { text-align: right; font-variant-numeric: tabular-nums; }
+.river-action-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.river-action-table th, .river-action-table td { padding: 12px 8px; border-bottom: 1px solid var(--line); text-align: right; }
+.river-action-table thead th { font-size: .8rem; font-weight: 500; color: var(--muted); }
+.river-action-table th:first-child { text-align: left; padding-left: 0; }
+.river-action-table tr > :last-child { padding-right: 0; }
+.river-frequency > th { text-transform: capitalize; font-weight: 500; }
+.river-frequency-cell { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.river-frequency-cell .river-frequency-track { flex: 1; min-width: 32px; max-width: 120px; }
+.river-frequency-cell strong { min-width: 54px; }
+.river-action-table .river-ev { font-weight: 700; white-space: nowrap; }
+.river-action-table .river-best { color: var(--accent); font-size: .8rem; }
+.river-policy-ev { padding: 12px; border-radius: 10px; background: var(--panel-soft); }
 .river-frequency-track { height: 9px; border-radius: 10px; background: var(--panel-soft); overflow: hidden; }
 .river-frequency-track i { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
 .river-range-player { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; }
@@ -44,7 +53,11 @@
   .river-lab .playing-card { width: 46px; height: 65px; min-width: 46px; min-height: 65px; }
   .river-run-actions { width: 100%; }
   .river-run-actions .primary-button { flex: 1; }
-  .river-frequency { grid-template-columns: 80px minmax(30px,1fr) 58px; gap: 8px; }
+  .river-action-table { font-size: .85rem; }
+  .river-action-table th, .river-action-table td { padding: 10px 5px; }
+  .river-frequency-cell .river-frequency-track { display: none; }
+  .river-frequency-cell strong { min-width: 0; }
+  .river-action-table .river-best { font-size: .75rem; }
 }
 .river-picker select {
   appearance: none;

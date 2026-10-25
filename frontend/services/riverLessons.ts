@@ -12,10 +12,16 @@ export interface RiverCatalog {
   enabled: boolean; version: string | null; lessons: RiverLesson[]; reason?: string;
   limits?: { wall_seconds: number; iterations: number; quality_gate_pct_pot: number };
 }
+export interface LessonActionValues {
+  version: string; actor_id: string; own_hand: string; actions: string[];
+  ev_chips: number[]; gap_to_best_chips: number[]; policy_ev_chips: number;
+  sunk_chips: number; baseline: string; continuation: string;
+}
 export interface LessonAnalysis {
   status: string; reasons: { code: string }[];
   quality: null | { value: number; gate: number; passed: boolean };
   candidate: null | { actions: string[]; probabilities: number[]; own_hand: string };
+  action_values?: LessonActionValues;
   admission: { offline_analysis_allowed: boolean; live_advice_allowed: boolean };
 }
 export interface LessonJob {
@@ -91,4 +97,27 @@ export async function followLessonJob(
   } finally {
     clearTimeout(timeout); signal.removeEventListener('abort', cancel);
   }
+}
+
+// Older/partial results can still display frequencies, but never unverified EV.
+export function lessonActionValues(result: LessonAnalysis | null | undefined, lesson: RiverLesson | undefined) {
+  const values = result?.action_values, candidate = result?.candidate;
+  if (!lesson || result?.status !== 'ready' || !result.quality?.passed ||
+      !result.admission.offline_analysis_allowed || result.admission.live_advice_allowed !== false || !candidate || !values ||
+      values.version !== 'fixed_policy_decision_ev_v1' || values.baseline !== 'current_decision' ||
+      values.continuation !== 'fixed_learned_policy' || values.actor_id !== lesson.actor_id ||
+      values.own_hand !== lesson.own_hand || candidate.own_hand !== lesson.own_hand ||
+      JSON.stringify(values.actions) !== JSON.stringify(candidate.actions) ||
+      JSON.stringify(values.actions) !== JSON.stringify(lesson.actions)) return null;
+  if (!Array.isArray(candidate.probabilities) || candidate.probabilities.length !== values.actions.length ||
+      !candidate.probabilities.every(p => Number.isFinite(p) && p >= 0 && p <= 1) ||
+      Math.abs(candidate.probabilities.reduce((sum, p) => sum + p, 0) - 1) > 1e-8 ||
+      values.sunk_chips !== lesson.players.find(p => p.id === lesson.actor_id)?.total_committed) return null;
+  const chips = values.ev_chips, gaps = values.gap_to_best_chips;
+  if (!Array.isArray(chips) || !Array.isArray(gaps) || chips.length !== values.actions.length || gaps.length !== chips.length ||
+      chips.length === 0 || !chips.every(Number.isFinite) || !gaps.every(Number.isFinite) ||
+      !Number.isFinite(values.policy_ev_chips) || !Number.isFinite(values.sunk_chips) ||
+      gaps.some((gap, i) => gap < 0 || Math.abs(Math.max(...chips) - chips[i] - gap) > 1e-7) ||
+      Math.abs(candidate.probabilities.reduce((sum, p, i) => sum + p * chips[i], 0) - values.policy_ev_chips) > 1e-7) return null;
+  return values;
 }

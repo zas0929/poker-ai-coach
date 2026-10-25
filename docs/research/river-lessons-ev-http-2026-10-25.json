@@ -1,0 +1,249 @@
+{
+  "scope": "Real localhost HTTP -> profile-isolated lesson API -> bounded native subprocess. Synthetic models only. No live hand mutation.",
+  "fixture_sha256": "9379498f810dd41f956b9a3c3a24ffc18d1bf0642222ac49aab2810b54b2a64d",
+  "checks": {
+    "unauthorized_rejected": true,
+    "foreign_poll_cancel_rejected": true,
+    "private_no_store": true,
+    "live_hand_preserved": true,
+    "rapid_restart_old_cancel_rejected": true,
+    "cancelled": true
+  },
+  "results": [
+    {
+      "lesson_id": "river-1",
+      "opponents": 1,
+      "status": "ready",
+      "quality_pct_pot": 0.041978623785068336,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.9999059876474448,
+        4.700617627770339e-05,
+        4.700617627770339e-05
+      ],
+      "action_values": {
+        "version": "fixed_policy_decision_ev_v1",
+        "actor_id": "villain",
+        "own_hand": "Ks3d",
+        "actions": [
+          "CHECK",
+          "BET 10",
+          "BET 20"
+        ],
+        "ev_chips": [
+          23.305329865684566,
+          20.000110741971206,
+          20.000221483942415
+        ],
+        "gap_to_best_chips": [
+          0.0,
+          3.3052191237133606,
+          3.3051083817421514
+        ],
+        "policy_ev_chips": 23.305019139464594,
+        "sunk_chips": 10,
+        "continuation": "fixed_learned_policy",
+        "baseline": "current_decision",
+        "compatible_deals": 1,
+        "conditional_mass": 0.3638026168506844
+      },
+      "value_provenance": {
+        "version": "fixed_policy_decision_ev_v1",
+        "source_sha256": "8a9d2408485b158e93d2ce3c26115b900585f3ff96d04ba3ccce235c99393cbf"
+      },
+      "elapsed_seconds": 0.585
+    },
+    {
+      "lesson_id": "river-2",
+      "opponents": 2,
+      "status": "ready",
+      "quality_pct_pot": 0.0905472155502777,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.09864134835243171,
+        0.90086188646759,
+        0.0004967651799783809
+      ],
+      "action_values": {
+        "version": "fixed_policy_decision_ev_v1",
+        "actor_id": "villain",
+        "own_hand": "AsTd",
+        "actions": [
+          "CHECK",
+          "BET 10",
+          "BET 20"
+        ],
+        "ev_chips": [
+          21.91660063153413,
+          21.913826579387326,
+          20.999644930321647
+        ],
+        "gap_to_best_chips": [
+          0.0,
+          0.0027740521468047064,
+          0.9169557012124834
+        ],
+        "policy_ev_chips": 21.91364608202006,
+        "sunk_chips": 10,
+        "continuation": "fixed_learned_policy",
+        "baseline": "current_decision",
+        "compatible_deals": 3,
+        "conditional_mass": 0.5994931815159523
+      },
+      "value_provenance": {
+        "version": "fixed_policy_decision_ev_v1",
+        "source_sha256": "8a9d2408485b158e93d2ce3c26115b900585f3ff96d04ba3ccce235c99393cbf"
+      },
+      "elapsed_seconds": 0.57
+    },
+    {
+      "lesson_id": "river-3",
+      "opponents": 3,
+      "status": "ready",
+      "quality_pct_pot": 0.045185366563205154,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.9999051462684108,
+        7.867896184497866e-05,
+        1.6174769744196258e-05
+      ],
+      "action_values": {
+        "version": "fixed_policy_decision_ev_v1",
+        "actor_id": "villain",
+        "own_hand": "AdTs",
+        "actions": [
+          "CHECK",
+          "BET 10",
+          "BET 20"
+        ],
+        "ev_chips": [
+          -8.705079293220192e-05,
+          -9.999709276696752,
+          -19.999651131005862
+        ],
+        "gap_to_best_chips": [
+          0.0,
+          9.99962222590382,
+          19.99956408021293
+        ],
+        "policy_ev_chips": -0.0011972990324900315,
+        "sunk_chips": 10,
+        "continuation": "fixed_learned_policy",
+        "baseline": "current_decision",
+        "compatible_deals": 4,
+        "conditional_mass": 0.33913231183866704
+      },
+      "value_provenance": {
+        "version": "fixed_policy_decision_ev_v1",
+        "source_sha256": "8a9d2408485b158e93d2ce3c26115b900585f3ff96d04ba3ccce235c99393cbf"
+      },
+      "elapsed_seconds": 0.589
+    },
+    {
+      "lesson_id": "river-4",
+      "opponents": 4,
+      "status": "ready",
+      "quality_pct_pot": 0.03750392109382261,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.9990783069875215,
+        0.0008921027698569462,
+        2.9590242621550766e-05
+      ],
+      "action_values": {
+        "version": "fixed_policy_decision_ev_v1",
+        "actor_id": "villain",
+        "own_hand": "5d2d",
+        "actions": [
+          "CHECK",
+          "BET 10",
+          "BET 20"
+        ],
+        "ev_chips": [
+          -9.978777643959732e-05,
+          -0.6181812264497807,
+          -11.841930384317115
+        ],
+        "gap_to_best_chips": [
+          0.0,
+          0.6180814386733411,
+          11.841830596540674
+        ],
+        "policy_ev_chips": -0.001001582580312193,
+        "sunk_chips": 10,
+        "continuation": "fixed_learned_policy",
+        "baseline": "current_decision",
+        "compatible_deals": 8,
+        "conditional_mass": 0.38598712461235873
+      },
+      "value_provenance": {
+        "version": "fixed_policy_decision_ev_v1",
+        "source_sha256": "8a9d2408485b158e93d2ce3c26115b900585f3ff96d04ba3ccce235c99393cbf"
+      },
+      "elapsed_seconds": 0.826
+    },
+    {
+      "lesson_id": "river-5",
+      "opponents": 5,
+      "status": "ready",
+      "quality_pct_pot": 0.017299311326794964,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.9999704904541337,
+        2.212674778599934e-05,
+        7.382798080472499e-06
+      ],
+      "action_values": {
+        "version": "fixed_policy_decision_ev_v1",
+        "actor_id": "villain",
+        "own_hand": "5c3d",
+        "actions": [
+          "CHECK",
+          "BET 10",
+          "BET 20"
+        ],
+        "ev_chips": [
+          -3.3710169428283456e-05,
+          -9.999999991415637,
+          -19.999944629014404
+        ],
+        "gap_to_best_chips": [
+          0.0,
+          9.99996628124621,
+          19.999910918844975
+        ],
+        "policy_ev_chips": -0.00040263220514318574,
+        "sunk_chips": 10,
+        "continuation": "fixed_learned_policy",
+        "baseline": "current_decision",
+        "compatible_deals": 6,
+        "conditional_mass": 0.25015381262024156
+      },
+      "value_provenance": {
+        "version": "fixed_policy_decision_ev_v1",
+        "source_sha256": "8a9d2408485b158e93d2ce3c26115b900585f3ff96d04ba3ccce235c99393cbf"
+      },
+      "elapsed_seconds": 0.8
+    }
+  ]
+}

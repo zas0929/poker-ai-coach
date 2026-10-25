@@ -19,11 +19,12 @@ function text(tree) {
 }
 function fixture(id,opponents=1) {
  return {id,opponents,board:['2c','4d','7h','9s','Jc'],own_hand:'AhAd',actor_id:'a',button_id:'b',pot:20,small_blind:5,big_blind:10,
-  tree:{bet_sizes:[10,20],raise_sizes:[],max_raises:0},players:[{id:'a',seat:0,stack:990,total_committed:10,range:[{cards:'AhAd',weight:1}]}]};
+  actions:['CHECK','BET 10','BET 20'],tree:{bet_sizes:[10,20],raise_sizes:[],max_raises:0},players:[{id:'a',seat:0,stack:990,total_committed:10,range:[{cards:'AhAd',weight:1}]}]};
 }
 function result(ticket,id,status='ready') {
  return {ticket_id:ticket,lesson_id:id,version:'v1',state:'completed',result:{status,reasons:status==='ready'?[]:[{code:'QUALITY_GATE_FAILED'}],
   quality:{passed:status==='ready',value:status==='ready'?.1:1,gate:.5},admission:{offline_analysis_allowed:status==='ready',live_advice_allowed:false},
+  action_values:{version:'fixed_policy_decision_ev_v1',actor_id:'a',own_hand:'AhAd',actions:['CHECK','BET 10','BET 20'],ev_chips:[5,10,7],gap_to_best_chips:[5,0,3],policy_ev_chips:6.9,sunk_chips:10,baseline:'current_decision',continuation:'fixed_learned_policy'},
   candidate:{own_hand:'AhAd',actions:['CHECK','BET 10','BET 20'],probabilities:[.5,.3,.2]}}};
 }
 function page(enabled=true) {
@@ -68,4 +69,23 @@ test('API calls keep catalog public and jobs authenticated, abort before submit,
  await h.RiverLessonsApi.catalog();await h.RiverLessonsApi.submit('river-1','v1');assert.equal(calls[0].options.headers.Authorization,undefined);assert.equal(calls[1].options.headers.Authorization,'Bearer test-profile');assert.equal(calls[1].options.cache,'no-store');
  const abort=new AbortController();abort.abort();await assert.rejects(h.RiverLessonsApi.submit('river-1','v1',abort.signal),/Aborted/);assert.equal(calls.length,2);
  assert.doesNotMatch(h.lessonError('/private/server/trace'),/private|trace/);assert.equal(h.lessonResultMatches({lesson_id:'a',version:'1'},'a','2'),false);
+});
+
+test('EV comparison shows values, fixed continuation and the correct baseline only for valid results',async()=>{
+ const p=page();p.button(await p.load()).props.onClick();p.calls.submit[0].resolve({ticket_id:'ev'});await tick();p.calls.poll[0].resolve(result('ev','river-1'));await tick();
+ const output=text(p.render());assert.match(output,/Compare actions/);assert.match(output,/\+10.00/);assert.match(output,/\+6.90/);
+ assert.match(output,/Earlier contributions are already spent/);assert.match(output,/same calculated strategy/);assert.match(output,/Best in this comparison/);
+ const h=helpers(),lesson=fixture('river-1'),valid=result('ev','river-1').result;
+ assert.ok(h.lessonActionValues(valid,lesson));
+ for(const change of [r=>r.action_values.ev_chips[0]=NaN,r=>r.action_values.gap_to_best_chips[0]=4,
+  r=>r.action_values.actor_id='other',r=>r.action_values.own_hand='KhKd',r=>r.action_values.continuation='best_response',
+  r=>r.action_values.policy_ev_chips=99,r=>r.status='quality_rejected',r=>r.admission.live_advice_allowed=true,
+  r=>r.candidate.probabilities=[NaN,.3,.2],r=>delete r.action_values]) {
+  const invalid=structuredClone(valid);change(invalid);assert.equal(h.lessonActionValues(invalid,lesson),null);
+ }
+});
+test('an older result keeps frequencies and asks for a new calculation instead of fabricating EV',async()=>{
+ const p=page();p.button(await p.load()).props.onClick();p.calls.submit[0].resolve({ticket_id:'legacy'});await tick();
+ const legacy=result('legacy','river-1');delete legacy.result.action_values;p.calls.poll[0].resolve(legacy);await tick();
+ const tree=p.render();assert.equal(nodes(tree,n=>n.props?.className==='river-frequency').length,3);assert.match(text(tree),/Action EV is unavailable/);assert.doesNotMatch(text(tree),/EV of the mixed strategy/);
 });

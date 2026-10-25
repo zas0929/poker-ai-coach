@@ -8,6 +8,7 @@ from threading import RLock
 
 from research.analysis_contract import ResearchLimits, expected_root_actions, validate_request
 from research.shadow_executor import ShadowExecutor, TERMINAL
+from research.lesson_values import analyze
 
 
 class LessonError(Exception):
@@ -30,7 +31,7 @@ class RiverLessons:
         for row in self.examples.values():
             validate_request(row['request'])
         self.limits = ResearchLimits(iterations=300, wall_seconds=10, memory_mib=128)
-        self.executor = executor if executor is not None else ShadowExecutor(max_pending=2, max_retained=64)
+        self.executor = executor if executor is not None else ShadowExecutor(max_pending=2, max_retained=64, analyzer=analyze)
         self.owners = OrderedDict()
         self.lock = RLock()
 
