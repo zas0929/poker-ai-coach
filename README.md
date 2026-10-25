@@ -403,3 +403,6 @@ server and hosted coach do not switch to the research solver. See
 
 Первый offline-решатель тёрн → ривер, отдельный native-адаптер, границы и проверки:
 [docs/TURN_REFERENCE.md](docs/TURN_REFERENCE.md). В интерфейсе пока доступен ривер.
+
+Приоритет интеграции — анализ текущего хода во время тренировочной игры:
+[docs/LIVE_TRAINER_ANALYSIS.md](docs/LIVE_TRAINER_ANALYSIS.md).
