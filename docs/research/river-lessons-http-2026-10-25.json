@@ -1,0 +1,99 @@
+{
+  "scope": "Real localhost HTTP -> profile-isolated lesson API -> bounded native subprocess. Synthetic models only. No live hand mutation.",
+  "fixture_sha256": "9379498f810dd41f956b9a3c3a24ffc18d1bf0642222ac49aab2810b54b2a64d",
+  "checks": {
+    "unauthorized_rejected": true,
+    "foreign_poll_cancel_rejected": true,
+    "private_no_store": true,
+    "live_hand_preserved": true,
+    "rapid_restart_old_cancel_rejected": true,
+    "cancelled": true
+  },
+  "results": [
+    {
+      "lesson_id": "river-1",
+      "opponents": 1,
+      "status": "ready",
+      "quality_pct_pot": 0.041978623785068336,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.9999059876474448,
+        4.700617627770339e-05,
+        4.700617627770339e-05
+      ],
+      "elapsed_seconds": 0.583
+    },
+    {
+      "lesson_id": "river-2",
+      "opponents": 2,
+      "status": "ready",
+      "quality_pct_pot": 0.0905472155502777,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.09864134835243171,
+        0.90086188646759,
+        0.0004967651799783809
+      ],
+      "elapsed_seconds": 0.586
+    },
+    {
+      "lesson_id": "river-3",
+      "opponents": 3,
+      "status": "ready",
+      "quality_pct_pot": 0.045185366563205154,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.9999051462684108,
+        7.867896184497866e-05,
+        1.6174769744196258e-05
+      ],
+      "elapsed_seconds": 0.573
+    },
+    {
+      "lesson_id": "river-4",
+      "opponents": 4,
+      "status": "ready",
+      "quality_pct_pot": 0.03750392109382261,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.9990783069875215,
+        0.0008921027698569462,
+        2.9590242621550766e-05
+      ],
+      "elapsed_seconds": 0.803
+    },
+    {
+      "lesson_id": "river-5",
+      "opponents": 5,
+      "status": "ready",
+      "quality_pct_pot": 0.017299311326794964,
+      "actions": [
+        "CHECK",
+        "BET 10",
+        "BET 20"
+      ],
+      "probabilities": [
+        0.9999704904541337,
+        2.212674778599934e-05,
+        7.382798080472499e-06
+      ],
+      "elapsed_seconds": 1.012
+    }
+  ]
+}

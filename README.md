@@ -388,3 +388,10 @@ draws. They still confirm no small threshold violations and never admit quality.
 See [docs/SOLVER_STRUCTURAL_DEVIATION.md](docs/SOLVER_STRUCTURAL_DEVIATION.md).
 Current delivery priorities, including the planned local bounded river review,
 are in [docs/TRAINER_DELIVERY_PLAN.md](docs/TRAINER_DELIVERY_PLAN.md).
+
+The first local river lesson UI is now available at `/practice/river`, linked from
+Practice. Five fixed 2–6-seat examples show explicit ranges, model parameters,
+async calculation, admitted action frequencies and bounded-game quality.
+Enable the opt-in API locally with `POKER_LOCAL_RIVER_LESSONS=1`; the default
+server and hosted coach do not switch to the research solver. See
+[docs/RIVER_LESSONS.md](docs/RIVER_LESSONS.md) for startup and end-to-end checks.

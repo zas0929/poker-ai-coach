@@ -18,3 +18,6 @@ dist/
 /backend/research/native/*.dylib
 /backend/research/native/*.dll
 /backend/research/native/*.o
+
+# Separate local river lesson preview build
+.next-river-*/

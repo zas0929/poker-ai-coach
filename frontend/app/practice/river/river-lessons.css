@@ -1,0 +1,56 @@
+.river-lab { padding-bottom: 36px; }
+.river-intro { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin: 20px 0; }
+.river-intro h2 { margin: 6px 0 10px; }
+.river-intro p { max-width: 68ch; color: var(--muted); line-height: 1.5; }
+.river-picker { display: grid; gap: 8px; min-width: 130px; color: var(--muted); }
+.river-picker select { width: 100%; min-height: 44px; }
+.river-layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr); gap: 18px; align-items: start; }
+.river-main { display: grid; gap: 18px; min-width: 0; }
+.river-section-title { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.river-section-title h3, .river-ranges > h3 { margin: 0; }
+.river-cards { display: flex; flex-wrap: wrap; gap: 24px; margin: 14px 0 20px; }
+.river-cards p { margin: 0 0 10px; color: var(--muted); }
+.river-board, .river-hand { display: flex; gap: 6px; }
+.river-lab .playing-card { width: 54px; height: 76px; min-width: 54px; min-height: 76px; }
+.river-facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.river-facts dt { color: var(--muted); font-size: .85rem; }
+.river-facts dd { margin: 7px 0 0; font-size: 1.2rem; font-weight: 700; }
+.river-run-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.river-run-actions button { padding: 10px 14px; min-height: 44px; }
+.river-result p { line-height: 1.5; }
+.river-quality { display: grid; gap: 5px; border-left: 3px solid var(--accent); padding-left: 12px; }
+.river-quality span { color: var(--muted); }
+.river-frequency { display: grid; grid-template-columns: minmax(80px, 1fr) 2fr 64px; align-items: center; gap: 12px; padding: 10px 0; }
+.river-frequency > span { text-transform: capitalize; }
+.river-frequency > strong { text-align: right; font-variant-numeric: tabular-nums; }
+.river-frequency-track { height: 9px; border-radius: 10px; background: var(--panel-soft); overflow: hidden; }
+.river-frequency-track i { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+.river-range-player { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; }
+.river-range-player h4 { margin: 0 0 6px; }
+.river-range-player p { margin: 0; color: var(--muted); font-size: .9rem; }
+.river-range-player ul { display: grid; gap: 8px; padding: 0; margin: 12px 0 0; list-style: none; }
+.river-range-player li { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: .9rem; }
+.river-range-player li > span:last-child { color: var(--muted); }
+.river-combo { font-family: ui-monospace, monospace; font-weight: 700; }
+.river-lesson-entry { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+.river-lesson-entry p { margin: 5px 0 0; }
+.river-lesson-entry a { color: var(--accent); padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; white-space: nowrap; }
+@media (max-width: 760px) {
+  .river-layout { grid-template-columns: minmax(0,1fr); }
+  .river-intro { align-items: flex-start; flex-direction: column; }
+  .river-picker { grid-template-columns: 1fr 72px; align-items: center; width: 100%; }
+  .river-facts { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .river-cards { gap: 18px; }
+  .river-lab .playing-card { width: 46px; height: 65px; min-width: 46px; min-height: 65px; }
+  .river-run-actions { width: 100%; }
+  .river-run-actions .primary-button { flex: 1; }
+  .river-frequency { grid-template-columns: 80px minmax(30px,1fr) 58px; gap: 8px; }
+}
+.river-picker select {
+  appearance: none;
+  color: var(--text);
+  background: var(--panel-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f2f5ef' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 36px 10px 12px;
+}

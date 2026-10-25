@@ -1,6 +1,7 @@
 'use client';
 
 import ServerWakeLoader from '@/components/ServerWakeLoader';
+import './river/river-lessons.css';
 
 import { useI18n } from '@/i18n/LanguageProvider';
 
@@ -10,6 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import PokerTable from '@/components/PokerTable';
 import HandHistory from '@/components/HandHistory';
 import { TrainingApi } from '@/services/trainingApi';
+import { RiverLessonsApi } from '@/services/riverLessons';
 import type { Exercise, ExerciseKind, ExerciseResult, SavedDecision, TrainingProgress } from '@/services/trainingApi';
 import type { ActionType } from '@/types/poker';
 
@@ -17,6 +19,7 @@ const ACTIONS: ActionType[] = ['fold', 'check', 'call', 'bet', 'raise'];
 
 export default function PracticePage() {
   const { t, locale } = useI18n();
+  const [riverEnabled, setRiverEnabled] = useState(false);
   const [kind, setKind] = useState<ExerciseKind>('call_price');
   const [question, setQuestion] = useState<Exercise | null>(null);
   const [progress, setProgress] = useState<TrainingProgress | null>(null);
@@ -39,6 +42,14 @@ export default function PracticePage() {
     }).catch((cause) => { if (mounted.current) setError(cause instanceof Error ? cause.message : 'Could not load practice.'); })
       .finally(() => { if (mounted.current) setLoading(false); });
     return () => { mounted.current = false; };
+  }, []);
+
+  useEffect(() => {
+    const abort = new AbortController();
+    void RiverLessonsApi.catalog(abort.signal).then(catalog => {
+      if (!abort.signal.aborted) setRiverEnabled(catalog.enabled);
+    }).catch(() => {});
+    return () => abort.abort();
   }, []);
 
   const run = async (task: () => Promise<void>) => {
@@ -89,6 +100,7 @@ export default function PracticePage() {
       <section className="practice-title"><p className="eyebrow">{t("Saved training · exact rules and call prices")}</p><h2>{t("Practice & decisions")}</h2></section>
       <section className="session-strip practice-progress"><div><span>{t("Answered")}</span><strong>{progress?.attempts ?? 0}</strong></div><div><span>{t("Correct answers")}</span><strong>{progress?.correct_attempts ?? 0}</strong></div><div><span>{t("Questions correct on last try")}</span><strong>{progress?.last_answer_correct ?? 0}</strong></div><div><span>{t("Questions to review")}</span><strong>{progress?.to_review ?? 0}</strong></div></section>
       {error ? <div className="error-banner" role="alert"><span>{t(error)}</span><button disabled={loading} onClick={() => void retry()}>{t("Retry")}</button></div> : null}
+      {riverEnabled ? <section className="control-panel river-lesson-entry"><div><strong>{t("River lesson")}</strong><p className="room-note">{t("Explore a small, explicit model with one to five opponents.")}</p></div><Link href="/practice/river">{t("Open river lesson")} →</Link></section> : null}
       <section className="game-layout">
         <div className="table-column">
           <section className="control-panel practice-question">

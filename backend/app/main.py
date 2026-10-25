@@ -13,6 +13,8 @@ from app.services.trainer_shadow import start_local_shadow, stop_local_shadow
 from app.api.training import router as training_router, store as training_store, profile
 from app.api.hand import router as hand_router, training_owner
 from app.api.rooms import router as room_router, store
+from app.api.river_lessons import router as river_lessons_router
+from app.services.river_lessons import start_river_lessons, stop_river_lessons
 
 @asynccontextmanager
 async def lifespan(app):
@@ -20,6 +22,7 @@ async def lifespan(app):
     training_store.open()
     task = asyncio.create_task(store.run_timers())
     start_local_shadow()
+    start_river_lessons()
     try:
         yield
     finally:
@@ -27,6 +30,7 @@ async def lifespan(app):
         with suppress(asyncio.CancelledError):
             await task
         await run_in_threadpool(stop_local_shadow)
+        await run_in_threadpool(stop_river_lessons)
         training_store.close()
         store.close()
 
@@ -36,7 +40,8 @@ app = FastAPI(title="Poker AI Coach API", lifespan=lifespan)
 @app.middleware('http')
 async def private_training_table(request, call_next):
     path = request.url.path
-    protected = path.startswith('/api/hand/') or path == '/api/training/decision'
+    protected = (path.startswith('/api/hand/') or path == '/api/training/decision'
+                 or path.startswith('/api/river-lessons/jobs'))
     if not protected or request.method == 'OPTIONS':
         return await call_next(request)
     try:
@@ -69,6 +74,7 @@ app.add_middleware(
 app.include_router(training_router, prefix="/api/training", tags=["training"])
 app.include_router(hand_router, prefix="/api/hand", tags=["hand"])
 app.include_router(room_router, prefix="/api/rooms", tags=["rooms"])
+app.include_router(river_lessons_router, prefix="/api/river-lessons", tags=["river-lessons"])
 
 
 @app.get("/")
