@@ -1,4 +1,5 @@
 import os
+from email.message import Message
 from pathlib import Path
 import subprocess
 import sys
@@ -39,3 +40,18 @@ class PackagedRiverTests(unittest.TestCase):
         result=subprocess.run([sys.executable,'-c','import app.main,sys;assert not any(m=="research" or m.startswith("research.") for m in sys.modules)'],
                               env=env,capture_output=True,text=True,timeout=15)
         self.assertEqual(result.returncode,0,result.stderr)
+
+
+class StagingProbeTests(unittest.TestCase):
+    def test_edge_vary_fields_are_combined_without_losing_authorization(self):
+        from backend.tests.river_staging_smoke import response_headers
+        headers=Message();headers['Vary']='Authorization, Origin';headers['Vary']='Accept-Encoding'
+        headers['Cache-Control']='private, no-store'
+        combined=response_headers(headers)
+        self.assertEqual(combined['vary'],'Authorization, Origin, Accept-Encoding')
+        self.assertEqual(combined['cache-control'],'private, no-store')
+
+    def test_probe_rejects_other_hosts_before_any_request(self):
+        from backend.tests.river_staging_smoke import check
+        for url in ('https://example.com','http://poker-ai-coach-api.onrender.com','https://poker-ai-coach-api.onrender.com.evil.test'):
+            with self.assertRaises(ValueError):check(url)

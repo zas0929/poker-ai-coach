@@ -1,0 +1,45 @@
+{
+  "api": "https://poker-ai-coach-api.onrender.com",
+  "fixture_sha256": "9379498f810dd41f956b9a3c3a24ffc18d1bf0642222ac49aab2810b54b2a64d",
+  "models": [
+    {
+      "opponents": 1,
+      "status": "ready",
+      "quality_pct_pot": 0.041978623785068336,
+      "elapsed_seconds": 6.216
+    },
+    {
+      "opponents": 2,
+      "status": "ready",
+      "quality_pct_pot": 0.0905472155502777,
+      "elapsed_seconds": 5.593
+    },
+    {
+      "opponents": 3,
+      "status": "ready",
+      "quality_pct_pot": 0.045185366563205154,
+      "elapsed_seconds": 6.287
+    },
+    {
+      "opponents": 4,
+      "status": "ready",
+      "quality_pct_pot": 0.03750392109382261,
+      "elapsed_seconds": 7.814
+    },
+    {
+      "opponents": 5,
+      "status": "ready",
+      "quality_pct_pot": 0.017299311326794964,
+      "elapsed_seconds": 10.21
+    }
+  ],
+  "completed_river_review": "ready",
+  "private_profiles_verified": true,
+  "scope": "New disposable profiles; synthetic lessons and their own passive trainer hand only. No existing users or rooms.",
+  "deployed_commit": "cc31a2813727f9b840e5da4e1ff0f09569f38bbb",
+  "deploy_id": "dep-dberaojrjlhs738kq2l0",
+  "deploy_status": "live",
+  "frontend_history_url": "https://poker-ai-coach-eight.vercel.app/practice/river/history",
+  "frontend_history_http_status": 200,
+  "frontend_uses_expected_api": true
+}

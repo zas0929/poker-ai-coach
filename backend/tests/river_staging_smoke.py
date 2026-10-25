@@ -11,6 +11,11 @@ import uuid
 ALLOWED={'https://poker-ai-coach-api.onrender.com','http://127.0.0.1:8011'}
 
 
+def response_headers(headers):
+    # Edge proxies may append separate Vary fields; their union is authoritative.
+    return {key.lower(): ', '.join(headers.get_all(key)) for key in headers.keys()}
+
+
 def check(base):
     if base not in ALLOWED:
         raise ValueError('Only the named poker staging API or isolated local preview is allowed.')
@@ -20,9 +25,9 @@ def check(base):
         request=Request(base+path,method=method,headers=headers,data=None if body is None else json.dumps(body).encode())
         try:
             with urlopen(request,timeout=90) as response:
-                return response.status,json.load(response),{k.lower():v for k,v in response.headers.items()}
+                return response.status,json.load(response),response_headers(response.headers)
         except HTTPError as error:
-            return error.code,json.loads(error.read()),{k.lower():v for k,v in error.headers.items()}
+            return error.code,json.loads(error.read()),response_headers(error.headers)
     status,catalog,_=call('/api/river-lessons');assert status==200 and catalog['enabled'],catalog
     assert call('/api/river-lessons/history')[0]==401
     status,a,_=call('/api/training/profiles','POST');assert status==200
@@ -44,7 +49,7 @@ def check(base):
     for lesson in catalog['lessons']:
         start=time.monotonic()
         status,submitted,headers=call('/api/river-lessons/jobs','POST',{'lesson_id':lesson['id'],'version':catalog['version']},token)
-        assert status==200 and 'no-store' in headers['cache-control'] and 'Authorization' in headers['vary']
+        assert status==200 and 'no-store' in headers['cache-control'] and 'authorization' in headers['vary'].lower()
         result=finish_job(submitted)
         rows.append({'opponents':lesson['opponents'],'status':result['status'],
                      'quality_pct_pot':result['quality']['value'],'elapsed_seconds':round(time.monotonic()-start,3)})
