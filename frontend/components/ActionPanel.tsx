@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useState, type ReactNode } from 'react';
-import { displayPlayer } from '@/i18n/translate';
+import InlineLoader from '@/components/InlineLoader';
 import { useI18n } from '@/i18n/LanguageProvider';
 import Sheet from '@/components/Sheet';
 import { betSizing } from '@/services/betSizing';
@@ -12,6 +12,7 @@ interface ActionPanelProps {
   stack?: number;
   trainingControls?: boolean;
   analysis: HandAnalysis | null;
+  analysisPending?: boolean;
   hand: HandState | null;
   isLoading: boolean;
   blocked?: boolean;
@@ -26,7 +27,7 @@ interface ActionPanelProps {
 }
 
 export default function ActionPanel({ stack, viewerId = 'hero', trainingControls = true, analysis, hand,
-  isLoading, blocked = false, waitingLabel, onAction, onAdvance, onStartHand, tools, secondsLeft, betweenActions, pausedActions }: ActionPanelProps) {
+  isLoading, analysisPending = false, blocked = false, waitingLabel, onAction, onAdvance, onStartHand, tools, secondsLeft, betweenActions, pausedActions }: ActionPanelProps) {
   const { t } = useI18n();
   const inputId = useId();
   const errorId = useId();
@@ -76,10 +77,8 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
 
   return <section className={`control-panel action-dock${trainingControls ? ' trainer-actions' : ''}`} aria-label={t('Table actions')}>
     <div className="turn-strip">
-      <strong role="status">{isLoading ? t('Sending…') : waitingLabel ?? t(handEnded ? 'Hand complete' : canAct ? 'Your turn' : actionClosed ? 'Action closed' : 'Waiting')}
-        {!isLoading && !handEnded && currentPlayer && !canAct ? <span> · {displayPlayer(currentPlayer, t)}</span> : null}
-      </strong>
-      {trainingControls && canAct && analysis ? <span className="coach-action-hint" role="status">{t('Coach: {0}').replace('{0}', adviceLabel)}</span> : null}
+      <strong role="status">{isLoading ? t('Sending…') : waitingLabel ?? t(handEnded ? 'Hand complete' : actionClosed ? 'Action closed' : canAct ? '' : 'Waiting')}</strong>
+      {trainingControls && hand && !handEnded && !folded ? <span className="coach-action-hint" role="status">{t('Coach: {0}').replace('{0}', '')}{analysisPending ? <InlineLoader /> : analysis ? adviceLabel : '—'}</span> : null}
       {secondsLeft !== null && secondsLeft !== undefined && !handEnded ? <span className={`dock-clock ${secondsLeft <= 10 ? 'urgent' : ''}`} role="timer" aria-label={t('Time remaining')}>{secondsLeft}s</span> : <span>{t('Stack')} <b>{heroStack}</b></span>}
     </div>
     {pausedActions ? <div className="hand-actions">{pausedActions}</div> : !hand || handEnded || (trainingControls && folded) || actionClosed ? <div className="hand-actions">

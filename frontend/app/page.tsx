@@ -9,6 +9,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import AppHeader from '@/components/AppHeader';
 
+import InlineLoader from '@/components/InlineLoader';
 import ActionPanel from '@/components/ActionPanel';
 import CoachPanel from '@/components/CoachPanel';
 import HandHistory from '@/components/HandHistory';
@@ -38,6 +39,14 @@ export default function HomePage() {
     startHand,
   } = usePokerHand();
 
+  const restartGame = () => {
+    const [small, big] = (blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`).split('/').map(Number);
+    void startHand(seatCount ?? hand?.players.length ?? 2, { small_blind: small, big_blind: big }, true);
+  };
+  const analysisMatches = Boolean(analysis && hand && !hand.result && analysis.hand_id === hand.hand_id && analysis.street === hand.street && analysis.pot === hand.pot && hand.current_player_id === 'hero');
+  const currentAnalysis = analysisMatches ? analysis : null;
+  const advicePending = isLoading || isAnalyzing;
+
   return (
     <main className="app-shell play-shell trainer-shell">
       <AppHeader>
@@ -45,6 +54,7 @@ export default function HomePage() {
             <label className="seat-count-control trainer-setting"><span>{t('Players')}</span><select aria-label={t('Players')} value={hand && !hand.result ? hand.players.length : seatCount ?? hand?.players.length ?? 2} disabled={isLoading || Boolean(hand && !hand.result)} title={hand && !hand.result ? t('Change table settings between hands.') : undefined} onChange={(event) => setSeatCount(Number(event.target.value))}>
               {[2, 3, 4, 5, 6].map((count) => <option key={count} value={count}>{count}</option>)}
             </select></label>
+            <button className="header-new-game" disabled={isLoading} onClick={restartGame} aria-label={t('New game')} title={t('New game')}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 7v5h-5"/><path d="M20 12a8 8 0 1 0-2 5M20 7v5"/></svg></button>
             <label className="blind-level-control trainer-setting"><span>{t('Blinds')}</span><select aria-label={t('Blinds')} value={hand && !hand.result ? `${hand.small_blind}/${hand.big_blind}` : blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`} disabled={isLoading || Boolean(hand && !hand.result)} title={hand && !hand.result ? t('Change table settings between hands.') : undefined} onChange={event => setBlindLevel(event.target.value)}>
               {['1/2', '2/4', '5/10', '10/20', '25/50', '50/100'].map(level => <option key={level} value={level}>{level}</option>)}
             </select></label>
@@ -65,16 +75,19 @@ export default function HomePage() {
 
       <section className="game-layout">
         <div className="table-column">
+          <div className="trainer-table-stage">
           <PokerTable hand={hand} seatCount={hand?.players.length ?? 2} thinkingPlayerId={isLoading && !hand?.result && hand?.current_player_id !== 'hero' ? hand?.current_player_id : null} />
-          {analysis && hand && !hand.result && analysis.hand_id === hand.hand_id && analysis.street === hand.street && analysis.pot === hand.pot && hand.current_player_id === 'hero' ? <div className="table-quick-metrics" aria-label={t('Coach')}><span>{t('Equity')} <b>{(analysis.equity * 100).toFixed(1)}%</b></span><span>{t('Call')} <b>{hand.betting?.call_amount ?? 0}</b></span><span>{t('Required')} <b>{(analysis.required_equity * 100).toFixed(1)}%</b></span></div> : null}
+          <div className="table-quick-metrics" aria-label={t('Coach')}><span>{t('Equity')} <b>{advicePending ? <InlineLoader /> : currentAnalysis ? `${(currentAnalysis.equity * 100).toFixed(1)}%` : '—'}</b></span><span>{t('Required')} <b>{advicePending ? <InlineLoader /> : currentAnalysis ? `${(currentAnalysis.required_equity * 100).toFixed(1)}%` : '—'}</b></span></div>
+          </div>
           <ActionPanel
-            analysis={analysis}
+            analysis={currentAnalysis}
+            analysisPending={advicePending}
             hand={actionHand}
             isLoading={isLoading}
             onAction={action}
             onAdvance={advance}
-            tools={<><button disabled={isLoading} onClick={() => { const [small, big] = (blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`).split('/').map(Number); void startHand(seatCount ?? hand?.players.length ?? 2, { small_blind: small, big_blind: big }, true); }}>{t('New game')}</button><button aria-haspopup="dialog" onClick={() => setPanel('coach')}>{t('Coach')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button></>}
-            onStartHand={() => { const [small, big] = (blindLevel ?? `${hand?.small_blind ?? 5}/${hand?.big_blind ?? 10}`).split('/').map(Number); void startHand(seatCount ?? hand?.players.length ?? 2, { small_blind: small, big_blind: big }, true); }}
+            tools={<><button aria-haspopup="dialog" onClick={() => setPanel('coach')}>{t('Coach')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('history')}>{t('History')} ↑</button><button aria-haspopup="dialog" onClick={() => setPanel('session')}>{t('Session')} ↑</button></>}
+            onStartHand={restartGame}
           />
         </div>
         <PanelSidebar active={panel} onClose={() => setPanel(null)} panels={[

@@ -37,3 +37,10 @@ test('departing current-hand players still render and six-seat roster never dupl
   const full=tableSeats(null,2,'5',six);
   assert.equal(full.length,6);assert.equal(new Set(full.map(s=>s.player.id)).size,6);
 });
+test('a room creator occupies exactly one bottom seat before the first hand',()=>{
+  const host={player_id:'host',seat:0,name:'Александр Длинноименный',stack:777};
+  const seats=tableSeats(null,2,'host',[host]);
+  assert.equal(seats[0].slot,'bottom');assert.equal(seats[0].player.name,host.name);
+  assert.equal(seats[0].player.stack,777);assert.equal(seats[0].waiting,true);
+  assert.equal(seats[1].player,undefined);
+});

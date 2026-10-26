@@ -538,3 +538,40 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
 .classic-table .seat-bottom .seat-turn-label { top:auto; bottom:2px; left:43px; transform:none; padding:1px 5px; font-size:9px; line-height:12px; }
 .classic-table .seat-bottom.active-seat .action-badge { visibility:hidden; }
 @media(max-width:1100px) { .classic-table .seat-bottom .seat-turn-label { left:6px; } }
+
+/* Lobby members, including the host, sit visibly before the first deal. */
+.room-created-invite { display:flex; align-items:center; gap:10px; padding:12px; margin-bottom:12px; border:1px solid #53674b; border-radius:12px; background:#1d3023; }
+.room-created-invite>div { display:grid; gap:4px; flex:1; min-width:0; }
+.room-created-invite span { color:var(--muted); font-size:12px; }
+.room-created-invite button { flex:none; min-height:34px; padding:6px 9px; font-size:12px; }
+.room-created-invite .invite-dismiss { padding:4px 8px; font-size:20px; }
+.classic-table .seat-bottom.active-seat .action-badge { visibility:visible; }
+.classic-table .seat-info { display:contents; }
+.classic-table .seat-info h2 { grid-column:2 / -1; grid-row:1; min-width:0; width:100%; max-width:100%; }
+.header-new-game { display:grid; place-items:center; flex:none; width:32px; height:36px; min-height:36px; padding:7px; border-radius:8px; }
+.header-new-game svg { width:18px; height:18px; }
+.trainer-table-stage { position:relative; display:flex; flex-direction:column; flex:1; min-height:0; }
+.inline-loader { display:inline-flex; vertical-align:middle; align-items:center; justify-content:center; min-width:20px; height:16px; }
+.inline-loader>span { width:12px; height:12px; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; animation:inline-loading .75s linear infinite; }
+@keyframes inline-loading { to { transform:rotate(360deg); } }
+.coach-action-hint { display:inline-flex; align-items:center; gap:5px; min-height:18px; }
+@media(max-width:760px) {
+ .room-shell:not(.room-in-hand) .table-column>.classic-table { display:flex; flex:none; }
+ .room-shell:not(.room-in-hand) .classic-table .classic-oval { flex:none; height:clamp(260px,45svh,400px); min-height:260px; }
+ .room-created-invite { padding:9px; gap:6px; }
+ .room-created-invite>div>strong { font-size:12px; }
+ .room-created-invite span { font-size:10px; }
+ .room-created-invite button { max-width:105px; font-size:10px; }
+ .classic-table .seat .seat-avatar { display:none; }
+ .classic-table .seat .seat-bar { grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:22px 18px; min-height:50px; padding:4px 5px; }
+ .classic-table .seat .seat-info h2 { grid-column:1 / -1; grid-row:1; padding-right:0; white-space:normal; overflow-wrap:anywhere; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-height:11px; max-height:22px; font-size:10px; }
+ .classic-table .seat .seat-info p { top:-11px; right:4px; line-height:10px; font-size:7px; }
+ .classic-table .seat .seat-stats { grid-column:1; grid-row:2; }
+ .classic-table .seat .action-badge { position:static; grid-column:2; grid-row:2; display:block; min-width:0; max-width:100%; width:100%; margin:0; text-align:right; }
+ .trainer-shell .table-quick-metrics { position:absolute; bottom:0; left:0; right:0; z-index:8; padding:3px 10px; min-height:22px; pointer-events:none; }
+ .table-quick-metrics>b, .table-quick-metrics span { min-width:0; }
+ .table-quick-metrics b { display:inline-block; min-width:38px; text-align:right; }
+ .trainer-shell .play-header-controls { gap:4px; }
+ .trainer-shell .header-new-game { width:28px; padding:5px; }
+}
+@media(prefers-reduced-motion:reduce) { .inline-loader>span { animation-duration:1.8s; } }
