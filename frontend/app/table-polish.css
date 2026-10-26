@@ -575,3 +575,10 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
  .trainer-shell .header-new-game { width:28px; padding:5px; }
 }
 @media(prefers-reduced-motion:reduce) { .inline-loader>span { animation-duration:1.8s; } }
+
+/* Stack and name share the left edge when the avatar column is hidden. */
+.classic-table .seat .seat-stats { min-width:0; text-align:left; justify-self:start; }
+@media(max-width:1100px) {
+ .classic-table .seat .seat-info h2 { grid-column:1 / -1; }
+ .classic-table .seat .seat-stats { grid-column:1; grid-row:2; }
+}
