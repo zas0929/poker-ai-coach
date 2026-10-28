@@ -9,7 +9,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import AppHeader from '@/components/AppHeader';
 
-import InlineLoader from '@/components/InlineLoader';
 import ActionPanel from '@/components/ActionPanel';
 import CoachPanel from '@/components/CoachPanel';
 import HandHistory from '@/components/HandHistory';
@@ -77,7 +76,6 @@ export default function HomePage() {
         <div className="table-column">
           <div className="trainer-table-stage">
           <PokerTable hand={hand} seatCount={hand?.players.length ?? 2} thinkingPlayerId={isLoading && !hand?.result && hand?.current_player_id !== 'hero' ? hand?.current_player_id : null} />
-          <div className="table-quick-metrics" aria-label={t('Coach')}><span>{t('Equity')} <b>{advicePending ? <InlineLoader /> : currentAnalysis ? `${(currentAnalysis.equity * 100).toFixed(1)}%` : '—'}</b></span><span>{t('Required')} <b>{advicePending ? <InlineLoader /> : currentAnalysis ? `${(currentAnalysis.required_equity * 100).toFixed(1)}%` : '—'}</b></span></div>
           </div>
           <ActionPanel
             analysis={currentAnalysis}

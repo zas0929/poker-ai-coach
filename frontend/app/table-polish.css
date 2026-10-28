@@ -582,3 +582,19 @@ select, .play-header select, .language-toolbar select { appearance:none; -webkit
  .classic-table .seat .seat-info h2 { grid-column:1 / -1; }
  .classic-table .seat .seat-stats { grid-column:1; grid-row:2; }
 }
+
+/* Mobile decision facts occupy the fixed-height status row. */
+.dock-equity, .dock-required { display:none; }
+.classic-table .dealer-marker { width:30px; height:30px; font-size:15px; right:-8px; top:-14px; }
+@media(max-width:760px) {
+ .action-dock .turn-strip>.processing-status,
+ .action-dock .turn-strip>.dock-stack { display:none; }
+ .trainer-actions .turn-strip { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:6px; align-items:center; }
+ .trainer-actions .turn-strip>strong { display:none; }
+ .trainer-actions .turn-strip>.dock-equity,
+ .trainer-actions .turn-strip>.dock-required { display:inline-flex; gap:4px; align-items:center; white-space:nowrap; font-size:10px; }
+ .trainer-actions .dock-equity { grid-column:1; grid-row:1; }
+ .trainer-actions .dock-required { grid-column:3; grid-row:1; }
+ .trainer-actions .turn-strip>.coach-action-hint { grid-column:2; grid-row:1; justify-self:center; font-size:10px; min-width:0; }
+ .trainer-actions .turn-strip b { color:#f0dda3; font-variant-numeric:tabular-nums; }
+}

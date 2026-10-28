@@ -72,8 +72,8 @@ function Seat({
           <h2 title={displayName}>{displayName}</h2>
           <p title={t(displayPosition)}>{shortPosition}</p>
           {player ? (
-            <span className={`action-badge action-${lastAction?.action ?? status}`}>
-              {t(waiting ? waitingLabel : thinking ? 'thinking' : formatAction(lastAction, status))}
+            <span title={waiting ? t(waitingLabel) : t(formatAction(lastAction, status))} className={`action-badge action-${lastAction?.action ?? status}`}>
+              {t(waiting ? waitingLabel : thinking ? 'thinking' : formatAction(lastAction, status, true))}
             </span>
           ) : (
             <span className="action-badge action-waiting">{t("Waiting")}</span>
@@ -306,7 +306,7 @@ function lastActionFor(hand: HandState | null, playerId: string) {
     .find((action) => action.player_id === playerId);
 }
 
-function formatAction(action: HandAction | undefined, status: Player['status']) {
+function formatAction(action: HandAction | undefined, status: Player['status'], compact = false) {
   if (status === 'folded') {
     return 'folded';
   }
@@ -317,7 +317,7 @@ function formatAction(action: HandAction | undefined, status: Player['status']) 
     return 'waiting';
   }
 
-  const actionLabel = action.action.replaceAll('_', ' ');
+  const actionLabel = compact && action.action === 'small_blind' ? 'SB' : compact && action.action === 'big_blind' ? 'BB' : action.action.replaceAll('_', ' ');
   return action.amount ? `${actionLabel} ${action.amount}` : actionLabel;
 }
 

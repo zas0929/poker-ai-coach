@@ -77,9 +77,11 @@ export default function ActionPanel({ stack, viewerId = 'hero', trainingControls
 
   return <section className={`control-panel action-dock${trainingControls ? ' trainer-actions' : ''}`} aria-label={t('Table actions')}>
     <div className="turn-strip">
-      <strong role="status">{isLoading ? t('Sending…') : waitingLabel ?? t(handEnded ? 'Hand complete' : actionClosed ? 'Action closed' : canAct ? '' : 'Waiting')}</strong>
+      {trainingControls ? <span className="dock-equity">{t('Equity')} <b>{analysisPending ? <InlineLoader /> : analysis ? `${(analysis.equity * 100).toFixed(1)}%` : '—'}</b></span> : null}
+      <strong className={isLoading ? "processing-status" : undefined} role="status">{isLoading ? t('Sending…') : waitingLabel ?? t(handEnded ? 'Hand complete' : actionClosed ? 'Action closed' : canAct ? '' : 'Waiting')}</strong>
       {trainingControls && hand && !handEnded && !folded ? <span className="coach-action-hint" role="status">{t('Coach: {0}').replace('{0}', '')}{analysisPending ? <InlineLoader /> : analysis ? adviceLabel : '—'}</span> : null}
-      {secondsLeft !== null && secondsLeft !== undefined && !handEnded ? <span className={`dock-clock ${secondsLeft <= 10 ? 'urgent' : ''}`} role="timer" aria-label={t('Time remaining')}>{secondsLeft}s</span> : <span>{t('Stack')} <b>{heroStack}</b></span>}
+      {trainingControls ? <span className="dock-required">{t('Required')} <b>{analysisPending ? <InlineLoader /> : analysis ? `${(analysis.required_equity * 100).toFixed(1)}%` : '—'}</b></span> : null}
+      {secondsLeft !== null && secondsLeft !== undefined && !handEnded ? <span className={`dock-clock ${secondsLeft <= 10 ? 'urgent' : ''}`} role="timer" aria-label={t('Time remaining')}>{secondsLeft}s</span> : <span className="dock-stack">{t('Stack')} <b>{heroStack}</b></span>}
     </div>
     {pausedActions ? <div className="hand-actions">{pausedActions}</div> : !hand || handEnded || (trainingControls && folded) || actionClosed ? <div className="hand-actions">
       {trainingControls && (!hand || handEnded || folded) ? <button className="primary-button" disabled={isLoading} onClick={onStartHand}>{t(hand ? 'Next hand' : 'New hand')}</button> : null}
